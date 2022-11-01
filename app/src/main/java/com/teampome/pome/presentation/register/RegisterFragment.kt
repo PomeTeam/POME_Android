@@ -1,10 +1,12 @@
 package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -29,7 +31,15 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
 
     }
 
+    // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
+    @SuppressLint("ClickableViewAccessibility")
     override fun initListener() {
+        // 키보드 자연스럽게 처리
+        binding.registerCl.setOnTouchListener { _, _ ->
+            hideKeyboard()
+            false
+        }
+
         binding.registerProfileAiv.setOnClickListener {
             pomeBottomSheetDialog.show()
         }
@@ -95,6 +105,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         binding.registerProfileNameCheckTv.setTextColor(resources.getColor(R.color.red, null))
         binding.registerProfileCheckBtn.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
         binding.registerProfileCheckBtn.isClickable = false
+    }
+
+    /**
+     *  키보드 자연스럽게 처리를 위한 메소드 (키보드 바깥쪽 클릭시 키보드 hide)
+     */
+    private fun hideKeyboard() {
+        if (activity != null && requireActivity().currentFocus != null) {
+            val inputManager: InputMethodManager =
+                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+            inputManager.hideSoftInputFromWindow(
+                requireActivity().currentFocus!!.windowToken,
+                InputMethodManager.HIDE_NOT_ALWAYS
+            )
+        }
     }
 
     private fun moveToRecord() {
