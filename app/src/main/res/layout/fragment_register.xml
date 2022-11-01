@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/Pome.Bold.22"
+            android:id="@+id/register_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_title_text"
+            android:textColor="@color/black"
+            android:layout_marginTop="86dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_profile_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_profile_empty_160"
+            android:layout_marginTop="53dp"
+            app:layout_constraintTop_toBottomOf="@id/register_title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_profile_plus_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_plus_24"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="9dp"
+            app:layout_constraintBottom_toBottomOf="@id/register_profile_aiv"
+            app:layout_constraintEnd_toEndOf="@id/register_profile_aiv" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            style="@style/Pome.Medium.16"
+            android:id="@+id/register_profile_name_et"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:background="@drawable/register_profile_name_background"
+            android:paddingHorizontal="16dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="38dp"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:hint="@string/register_profile_name_hint_text"
+            android:textColorHint="@color/grey_5"
+            android:textCursorDrawable="@drawable/register_profile_name_cursor"
+            app:layout_constraintTop_toBottomOf="@id/register_profile_aiv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_profile_name_del_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_20"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@id/register_profile_name_et"
+            app:layout_constraintBottom_toBottomOf="@id/register_profile_name_et"
+            app:layout_constraintEnd_toEndOf="@id/register_profile_name_et"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/register_profile_name_check_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/red"
+            tools:text="사용할 수 없는 닉네임이에요"
+            app:layout_constraintTop_toBottomOf="@id/register_profile_name_et"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.12"
+            android:textColor="@color/grey_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginHorizontal="40dp"
+            android:text="@string/register_profile_check_description_text"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/register_profile_check_btn"/>
+
+        <!-- stateListAnimator는 button의 shadow를 빼기 위함
+             AppCompatButton을 사용한 이유는 Button의 background를 넣기 위함 -->
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Pome.Bold.18"
+            android:id="@+id/register_profile_check_btn"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/register_profile_name_button_text"
+            android:background="@drawable/register_profile_name_check_disable_btn_background"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="14dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

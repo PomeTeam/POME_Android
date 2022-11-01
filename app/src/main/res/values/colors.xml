@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+    <!-- Pome Color -->
+    <color name="background">#EBEBEB</color>
+    <color name="main">#7BE48F</color>
+    <color name="main_alpha">#887BE48F</color>
+    <color name="middle_mint">#87E999</color>
+    <color name="disable_mint">#B0EFBC</color>
+    <color name="light_mint">#E2FCE7</color>
+    <color name="bright_mint">#F2FFF5</color>
+    <color name="sub">#FF908A</color>
+    <color name="middle_pink">#FFDDDA</color>
+    <color name="light_pink">#FFF4F3</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey_0">#F8FAFB</color>
+    <color name="grey_1">#F2F5F5</color>
+    <color name="grey_2">#EBEEEF</color>
+    <color name="grey_3">#E2E4E6</color>
+    <color name="grey_4">#CFD3D6</color>
+    <color name="grey_5">#AAAFB3</color>
+    <color name="grey_6">#888D91</color>
+    <color name="grey_7">#4E5256</color>
+    <color name="grey_8">#373A3C</color>
+    <color name="grey_9">#292A2B</color>
+    <color name="black">#FF000000</color>
+    <color name="red">#FB5E5E</color>
+    <color name="shadow">#6D8DAD</color>
+    <color name="blue_action_sheet">#1082FF</color>
+</resources>

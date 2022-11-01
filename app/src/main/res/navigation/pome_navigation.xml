@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/pome_navigation"
+    app:startDestination="@id/splash_fragment">
+
+    <fragment
+        android:id="@+id/splash_fragment"
+        android:name="com.teampome.pome.presentation.splash.SplashFragment"
+        android:label="SplashFragment">
+        <action
+            android:id="@+id/action_splash_fragment_to_register_fragment"
+            app:destination="@id/register_fragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_splash_fragment_to_record_fragment"
+            app:destination="@id/record_fragment"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="com.teampome.pome.presentation.register.RegisterFragment"
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_register_fragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/record_fragment"
+        android:name="com.teampome.pome.presentation.record.RecordFragment"
+        android:label="RecordFragment" />
+
+    <fragment
+        android:id="@+id/remind_fragment"
+        android:name="com.teampome.pome.presentation.remind.RemindFragment"
+        android:label="RemindFragment" />
+
+    <fragment
+        android:id="@+id/friend_fragment"
+        android:name="com.teampome.pome.presentation.friend.FriendFragment"
+        android:label="FriendFragment" />
+
+    <fragment
+        android:id="@+id/mypage_fragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageFragment"
+        android:label="MyPageFragment" />
+
+</navigation>

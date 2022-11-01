@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/record_fragment"
+        android:title="@string/bottom_nav_menu_record_title"
+        android:icon="@drawable/ic_record_mono"/>
+
+    <item
+        android:id="@+id/remind_fragment"
+        android:title="@string/bottom_nav_menu_remind_title"
+        android:icon="@drawable/ic_recollect_mono"/>
+
+    <item
+        android:id="@+id/friend_fragment"
+        android:title="@string/bottom_nav_menu_friend_title"
+        android:icon="@drawable/ic_friends_mono"/>
+
+    <item
+        android:id="@+id/mypage_fragment"
+        android:title="@string/bottom_nav_menu_mypage_title"
+        android:icon="@drawable/ic_my_mono"/>
+</menu>

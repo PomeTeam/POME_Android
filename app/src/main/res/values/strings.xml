@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Pome</string>
+
+    <!-- Pome bottom menu -->
+    <string name="bottom_nav_menu_record_title">기록</string>
+    <string name="bottom_nav_menu_remind_title">회고</string>
+    <string name="bottom_nav_menu_friend_title">친구</string>
+    <string name="bottom_nav_menu_mypage_title">마이</string>
+
+    <!-- Pome Splash -->
+    <string name="splash_marshmallow_background_image_description">Splash marshmallow background</string>
+    <string name="splash_marshmallow_3d_image_description">splash marshmallow 3d image description</string>
+    <string name="splash_logo_image_description">splash logo image description</string>
+    <string name="splash_marshmallow_is_yours_image_description">splash marshmallow is yours image description</string>
+    <string name="register_title_text">나만의 프로필을\n만들어 볼까요?</string>
+    <string name="register_profile_name_hint_text">영어, 한국어 최대 10자 이내 입력</string>
+    <string name="register_profile_name_button_text">만들었어요</string>
+    <string name="register_profile_check_description_text">입력한 정보는 회원을 식별하고 친구간 커뮤니케이션을 위한 동의 목적으로만 사용되며 포미 이용기간 동안 보관돼요</string>
+    <string name="pome_bottom_sheet_dialog_delete_text">삭제하기</string>
+    <string name="pome_bottom_sheet_dialog_pencil_text">수정하기</string>
+    <string name="pome_bottom_sheet_dialog_title_text">프로필 편집</string>
+
+
+</resources>
