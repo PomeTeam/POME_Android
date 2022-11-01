@@ -1,38 +1,48 @@
 package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.graphics.ImageDecoder
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.R
 import com.teampome.pome.base.BaseFragment
+import com.teampome.pome.databinding.PomeBottomSheetDialogBinding
 import kotlinx.coroutines.*
 
+// Todo : ViewModel data 구분 짓기
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
 
-    private lateinit var pomeBottomSheetView: View
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
+    private lateinit var pomeBottomSheetDialogBinding: PomeBottomSheetDialogBinding
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        pomeBottomSheetView = layoutInflater.inflate(R.layout.pome_bottom_sheet_dialog, null)
+        // initListener가 먼저 불려 super보다 먼저 호출
+        // pomeBottomSheetDialog 뷰 인플레이션 과정
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
-        pomeBottomSheetDialog.setContentView(pomeBottomSheetView)
+        pomeBottomSheetDialogBinding = PomeBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
 
-
+        super.onViewCreated(view, savedInstanceState)
     }
 
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun initListener() {
         // 키보드 자연스럽게 처리
         binding.registerCl.setOnTouchListener { _, _ ->
@@ -74,6 +84,25 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 확인 버튼
         binding.registerProfileCheckBtn.setOnClickListener {
             Toast.makeText(requireContext(), "만들었어요.", Toast.LENGTH_SHORT).show()
+            moveToRecord()
+        }
+
+        binding.registerProfileAiv.setOnClickListener {
+            pomeBottomSheetDialog.show()
+        }
+
+        // dialog 수정 click
+        pomeBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
+            Toast.makeText(requireContext(), "수정하기", Toast.LENGTH_SHORT).show()
+            openGallery()
+        }
+
+        // dialog 삭제 click
+        pomeBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
+            Toast.makeText(requireContext(), "삭제하기", Toast.LENGTH_SHORT).show()
+            binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_160, null))
+            binding.registerProfilePlusAiv.visibility = View.VISIBLE
+            pomeBottomSheetDialog.dismiss()
         }
 
 //        // 2초 뒤 register로 move
@@ -120,6 +149,48 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                 InputMethodManager.HIDE_NOT_ALWAYS
             )
         }
+    }
+
+    /**
+     *  galleryLauncher를 이용하여 사용자 이미지를 가져오는 작업
+     */
+    private val galleryLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+
+                val imageUri = result.data?.data
+
+                try {
+                    if(Build.VERSION.SDK_INT < 28) {
+                        val bitmap = MediaStore.Images.Media.getBitmap(
+                            activity?.contentResolver,
+                            imageUri
+                        )
+                        binding.registerProfileAiv.setImageBitmap(bitmap)
+                    } else {
+                        imageUri?.let {
+                            val source = ImageDecoder.createSource(requireActivity().contentResolver, it)
+                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            binding.registerProfileAiv.setImageBitmap(bitmap)
+                        }
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+
+                // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
+                binding.registerProfilePlusAiv.visibility = View.INVISIBLE
+                pomeBottomSheetDialog.dismiss()
+            }
+        }
+
+    private fun openGallery() {
+        val intent = Intent()
+        intent.apply {
+            type = "image/*"
+            action = Intent.ACTION_GET_CONTENT
+        }
+        galleryLauncher.launch(Intent.createChooser(intent, "Select Picture"))
     }
 
     private fun moveToRecord() {
