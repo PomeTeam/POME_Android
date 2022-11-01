@@ -12,6 +12,8 @@
     <string name="splash_marshmallow_3d_image_description">splash marshmallow 3d image description</string>
     <string name="splash_logo_image_description">splash logo image description</string>
     <string name="splash_marshmallow_is_yours_image_description">splash marshmallow is yours image description</string>
+
+    <!-- Pome Register -->
     <string name="register_title_text">나만의 프로필을\n만들어 볼까요?</string>
     <string name="register_profile_name_hint_text">영어, 한국어 최대 10자 이내 입력</string>
     <string name="register_profile_name_button_text">만들었어요</string>
@@ -19,6 +21,8 @@
     <string name="pome_bottom_sheet_dialog_delete_text">삭제하기</string>
     <string name="pome_bottom_sheet_dialog_pencil_text">수정하기</string>
     <string name="pome_bottom_sheet_dialog_title_text">프로필 편집</string>
+    <string name="pome_name_check_impossible_text">사용할 수 없는 닉네임이에요</string>
+    <string name="pome_name_check_possible_text">멋진 닉네임이네요!</string>
 
 
 </resources>
