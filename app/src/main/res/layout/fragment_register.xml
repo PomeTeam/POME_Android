@@ -107,6 +107,7 @@
             android:textColor="@color/white"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:clickable="false"
             android:text="@string/register_profile_name_button_text"
             android:background="@drawable/register_profile_name_check_disable_btn_background"
             android:stateListAnimator="@null"
