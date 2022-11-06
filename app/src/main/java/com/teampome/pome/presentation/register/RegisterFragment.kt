@@ -105,6 +105,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             pomeBottomSheetDialog.dismiss()
         }
 
+        // close Button 처리
+        binding.registerProfileNameDelAiv.setOnClickListener {
+            binding.registerProfileNameEt.setText("")
+        }
+
 //        // 2초 뒤 register로 move
 //        GlobalScope.launch(context = Dispatchers.Main) {
 //            delay(3000)
