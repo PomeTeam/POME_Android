@@ -25,7 +25,7 @@ object CommonUtil {
     /**
      *  keyboard가 화면을 밀게 설정
      */
-    fun inputModeResize(activity: Activity) {
+    fun inputModePan(activity: Activity) {
         activity.window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 

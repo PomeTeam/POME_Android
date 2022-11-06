@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 
 class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.fragment_add_friends) {
@@ -19,9 +20,13 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        CommonUtil.inputModePan(requireActivity())
     }
 
     override fun initListener() {
-
+        binding.addFriendsCl.setOnClickListener {
+            CommonUtil.hideKeyboard(requireActivity())
+        }
     }
 }
