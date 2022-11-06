@@ -80,6 +80,10 @@
 
     <!-- Pome Medium -->
 
+    <style name="Pome.Medium.22">
+        <item name="android:textSize">22sp</item>
+    </style>
+
     <style name="Pome.Medium.20">
         <item name="android:textSize">20sp</item>
     </style>
