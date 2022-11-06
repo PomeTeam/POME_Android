@@ -2,17 +2,13 @@ package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.graphics.ImageDecoder
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
@@ -183,11 +179,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             action = Intent.ACTION_GET_CONTENT
         }
         galleryLauncher.launch(Intent.createChooser(intent, "Select Picture"))
-    }
-
-    private fun moveToRecord() {
-        val registerToRecordAction = RegisterFragmentDirections.actionRegisterFragmentToRecordFragment()
-        findNavController().navigate(registerToRecordAction)
     }
 
     private fun moveToAddFriends() {
