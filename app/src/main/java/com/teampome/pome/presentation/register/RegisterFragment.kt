@@ -115,12 +115,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         binding.registerProfileNameDelAiv.setOnClickListener {
             binding.registerProfileNameEt.setText("")
         }
-
-//        // 2초 뒤 register로 move
-//        GlobalScope.launch(context = Dispatchers.Main) {
-//            delay(3000)
-//            moveToRecord()
-//        }
     }
 
     /**
@@ -153,7 +147,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-
                 val imageUri = result.data?.data
 
                 try {
@@ -165,10 +158,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                         binding.registerProfileAiv.setImageBitmap(bitmap)
                     } else {
                         imageUri?.let {
-//                            val source = ImageDecoder.createSource(requireActivity().contentResolver, it)
-//                            val bitmap = ImageDecoder.decodeBitmap(source)
-//                            binding.registerProfileAiv.setImageBitmap(bitmap)
-
                             Glide.with(requireContext())
                                 .load(it)
                                 .apply(
