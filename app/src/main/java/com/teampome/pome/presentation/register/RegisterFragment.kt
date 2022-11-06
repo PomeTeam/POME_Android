@@ -19,8 +19,9 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.R
-import com.teampome.pome.base.BaseFragment
+import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.PomeBottomSheetDialogBinding
+import com.teampome.pome.util.CommonUtil
 import kotlinx.coroutines.*
 
 // Todo : ViewModel data 구분 짓기
@@ -46,7 +47,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     override fun initListener() {
         // 키보드 자연스럽게 처리
         binding.registerCl.setOnTouchListener { _, _ ->
-            hideKeyboard()
+            CommonUtil.hideKeyboard(requireActivity())
             false
         }
 
@@ -139,21 +140,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         binding.registerProfileNameCheckTv.setTextColor(resources.getColor(R.color.red, null))
         binding.registerProfileCheckBtn.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
         binding.registerProfileCheckBtn.isClickable = false
-    }
-
-    /**
-     *  키보드 자연스럽게 처리를 위한 메소드 (키보드 바깥쪽 클릭시 키보드 hide)
-     */
-    private fun hideKeyboard() {
-        if (activity != null && requireActivity().currentFocus != null) {
-            val inputManager: InputMethodManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-
-            inputManager.hideSoftInputFromWindow(
-                requireActivity().currentFocus!!.windowToken,
-                InputMethodManager.HIDE_NOT_ALWAYS
-            )
-        }
     }
 
     /**
