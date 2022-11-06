@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/pome_navigation"
     app:startDestination="@id/splash_fragment">
 
     <fragment
         android:id="@+id/splash_fragment"
         android:name="com.teampome.pome.presentation.splash.SplashFragment"
-        android:label="SplashFragment">
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splash_fragment_to_register_fragment"
             app:destination="@id/register_fragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"
             app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"/>
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_splash_fragment_to_record_fragment"
             app:destination="@id/record_fragment"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out"
             app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"/>
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
         <action
             android:id="@+id/action_splash_fragment_to_splashLoginFragment"
             app:destination="@id/splashLoginFragment" />
@@ -30,7 +32,8 @@
     <fragment
         android:id="@+id/register_fragment"
         android:name="com.teampome.pome.presentation.register.RegisterFragment"
-        android:label="RegisterFragment" >
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register">
         <action
             android:id="@+id/action_register_fragment_to_record_fragment"
             app:destination="@id/record_fragment" />
@@ -42,26 +45,31 @@
     <fragment
         android:id="@+id/record_fragment"
         android:name="com.teampome.pome.presentation.record.RecordFragment"
-        android:label="RecordFragment" />
+        android:label="RecordFragment"
+        tools:layout="@layout/fragment_record"/>
 
     <fragment
         android:id="@+id/remind_fragment"
         android:name="com.teampome.pome.presentation.remind.RemindFragment"
-        android:label="RemindFragment" />
+        android:label="RemindFragment"
+        tools:layout="@layout/fragment_remind"/>
 
     <fragment
         android:id="@+id/friend_fragment"
         android:name="com.teampome.pome.presentation.friend.FriendFragment"
-        android:label="FriendFragment" />
+        android:label="FriendFragment"
+        tools:layout="@layout/fragment_friend"/>
 
     <fragment
         android:id="@+id/mypage_fragment"
         android:name="com.teampome.pome.presentation.mypage.MyPageFragment"
-        android:label="MyPageFragment" />
+        android:label="MyPageFragment"
+        tools:layout="@layout/fragment_mypage"/>
     <fragment
         android:id="@+id/splashLoginFragment"
         android:name="com.teampome.pome.presentation.splash.SplashLoginFragment"
-        android:label="SplashLoginFragment" >
+        android:label="SplashLoginFragment"
+        tools:layout="@layout/fragment_login_splash">
         <action
             android:id="@+id/action_splashLoginFragment_to_register_fragment"
             app:destination="@id/register_fragment" />
@@ -69,6 +77,7 @@
     <fragment
         android:id="@+id/addFriendsNoticeFragment"
         android:name="com.teampome.pome.presentation.addfriends.AddFriendsNoticeFragment"
-        android:label="AddFriendsNoticeFragment" />
+        android:label="AddFriendsNoticeFragment"
+        tools:layout="@layout/fragment_add_friends_notice"/>
 
 </navigation>
