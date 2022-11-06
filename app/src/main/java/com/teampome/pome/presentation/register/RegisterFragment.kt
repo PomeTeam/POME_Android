@@ -90,7 +90,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 확인 버튼
         binding.registerProfileCheckBtn.setOnClickListener {
             Toast.makeText(requireContext(), "만들었어요.", Toast.LENGTH_SHORT).show()
-            moveToRecord()
+            moveToAddFriends()
         }
 
         binding.registerProfileAiv.setOnClickListener {
@@ -188,5 +188,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     private fun moveToRecord() {
         val registerToRecordAction = RegisterFragmentDirections.actionRegisterFragmentToRecordFragment()
         findNavController().navigate(registerToRecordAction)
+    }
+
+    private fun moveToAddFriends() {
+        val registerToAddFriendsAction = RegisterFragmentDirections.actionRegisterFragmentToAddFriendsNoticeFragment()
+        findNavController().navigate(registerToAddFriendsAction)
     }
 }

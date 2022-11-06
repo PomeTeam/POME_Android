@@ -23,6 +23,9 @@
     <string name="pome_bottom_sheet_dialog_title_text">프로필 편집</string>
     <string name="pome_name_check_impossible_text">사용할 수 없는 닉네임이에요</string>
     <string name="pome_name_check_possible_text">멋진 닉네임이네요!</string>
+    <string name="add_friends_notice_title_text">회원가입 완료!\n친구를 추가해볼까요?</string>
+    <string name="add_friends_notice_desc_text">친구의 소비 기록을 확인하고\n서로 응원할 수 있어요</string>
+    <string name="add_friends_notice_check_false_text">다음에 할래요</string>
 
 
 </resources>

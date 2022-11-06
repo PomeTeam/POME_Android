@@ -34,6 +34,9 @@
         <action
             android:id="@+id/action_register_fragment_to_record_fragment"
             app:destination="@id/record_fragment" />
+        <action
+            android:id="@+id/action_register_fragment_to_addFriendsNoticeFragment"
+            app:destination="@id/addFriendsNoticeFragment" />
     </fragment>
 
     <fragment
@@ -63,5 +66,9 @@
             android:id="@+id/action_splashLoginFragment_to_register_fragment"
             app:destination="@id/register_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addFriendsNoticeFragment"
+        android:name="com.teampome.pome.presentation.addfriends.AddFriendsNoticeFragment"
+        android:label="AddFriendsNoticeFragment" />
 
 </navigation>
