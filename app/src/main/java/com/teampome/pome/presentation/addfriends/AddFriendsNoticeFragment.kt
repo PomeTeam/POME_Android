@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsNoticeBinding
 import com.teampome.pome.util.base.BaseFragment
@@ -22,6 +23,13 @@ class AddFriendsNoticeFragment : BaseFragment<FragmentAddFriendsNoticeBinding>(R
     }
 
     override fun initListener() {
+        binding.addFriendsNoticeCheckFalseAtv.setOnClickListener {
+            moveToRecord()
+        }
+    }
 
+    private fun moveToRecord() {
+        val addFriendsNoticeToRecord = AddFriendsNoticeFragmentDirections.actionAddFriendsNoticeFragmentToRecordFragment()
+        findNavController().navigate(addFriendsNoticeToRecord)
     }
 }
