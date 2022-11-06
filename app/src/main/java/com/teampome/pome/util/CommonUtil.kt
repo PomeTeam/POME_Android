@@ -22,6 +22,7 @@ object CommonUtil {
         }
     }
 
+    // Todo : 화면밀기 동작 안함
     /**
      *  keyboard가 화면을 밀게 설정
      */
