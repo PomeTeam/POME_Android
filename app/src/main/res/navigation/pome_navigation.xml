@@ -82,6 +82,14 @@
         <action
             android:id="@+id/action_addFriendsNoticeFragment_to_record_fragment"
             app:destination="@id/record_fragment" />
+        <action
+            android:id="@+id/action_addFriendsNoticeFragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/addFriendsFragment"
+        android:name="com.teampome.pome.presentation.addfriends.AddFriendsFragment"
+        android:label="AddFriendsFragment"
+        tools:layout="@layout/fragment_add_friends"/>
 
 </navigation>

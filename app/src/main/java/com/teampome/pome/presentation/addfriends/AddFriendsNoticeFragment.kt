@@ -26,10 +26,19 @@ class AddFriendsNoticeFragment : BaseFragment<FragmentAddFriendsNoticeBinding>(R
         binding.addFriendsNoticeCheckFalseAtv.setOnClickListener {
             moveToRecord()
         }
+
+        binding.addFriendsNoticeCheckBtn.setOnClickListener {
+            moveToAddFriends()
+        }
     }
 
     private fun moveToRecord() {
         val addFriendsNoticeToRecord = AddFriendsNoticeFragmentDirections.actionAddFriendsNoticeFragmentToRecordFragment()
         findNavController().navigate(addFriendsNoticeToRecord)
+    }
+
+    private fun moveToAddFriends() {
+        val addFriendsNoticeToAddFriends = AddFriendsNoticeFragmentDirections.actionAddFriendsNoticeFragmentToAddFriendsFragment()
+        findNavController().navigate(addFriendsNoticeToAddFriends)
     }
 }
