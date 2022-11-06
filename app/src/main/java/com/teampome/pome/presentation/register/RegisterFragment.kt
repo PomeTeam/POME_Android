@@ -16,12 +16,17 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.MultiTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.PomeBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
+import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 
 // Todo : ViewModel data 구분 짓기
@@ -160,9 +165,16 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                         binding.registerProfileAiv.setImageBitmap(bitmap)
                     } else {
                         imageUri?.let {
-                            val source = ImageDecoder.createSource(requireActivity().contentResolver, it)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            binding.registerProfileAiv.setImageBitmap(bitmap)
+//                            val source = ImageDecoder.createSource(requireActivity().contentResolver, it)
+//                            val bitmap = ImageDecoder.decodeBitmap(source)
+//                            binding.registerProfileAiv.setImageBitmap(bitmap)
+
+                            Glide.with(requireContext())
+                                .load(it)
+                                .apply(
+                                    bitmapTransform(MultiTransformation(CenterCrop(),
+                                    MaskTransformation(R.drawable.user_profile_empty_160)))
+                                ).into(binding.registerProfileAiv)
                         }
                     }
                 } catch (e: Exception) {
