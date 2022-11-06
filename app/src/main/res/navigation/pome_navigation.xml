@@ -22,6 +22,9 @@
             app:popExitAnim="@anim/fade_out"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_splash_fragment_to_splashLoginFragment"
+            app:destination="@id/splashLoginFragment" />
     </fragment>
 
     <fragment
@@ -52,5 +55,13 @@
         android:id="@+id/mypage_fragment"
         android:name="com.teampome.pome.presentation.mypage.MyPageFragment"
         android:label="MyPageFragment" />
+    <fragment
+        android:id="@+id/splashLoginFragment"
+        android:name="com.teampome.pome.presentation.splash.SplashLoginFragment"
+        android:label="SplashLoginFragment" >
+        <action
+            android:id="@+id/action_splashLoginFragment_to_register_fragment"
+            app:destination="@id/register_fragment" />
+    </fragment>
 
 </navigation>
