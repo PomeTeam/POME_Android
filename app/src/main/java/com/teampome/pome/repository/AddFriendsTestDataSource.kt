@@ -12,6 +12,46 @@ class AddFriendsTestDataSource @Inject constructor(
             AddFriendsTestData(
                 "최한슬",
                 ""
+            ),
+            AddFriendsTestData(
+                "윤성식",
+                ""
+            ),
+            AddFriendsTestData(
+                "고민채",
+                ""
+            ),
+            AddFriendsTestData(
+                "박소윤",
+                ""
+            ),
+            AddFriendsTestData(
+                "강효진",
+                ""
+            ),
+            AddFriendsTestData(
+                "서연진",
+                ""
+            ),
+            AddFriendsTestData(
+                "선아",
+                ""
+            ),
+            AddFriendsTestData(
+                "양은진",
+                ""
+            ),
+            AddFriendsTestData(
+                "은조미",
+                ""
+            ),
+            AddFriendsTestData(
+                "이찬영",
+                ""
+            ),
+            AddFriendsTestData(
+                "한규범",
+                ""
             )
         )
     }
