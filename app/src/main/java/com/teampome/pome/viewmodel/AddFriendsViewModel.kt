@@ -24,7 +24,6 @@ class AddFriendsViewModel @Inject constructor(
 
     private fun getTestData() {
         viewModelScope.launch {
-            // 얘가 왜 null??
             _testFriendsList.value = repository.getFriendsTestData()
         }
     }

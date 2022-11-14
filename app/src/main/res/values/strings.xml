@@ -29,6 +29,7 @@
     <string name="add_friends_title_text">타이틀</string>
     <string name="add_friends_name_hint_text">친구의 닉네임을 검색해보세요</string>
     <string name="add_friends_check_btn_text">완료했어요</string>
+    <string name="add_friends_list_add_complete_text">추가완료</string>
 
 
 </resources>
