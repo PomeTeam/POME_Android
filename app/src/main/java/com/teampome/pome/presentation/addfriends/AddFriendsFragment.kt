@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
+import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.AddFriendsViewModel
@@ -30,13 +31,15 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.addFriendsListRv.adapter = AddFriendsListAdapter()
+
         CommonUtil.inputModePan(requireActivity())
     }
 
     override fun initListener() {
 
         viewModel.testFriendsList.observe(viewLifecycleOwner) {
-            Log.d("testData", "test data $it")
+            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it)
         }
 
         binding.addFriendsCl.setOnClickListener {
