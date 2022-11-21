@@ -30,5 +30,13 @@
     <string name="add_friends_name_hint_text">친구의 닉네임을 검색해보세요</string>
     <string name="add_friends_check_btn_text">완료했어요</string>
 
+    <!-- Pome Record  -->
+    <string name="record_main_text">목표를 세워 친구와 \n마시멜로를 모아보세요!</string>
+    <string name="record_main_text2">목표 만들기 </string>
+    <string name="record_week_text">일주일 씀씀이 </string>
+    <string name="record_week_text2">감정을 남겨주세요</string>
+    <string name="record_week_text3">다시 돌아볼 씀씀이가 0건 있어요.</string>
+    <string name="record_noting_text">기록한 씀씀이가 없어요.</string>
+
 
 </resources>
