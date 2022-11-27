@@ -112,7 +112,6 @@
             app:layout_constraintTop_toBottomOf="@id/remind_goal_card_cv"
             app:layout_constraintStart_toStartOf="@id/remind_goal_card_cv" />
 
-        <!-- Todo: Spinner item 연결하기 (Adapter) -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/remind_review_first_emotion_cl"
             android:layout_width="wrap_content"

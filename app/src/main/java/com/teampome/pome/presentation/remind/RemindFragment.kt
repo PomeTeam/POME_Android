@@ -90,6 +90,11 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
             pomeRemindBottomSheetDialog.dismiss()
         }
+
+        // bottomSheetDialog close
+        pomeRemindBottomSheetDialogBinding.remindDialogCloseAiv.setOnClickListener {
+            pomeRemindBottomSheetDialog.dismiss()
+        }
     }
 
     // 직관성을 높이기 위해 두 가지 메소드로 구현
