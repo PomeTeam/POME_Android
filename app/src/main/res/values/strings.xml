@@ -31,6 +31,10 @@
     <string name="add_friends_check_btn_text">완료했어요</string>
     <string name="add_friends_list_add_complete_text">추가완료</string>
     <string name="add_friends_no_search_desc_text">검색 결과가 없어요\n다른 닉네임으로 검색해볼까요?</string>
+    <string name="remind_goal_card_no_text">아직 추가한 목표가 없어요.</string>
+    <string name="remind_review_title_text">씀씀이 돌아보기</string>
+    <string name="remind_review_initial_text">초기화</string>
+    <string name="remind_no_review_text">아직 돌아본 씀씀이가 없어요</string>
 
 
 </resources>

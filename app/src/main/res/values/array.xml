@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="first_emotion">
+        <item>처음 감정</item>
+        <item>처음 감정2</item>
+        <item>처음 감정3</item>
+    </string-array>
+    <string-array name="last_emotion">
+        <item>돌아본 감정</item>
+        <item>돌아본 감정2</item>
+        <item>돌아본 감정3</item>
+    </string-array>
+</resources>
