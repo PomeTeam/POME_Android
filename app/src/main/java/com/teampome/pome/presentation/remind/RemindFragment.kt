@@ -1,9 +1,11 @@
 package com.teampome.pome.presentation.remind
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -11,11 +13,18 @@ import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
+import com.teampome.pome.viewmodel.RemindViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_remind) {
 
+    // bottomSheetDialog
     private lateinit var pomeRemindBottomSheetDialogBinding: PomeRemindBottomSheetDialogBinding
     private lateinit var pomeRemindBottomSheetDialog: BottomSheetDialog
+
+    // viewModel
+    private val viewModel: RemindViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pomeRemindBottomSheetDialog = BottomSheetDialog(requireContext())
@@ -27,6 +36,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     }
 
     override fun initListener() {
+
+        // test data livedata listener
+        viewModel.testRemindList.observe(viewLifecycleOwner) {
+            Log.d("remind", "remind data is $it")
+        }
+
         // 처음 감정 선택
         binding.remindReviewFirstEmotionCl.setOnClickListener {
             pomeRemindBottomSheetDialogBinding.apply {

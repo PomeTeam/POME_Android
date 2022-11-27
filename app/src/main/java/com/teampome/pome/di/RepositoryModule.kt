@@ -1,8 +1,11 @@
 package com.teampome.pome.di
 
-import com.teampome.pome.repository.AddFriendsDataSource
-import com.teampome.pome.repository.AddFriendsRepository
-import com.teampome.pome.repository.AddFriendsTestDataSource
+import com.teampome.pome.repository.friend.AddFriendsDataSource
+import com.teampome.pome.repository.friend.AddFriendsRepository
+import com.teampome.pome.repository.friend.AddFriendsTestDataSource
+import com.teampome.pome.repository.remind.RemindDataSource
+import com.teampome.pome.repository.remind.RemindRepository
+import com.teampome.pome.repository.remind.RemindTestDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +26,17 @@ object RepositoryModule {
     @Singleton
     fun provideAddFriendsRepository(dataSource: AddFriendsDataSource) : AddFriendsRepository {
         return AddFriendsRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestRemindDataSource() : RemindDataSource {
+        return RemindTestDataSource()
+    }
+
+    @Provides
+    @Singleton
+    fun provideTestRemindRepository(dataSource: RemindDataSource) : RemindRepository {
+        return RemindRepository(dataSource)
     }
 }
