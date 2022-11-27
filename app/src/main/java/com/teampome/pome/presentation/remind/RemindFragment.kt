@@ -3,6 +3,7 @@ package com.teampome.pome.presentation.remind
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -14,7 +15,7 @@ import com.teampome.pome.util.Constants.LAST_EMOTION
 class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_remind) {
 
     private lateinit var pomeRemindBottomSheetDialogBinding: PomeRemindBottomSheetDialogBinding
-    lateinit var pomeRemindBottomSheetDialog: BottomSheetDialog
+    private lateinit var pomeRemindBottomSheetDialog: BottomSheetDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         pomeRemindBottomSheetDialog = BottomSheetDialog(requireContext())
@@ -28,13 +29,25 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     override fun initListener() {
         // 처음 감정 선택
         binding.remindReviewFirstEmotionCl.setOnClickListener {
-            pomeRemindBottomSheetDialogBinding.remindDialogTitleTv.text = FIRST_EMOTION
+            pomeRemindBottomSheetDialogBinding.apply {
+                remindDialogTitleTv.text = FIRST_EMOTION
+                remindDialogHappyAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_mint_fiter_happy))
+                remindDialogWhatAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_mint_fiter_what))
+                remindDialogSadAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_mint_fiter_sad))
+            }
+
             pomeRemindBottomSheetDialog.show()
         }
 
         // 돌아본 감정 선택
         binding.remindReviewLastEmotionCl.setOnClickListener {
-            pomeRemindBottomSheetDialogBinding.remindDialogTitleTv.text = LAST_EMOTION
+            pomeRemindBottomSheetDialogBinding.apply {
+                remindDialogTitleTv.text = LAST_EMOTION
+                remindDialogHappyAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_pink_fiter_happy))
+                remindDialogWhatAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_pink_fiter_what))
+                remindDialogSadAiv.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.emoji_pink_fiter_sad))
+            }
+
             pomeRemindBottomSheetDialog.show()
         }
 
