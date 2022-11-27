@@ -113,27 +113,79 @@
             app:layout_constraintStart_toStartOf="@id/remind_goal_card_cv" />
 
         <!-- Todo: Spinner item 연결하기 (Adapter) -->
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/remind_review_first_emotion_acs"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/remind_review_first_emotion_cl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_marginStart="13dp"
-            tools:listitem="@layout/emotion_spinner_item"
-            android:background="@drawable/emotion_selector"
+            android:background="@drawable/emotion_spinner_background"
             app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" >
 
-        <androidx.appcompat.widget.AppCompatSpinner
-            android:id="@+id/remind_review_last_emotion_acs"
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Pome.SemiBold.14"
+                android:id="@+id/remind_review_first_emotion_atv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_review_first_emotion_text"
+                android:textColor="@color/grey_5"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:paddingVertical="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="11dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_atv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/remind_review_last_emotion_cl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="13dp"
             android:layout_marginStart="6dp"
-            tools:listitem="@layout/emotion_spinner_item"
-            android:background="@drawable/emotion_selector"
+            android:background="@drawable/emotion_spinner_background"
             app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv"
-            app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_acs" />
+            app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_cl" >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Pome.SemiBold.14"
+                android:id="@+id/remind_review_last_emotion_atv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_review_last_emotion_text"
+                android:textColor="@color/grey_5"
+                android:paddingStart="8dp"
+                android:paddingEnd="0dp"
+                android:paddingVertical="6dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="11dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/remind_review_last_emotion_atv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/remind_review_initial_tv"
@@ -143,8 +195,8 @@
             android:textColor="@color/grey_5"
             android:text="@string/remind_review_initial_text"
             android:layout_marginEnd="3dp"
-            app:layout_constraintTop_toTopOf="@id/remind_review_first_emotion_acs"
-            app:layout_constraintBottom_toBottomOf="@id/remind_review_first_emotion_acs"
+            app:layout_constraintTop_toTopOf="@id/remind_review_first_emotion_cl"
+            app:layout_constraintBottom_toBottomOf="@id/remind_review_first_emotion_cl"
             app:layout_constraintEnd_toStartOf="@id/remind_review_initial_aiv" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -153,8 +205,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_initial"
             android:layout_marginEnd="25dp"
-            app:layout_constraintTop_toTopOf="@id/remind_review_first_emotion_acs"
-            app:layout_constraintBottom_toBottomOf="@id/remind_review_first_emotion_acs"
+            app:layout_constraintTop_toTopOf="@id/remind_review_first_emotion_cl"
+            app:layout_constraintBottom_toBottomOf="@id/remind_review_first_emotion_cl"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -163,7 +215,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintTop_toBottomOf="@id/remind_review_first_emotion_acs"
+            app:layout_constraintTop_toBottomOf="@id/remind_review_first_emotion_cl"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
