@@ -19,8 +19,8 @@ import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.R
+import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.databinding.PomeBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
@@ -29,7 +29,7 @@ import kotlinx.coroutines.*
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
-    private lateinit var pomeBottomSheetDialogBinding: PomeBottomSheetDialogBinding
+    private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // initListener가 먼저 불려 super보다 먼저 호출
         // pomeBottomSheetDialog 뷰 인플레이션 과정
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
-        pomeBottomSheetDialogBinding = PomeBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
         pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
 
         super.onViewCreated(view, savedInstanceState)

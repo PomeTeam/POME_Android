@@ -37,6 +37,9 @@
     <string name="remind_no_review_text">아직 돌아본 씀씀이가 없어요</string>
     <string name="remind_review_first_emotion_text">처음 감정</string>
     <string name="remind_review_last_emotion_text">돌아본 감정</string>
+    <string name="remind_dialog_happy_text">행복해요</string>
+    <string name="remind_dialog_what_text">모르겠어요</string>
+    <string name="remind_dialog_sad_text">후회해요</string>
 
 
 </resources>
