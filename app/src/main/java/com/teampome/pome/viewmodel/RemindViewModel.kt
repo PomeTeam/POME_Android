@@ -15,12 +15,13 @@ class RemindViewModel @Inject constructor(
     private val repository: RemindRepository
 ) : ViewModel() {
 
-    private val _testRemindList = MutableLiveData<List<RemindTestData>?>()
-    val testRemindList: LiveData<List<RemindTestData>?> = _testRemindList
+    private val _testRemindList = MutableLiveData<RemindTestData?>()
+    val testRemindList: LiveData<RemindTestData?> = _testRemindList
 
     init {
         // test data 주입
         viewModelScope.launch {
+//            _testRemindList.value = null
             _testRemindList.value = repository.getTestRemindData()
         }
     }

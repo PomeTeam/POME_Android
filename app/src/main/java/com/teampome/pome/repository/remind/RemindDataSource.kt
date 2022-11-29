@@ -3,5 +3,5 @@ package com.teampome.pome.repository.remind
 import com.teampome.pome.model.RemindTestData
 
 interface RemindDataSource {
-    suspend fun getTestRemindData() : List<RemindTestData>?
+    suspend fun getTestRemindData() : RemindTestData?
 }

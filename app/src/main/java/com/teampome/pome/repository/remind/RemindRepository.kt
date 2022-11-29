@@ -6,7 +6,7 @@ import javax.inject.Inject
 class RemindRepository @Inject constructor(
     private val dataSource: RemindDataSource
 ) {
-    suspend fun getTestRemindData() : List<RemindTestData>? {
+    suspend fun getTestRemindData() : RemindTestData? {
         return dataSource.getTestRemindData()
     }
 }

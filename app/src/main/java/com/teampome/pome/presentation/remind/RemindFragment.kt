@@ -39,7 +39,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // test data livedata listener
         viewModel.testRemindList.observe(viewLifecycleOwner) {
-            Log.d("remind", "remind data is $it")
+            binding.remindTestData = it
         }
 
         // 처음 감정 선택
