@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/register_fragment"
-        android:name="com.teampome.pome.presentation.register.RegisterFragment"
+        android:name="com.teampome.pome.presentation.register.RegisterProfileFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register">
+        tools:layout="@layout/fragment_register_profile">
         <action
             android:id="@+id/action_register_fragment_to_record_fragment"
             app:destination="@id/record_fragment" />

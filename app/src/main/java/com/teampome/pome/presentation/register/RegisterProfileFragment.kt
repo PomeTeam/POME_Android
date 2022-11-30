@@ -17,8 +17,8 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.R
+import com.teampome.pome.databinding.FragmentRegisterProfileBinding
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.PomeBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
@@ -26,7 +26,7 @@ import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 
 // Todo : ViewModel data 구분 짓기
-class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
+class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeBottomSheetDialogBinding
@@ -47,7 +47,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun initListener() {
         // 키보드 자연스럽게 처리
-        binding.registerCl.setOnTouchListener { _, _ ->
+        binding.registerProfileCl.setOnTouchListener { _, _ ->
             CommonUtil.hideKeyboard(requireActivity())
             false
         }
@@ -182,7 +182,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     }
 
     private fun moveToAddFriends() {
-        val registerToAddFriendsAction = RegisterFragmentDirections.actionRegisterFragmentToAddFriendsNoticeFragment()
+        val registerToAddFriendsAction = RegisterProfileFragmentDirections.actionRegisterFragmentToAddFriendsNoticeFragment()
         findNavController().navigate(registerToAddFriendsAction)
     }
 }
