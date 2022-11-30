@@ -57,7 +57,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         }
 
         // 닉네임 변경 글자 감지
-        binding.registerProfileNameEt.addTextChangedListener(object: TextWatcher {
+        binding.registerNameAet.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 // 사용 x
             }
@@ -109,7 +109,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // close Button 처리
         binding.registerProfileNameDelAiv.setOnClickListener {
-            binding.registerProfileNameEt.setText("")
+            binding.registerNameAet.setText("")
         }
     }
 

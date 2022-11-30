@@ -31,6 +31,15 @@
     <string name="add_friends_check_btn_text">완료했어요</string>
     <string name="add_friends_list_add_complete_text">추가완료</string>
     <string name="add_friends_no_search_desc_text">검색 결과가 없어요\n다른 닉네임으로 검색해볼까요?</string>
+    <string name="register_name_text">이름</string>
+    <string name="register_name_hint_text">이름을 입력해주세요</string>
+    <string name="register_phone_title_text">휴대전화 번호</string>
+    <string name="register_phone_hint_text">- 없이 숫자만 입력해주세요</string>
+    <string name="register_cert_phone_btn_text">인증 요청</string>
+    <string name="register_cert_title_text">인증 번호</string>
+    <string name="register_cert_num_hint_text">인증번호를 입력해주세요</string>
+    <string name="register_agree_btn_text">동의하고 시작하기</string>
+    <string name="register_agree_desc_text">인증번호가 오지 않나요?</string>
 
 
 </resources>
