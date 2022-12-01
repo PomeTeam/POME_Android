@@ -42,9 +42,9 @@
     <string name="register_agree_desc_text">인증번호가 오지 않나요?</string>
     <string name="register_terms_title_text">포미를 이용하려면\n아래 약관에 동의해주세요</string>
     <string name="register_terms_all_agree_text">전체 동의</string>
-    <string name="register_agree_using_terms_text"><U>이용 약관 동의 (필수)</U></string>
-    <string name="register_agree_privacy_text"><U>개인정보 수집 및 이용 동의 (필수)</U></string>
-    <string name="register_agree_marketing_text"><U>마케팅 정보 수집 동의 (선택)</U></string>
+    <string name="register_agree_using_terms_text"><u>이용 약관 동의 (필수)</u></string>
+    <string name="register_agree_privacy_text"><u>개인정보 수집 및 이용 동의 (필수)</u></string>
+    <string name="register_agree_marketing_text"><u>마케팅 정보 수집 동의 (선택)</u></string>
     <string name="register_terms_agree_button_text">동의했어요</string>
 
 
