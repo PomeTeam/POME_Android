@@ -42,7 +42,7 @@
             android:layout_height="50dp"
             android:textColor="@color/black"
             android:background="@drawable/register_profile_name_background"
-            android:maxLength="10"
+            android:maxLength="15"
             android:maxLines="1"
             android:paddingVertical="12dp"
             android:paddingHorizontal="16dp"

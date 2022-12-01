@@ -8,13 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.viewmodel.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
+
+    private val viewModel: RegisterViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +54,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                // Todo : 임시 작업 삭제
+                p0?.let {
+                    viewModel._registerName.value = it.toString()
+                }
 
+                settingAgreeButton()
             }
         })
 
@@ -62,7 +74,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                // Todo : 임시 작업 삭제
+                p0?.let {
+                    viewModel._registerPhone.value = it.toString()
+                }
 
+                settingAgreeButton()
             }
         })
 
@@ -77,7 +94,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                // Todo : 임시 작업 삭제
+                p0?.let {
+                    viewModel._registerCertNum.value = it.toString()
+                }
 
+                settingAgreeButton()
             }
         })
 
@@ -96,5 +118,41 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         binding.registerBackAiv.setOnClickListener {
             findNavController().navigateUp()
         }
+    }
+
+    /**
+     *  Agree Btn 활성화 혹은 비활성화 작업
+     */
+    private fun settingAgreeButton() {
+        if(checkAgreeBtnEnable()) {
+            enableAgreeBtn()
+        } else {
+            disableAgreeBtn()
+        }
+    }
+
+    /**
+     *  button 활성화 여부 체크
+     */
+    private fun checkAgreeBtnEnable() : Boolean {
+        return (!viewModel.registerName.value.isNullOrEmpty()
+                && !viewModel.registerPhone.value.isNullOrEmpty()
+                && !viewModel.registerCertNum.value.isNullOrEmpty())
+    }
+
+    /**
+     *  button 활성화 작업
+     */
+    private fun enableAgreeBtn() {
+        binding.registerAgreeAcb.setBackgroundResource(R.drawable.register_profile_name_check_available_btn_background)
+        binding.registerAgreeAcb.isClickable = true
+    }
+
+    /**
+     *  button 비활성화 작업
+     */
+    private fun disableAgreeBtn() {
+        binding.registerAgreeAcb.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
+        binding.registerAgreeAcb.isClickable = false
     }
 }
