@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/Pome.Bold.22"
+            android:id="@+id/register_terms_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_terms_title_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="64dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Pome.Medium.16"
+            android:id="@+id/register_terms_all_agree_atv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/register_terms_all_agree_text"
+            android:textColor="@color/grey_8"
+            android:background="@drawable/grey2_border_r6_background"
+            android:layout_marginTop="90dp"
+            android:layout_marginHorizontal="16dp"
+            android:paddingVertical="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@id/register_terms_title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- button check시 tint를 바꿔서 처리, state는 ViewModel에서 관리 -->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_all_agree_check_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_24"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@id/register_terms_all_agree_atv"
+            app:layout_constraintBottom_toBottomOf="@id/register_terms_all_agree_atv"
+            app:layout_constraintEnd_toEndOf="@id/register_terms_all_agree_atv"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Pome.Medium.16"
+            android:id="@+id/register_agree_using_terms_atv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_agree_using_terms_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginTop="28dp"
+            android:layout_marginStart="21dp"
+            app:layout_constraintTop_toBottomOf="@id/register_terms_all_agree_atv"
+            app:layout_constraintStart_toStartOf="@id/register_terms_all_agree_atv"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_agree_using_terms_check_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_24"
+            android:layout_marginEnd="37dp"
+            app:layout_constraintTop_toTopOf="@id/register_agree_using_terms_atv"
+            app:layout_constraintBottom_toBottomOf="@id/register_agree_using_terms_atv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Pome.Medium.16"
+            android:id="@+id/register_agree_privacy_atv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_agree_privacy_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/register_agree_using_terms_atv"
+            app:layout_constraintStart_toStartOf="@id/register_agree_using_terms_atv"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_agree_privacy_check_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_24"
+            android:layout_marginEnd="37dp"
+            app:layout_constraintTop_toTopOf="@id/register_agree_privacy_atv"
+            app:layout_constraintBottom_toBottomOf="@id/register_agree_privacy_atv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/Pome.Medium.16"
+            android:id="@+id/register_agree_marketing_atv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_agree_marketing_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="21dp"
+            app:layout_constraintTop_toBottomOf="@id/register_agree_privacy_atv"
+            app:layout_constraintStart_toStartOf="@id/register_terms_all_agree_atv"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/register_agree_marketing_check_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_check_24"
+            android:layout_marginEnd="37dp"
+            app:layout_constraintTop_toTopOf="@id/register_agree_marketing_atv"
+            app:layout_constraintBottom_toBottomOf="@id/register_agree_marketing_atv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Pome.SemiBold.16"
+            android:id="@+id/register_agree_acb"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:clickable="false"
+            android:text="@string/register_terms_agree_button_text"
+            android:background="@drawable/register_profile_name_check_disable_btn_background"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="14dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
