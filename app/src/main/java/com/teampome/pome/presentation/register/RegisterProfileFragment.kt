@@ -182,7 +182,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     }
 
     private fun moveToAddFriends() {
-        val registerToAddFriendsAction = RegisterProfileFragmentDirections.actionRegisterFragmentToAddFriendsNoticeFragment()
-        findNavController().navigate(registerToAddFriendsAction)
+        val registerProfileToAddFriendsAction = RegisterProfileFragmentDirections.actionRegisterProfileFragmentToAddFriendsNoticeFragment()
+        findNavController().navigate(registerProfileToAddFriendsAction)
     }
 }

@@ -41,6 +41,11 @@ class SplashLoginFragment : BaseFragment<FragmentLoginSplashBinding>(R.layout.fr
         }
     }
 
+    private fun moveToRegisterProfile() {
+        val loginToRegisterProfileAction = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterProfileFragment()
+        findNavController().navigate(loginToRegisterProfileAction)
+    }
+
     private fun moveToRegister() {
         val loginToRegisterAction = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterFragment()
         findNavController().navigate(loginToRegisterAction)

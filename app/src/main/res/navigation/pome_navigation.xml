@@ -11,8 +11,8 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splash_fragment_to_register_fragment"
-            app:destination="@id/register_fragment"
+            android:id="@+id/action_splash_fragment_to_register_profile_fragment"
+            app:destination="@id/register_profile_fragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"
             app:popEnterAnim="@anim/fade_in"
@@ -30,15 +30,15 @@
     </fragment>
 
     <fragment
-        android:id="@+id/register_fragment"
+        android:id="@+id/register_profile_fragment"
         android:name="com.teampome.pome.presentation.register.RegisterProfileFragment"
-        android:label="RegisterFragment"
+        android:label="RegisterProfileFragment"
         tools:layout="@layout/fragment_register_profile">
         <action
-            android:id="@+id/action_register_fragment_to_record_fragment"
+            android:id="@+id/action_register_profile_fragment_to_record_fragment"
             app:destination="@id/record_fragment" />
         <action
-            android:id="@+id/action_register_fragment_to_addFriendsNoticeFragment"
+            android:id="@+id/action_register_profile_fragment_to_addFriendsNoticeFragment"
             app:destination="@id/addFriendsNoticeFragment" />
     </fragment>
 
@@ -71,8 +71,11 @@
         android:label="SplashLoginFragment"
         tools:layout="@layout/fragment_login_splash">
         <action
-            android:id="@+id/action_splashLoginFragment_to_register_fragment"
-            app:destination="@id/register_fragment" />
+            android:id="@+id/action_splashLoginFragment_to_register_profile_fragment"
+            app:destination="@id/register_profile_fragment" />
+        <action
+            android:id="@+id/action_splashLoginFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsNoticeFragment"
@@ -91,5 +94,9 @@
         android:name="com.teampome.pome.presentation.addfriends.AddFriendsFragment"
         android:label="AddFriendsFragment"
         tools:layout="@layout/fragment_add_friends"/>
-
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.teampome.pome.presentation.register.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register"/>
 </navigation>

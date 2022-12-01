@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                     binding.activityMainBnv.visibility = View.GONE
                     changeStatusBarColor(R.color.main)
                 }
-                R.id.register_fragment -> {
+                R.id.register_profile_fragment -> {
                     binding.activityMainBnv.visibility = View.GONE
                     changeStatusBarColor(R.color.background)
                 }
