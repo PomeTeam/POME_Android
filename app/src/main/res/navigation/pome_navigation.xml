@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_splashLoginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_splashLoginFragment_to_registerTermsFragment"
+            app:destination="@id/registerTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsNoticeFragment"
@@ -98,5 +101,18 @@
         android:id="@+id/registerFragment"
         android:name="com.teampome.pome.presentation.register.RegisterFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register"/>
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_registerTermsFragment"
+            app:destination="@id/registerTermsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registerTermsFragment"
+        android:name="com.teampome.pome.presentation.register.RegisterTermsFragment"
+        android:label="RegisterTermsFragment"
+        tools:layout="@layout/fragment_register_terms">
+        <action
+            android:id="@+id/action_registerTermsFragment_to_register_profile_fragment"
+            app:destination="@id/register_profile_fragment" />
+    </fragment>
 </navigation>

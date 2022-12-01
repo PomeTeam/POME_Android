@@ -112,6 +112,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 동의하고 시작하기 버튼
         binding.registerAgreeAcb.setOnClickListener {
             Toast.makeText(requireContext(), "동의하고 시작하기", Toast.LENGTH_SHORT).show()
+            moveToRegisterTerms()
         }
 
         // 뒤로가기 버튼
@@ -154,5 +155,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     private fun disableAgreeBtn() {
         binding.registerAgreeAcb.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
         binding.registerAgreeAcb.isClickable = false
+    }
+
+    /**
+     *  register Terms로 이동
+     */
+    private fun moveToRegisterTerms() {
+        val registerToRegisterTermsAction = RegisterFragmentDirections.actionRegisterFragmentToRegisterTermsFragment()
+        findNavController().navigate(registerToRegisterTermsAction)
     }
 }

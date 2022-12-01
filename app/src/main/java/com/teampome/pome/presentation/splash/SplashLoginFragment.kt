@@ -33,11 +33,13 @@ class SplashLoginFragment : BaseFragment<FragmentLoginSplashBinding>(R.layout.fr
         // kakao login btn click
         binding.loginKakaoBtnAiv.setOnClickListener {
             Toast.makeText(requireContext(), "kakao login", Toast.LENGTH_SHORT).show()
+            moveToRegisterTerms()
         }
         
         // google login btn click
         binding.loginGoogleBtnAiv.setOnClickListener {
             Toast.makeText(requireContext(), "google login", Toast.LENGTH_SHORT).show()
+            moveToRegisterTerms()
         }
     }
 
@@ -49,5 +51,10 @@ class SplashLoginFragment : BaseFragment<FragmentLoginSplashBinding>(R.layout.fr
     private fun moveToRegister() {
         val loginToRegisterAction = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterFragment()
         findNavController().navigate(loginToRegisterAction)
+    }
+
+    private fun moveToRegisterTerms() {
+        val loginToRegisterTerms = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterTermsFragment()
+        findNavController().navigate(loginToRegisterTerms)
     }
 }
