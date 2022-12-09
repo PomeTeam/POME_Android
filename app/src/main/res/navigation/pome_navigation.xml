@@ -114,5 +114,20 @@
         <action
             android:id="@+id/action_registerTermsFragment_to_register_profile_fragment"
             app:destination="@id/register_profile_fragment" />
+        <action
+            android:id="@+id/action_registerTermsFragment_to_termsDetailFragment"
+            app:destination="@id/termsDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/termsDetailFragment"
+        android:name="com.teampome.pome.presentation.register.TermsDetailFragment"
+        android:label="TermsDetailFragment"
+        tools:layout="@layout/fragment_terms_detail">
+        <argument
+            android:name="terms_detail_title"
+            app:argType="string" />
+        <argument
+            android:name="terms_detail_content"
+            app:argType="string" />
     </fragment>
 </navigation>

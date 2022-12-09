@@ -26,7 +26,6 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
     override fun initListener() {
         // 전체 동의 클릭
         binding.registerAllAgreeCheckAiv.setOnClickListener {
-
             if(viewModel.agreeAllCheck.value == true) {
                 viewModel._agreeAllCheck.value = false
                 viewModel._agreeUsingTermsCheck.value = false
@@ -40,19 +39,34 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
             }
         }
 
-        // 이용약관 동의 클릭
+        // 이용약관 동의 체크 클릭
         binding.registerAgreeUsingTermsCheckAiv.setOnClickListener {
             viewModel._agreeUsingTermsCheck.value = viewModel.agreeUsingTermsCheck.value != true
         }
 
-        // 개인정보 수집 동의 클릭
+        // 이용약관 동의 텍스트 클릭
+        binding.registerAgreeUsingTermsAtv.setOnClickListener {
+            moveToTermsDetail()
+        }
+
+        // 개인정보 수집 동의 체크 클릭
         binding.registerAgreePrivacyCheckAiv.setOnClickListener {
             viewModel._agreePrivacyCheck.value = viewModel.agreePrivacyCheck.value != true
         }
 
-        // 마케팅 정보 수집 동의 클릭
+        // 개인정보 수집 동의 텍스트 클릭
+        binding.registerAgreePrivacyAtv.setOnClickListener {
+            moveToTermsDetail()
+        }
+
+        // 마케팅 정보 수집 동의 체크 클릭
         binding.registerAgreeMarketingCheckAiv.setOnClickListener {
             viewModel._agreeMarketingCheck.value = viewModel.agreeMarketingCheck.value != true
+        }
+
+        // 마케팅 정보 수집 동의 텍스트 클릭
+        binding.registerAgreeMarketingAtv.setOnClickListener {
+            moveToTermsDetail()
         }
 
         // 전체동의 체크시 뷰
@@ -170,5 +184,21 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
     private fun moveToRegisterProfile() {
         val registerTermsToRegisterProfileAction = RegisterTermsFragmentDirections.actionRegisterTermsFragmentToRegisterProfileFragment()
         findNavController().navigate(registerTermsToRegisterProfileAction)
+    }
+
+    /**
+     *  이용약관 디테일 뷰로 이동
+     */
+    private fun moveToTermsDetail() {
+        val registerTermsToTermsDetailAction = RegisterTermsFragmentDirections.actionRegisterTermsFragmentToTermsDetailFragment(
+            termsDetailTitle = "개인 정보보호 동의",
+            termsDetailContent = "포미은 ~수집을 위해 아래와 같이 개인정보를 수집, 이용하고자 합니다. 내용을 읽으신 후 동의 여부를 결정하여 주십시오.\n\n" +
+                    "개인정보 수집 이용 내역\n" +
+                    "수집, 이용 항목 : 이름, 휴대전화 번호\n" +
+                    "수집, 이용 목적 : ~ 수집\n" +
+                    "개인정보 보관기간 : 수집일로부터 1년\n\n" +
+                    "수집된 개인정보는 ~에 한해 이용되며, 목적 달성 후 안전하게 파기 됩니다. 개인 정보 수집 및 이용에 대해 거부하실 수 있으며, 동의를 거부하실 경우 ~ 불가합니다."
+        )
+        findNavController().navigate(registerTermsToTermsDetailAction)
     }
 }
