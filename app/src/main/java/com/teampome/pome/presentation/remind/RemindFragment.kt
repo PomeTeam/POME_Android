@@ -51,7 +51,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
                 remindTestData.contentItems.map { remindTestItem ->
                     remindTestItem.mainCategory
                 }
-            }
+            } ?: listOf("···") // null이면 ··· 으로 => category가 없는 경우
 
             Log.d("test", "filter test data is $testCategoryList")
 
