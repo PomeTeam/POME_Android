@@ -32,6 +32,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
 
+        // RecyclerView adapter 설정
+        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter()
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -40,6 +43,21 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // test data livedata listener
         viewModel.testRemindList.observe(viewLifecycleOwner) {
             binding.remindTestData = it
+
+            Log.d("test", "test data is $it")
+
+            // 자체로 필터링해서 데이터를 집어넣자
+            val testCategoryList = it?.let { remindTestData ->
+                remindTestData.contentItems.map { remindTestItem ->
+                    remindTestItem.mainCategory
+                }
+            }
+
+            Log.d("test", "filter test data is $testCategoryList")
+
+            (binding.remindCategoryChipRv.adapter as RemindCategoryChipAdapter).submitList(
+                testCategoryList
+            )
         }
 
         // 처음 감정 선택
