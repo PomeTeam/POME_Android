@@ -33,7 +33,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
 
         // RecyclerView adapter 설정
-        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter()
+        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter(resources)
 
         super.onViewCreated(view, savedInstanceState)
     }
