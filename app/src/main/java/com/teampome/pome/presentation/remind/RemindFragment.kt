@@ -20,6 +20,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_remind) {
 
+    /*
+         데이터는 항상 일관성 있게! => View의 data는 항상 ViewModel의 data를 바라보게 (dummy data x, 일관성 하락)
+     */
+
     // bottomSheetDialog
     private lateinit var pomeRemindBottomSheetDialogBinding: PomeRemindBottomSheetDialogBinding
     private lateinit var pomeRemindBottomSheetDialog: BottomSheetDialog
@@ -37,6 +41,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
             setOnItemClickListener(object : OnCategoryItemClickListener {
                 override fun onCategoryItemClick(item: RemindCategoryData, position: Int) { // 선택된 카테고리 내용 확인
+                    viewModel.settingRemindPosition(position)
                     Toast.makeText(requireContext(), "item : $item, position : $position", Toast.LENGTH_SHORT).show()
                 }
             })
@@ -49,11 +54,10 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // test data livedata listener
         viewModel.testRemindList.observe(viewLifecycleOwner) {
-            if (it != null) {
-                binding.remindTestItem = it.contentItems[0] // 일단 0번 데이터를 넣기
-            }
-
             Log.d("test", "test data is $it")
+
+            // 초기 category 위치 0으로 설정
+            viewModel.settingRemindPosition(0)
 
             // 자체로 필터링해서 데이터를 집어넣자
             val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
@@ -69,6 +73,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             (binding.remindCategoryChipRv.adapter as RemindCategoryChipAdapter).submitList(
                 testCategoryList
             )
+        }
+
+        // viewModel position 관찰
+        viewModel.remindPosition.observe(viewLifecycleOwner) {
+            binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
+            binding.executePendingBindings()
         }
 
         // 처음 감정 선택

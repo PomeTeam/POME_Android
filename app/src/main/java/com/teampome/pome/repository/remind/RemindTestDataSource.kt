@@ -77,7 +77,7 @@ class RemindTestDataSource @Inject constructor(
                             "공개",
                             "D-12"
                         ),
-                        goal = "커피 대신 물을 마시자"
+                        goal = "아이스크림 대신 물을 마시자"
                     ),
                     contentCardItem = listOf(
                         ContentCardItem(
@@ -129,7 +129,7 @@ class RemindTestDataSource @Inject constructor(
                             "공개",
                             "D-12"
                         ),
-                        goal = "커피 대신 물을 마시자"
+                        goal = "택시 대신 물을 마시자"
                     ),
                     contentCardItem = listOf(
                         ContentCardItem(

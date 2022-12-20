@@ -18,11 +18,18 @@ class RemindViewModel @Inject constructor(
     private val _testRemindList = MutableLiveData<RemindTestData?>()
     val testRemindList: LiveData<RemindTestData?> = _testRemindList
 
+    private val _remindPosition = MutableLiveData<Int>()
+    val remindPosition: LiveData<Int> = _remindPosition
+
     init {
         // test data 주입
         viewModelScope.launch {
 //            _testRemindList.value = null
             _testRemindList.value = repository.getTestRemindData()
         }
+    }
+
+    fun settingRemindPosition(pos: Int) {
+        _remindPosition.value = pos
     }
 }
