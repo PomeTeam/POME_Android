@@ -16,7 +16,6 @@
     <color name="bright_mint">#F2FFF5</color>
     <color name="sub">#FF908A</color>
     <color name="middle_pink">#FFDDDA</color>
-    <color name="light_pink">#FFF4F3</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_0">#F8FAFB</color>
     <color name="grey_1">#F2F5F5</color>
@@ -33,4 +32,6 @@
     <color name="red">#FB5E5E</color>
     <color name="shadow">#6D8DAD</color>
     <color name="blue_action_sheet">#1082FF</color>
+    <color name="pink_100">#FF908A</color>
+    <color name="pink_10">#FFF4F3</color>
 </resources>
