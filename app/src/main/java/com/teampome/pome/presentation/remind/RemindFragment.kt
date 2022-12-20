@@ -14,6 +14,7 @@ import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
+import com.teampome.pome.viewmodel.Emotion
 import com.teampome.pome.viewmodel.RemindViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,9 +57,6 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         viewModel.testRemindList.observe(viewLifecycleOwner) {
             Log.d("test", "test data is $it")
 
-            // 초기 category 위치 0으로 설정
-            viewModel.settingRemindPosition(0)
-
             // 자체로 필터링해서 데이터를 집어넣자
             val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
                 remindTestData.contentItems.map { remindTestItem ->
@@ -78,6 +76,18 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // viewModel position 관찰
         viewModel.remindPosition.observe(viewLifecycleOwner) {
             binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
+            binding.executePendingBindings()
+        }
+
+        // viewModel 처음 감정 관찰
+        viewModel.firstEmotion.observe(viewLifecycleOwner) {
+            binding.firstEmotion = it
+            binding.executePendingBindings()
+        }
+
+        // viewModel 후 감정 관찰
+        viewModel.lastEmotion.observe(viewLifecycleOwner) {
+            binding.lastEmotion = it
             binding.executePendingBindings()
         }
 
@@ -109,9 +119,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Happy
         pomeRemindBottomSheetDialogBinding.remindDialogHappyContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                Toast.makeText(requireContext(), "$FIRST_EMOTION : happy", Toast.LENGTH_SHORT).show()
+                viewModel.settingFirstEmotion(Emotion.HAPPY_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                Toast.makeText(requireContext(), "$LAST_EMOTION : happy", Toast.LENGTH_SHORT).show()
+                viewModel.settingLastEmotion(Emotion.HAPPY_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -122,9 +132,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // What
         pomeRemindBottomSheetDialogBinding.remindDialogWhatContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                Toast.makeText(requireContext(), "$FIRST_EMOTION : what", Toast.LENGTH_SHORT).show()
+                viewModel.settingFirstEmotion(Emotion.WHAT_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                Toast.makeText(requireContext(), "$LAST_EMOTION : what", Toast.LENGTH_SHORT).show()
+                viewModel.settingLastEmotion(Emotion.WHAT_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -135,9 +145,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Sad
         pomeRemindBottomSheetDialogBinding.remindDialogSadContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                Toast.makeText(requireContext(), "$FIRST_EMOTION : sad", Toast.LENGTH_SHORT).show()
+                viewModel.settingFirstEmotion(Emotion.SAD_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                Toast.makeText(requireContext(), "$LAST_EMOTION : sad", Toast.LENGTH_SHORT).show()
+                viewModel.settingLastEmotion(Emotion.SAD_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -148,6 +158,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // bottomSheetDialog close
         pomeRemindBottomSheetDialogBinding.remindDialogCloseAiv.setOnClickListener {
             pomeRemindBottomSheetDialog.dismiss()
+        }
+
+        // 초기화 버튼 클릭시
+        binding.remindReviewResetContainterCl.setOnClickListener {
+            viewModel.settingFirstEmotion(Emotion.FIRST_EMOTION)
+            viewModel.settingLastEmotion(Emotion.LAST_EMOTION)
         }
     }
 
