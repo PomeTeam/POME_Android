@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="testCategory"
-            type="String" />
+            name="remindCategoryData"
+            type="com.teampome.pome.model.RemindCategoryData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,14 +20,17 @@
 
             비활성화시 :
             android:textColor="@color/grey_5"
+
+            dataBinding 3항 연산자에 default도 가능
         -->
         <TextView
             android:id="@+id/remind_category_chip_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{testCategory}"
+            android:text="@{remindCategoryData.category}"
             tools:text="···"
-            android:textColor="@color/grey_5"
+            android:background="@{remindCategoryData.isSelected() ? @drawable/remind_chip_background : null}"
+            android:textColor="@{remindCategoryData.isSelected() ? @color/white : @color/grey_5, default=@color/grey_5}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="5dp"
             android:layout_marginEnd="8dp"

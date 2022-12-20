@@ -11,6 +11,7 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
+import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
 import com.teampome.pome.viewmodel.RemindViewModel
@@ -33,7 +34,13 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
 
         // RecyclerView adapter 설정
-        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter(resources)
+        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
+            setOnItemClickListener(object : OnCategoryItemClickListener {
+                override fun onCategoryItemClick(item: RemindCategoryData, position: Int) { // 선택된 카테고리 내용 확인
+                    Toast.makeText(requireContext(), "item : $item, position : $position", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -47,11 +54,13 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             Log.d("test", "test data is $it")
 
             // 자체로 필터링해서 데이터를 집어넣자
-            val testCategoryList = it?.let { remindTestData ->
+            val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
                 remindTestData.contentItems.map { remindTestItem ->
-                    remindTestItem.mainCategory
+                    RemindCategoryData(
+                        remindTestItem.mainCategory
+                    )
                 }
-            } ?: listOf("···") // null이면 ··· 으로 => category가 없는 경우
+            } ?: listOf(RemindCategoryData("···"))) // null이면 ··· 으로 => category가 없는 경우
 
             Log.d("test", "filter test data is $testCategoryList")
 
