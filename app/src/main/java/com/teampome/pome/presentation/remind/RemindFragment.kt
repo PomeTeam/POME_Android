@@ -49,7 +49,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // test data livedata listener
         viewModel.testRemindList.observe(viewLifecycleOwner) {
-            binding.remindTestData = it
+            if (it != null) {
+                binding.remindTestItem = it.contentItems[0] // 일단 0번 데이터를 넣기
+            }
 
             Log.d("test", "test data is $it")
 

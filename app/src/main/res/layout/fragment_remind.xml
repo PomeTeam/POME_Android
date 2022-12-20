@@ -5,8 +5,10 @@
 
     <data>
         <variable
-            name="remindTestData"
-            type="com.teampome.pome.model.RemindTestData" />
+            name="remindTestItem"
+            type="com.teampome.pome.model.RemindTestItem" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,8 +85,8 @@
             app:cardPreventCornerOverlap="true"
             app:cardElevation="3dp"
             app:contentPaddingLeft="16dp"
-            app:contentPaddingTop="15dp"
-            app:contentPaddingBottom="15dp"
+            app:contentPaddingTop="14dp"
+            app:contentPaddingBottom="14dp"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="30dp"
             app:layout_constraintTop_toBottomOf="@id/remind_category_chip_rv"
@@ -94,30 +96,50 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/remind_goal_content_ll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="UseCompoundDrawables">
+                android:layout_height="wrap_content">
 
                 <!-- Todo : databinding 이용해서 동적으로 데이터 변경 처리 -->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/remind_goal_card_chips_rv"
-                    android:layout_width="0dp"
+                <TextView
+                    style="@style/Pome.SemiBold.10"
+                    android:id="@+id/remind_goal_card_public_chip_tv"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginEnd="12dp"
-                    android:visibility="invisible"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:textColor="@color/grey_5"
+                    tools:text="공개"
+                    android:text="@{remindTestItem.goalCardItem.categories[0]}"
+                    android:paddingVertical="4dp"
+                    android:paddingHorizontal="6dp"
+                    android:background="@drawable/item_grey1_r4_background"
+                    android:visibility="@{remindTestItem.goalCardItem.goal == null ? View.GONE : View.VISIBLE}"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    style="@style/Pome.SemiBold.10"
+                    android:id="@+id/remind_goal_card_day_chip_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/pink_100"
+                    tools:text="D-12"
+                    android:text="@{remindTestItem.goalCardItem.categories[1]}"
+                    android:layout_marginStart="4dp"
+                    android:paddingVertical="4dp"
+                    android:paddingHorizontal="6dp"
+                    android:visibility="@{remindTestItem.goalCardItem.goal == null ? View.GONE : View.VISIBLE}"
+                    android:background="@drawable/item_pink10_r4_background"
+                    app:layout_constraintTop_toTopOf="@id/remind_goal_card_public_chip_tv"
+                    app:layout_constraintStart_toEndOf="@id/remind_goal_card_public_chip_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/remind_goal_card_public_chip_tv"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/remind_goal_card_empty_aiv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="@{remindTestItem.goalCardItem.goal == null ? View.VISIBLE : View.GONE}"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/remind_goal_card_chips_rv"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/remind_goal_card_tv"
+                    app:layout_constraintBottom_toBottomOf="@id/remind_goal_card_tv"
                     android:src="@drawable/ic_empty_goal"/>
 
                 <TextView
@@ -125,12 +147,13 @@
                     android:id="@+id/remind_goal_card_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey_5"
-                    android:text="@string/remind_goal_card_no_text"
+                    android:textColor="@{remindTestItem.goalCardItem.goal == null ? @color/grey_5 : @color/grey_8}"
+                    android:text="@{remindTestItem.goalCardItem.goal ?? @string/remind_goal_card_no_text}"
+                    tools:text="@string/remind_goal_card_no_text"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@id/remind_goal_card_empty_aiv"
-                    app:layout_constraintTop_toTopOf="@id/remind_goal_card_empty_aiv"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toBottomOf="@id/remind_goal_card_public_chip_tv" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
