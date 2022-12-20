@@ -320,6 +320,8 @@
             android:id="@+id/remind_review_rv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="14dp"
+            android:paddingHorizontal="16dp"
             android:visibility="@{remindTestItem.contentCardItem == null ? View.GONE : View.VISIBLE}"
             tools:listitem="@layout/item_remind_contents_card"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
