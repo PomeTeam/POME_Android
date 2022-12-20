@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="contentCardItem"
+            type="com.teampome.pome.model.ContentCardItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/remind_contents_card_first_emotion_container_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/item_grey1_r4_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/remind_contents_card_first_emotion_aiv"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/emoji_mint_fiter_sad"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/Pome.Medium.12"
+                android:id="@+id/remind_contents_card_first_emotion_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/grey_7"
+                android:text="후회해요"
+                android:layout_marginStart="4dp"
+                app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_emotion_aiv"
+                app:layout_constraintTop_toTopOf="@id/remind_contents_card_first_emotion_aiv"
+                app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_first_emotion_aiv"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

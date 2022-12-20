@@ -11,7 +11,9 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
+import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.model.RemindCategoryData
+import com.teampome.pome.model.RemindTestItem
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
 import com.teampome.pome.viewmodel.Emotion
@@ -48,6 +50,8 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             })
         }
 
+        binding.remindReviewRv.adapter = RemindContentsCardAdapter()
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -76,6 +80,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // viewModel position 관찰
         viewModel.remindPosition.observe(viewLifecycleOwner) {
             binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
+
+            // position에 따라 Card Item 삽입
+            (binding.remindReviewRv.adapter as RemindContentsCardAdapter).submitList(
+                viewModel.testRemindList.value?.contentItems?.get(it)?.contentCardItem
+            )
+
             binding.executePendingBindings()
         }
 
