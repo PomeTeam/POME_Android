@@ -100,7 +100,11 @@
         android:id="@+id/addFriendsFragment"
         android:name="com.teampome.pome.presentation.addfriends.AddFriendsFragment"
         android:label="AddFriendsFragment"
-        tools:layout="@layout/fragment_add_friends"/>
+        tools:layout="@layout/fragment_add_friends">
+        <action
+            android:id="@+id/action_addFriendsFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.teampome.pome.presentation.register.RegisterFragment"

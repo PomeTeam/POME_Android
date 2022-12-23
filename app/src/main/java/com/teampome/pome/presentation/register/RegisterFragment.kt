@@ -1,28 +1,23 @@
 package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.util.CommonUtil
-import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import com.teampome.pome.util.CommonUtil
-import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 
 @AndroidEntryPoint

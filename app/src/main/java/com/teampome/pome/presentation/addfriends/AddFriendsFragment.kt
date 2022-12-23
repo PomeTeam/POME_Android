@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
 import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
@@ -57,5 +58,14 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
             }
         })
+
+        binding.addFriendsCheckBtn.setOnClickListener {
+            moveToRecordView()
+        }
+    }
+
+    private fun moveToRecordView() {
+        val action = AddFriendsFragmentDirections.actionAddFriendsFragmentToRecordFragment()
+        findNavController().navigate(action)
     }
 }
