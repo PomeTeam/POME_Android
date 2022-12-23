@@ -1,4 +1,4 @@
-package com.teampome.pome.repository
+package com.teampome.pome.repository.friend
 
 import com.teampome.pome.model.AddFriendsTestData
 import javax.inject.Inject

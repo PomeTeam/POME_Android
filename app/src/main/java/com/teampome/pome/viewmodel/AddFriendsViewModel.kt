@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.AddFriendsTestData
-import com.teampome.pome.repository.AddFriendsRepository
+import com.teampome.pome.repository.friend.AddFriendsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
+import com.teampome.pome.viewmodel.Emotion
 
 object CommonUtil {
 
@@ -35,5 +36,25 @@ object CommonUtil {
      */
     fun inputModeNothing(activity: Activity) {
         activity.window.setSoftInputMode(LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+    }
+
+    /**
+     *  emotion 정보를 가져오기
+     */
+    fun getEmotionData(emotionStr: String) : Emotion? {
+        return when(emotionStr) {
+            Constants.HAPPY_EMOTION -> {
+                Emotion.HAPPY_EMOTION
+            }
+            Constants.WHAT_EMOTION -> {
+                Emotion.WHAT_EMOTION
+            }
+            Constants.SAD_EMOTION -> {
+                Emotion.SAD_EMOTION
+            }
+            else -> {
+                null
+            }
+        }
     }
 }

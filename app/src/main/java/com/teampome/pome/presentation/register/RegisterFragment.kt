@@ -1,10 +1,13 @@
 package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -13,14 +16,21 @@ import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.R
+import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import com.teampome.pome.util.CommonUtil
+import jp.wasabeef.glide.transformations.MaskTransformation
+import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
 
     private val viewModel: RegisterViewModel by viewModels()
+    private lateinit var pomeBottomSheetDialog: BottomSheetDialog
+    private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,6 +41,13 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        // initListener가 먼저 불려 super보다 먼저 호출
+        // pomeBottomSheetDialog 뷰 인플레이션 과정
+        pomeBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -122,7 +139,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     }
 
     /**
-     *  Agree Btn 활성화 혹은 비활성화 작업
+     *  galleryLauncher를 이용하여 사용자 이미지를 가져오는 작업
      */
     private fun settingAgreeButton() {
         if(checkAgreeBtnEnable()) {
