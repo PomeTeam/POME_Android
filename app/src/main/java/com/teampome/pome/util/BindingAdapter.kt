@@ -1,6 +1,7 @@
 package com.teampome.pome.util
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -32,7 +33,7 @@ fun bindingPomeImage44(imageView: ImageView, src: String?){
 }
 
 @BindingAdapter("bind:remindEmotionText")
-fun bindingRemindEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
+fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
     emotion?.let {
         when(emotion) {
             Emotion.FIRST_EMOTION -> {
@@ -49,6 +50,58 @@ fun bindingRemindEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
             }
             Emotion.SAD_EMOTION -> {
                 textView.text = Constants.SAD_EMOTION
+            }
+        }
+    }
+}
+
+@BindingAdapter("bind:remindFirstEmotionDrawable")
+fun bindingRemindFirstEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
+    emotion?.let{
+        when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mint_fiter_happy)
+                    .into(imageView)
+            }
+            Emotion.WHAT_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mint_fiter_what)
+                    .into(imageView)
+            }
+            Emotion.SAD_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mint_fiter_sad)
+                    .into(imageView)
+            }
+            else -> {
+
+            }
+        }
+    }
+}
+
+@BindingAdapter("bind:remindLastEmotionDrawable")
+fun bindingRemindLastEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
+    emotion?.let{
+        when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_pink_fiter_happy)
+                    .into(imageView)
+            }
+            Emotion.WHAT_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_pink_fiter_what)
+                    .into(imageView)
+            }
+            Emotion.SAD_EMOTION -> {
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_pink_fiter_sad)
+                    .into(imageView)
+            }
+            else -> {
+
             }
         }
     }

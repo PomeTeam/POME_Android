@@ -14,6 +14,7 @@ data class GoalCardItem(
     val categories: List<String>,
     val goal: String
 )
+
 data class ContentCardItem(
     val firstThink: String,
     val lastThink: String,
