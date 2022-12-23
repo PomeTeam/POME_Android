@@ -50,7 +50,13 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             })
         }
 
-        binding.remindReviewRv.adapter = RemindContentsCardAdapter()
+        binding.remindReviewRv.adapter = RemindContentsCardAdapter(
+            object : RemindItemClickListener {
+                override fun remindItemClick(item: ContentCardItem) {
+                    Toast.makeText(requireContext(), "item is $item", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
 
         super.onViewCreated(view, savedInstanceState)
     }

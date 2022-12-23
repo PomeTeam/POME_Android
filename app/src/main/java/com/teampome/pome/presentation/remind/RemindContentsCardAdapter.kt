@@ -10,7 +10,9 @@ import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.util.Constants
 import com.teampome.pome.viewmodel.Emotion
 
-class RemindContentsCardAdapter : ListAdapter<ContentCardItem, RemindContentsCardAdapter.RemindContentsCardViewHolder>(
+class RemindContentsCardAdapter(
+    private val remindItemClickListener: RemindItemClickListener
+) : ListAdapter<ContentCardItem, RemindContentsCardAdapter.RemindContentsCardViewHolder>(
     RemindContentsCardDiffCallback()
 ) {
 
@@ -36,6 +38,7 @@ class RemindContentsCardAdapter : ListAdapter<ContentCardItem, RemindContentsCar
             binding.contentCardItem = item
             binding.firstEmotion = getEmotionData(item.firstThink)
             binding.lastEmotion = getEmotionData(item.lastThink)
+            binding.clickListener = remindItemClickListener
             binding.executePendingBindings()
         }
     }

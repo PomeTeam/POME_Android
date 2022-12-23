@@ -17,6 +17,10 @@
             name="lastEmotion"
             type="com.teampome.pome.viewmodel.Emotion" />
 
+        <variable
+            name="clickListener"
+            type="com.teampome.pome.presentation.remind.RemindItemClickListener" />
+
         <import type="com.teampome.pome.viewmodel.Emotion" />
     </data>
 
@@ -34,7 +38,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> clickListener.remindItemClick(contentCardItem)}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/remind_contents_card_first_emotion_container_cl"
