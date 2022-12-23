@@ -46,7 +46,6 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             setOnItemClickListener(object : OnCategoryItemClickListener {
                 override fun onCategoryItemClick(item: RemindCategoryData, position: Int) { // 선택된 카테고리 내용 확인
                     viewModel.settingRemindPosition(position)
-                    Toast.makeText(requireContext(), "item : $item, position : $position", Toast.LENGTH_SHORT).show()
                 }
             })
         }
