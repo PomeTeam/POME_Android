@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -51,9 +52,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         }
 
         binding.remindReviewRv.adapter = RemindContentsCardAdapter(
-            object : RemindItemClickListener {
+            object : RemindItemClickListener { // detailView로 이동
                 override fun remindItemClick(item: ContentCardItem) {
-                    Toast.makeText(requireContext(), "item is $item", Toast.LENGTH_SHORT).show()
+                    moveToRemindDetailView(item)
                 }
             }
         )
@@ -181,6 +182,14 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
             viewModel.settingFirstEmotion(Emotion.FIRST_EMOTION)
             viewModel.settingLastEmotion(Emotion.LAST_EMOTION)
         }
+    }
+
+    private fun moveToRemindDetailView(item: ContentCardItem) {
+        val action = RemindFragmentDirections.actionRemindFragmentToRemindDetailFragment(
+            item
+        )
+
+        findNavController().navigate(action)
     }
 
     // 직관성을 높이기 위해 두 가지 메소드로 구현

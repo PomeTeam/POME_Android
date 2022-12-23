@@ -1,5 +1,8 @@
 package com.teampome.pome.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class RemindTestData(
     val contentItems: List<RemindTestItem>,
 )
@@ -15,6 +18,7 @@ data class GoalCardItem(
     val goal: String
 )
 
+@Parcelize
 data class ContentCardItem(
     val firstThink: String,
     val lastThink: String,
@@ -23,4 +27,4 @@ data class ContentCardItem(
     val name: String,
     val time: String,
     val friendEmotions: List<String>
-)
+) : Parcelable

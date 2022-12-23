@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRemindContentsCardBinding
 import com.teampome.pome.model.ContentCardItem
+import com.teampome.pome.util.CommonUtil.getEmotionData
 import com.teampome.pome.util.Constants
 import com.teampome.pome.viewmodel.Emotion
 
@@ -40,23 +41,6 @@ class RemindContentsCardAdapter(
             binding.lastEmotion = getEmotionData(item.lastThink)
             binding.clickListener = remindItemClickListener
             binding.executePendingBindings()
-        }
-    }
-}
-
-private fun getEmotionData(emotionStr: String) : Emotion? {
-    return when(emotionStr) {
-        Constants.HAPPY_EMOTION -> {
-            Emotion.HAPPY_EMOTION
-        }
-        Constants.WHAT_EMOTION -> {
-            Emotion.WHAT_EMOTION
-        }
-        Constants.SAD_EMOTION -> {
-            Emotion.SAD_EMOTION
-        }
-        else -> {
-            null
         }
     }
 }
