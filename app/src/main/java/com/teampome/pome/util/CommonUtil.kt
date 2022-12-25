@@ -57,4 +57,10 @@ object CommonUtil {
             }
         }
     }
+
+    fun getPixelToDp(context: Context, wantDp: Int): Int {
+        val scale = context.resources.displayMetrics.density
+
+        return (wantDp * scale + 0.5f).toInt()
+    }
 }

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -7,13 +9,55 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/grey_0">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/record_notice_bell_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/bell"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/record_notice_alarm_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/green_alarm"
+            android:layout_marginTop="-1dp"
+            android:layout_marginEnd="-3.5dp"
+            app:layout_constraintTop_toTopOf="@id/record_notice_bell_aiv"
+            app:layout_constraintEnd_toEndOf="@id/record_notice_bell_aiv"/>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="record_fragment"/>
+            android:id="@+id/record_category_plus_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+"
+            android:background="@drawable/record_category_plus_background"
+            android:textColor="@color/white"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="5dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="22dp"
+            app:layout_constraintTop_toBottomOf="@id/record_notice_bell_aiv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_category_chips_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:paddingEnd="16dp"
+            android:paddingStart="8dp"
+            tools:listitem="@layout/item_record_category_chip"
+            app:layout_constraintTop_toTopOf="@id/record_category_plus_tv"
+            app:layout_constraintStart_toEndOf="@id/record_category_plus_tv"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
