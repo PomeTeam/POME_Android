@@ -56,5 +56,9 @@
     <string name="register_agree_marketing_text"><u>마케팅 정보 수집 동의 (선택)</u></string>
     <string name="register_terms_agree_button_text">동의했어요</string>
 
+    <!--  POME Friend  -->
+    <string name="friend_all_text">전체</string>
+    <string name="friend_profile_name">성식</string>
+    <string name="friend_not_text">아직 추가한 친구가 없어요</string>
 
 </resources>

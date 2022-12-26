@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -9,11 +11,93 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/friend_add_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_friend_add"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:id="@+id/friend_all_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_friend_all_on"
+            app:layout_constraintTop_toBottomOf="@id/friend_add_iv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="20dp"
+            />
+
         <TextView
+            android:id="@+id/friend_all_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/friend_all_text"
+            android:textColor="@color/grey_8"
+            app:layout_constraintTop_toBottomOf="@id/friend_all_iv"
+            android:layout_marginTop="10dp"
+            app:layout_constraintLeft_toLeftOf="@id/friend_all_iv"
+            app:layout_constraintRight_toRightOf="@id/friend_all_iv"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friend_list_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/friend_add_iv"
+            app:layout_constraintLeft_toRightOf="@+id/friend_all_iv"
+            android:layout_marginTop="4dp"
+            tools:listitem="@layout/item_friends_list"
+            />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/friend_detail_rv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="friend_fragment"/>
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/friend_all_tv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="20dp"
+            tools:listitem="@layout/item_friend_detail_card"
+            />
+
+        <ImageView
+            android:id="@+id/friend_not_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_not_friend"
+            android:visibility="invisible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/friend_list_rv"
+            />
+
+        <TextView
+            android:id="@+id/friend_not_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/friend_not_text"
+            android:visibility="invisible"
+            style="@style/Pome.Bold.14"
+            android:textColor="@color/grey_5"
+            app:layout_constraintLeft_toLeftOf="@id/friend_not_iv"
+            app:layout_constraintRight_toRightOf="@id/friend_not_iv"
+            app:layout_constraintTop_toBottomOf="@id/friend_not_iv"
+            android:layout_marginTop="16dp"
+            />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
