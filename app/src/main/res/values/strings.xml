@@ -55,6 +55,9 @@
     <string name="register_agree_privacy_text"><u>개인정보 수집 및 이용 동의 (필수)</u></string>
     <string name="register_agree_marketing_text"><u>마케팅 정보 수집 동의 (선택)</u></string>
     <string name="register_terms_agree_button_text">동의했어요</string>
+    <string name="record_no_goal_title_text">목표를 세워 친구와 \n마시멜로를 모아보세요!</string>
+    <string name="record_no_goal_subtitle_text">목표 만들기</string>
+    <string name="record_goal_used_amount_title_text">사용 금액</string>
 
 
 </resources>
