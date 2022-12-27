@@ -60,4 +60,7 @@
     <string name="record_goal_used_amount_title_text">사용 금액</string>
 
     <string name="record_progress_percent">%d%%</string>
+    <string name="record_week_consume_title_text">일주일 씀씀이</string>
+    <string name="record_write_emotion_title_text">감정을 남겨주세요</string>
+    <string name="record_no_write_emotion_text">기록한 씀씀이가 없어요</string>
 </resources>
