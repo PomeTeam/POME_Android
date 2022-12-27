@@ -62,7 +62,11 @@
         android:id="@+id/friend_fragment"
         android:name="com.teampome.pome.presentation.friend.FriendFragment"
         android:label="FriendFragment"
-        tools:layout="@layout/fragment_friend"/>
+        tools:layout="@layout/fragment_friend">
+        <action
+            android:id="@+id/action_friend_fragment_to_friendDetailFragment"
+            app:destination="@id/friendDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mypage_fragment"
@@ -147,5 +151,10 @@
             android:name="remind_contents_item"
             app:argType="com.teampome.pome.model.ContentCardItem" />
     </fragment>
+    <fragment
+        android:id="@+id/friendDetailFragment"
+        android:name="com.teampome.pome.presentation.friend.FriendDetailFragment"
+        android:label="FriendDetailFragment"
+        tools:layout="@layout/fragment_friend_detail"/>
 
 </navigation>
