@@ -61,4 +61,9 @@
     <string name="friend_profile_name">성식</string>
     <string name="friend_not_text">아직 추가한 친구가 없어요</string>
 
+    <string name="friend_bottom_text">더보기</string>
+    <string name="friend_bottom_hide_text">숨기기</string>
+    <string name="friend_bottom_report_text">신고하기</string>
+
+
 </resources>
