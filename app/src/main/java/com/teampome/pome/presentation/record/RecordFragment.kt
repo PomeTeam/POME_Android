@@ -1,7 +1,13 @@
 package com.teampome.pome.presentation.record
 
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
@@ -20,6 +26,27 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     }
                 })
             }
+
+        binding.recordAmountProgressAsb.apply {
+            isEnabled = false
+
+            progress = 48
+            binding.recordAmountProgressTextTv.text = getString(R.string.record_progress_percent).format(progress)
+
+            viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val thumbBounds = thumb.bounds
+                    val progressTextWidth = binding.recordAmountProgressTextTv.width
+
+                    Log.d("progress", "thumbBounds center : ${thumbBounds.exactCenterX()}, progressTextWidth : $progressTextWidth")
+
+                    // thumb의 중간 - (progressTv 길이 / 2) -1f => 1f는 살짝 왼쪽으로 조정하는 값
+                    binding.recordAmountProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
+
+                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+        }
 
         (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
             listOf(
