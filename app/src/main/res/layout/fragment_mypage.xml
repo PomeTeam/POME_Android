@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -9,11 +10,116 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/mypage_setting_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_setting"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="20dp"/>
+
+        <ImageView
+            android:id="@+id/mypage_profile_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/user_profile_example"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_setting_iv"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="37dp"
+            />
+
         <TextView
+            android:id="@+id/mypage_profile_name_tv"
+            android:text="@string/friend_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Pome.SemiBold.18"
+            android:textColor="@color/grey_8"
+            app:layout_constraintTop_toBottomOf="@id/mypage_profile_iv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="8dp"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mypage_main_cl"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="mypage_fragment" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/mypage_main_cl"
+            app:layout_constraintTop_toBottomOf="@id/mypage_profile_name_tv"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/mypage_main_logo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mypage_main_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginVertical="15dp"
+                android:paddingLeft="14dp"
+                />
+
+            <TextView
+                android:id="@+id/mypage_main_goal_tv"
+                android:text="@string/mypage_main_goal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pome.SemiBold.16"
+                android:textColor="@color/grey_8"
+                app:layout_constraintTop_toTopOf="@id/mypage_main_logo_iv"
+                app:layout_constraintLeft_toRightOf="@id/mypage_main_logo_iv"
+                android:layout_marginLeft="10dp"
+                />
+
+            <TextView
+                android:id="@+id/mypage_main_last_goal_tv"
+                android:text="@string/mypage_main_last_goal_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Pome.Medium.14"
+                android:textColor="@color/grey_6"
+                app:layout_constraintBottom_toBottomOf="@id/mypage_main_logo_iv"
+                app:layout_constraintLeft_toRightOf="@id/mypage_main_logo_iv"
+                android:layout_marginLeft="10dp"
+                />
+
+            <ImageView
+                android:id="@+id/mypage_ic_arrow_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_mypage_goal_arrow"
+                app:layout_constraintTop_toTopOf="@id/mypage_main_goal_tv"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginRight="15dp"
+                />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/mypage_marshmallow_tv"
+            android:text="@string/mypage_marshmallow_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Pome.SemiBold.18"
+            android:textColor="@color/grey_9"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_main_cl"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="21dp"
+            android:layout_marginTop="24dp"
+            />
+
+        <!-- Todo : RV or Card View 정하기 (CV 로 하면 스크롤뷰로 해야할지?) -->
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
