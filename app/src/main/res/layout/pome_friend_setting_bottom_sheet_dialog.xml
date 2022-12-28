@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pome_friend_setting_bottom_sheet_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_draggable="true"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <TextView
+            style="@style/Pome.Medium.16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="37dp"
+            android:paddingTop="24dp"
+            android:text="@string/friend_bottom_text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/pome_friend_bottom_sheet_dialog_hide_aiv"
+            app:layout_constraintStart_toStartOf="@id/pome_friend_bottom_sheet_dialog_hide_aiv" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pome_friend_bottom_sheet_dialog_hide_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="38dp"
+            android:src="@drawable/ic_hide"
+            app:layout_constraintBottom_toTopOf="@id/pome_friend_bottom_sheet_dialog_report_aiv"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- 사용자의 touch영역을 늘리기위해 paddingEnd를 20dp 늘림 -->
+        <TextView
+            android:id="@+id/pome_friend_bottom_sheet_dialog_hide_tv"
+            style="@style/Pome.Medium.16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="20dp"
+            android:text="@string/friend_bottom_hide_text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@+id/pome_friend_bottom_sheet_dialog_hide_aiv"
+            app:layout_constraintStart_toEndOf="@+id/pome_friend_bottom_sheet_dialog_hide_aiv"
+            app:layout_constraintTop_toTopOf="@+id/pome_friend_bottom_sheet_dialog_hide_aiv" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pome_friend_bottom_sheet_dialog_report_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginBottom="38dp"
+            android:src="@drawable/ic_siren"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- 사용자의 touch영역을 늘리기위해 paddingEnd를 20dp 늘림 -->
+        <TextView
+            android:id="@+id/pome_friend_bottom_sheet_dialog_report_tv"
+            style="@style/Pome.Medium.16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="20dp"
+            android:text="@string/friend_bottom_report_text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/pome_friend_bottom_sheet_dialog_report_aiv"
+            app:layout_constraintStart_toEndOf="@id/pome_friend_bottom_sheet_dialog_report_aiv"
+            app:layout_constraintTop_toTopOf="@id/pome_friend_bottom_sheet_dialog_report_aiv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

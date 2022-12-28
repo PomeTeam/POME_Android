@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pome_friend_emotion_bottom_sheet_dialog_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_draggable="true"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <ImageView
+            android:id="@+id/friend_detail_profile_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_friend_all_on"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="19dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_love_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_love"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_profile_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_what_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_what"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_love_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_merong_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_merong"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_what_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_glass_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_glass"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_merong_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_sad_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_sad"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_glass_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <ImageView
+            android:id="@+id/friend_detail_emoji_happy_iv"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/emoji_happy"
+            app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_sad_iv"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="14dp"
+            />
+
+        <TextView
+            style="@style/Pome.SemiBold.14"
+            android:id="@+id/friend_detail_all_emotion_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="전체 6개"
+            android:textColor="@color/grey_9"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="53dp"
+            app:layout_constraintBottom_toTopOf="@id/friend_emotion_happy_cl"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/friend_emotion_happy_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/friend_emotion_what_cl"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/friend_emotion_happy_aiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/emoji_mint_fiter_happy"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/friend_emotion_happy_tv"/>
+
+            <TextView
+                android:id="@+id/friend_emotion_happy_tv"
+                style="@style/Pome.Medium.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_dialog_happy_text"
+                android:textColor="@color/grey_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/friend_emotion_what_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintStart_toEndOf="@id/friend_emotion_happy_cl"
+            app:layout_constraintEnd_toEndOf="@id/friend_emotion_sad_cl"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/friend_emotion_what_aiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/emoji_mint_fiter_what"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/friend_emotion_what_tv"/>
+
+            <TextView
+                android:id="@+id/friend_emotion_what_tv"
+                style="@style/Pome.Medium.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_dialog_what_text"
+                android:textColor="@color/grey_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/friend_emotion_sad_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            app:layout_constraintStart_toEndOf="@id/friend_emotion_what_cl"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/friend_emotion_sad_aiv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:src="@drawable/emoji_mint_fiter_sad"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/friend_emotion_sad_tv"/>
+
+            <TextView
+                android:id="@+id/friend_emotion_sad_tv"
+                style="@style/Pome.Medium.14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remind_dialog_sad_text"
+                android:textColor="@color/grey_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
