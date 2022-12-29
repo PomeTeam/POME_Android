@@ -8,13 +8,20 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.fragment.app.viewModels
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
+import com.teampome.pome.viewmodel.RecordViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
+
+    private val viewModel: RecordViewModel by viewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -78,6 +85,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     override fun initListener() {
-
+        viewModel.recordTestData.observe(viewLifecycleOwner) {
+            Log.d("test", "data is $it")
+        }
     }
 }
