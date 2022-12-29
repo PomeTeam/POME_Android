@@ -60,6 +60,7 @@
             android:layout_marginTop="16dp"
             />
 
+        <!--   Todo 기록탭에서 완성된 progress bar 가져오기  -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mypage_goal_rv"
             android:layout_width="match_parent"

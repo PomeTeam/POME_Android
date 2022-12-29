@@ -74,4 +74,11 @@
     <string name="mypage_goal_text">완료한 목표</string>
     <string name="mypage_goal_not_text">저장된 목표가 없어요</string>
 
+    <!--  POME Mypage -> Goal Page -> trash -->
+    <string name="goal_trash_text">종료된 목표를 삭제하시겠어요?</string>
+    <string name="goal_trash_all_text">지금까지 작성한 기록들은 모두 사라져요</string>
+    <string name="goal_trash_all_not_text">아니요</string>
+    <string name="goal_trash_all_okay_text">삭제할래요</string>
+
+
 </resources>
