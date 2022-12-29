@@ -65,5 +65,31 @@
     <string name="friend_bottom_hide_text">숨기기</string>
     <string name="friend_bottom_report_text">신고하기</string>
 
+    <!--  POME Mypage  -->
+    <string name="mypage_main_goal_text">목표 보관함</string>
+    <string name="mypage_main_last_goal_text">다시 보고 싶은 지난 목표가 2건 있어요</string>
+    <string name="mypage_marshmallow_text">마시멜로 모으기</string>
 
+    <!--  POME Mypage -> Goal Page  -->
+    <string name="mypage_goal_text">완료한 목표</string>
+    <string name="mypage_goal_not_text">저장된 목표가 없어요</string>
+
+    <!--  POME Mypage -> Goal Page -> trash -->
+    <string name="goal_trash_text">종료된 목표를 삭제하시겠어요?</string>
+    <string name="goal_trash_all_text">지금까지 작성한 기록들은 모두 사라져요</string>
+    <string name="goal_trash_all_not_text">아니요</string>
+    <string name="goal_trash_all_okay_text">삭제할래요</string>
+
+    <!--  POME Mypage -> Setting-->
+    <string name="mypage_setting_title_text">설정</string>
+    <string name="mypage_setting_friend_text">친구 관리</string>
+    <string name="mypage_setting_question_text">문의 하기</string>
+    <string name="mypage_setting_alarm_text">알림 설정</string>
+    <string name="mypage_setting_report_text">신고 하기</string>
+    <string name="mypage_setting_service_text">서비스</string>
+
+    <string name="mypage_setting_policy_text">약관 및 정책</string>
+    <string name="mypage_setting_open_source_text">오픈소스 라이센스</string>
+    <string name="mypage_setting_version_text">버전 정보</string>
+    <string name="mypage_setting_logout_text">로그아웃</string>
 </resources>

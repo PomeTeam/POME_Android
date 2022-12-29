@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/mypage_setting_arrow_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/mypage_profile_name_tv"
+            android:text="@string/mypage_setting_title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Pome.Medium.14"
+            android:textColor="@color/grey_8"
+            app:layout_constraintTop_toTopOf="@+id/mypage_setting_arrow_iv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/mypage_setting_arrow_iv"
+            />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:id="@+id/mypage_setting_sv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/cl"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_profile_information_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    >
+
+                    <ImageView
+                        android:id="@+id/mypage_profile_iv"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/user_profile_example"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginVertical="10dp"
+                        />
+
+                    <TextView
+                        android:id="@+id/mypage_profile_tv"
+                        android:text="@string/friend_profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.SemiBold.18"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="@id/mypage_profile_iv"
+                        app:layout_constraintBottom_toBottomOf="@id/mypage_profile_iv"
+                        app:layout_constraintLeft_toRightOf="@id/mypage_profile_iv"
+                        android:layout_marginLeft="12dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_friend_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_profile_information_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    android:layout_marginTop="12dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_friend_setting_tv"
+                        android:text="@string/mypage_setting_friend_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_friend_setting_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_question_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_friend_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    android:layout_marginTop="12dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_question_setting_tv"
+                        android:text="@string/mypage_setting_question_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_question_setting_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_alarm_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_question_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    android:layout_marginTop="12dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_alarm_setting_tv"
+                        android:text="@string/mypage_setting_alarm_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_question_alarm_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_report_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_alarm_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    android:layout_marginTop="12dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_report_setting_tv"
+                        android:text="@string/mypage_setting_report_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_question_report_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_service_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_report_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingTop="14dp"
+                    android:layout_marginTop="12dp"
+                    android:paddingBottom="4dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_service_setting_tv"
+                        android:text="@string/mypage_setting_service_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.12"
+                        android:textColor="@color/grey_5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_policy_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_service_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_policy_setting_tv"
+                        android:text="@string/mypage_setting_policy_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_policy_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_open_source_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_policy_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_open_source_setting_tv"
+                        android:text="@string/mypage_setting_open_source_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_open_source_setting_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_version_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_open_source_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_version_setting_tv"
+                        android:text="@string/mypage_setting_version_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_version_setting_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_logout_setting_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_version_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:paddingVertical="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_logout_setting_tv"
+                        android:text="@string/mypage_setting_logout_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+                    <ImageView
+                        android:id="@+id/mypage_logout_setting_arrow_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginRight="24dp"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
