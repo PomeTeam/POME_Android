@@ -27,6 +27,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 })
             }
 
+        binding.recordEmotionRv.adapter = RecordContentsCardAdapter()
+
         binding.recordAmountProgressAsb.apply {
             isEnabled = false
 
@@ -59,6 +61,18 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 RemindCategoryData(
                     category = "test3"
                 )
+            )
+        )
+
+        (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+            listOf(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             )
         )
     }
