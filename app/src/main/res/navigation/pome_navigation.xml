@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_mypage_fragment_to_myPageGoalFragment"
             app:destination="@id/myPageGoalFragment" />
+        <action
+            android:id="@+id/action_mypage_fragment_to_myPageSettingFragment"
+            app:destination="@id/myPageSettingFragment" />
     </fragment>
     <fragment
         android:id="@+id/splashLoginFragment"
@@ -165,5 +168,27 @@
         android:name="com.teampome.pome.presentation.mypage.MyPageGoalFragment"
         android:label="MyPageGoalFragment"
         tools:layout="@layout/fragment_mypage_goal"/>
+    <fragment
+        android:id="@+id/myPageAlarmFragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageAlarmFragment"
+        android:label="MyPageAlarmFragment"
+        tools:layout="@layout/fragment_mypage_alarm"/>
+    <fragment
+        android:id="@+id/myPageSettingFragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageSettingFragment"
+        android:label="MyPageSettingFragment"
+        tools:layout="@layout/fragment_mypage_setting">
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_myPageAlarmFragment"
+            app:destination="@id/myPageAlarmFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_myPageFriendFragment"
+            app:destination="@id/myPageFriendFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageFriendFragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageFriendFragment"
+        android:label="MyPageFriendFragment"
+        tools:layout="@layout/fragment_mypage_friend"/>
 
 </navigation>
