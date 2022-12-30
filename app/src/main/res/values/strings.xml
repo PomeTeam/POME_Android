@@ -80,7 +80,7 @@
     <string name="goal_trash_all_not_text">아니요</string>
     <string name="goal_trash_all_okay_text">삭제할래요</string>
 
-    <!--  POME Mypage -> Setting-->
+    <!--  POME Mypage -> Setting -->
     <string name="mypage_setting_title_text">설정</string>
     <string name="mypage_setting_friend_text">친구 관리</string>
     <string name="mypage_setting_question_text">문의 하기</string>
@@ -92,4 +92,17 @@
     <string name="mypage_setting_open_source_text">오픈소스 라이센스</string>
     <string name="mypage_setting_version_text">버전 정보</string>
     <string name="mypage_setting_logout_text">로그아웃</string>
+
+    <!--  POME Mypage -> Setting -> Alarm -->
+    <string name="mypage_alarm_title_text">알림 설정</string>
+
+    <!--  POME Mypage -> Setting -> Friend -->
+    <string name="mypage_friend_title_text">친구 관리</string>
+
+    <!--  POME Mypage -> Setting -> Friend -> Delete -->
+    <string name="friend_delete_text">친구를 삭제하시겠어요?</string>
+    <string name="friend_delete_all_text">친구의 씀씀이를 더 이상 볼 수 없어요</string>
+
+    <!--  POME Mypage -> Setting -> Logout -->
+    <string name="mypage_logout_title_text">로그아웃 하시겠어요?</string>
 </resources>

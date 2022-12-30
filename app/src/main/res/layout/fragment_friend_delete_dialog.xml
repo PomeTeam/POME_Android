@@ -8,8 +8,6 @@
 
     </data>
 
-    <!-- Todo : 그림자 처리 -->
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,8 +24,8 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/goal_trash_goal_trash_tv"
-                android:text="@string/goal_trash_text"
+                android:id="@+id/friend_delete_tv"
+                android:text="@string/friend_delete_text"
                 style="@style/Pome.SemiBold.16"
                 android:textColor="@color/grey_9"
                 app:layout_constraintTop_toTopOf="parent"
@@ -38,11 +36,11 @@
                 android:layout_marginTop="24dp"/>
 
             <TextView
-                android:id="@+id/goal_trash_goal_all_trash_tv"
-                android:text="@string/goal_trash_all_text"
+                android:id="@+id/friend_delete_all_tv"
+                android:text="@string/friend_delete_all_text"
                 style="@style/Pome.Medium.14"
                 android:textColor="@color/grey_5"
-                app:layout_constraintTop_toBottomOf="@+id/goal_trash_goal_trash_tv"
+                app:layout_constraintTop_toBottomOf="@+id/friend_delete_tv"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
@@ -51,22 +49,22 @@
                 />
 
             <ImageView
-                android:id="@+id/goal_trash_goal_iv"
+                android:id="@+id/friend_delete_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/trash_green_iv"
-                app:layout_constraintTop_toBottomOf="@+id/goal_trash_goal_all_trash_tv"
+                android:src="@drawable/trash_pink_100"
+                app:layout_constraintTop_toBottomOf="@+id/friend_delete_all_tv"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="12dp"
                 />
 
             <TextView
-                android:id="@+id/goal_trash_goal_all_okay_trash_tv"
+                android:id="@+id/friend_delete_okay_tv"
                 android:text="@string/goal_trash_all_okay_text"
                 style="@style/Pome.Medium.14"
                 android:textColor="@color/main"
-                app:layout_constraintTop_toBottomOf="@+id/goal_trash_goal_iv"
+                app:layout_constraintTop_toBottomOf="@+id/friend_delete_iv"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,12 +74,12 @@
                 />
 
             <TextView
-                android:id="@+id/goal_trash_goal_all_not_trash_tv"
+                android:id="@+id/friend_delete_not_all_tv"
                 android:text="@string/goal_trash_all_not_text"
                 style="@style/Pome.Medium.14"
                 android:textColor="@color/main"
-                app:layout_constraintTop_toBottomOf="@+id/goal_trash_goal_iv"
-                app:layout_constraintRight_toLeftOf="@id/goal_trash_goal_all_okay_trash_tv"
+                app:layout_constraintTop_toBottomOf="@+id/friend_delete_iv"
+                app:layout_constraintRight_toLeftOf="@id/friend_delete_okay_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
