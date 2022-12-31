@@ -75,9 +75,15 @@ fun bindingRemindFirstEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
                     .into(imageView)
             }
             else -> {
-
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mono_16)
+                    .into(imageView)
             }
         }
+    } ?: run {
+        Glide.with(imageView)
+            .load(R.drawable.emoji_mono_16)
+            .into(imageView)
     }
 }
 
@@ -101,8 +107,14 @@ fun bindingRemindLastEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
                     .into(imageView)
             }
             else -> {
-
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mono_16)
+                    .into(imageView)
             }
         }
+    } ?: run {
+        Glide.with(imageView)
+            .load(R.drawable.emoji_mono_16)
+            .into(imageView)
     }
 }

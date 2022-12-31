@@ -15,7 +15,8 @@ data class RecordGoalCard(
     val timeLimit: Int,
     val title: String,
     val useAmount: String,
-    val goalAmount: String
+    val goalAmount: String,
+    val progress: Int
 )
 
 data class RecordWeekData(

@@ -17,7 +17,8 @@ class RecordTestDataSource @Inject constructor(
                         timeLimit = 0,
                         title = "커피 대신 물을 마시자",
                         useAmount = "30,000원",
-                        goalAmount = "100,000원"
+                        goalAmount = "100,000원",
+                        progress = 30
                     )
                 ),
                 RecordGoalItem(
@@ -27,7 +28,8 @@ class RecordTestDataSource @Inject constructor(
                         timeLimit = 10,
                         title = "아이스크림 대신 물을 마시자",
                         useAmount = "30,000원",
-                        goalAmount = "100,000원"
+                        goalAmount = "100,000원",
+                        progress = 50
                     )
                 ),
                 RecordGoalItem(
@@ -37,7 +39,8 @@ class RecordTestDataSource @Inject constructor(
                         timeLimit = 22,
                         title = "택시 대신 물을 마시자",
                         useAmount = "30,000원",
-                        goalAmount = "100,000원"
+                        goalAmount = "100,000원",
+                        progress = 70
                     )
                 )
             ),

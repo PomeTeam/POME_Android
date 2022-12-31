@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
+import com.teampome.pome.model.RecordWeekItem
+import com.teampome.pome.util.CommonUtil
 
-class RecordContentsCardAdapter : ListAdapter<String, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
+class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
 ) {
     private lateinit var binding: ItemRecordEmotionCardBinding
@@ -22,24 +24,27 @@ class RecordContentsCardAdapter : ListAdapter<String, RecordContentsCardAdapter.
     }
 
     override fun onBindViewHolder(holder: RecordContentsCardViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(getItem(position))
     }
 
     inner class RecordContentsCardViewHolder(
         binding : ItemRecordEmotionCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind() {
-
+        fun bind(item: RecordWeekItem) {
+            binding.recordWeekItem = item
+            binding.firstEmotion = CommonUtil.getEmotionData(item.firstThink)
+            binding.lastEmotion = item.lastThink?.let { CommonUtil.getEmotionData(it) }
+            binding.executePendingBindings()
         }
     }
 }
 
-class RecordContentsCardDiffCallback : DiffUtil.ItemCallback<String>() {
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
+class RecordContentsCardDiffCallback : DiffUtil.ItemCallback<RecordWeekItem>() {
+    override fun areItemsTheSame(oldItem: RecordWeekItem, newItem: RecordWeekItem): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
+    override fun areContentsTheSame(oldItem: RecordWeekItem, newItem: RecordWeekItem): Boolean {
         return oldItem == newItem
     }
 }

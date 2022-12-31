@@ -29,7 +29,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
                     override fun onCategoryItemClick(item: RemindCategoryData, position: Int) {
-
+                        binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
+                        binding.executePendingBindings()
                     }
                 })
             }
@@ -39,7 +40,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordAmountProgressAsb.apply {
             isEnabled = false
 
-            progress = 48
             binding.recordAmountProgressTextTv.text = getString(R.string.record_progress_percent).format(progress)
 
             viewTreeObserver.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
@@ -52,41 +52,38 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     // thumb의 중간 - (progressTv 길이 / 2) -1f => 1f는 살짝 왼쪽으로 조정하는 값
                     binding.recordAmountProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
 
-                    viewTreeObserver.removeOnGlobalLayoutListener(this)
+//                    viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })
         }
-
-        (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
-            listOf(
-                RemindCategoryData(
-                    category = "test"
-                ),
-                RemindCategoryData(
-                    category = "test2"
-                ),
-                RemindCategoryData(
-                    category = "test3"
-                )
-            )
-        )
-
-        (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-            listOf(
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-            )
-        )
     }
 
     override fun initListener() {
-        viewModel.recordTestData.observe(viewLifecycleOwner) {
-            Log.d("test", "data is $it")
+        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
+            recordTestData?.let {
+
+                // category Adapter data 주입
+                it.recordGoalData?.let { recordGoalItemList ->
+                    (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
+                        recordGoalItemList.map { recordGoalItem ->
+                            RemindCategoryData(
+                                recordGoalItem.category
+                            )
+                        }
+                    )
+
+                    // 초기 값은 0번
+                    binding.recordGoalItem = recordGoalItemList[0]
+                }
+
+                // content card data 주입
+                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+                    it.recordWeekData?.recordWeekItem
+                )
+
+                binding.recordWeekData = it.recordWeekData
+                binding.executePendingBindings()
+            }
         }
     }
 }

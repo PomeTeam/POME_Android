@@ -10,7 +10,7 @@ import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 
 class RecordCategoryAdapter : ListAdapter<RemindCategoryData, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
-    lateinit var binding: ItemRecordCategoryChipBinding
+    lateinit var bind: ItemRecordCategoryChipBinding
 
     // category click 관리 변수
     private var onCategoryItemClickListener: OnCategoryItemClickListener? = null
@@ -21,9 +21,9 @@ class RecordCategoryAdapter : ListAdapter<RemindCategoryData, RecordCategoryAdap
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordCategoryViewHolder {
-        binding = ItemRecordCategoryChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        bind = ItemRecordCategoryChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return RecordCategoryViewHolder(binding)
+        return RecordCategoryViewHolder(bind)
     }
 
     override fun onBindViewHolder(holder: RecordCategoryViewHolder, position: Int) {

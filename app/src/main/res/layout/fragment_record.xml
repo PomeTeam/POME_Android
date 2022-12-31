@@ -4,7 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="recordGoalItem"
+            type="com.teampome.pome.model.RecordGoalItem" />
 
+        <variable
+            name="recordWeekData"
+            type="com.teampome.pome.model.RecordWeekData" />
+
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -41,7 +49,7 @@
             android:background="@drawable/record_category_plus_background"
             android:paddingHorizontal="16dp"
             android:paddingVertical="5dp"
-            android:text="+"
+            android:text="@string/record_category_plus_text"
             android:textColor="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/record_notice_bell_aiv" />
@@ -68,7 +76,7 @@
             app:cardCornerRadius="6dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/record_category_chips_rv">
+            app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/record_no_goal_card_cl"
@@ -76,7 +84,8 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="20dp"
                 android:paddingVertical="33dp"
-                android:visibility="gone">
+                tools:visibility="visible"
+                android:visibility="@{recordGoalItem == null ? View.VISIBLE : View.GONE}">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/record_no_goal_marshmellow_aiv"
@@ -138,7 +147,9 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="14dp"
                 android:paddingStart="0dp"
-                android:paddingEnd="16dp">
+                android:paddingEnd="16dp"
+                tools:visibility="gone"
+                android:visibility="@{recordGoalItem == null ? View.GONE : View.VISIBLE}">
 
                 <TextView
                     android:id="@+id/record_goal_card_public_chip_tv"
@@ -149,7 +160,8 @@
                     android:background="@drawable/item_grey1_r4_background"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="4dp"
-                    android:text="비공개"
+                    android:text="@{recordGoalItem.recordGoalCard.private ? `비공개` : `공개`}"
+                    tools:text="비공개"
                     android:textColor="@color/grey_5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -163,12 +175,12 @@
                     android:background="@drawable/item_pink10_r4_background"
                     android:paddingHorizontal="6dp"
                     android:paddingVertical="4dp"
-                    android:text="END"
+                    android:text="@{recordGoalItem.recordGoalCard.timeLimit == 0 ? `END` : @string/record_category_limit_date(recordGoalItem.recordGoalCard.timeLimit)}"
+                    tools:text="END"
                     android:textColor="@color/pink_100"
                     app:layout_constraintBottom_toBottomOf="@id/record_goal_card_public_chip_tv"
                     app:layout_constraintStart_toEndOf="@id/record_goal_card_public_chip_tv"
-                    app:layout_constraintTop_toTopOf="@id/record_goal_card_public_chip_tv"
-                    tools:text="END" />
+                    app:layout_constraintTop_toTopOf="@id/record_goal_card_public_chip_tv" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/record_goal_more_aiv"
@@ -188,7 +200,8 @@
                     android:lineSpacingExtra="6sp"
                     android:maxLines="1"
                     android:paddingHorizontal="0dp"
-                    android:text="커피 대신 물을 마시자"
+                    android:text="@{recordGoalItem.recordGoalCard.title}"
+                    tools:text="커피 대신 물을 마시자"
                     android:textColor="@color/grey_8"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@id/record_goal_card_public_chip_tv"
@@ -211,7 +224,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="3sp"
-                    android:text="30,000원"
+                    android:text="@{recordGoalItem.recordGoalCard.useAmount}"
+                    tools:text="30,000원"
                     android:textColor="@color/grey_7"
                     app:layout_constraintStart_toStartOf="@id/record_goal_used_amount_title_atv"
                     app:layout_constraintTop_toBottomOf="@id/record_goal_used_amount_title_atv" />
@@ -222,7 +236,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="· 100,000원"
+                    android:text="@{recordGoalItem.recordGoalCard.goalAmount}"
+                    tools:text="· 100,000원"
                     android:textColor="@color/grey_5"
                     app:layout_constraintBottom_toBottomOf="@id/record_goal_used_amount_atv"
                     app:layout_constraintStart_toEndOf="@id/record_goal_used_amount_atv"
@@ -239,7 +254,8 @@
                     android:focusableInTouchMode="false"
                     android:maxHeight="6dp"
                     android:minHeight="6dp"
-                    android:progress="30"
+                    android:progress="@{recordGoalItem.recordGoalCard.progress}"
+                    tools:progress="0"
                     android:progressDrawable="@drawable/pome_seekbar_custom"
                     android:thumb="@drawable/pome_seekbar_custom_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -251,7 +267,8 @@
                     style="@style/Pome.SemiBold.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="30%"
+                    android:text="@{@string/record_progress_percent(recordGoalItem.recordGoalCard.progress)}"
+                    tools:text="0%"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@id/record_amount_progress_asb"
                     app:layout_constraintStart_toStartOf="parent"
@@ -316,17 +333,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="다시 돌아볼 씀씀이가 0건 있어요"
+                android:text="@{@string/record_write_emotion_subtitle_text(recordWeekData.remindCount)}"
+                tools:text="다시 돌아볼 씀씀이가 0건 있어요"
                 app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
-                app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv"
-                tools:text="다시 돌아볼 씀씀이가 0건 있어요" />
+                app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/record_no_write_emotion_container_cl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="gone"
+            android:visibility="@{recordWeekData.recordWeekItem == null ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
             app:layout_constraintBottom_toBottomOf="parent">
 
