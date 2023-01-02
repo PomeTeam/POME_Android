@@ -8,10 +8,13 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
+import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.viewmodel.RecordViewModel
@@ -22,8 +25,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private val viewModel: RecordViewModel by viewModels()
 
+    // 목표 더보기 클릭 다이얼로그
+    private lateinit var goalMoreBottomSheetDialogBinding: PomeRecordMoreGoalBottomSheetDialogBinding
+    private lateinit var goalMoreBottomSheetDialog: BottomSheetDialog
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        makeBottomSheetDialog()
 
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
@@ -56,6 +65,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 }
             })
         }
+
+        // 목표의 더보기 클릭
+        binding.recordGoalMoreAiv.setOnClickListener {
+            goalMoreBottomSheetDialog.show()
+        }
     }
 
     override fun initListener() {
@@ -84,6 +98,18 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 binding.recordWeekData = it.recordWeekData
                 binding.executePendingBindings()
             }
+        }
+    }
+
+    private fun makeBottomSheetDialog() {
+        goalMoreBottomSheetDialog = BottomSheetDialog(requireContext())
+        goalMoreBottomSheetDialogBinding = PomeRecordMoreGoalBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+
+        goalMoreBottomSheetDialog.setContentView(goalMoreBottomSheetDialogBinding.root)
+
+        // bottom sheet 삭제하기 클릭
+        goalMoreBottomSheetDialogBinding.goalMoreTrashTv.setOnClickListener {
+            Toast.makeText(requireContext(), "삭제하기 클릭", Toast.LENGTH_SHORT).show()
         }
     }
 }

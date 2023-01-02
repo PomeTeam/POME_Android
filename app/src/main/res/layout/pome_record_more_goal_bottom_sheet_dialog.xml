@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/goal_more_dialog_container_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:behavior_draggable="true"
+        app:behavior_hideable="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <TextView
+            style="@style/Pome.Medium.16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="37dp"
+            android:paddingTop="24dp"
+            android:text="@string/goal_more_title_text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@id/goal_more_trash_aiv"
+            app:layout_constraintStart_toStartOf="@id/goal_more_trash_aiv" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/goal_more_trash_aiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginBottom="75dp"
+            android:src="@drawable/ic_trash_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- 사용자의 touch영역을 늘리기위해 paddingEnd를 20dp 늘림 -->
+        <TextView
+            android:id="@+id/goal_more_trash_tv"
+            style="@style/Pome.Medium.16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="20dp"
+            android:text="@string/pome_bottom_sheet_dialog_delete_text"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/goal_more_trash_aiv"
+            app:layout_constraintStart_toEndOf="@id/goal_more_trash_aiv"
+            app:layout_constraintTop_toTopOf="@id/goal_more_trash_aiv" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

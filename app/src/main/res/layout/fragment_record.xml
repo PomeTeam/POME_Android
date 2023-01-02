@@ -186,6 +186,7 @@
                     android:id="@+id/record_goal_more_aiv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="5dp"
                     android:src="@drawable/ic_more_vertical_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

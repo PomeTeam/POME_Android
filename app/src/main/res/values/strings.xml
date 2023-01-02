@@ -66,4 +66,5 @@
     <string name="record_category_plus_text">+</string>
     <string name="record_category_limit_date">D-%d</string>
     <string name="record_write_emotion_subtitle_text">다시 돌아볼 씀씀이가 %d건 있어요</string>
+    <string name="goal_more_title_text">목표 편집</string>
 </resources>
