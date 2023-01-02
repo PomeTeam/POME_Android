@@ -1,5 +1,8 @@
 package com.teampome.pome.presentation.record
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +18,7 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
+import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.viewmodel.RecordViewModel
@@ -28,6 +32,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     // 목표 더보기 클릭 다이얼로그
     private lateinit var goalMoreBottomSheetDialogBinding: PomeRecordMoreGoalBottomSheetDialogBinding
     private lateinit var goalMoreBottomSheetDialog: BottomSheetDialog
+
+    // 목표 삭제 클릭 다이얼로그
+    private lateinit var removeDialogBinding: PomeRemoveDialogBinding
+    private lateinit var removeDialog: Dialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -110,6 +118,31 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         // bottom sheet 삭제하기 클릭
         goalMoreBottomSheetDialogBinding.goalMoreTrashTv.setOnClickListener {
             Toast.makeText(requireContext(), "삭제하기 클릭", Toast.LENGTH_SHORT).show()
+
+            makeRemoveDialog()
+
+            removeDialog.show()
+        }
+    }
+
+    private fun makeRemoveDialog() {
+        removeDialog = Dialog(requireContext())
+        removeDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
+        
+        removeDialog.setContentView(removeDialogBinding.root)
+
+        // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
+        removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        removeDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
+        removeDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
+        
+        removeDialogBinding.removeYesTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "Yes", Toast.LENGTH_SHORT).show()
+        }
+        
+        removeDialogBinding.removeNoTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
         }
     }
 }
