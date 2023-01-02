@@ -44,7 +44,7 @@
             android:id="@+id/record_category_plus_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="22dp"
             android:background="@drawable/record_category_plus_background"
             android:paddingHorizontal="16dp"
