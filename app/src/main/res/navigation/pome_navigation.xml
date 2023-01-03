@@ -155,5 +155,9 @@
         android:id="@+id/modifyRecordCardFragment"
         android:name="com.teampome.pome.presentation.record.ModifyRecordCardFragment"
         android:label="ModifyRecordCardFragment"
-        tools:layout="@layout/fragment_modify_record_card"/>
+        tools:layout="@layout/fragment_modify_record_card">
+        <argument
+            android:name="record_week_item"
+            app:argType="com.teampome.pome.model.RecordWeekItem" />
+    </fragment>
 </navigation>

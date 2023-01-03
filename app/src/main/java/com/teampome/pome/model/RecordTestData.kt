@@ -1,5 +1,8 @@
 package com.teampome.pome.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class RecordTestData(
     val recordGoalData: List<RecordGoalItem>?,
     val recordWeekData: RecordWeekData?
@@ -24,10 +27,11 @@ data class RecordWeekData(
     val recordWeekItem: List<RecordWeekItem>?
 )
 
+@Parcelize
 data class RecordWeekItem(
     val firstThink: String,
     val lastThink: String?,
     val title: String,
     val subTitle: String,
     val date: String
-)
+) : Parcelable

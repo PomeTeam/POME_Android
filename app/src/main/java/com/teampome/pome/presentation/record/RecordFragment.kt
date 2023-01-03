@@ -230,7 +230,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToModifyRecordCard() {
-        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment()
+        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
+            recordWeekItem
+        )
 
         findNavController().navigate(action)
     }
