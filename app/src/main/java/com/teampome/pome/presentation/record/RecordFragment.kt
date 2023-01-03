@@ -18,7 +18,9 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
+import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
+import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.viewmodel.RecordViewModel
@@ -36,6 +38,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     // 목표 삭제 클릭 다이얼로그
     private lateinit var removeDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeDialog: Dialog
+
+    // Todo : 공통 다이얼로그로 변경
+    private lateinit var recordDialogBinding: PomeRegisterBottomSheetDialogBinding
+    private lateinit var recordDialog: BottomSheetDialog
+
+    // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
+    private lateinit var recordWeekItem: RecordWeekItem
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -103,6 +112,16 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     it.recordWeekData?.recordWeekItem
                 )
 
+                // content card more 버튼 클릭 리스너 등록
+                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
+                    override fun onMoreIconClick(item: RecordWeekItem) {
+                        makeRecordDialog()
+                        recordWeekItem = item
+
+                        recordDialog.show()
+                    }
+                })
+
                 binding.recordWeekData = it.recordWeekData
                 binding.executePendingBindings()
             }
@@ -117,8 +136,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // bottom sheet 삭제하기 클릭
         goalMoreBottomSheetDialogBinding.goalMoreTrashTv.setOnClickListener {
-            Toast.makeText(requireContext(), "삭제하기 클릭", Toast.LENGTH_SHORT).show()
-
             makeRemoveDialog()
 
             removeDialog.show()
@@ -149,6 +166,29 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
             goalMoreBottomSheetDialog.dismiss()
             removeDialog.dismiss()
+        }
+    }
+
+    private fun makeRecordDialog() {
+        recordDialog = BottomSheetDialog(requireContext())
+        recordDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+
+        recordDialog.setContentView(recordDialogBinding.root)
+
+        recordDialogBinding.bottomSheetTitleTv.text = "기록 편집"
+
+        // 수정하기 클릭
+        recordDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
+            Toast.makeText(requireContext(), "$recordWeekItem 수정하기", Toast.LENGTH_SHORT).show()
+
+            recordDialog.dismiss()
+        }
+
+        // 삭제 클릭
+        recordDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
+            Toast.makeText(requireContext(), "$recordWeekItem 삭제하기", Toast.LENGTH_SHORT).show()
+
+            recordDialog.dismiss()
         }
     }
 }

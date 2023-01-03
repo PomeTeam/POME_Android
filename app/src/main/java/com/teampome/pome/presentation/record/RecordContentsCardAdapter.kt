@@ -13,6 +13,11 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
     RecordContentsCardDiffCallback()
 ) {
     private lateinit var binding: ItemRecordEmotionCardBinding
+    private var moreItemClickListener: OnMoreItemClickListener? = null
+
+    fun setOnMoreItemClickListener(listener: OnMoreItemClickListener) {
+        moreItemClickListener = listener
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -34,6 +39,11 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
             binding.recordWeekItem = item
             binding.firstEmotion = CommonUtil.getEmotionData(item.firstThink)
             binding.lastEmotion = item.lastThink?.let { CommonUtil.getEmotionData(it) }
+
+            binding.recordContentsCardMoreAiv.setOnClickListener {
+                moreItemClickListener?.onMoreIconClick(item)
+            }
+
             binding.executePendingBindings()
         }
     }
