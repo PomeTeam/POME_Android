@@ -67,327 +67,339 @@
             app:layout_constraintTop_toTopOf="@id/record_category_plus_tv"
             tools:listitem="@layout/item_record_category_chip" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/record_goal_card_cv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="18dp"
-            app:cardCornerRadius="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/record_no_goal_card_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="33dp"
-                tools:visibility="visible"
-                android:visibility="@{recordGoalItem == null ? View.VISIBLE : View.GONE}">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/record_no_goal_marshmellow_aiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/marshmallow_level_4_mint"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/record_no_goal_text_container_cl"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    app:layout_constraintBottom_toBottomOf="@id/record_no_goal_marshmellow_aiv"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/record_no_goal_marshmellow_aiv"
-                    app:layout_constraintTop_toTopOf="@id/record_no_goal_marshmellow_aiv">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/record_no_goal_title_atv"
-                        style="@style/Pome.SemiBold.16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:lineSpacingExtra="3sp"
-                        android:paddingHorizontal="20dp"
-                        android:text="@string/record_no_goal_title_text"
-                        android:textColor="@color/grey_8"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/record_no_goal_subtitle_atv"
-                        style="@style/Pome.Medium.14"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="0dp"
-                        android:text="@string/record_no_goal_subtitle_text"
-                        android:textColor="@color/main"
-                        app:layout_constraintStart_toStartOf="@id/record_no_goal_title_atv"
-                        app:layout_constraintTop_toBottomOf="@id/record_no_goal_title_atv" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/ic_arrow_right_24"
-                        app:layout_constraintBottom_toBottomOf="@id/record_no_goal_subtitle_atv"
-                        app:layout_constraintStart_toEndOf="@id/record_no_goal_subtitle_atv"
-                        app:layout_constraintTop_toTopOf="@id/record_no_goal_subtitle_atv" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/record_goal_card_cl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="14dp"
-                android:paddingStart="0dp"
-                android:paddingEnd="16dp"
-                tools:visibility="gone"
-                android:visibility="@{recordGoalItem == null ? View.GONE : View.VISIBLE}">
-
-                <TextView
-                    android:id="@+id/record_goal_card_public_chip_tv"
-                    style="@style/Pome.SemiBold.10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/item_grey1_r4_background"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="4dp"
-                    android:text="@{recordGoalItem.recordGoalCard.private ? `비공개` : `공개`}"
-                    tools:text="비공개"
-                    android:textColor="@color/grey_5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/record_goal_card_day_chip_tv"
-                    style="@style/Pome.SemiBold.10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:background="@drawable/item_pink10_r4_background"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="4dp"
-                    android:text="@{recordGoalItem.recordGoalCard.timeLimit == 0 ? `END` : @string/record_category_limit_date(recordGoalItem.recordGoalCard.timeLimit)}"
-                    tools:text="END"
-                    android:textColor="@color/pink_100"
-                    app:layout_constraintBottom_toBottomOf="@id/record_goal_card_public_chip_tv"
-                    app:layout_constraintStart_toEndOf="@id/record_goal_card_public_chip_tv"
-                    app:layout_constraintTop_toTopOf="@id/record_goal_card_public_chip_tv" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/record_goal_more_aiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="5dp"
-                    android:src="@drawable/ic_more_vertical_24"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/record_goal_title_atv"
-                    style="@style/Pome.SemiBold.18"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:lineSpacingExtra="6sp"
-                    android:maxLines="1"
-                    android:paddingHorizontal="0dp"
-                    android:text="@{recordGoalItem.recordGoalCard.title}"
-                    tools:text="커피 대신 물을 마시자"
-                    android:textColor="@color/grey_8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/record_goal_card_public_chip_tv"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_card_public_chip_tv" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/record_goal_used_amount_title_atv"
-                    style="@style/Pome.SemiBold.12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/record_goal_used_amount_title_text"
-                    android:textColor="@color/grey_5"
-                    app:layout_constraintStart_toStartOf="@id/record_goal_title_atv"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_title_atv" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/record_goal_used_amount_atv"
-                    style="@style/Pome.SemiBold.16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingExtra="3sp"
-                    android:text="@{recordGoalItem.recordGoalCard.useAmount}"
-                    tools:text="30,000원"
-                    android:textColor="@color/grey_7"
-                    app:layout_constraintStart_toStartOf="@id/record_goal_used_amount_title_atv"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_used_amount_title_atv" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/record_goal_amount_atv"
-                    style="@style/Pome.SemiBold.16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:text="@{recordGoalItem.recordGoalCard.goalAmount}"
-                    tools:text="· 100,000원"
-                    android:textColor="@color/grey_5"
-                    app:layout_constraintBottom_toBottomOf="@id/record_goal_used_amount_atv"
-                    app:layout_constraintStart_toEndOf="@id/record_goal_used_amount_atv"
-                    app:layout_constraintTop_toTopOf="@id/record_goal_used_amount_atv" />
-
-                <!--
-                    런타임에서 enabled를 false로 설정하여 seekbar thumb 고정
-                -->
-                <androidx.appcompat.widget.AppCompatSeekBar
-                    android:id="@+id/record_amount_progress_asb"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:focusableInTouchMode="false"
-                    android:maxHeight="6dp"
-                    android:minHeight="6dp"
-                    android:progress="@{recordGoalItem.recordGoalCard.progress}"
-                    tools:progress="0"
-                    android:progressDrawable="@drawable/pome_seekbar_custom"
-                    android:thumb="@drawable/pome_seekbar_custom_thumb"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_amount_atv" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/record_amount_progress_text_tv"
-                    style="@style/Pome.SemiBold.12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{@string/record_progress_percent(recordGoalItem.recordGoalCard.progress)}"
-                    tools:text="0%"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/record_amount_progress_asb"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/record_amount_progress_asb" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/record_week_consume_title_atv"
-            style="@style/Pome.SemiBold.18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/record_week_consume_title_text"
-            android:textColor="@color/grey_8"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/record_goal_card_cv" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/record_write_emotion_container_cl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/minte5_solid_r6_background"
-            android:padding="14dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/record_week_consume_title_atv">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/record_write_emotion_heart_aiv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_heart"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/record_write_emotion_title_atv"
-                style="@style/Pome.SemiBold.16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/record_write_emotion_title_text"
-                android:textColor="@color/grey_8"
-                app:layout_constraintStart_toEndOf="@id/record_write_emotion_heart_aiv"
-                app:layout_constraintTop_toTopOf="@id/record_write_emotion_heart_aiv" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_arrow_right_big_24"
-                app:layout_constraintBottom_toBottomOf="@id/record_write_emotion_title_atv"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/record_write_emotion_title_atv" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/record_write_emotion_subtitle_atv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="@{@string/record_write_emotion_subtitle_text(recordWeekData.remindCount)}"
-                tools:text="다시 돌아볼 씀씀이가 0건 있어요"
-                app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
-                app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/record_no_write_emotion_container_cl"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:visibility="@{recordWeekData.recordWeekItem == null ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
+            android:layout_marginTop="18dp"
+            app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/record_no_write_emotion_aiv"
-                    android:layout_width="wrap_content"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/record_goal_card_cv"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/more_circle"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginHorizontal="16dp"
+                    app:cardCornerRadius="6dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/record_no_goal_card_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="33dp"
+                        tools:visibility="visible"
+                        android:visibility="@{recordGoalItem == null ? View.VISIBLE : View.GONE}">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/record_no_goal_marshmellow_aiv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/marshmallow_level_4_mint"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/record_no_goal_text_container_cl"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            app:layout_constraintBottom_toBottomOf="@id/record_no_goal_marshmellow_aiv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/record_no_goal_marshmellow_aiv"
+                            app:layout_constraintTop_toTopOf="@id/record_no_goal_marshmellow_aiv">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/record_no_goal_title_atv"
+                                style="@style/Pome.SemiBold.16"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="3sp"
+                                android:paddingHorizontal="20dp"
+                                android:text="@string/record_no_goal_title_text"
+                                android:textColor="@color/grey_8"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/record_no_goal_subtitle_atv"
+                                style="@style/Pome.Medium.14"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="0dp"
+                                android:text="@string/record_no_goal_subtitle_text"
+                                android:textColor="@color/main"
+                                app:layout_constraintStart_toStartOf="@id/record_no_goal_title_atv"
+                                app:layout_constraintTop_toBottomOf="@id/record_no_goal_title_atv" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_arrow_right_24"
+                                app:layout_constraintBottom_toBottomOf="@id/record_no_goal_subtitle_atv"
+                                app:layout_constraintStart_toEndOf="@id/record_no_goal_subtitle_atv"
+                                app:layout_constraintTop_toTopOf="@id/record_no_goal_subtitle_atv" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/record_goal_card_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="14dp"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="16dp"
+                        tools:visibility="gone"
+                        android:visibility="@{recordGoalItem == null ? View.GONE : View.VISIBLE}">
+
+                        <TextView
+                            android:id="@+id/record_goal_card_public_chip_tv"
+                            style="@style/Pome.SemiBold.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:background="@drawable/item_grey1_r4_background"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="4dp"
+                            android:text="@{recordGoalItem.recordGoalCard.private ? `비공개` : `공개`}"
+                            tools:text="비공개"
+                            android:textColor="@color/grey_5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/record_goal_card_day_chip_tv"
+                            style="@style/Pome.SemiBold.10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:background="@drawable/item_pink10_r4_background"
+                            android:paddingHorizontal="6dp"
+                            android:paddingVertical="4dp"
+                            android:text="@{recordGoalItem.recordGoalCard.timeLimit == 0 ? `END` : @string/record_category_limit_date(recordGoalItem.recordGoalCard.timeLimit)}"
+                            tools:text="END"
+                            android:textColor="@color/pink_100"
+                            app:layout_constraintBottom_toBottomOf="@id/record_goal_card_public_chip_tv"
+                            app:layout_constraintStart_toEndOf="@id/record_goal_card_public_chip_tv"
+                            app:layout_constraintTop_toTopOf="@id/record_goal_card_public_chip_tv" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/record_goal_more_aiv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="5dp"
+                            android:src="@drawable/ic_more_vertical_24"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_goal_title_atv"
+                            style="@style/Pome.SemiBold.18"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:lineSpacingExtra="6sp"
+                            android:maxLines="1"
+                            android:paddingHorizontal="0dp"
+                            android:text="@{recordGoalItem.recordGoalCard.title}"
+                            tools:text="커피 대신 물을 마시자"
+                            android:textColor="@color/grey_8"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/record_goal_card_public_chip_tv"
+                            app:layout_constraintTop_toBottomOf="@id/record_goal_card_public_chip_tv" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_goal_used_amount_title_atv"
+                            style="@style/Pome.SemiBold.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/record_goal_used_amount_title_text"
+                            android:textColor="@color/grey_5"
+                            app:layout_constraintStart_toStartOf="@id/record_goal_title_atv"
+                            app:layout_constraintTop_toBottomOf="@id/record_goal_title_atv" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_goal_used_amount_atv"
+                            style="@style/Pome.SemiBold.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:lineSpacingExtra="3sp"
+                            android:text="@{recordGoalItem.recordGoalCard.useAmount}"
+                            tools:text="30,000원"
+                            android:textColor="@color/grey_7"
+                            app:layout_constraintStart_toStartOf="@id/record_goal_used_amount_title_atv"
+                            app:layout_constraintTop_toBottomOf="@id/record_goal_used_amount_title_atv" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_goal_amount_atv"
+                            style="@style/Pome.SemiBold.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:text="@{recordGoalItem.recordGoalCard.goalAmount}"
+                            tools:text="· 100,000원"
+                            android:textColor="@color/grey_5"
+                            app:layout_constraintBottom_toBottomOf="@id/record_goal_used_amount_atv"
+                            app:layout_constraintStart_toEndOf="@id/record_goal_used_amount_atv"
+                            app:layout_constraintTop_toTopOf="@id/record_goal_used_amount_atv" />
+
+                        <!--
+                            런타임에서 enabled를 false로 설정하여 seekbar thumb 고정
+                        -->
+                        <androidx.appcompat.widget.AppCompatSeekBar
+                            android:id="@+id/record_amount_progress_asb"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:focusableInTouchMode="false"
+                            android:maxHeight="6dp"
+                            android:minHeight="6dp"
+                            android:progress="@{recordGoalItem.recordGoalCard.progress}"
+                            tools:progress="0"
+                            android:progressDrawable="@drawable/pome_seekbar_custom"
+                            android:thumb="@drawable/pome_seekbar_custom_thumb"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/record_goal_amount_atv" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_amount_progress_text_tv"
+                            style="@style/Pome.SemiBold.12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{@string/record_progress_percent(recordGoalItem.recordGoalCard.progress)}"
+                            tools:text="0%"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="@id/record_amount_progress_asb"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/record_amount_progress_asb" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/record_week_consume_title_atv"
+                    style="@style/Pome.SemiBold.18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/record_no_write_emotion_text"
-                    android:layout_marginTop="12dp"
-                    app:layout_constraintTop_toBottomOf="@id/record_no_write_emotion_aiv"
-                    app:layout_constraintStart_toStartOf="@id/record_no_write_emotion_aiv"
-                    app:layout_constraintEnd_toEndOf="@id/record_no_write_emotion_aiv"/>
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/record_week_consume_title_text"
+                    android:textColor="@color/grey_8"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_goal_card_cv" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/record_emotion_rv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_record_emotion_card"
-            android:layout_marginTop="12dp"
-            android:paddingHorizontal="16dp"
-            app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/record_write_emotion_container_cl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/minte5_solid_r6_background"
+                    android:padding="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_week_consume_title_atv">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/record_write_emotion_heart_aiv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_heart"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/record_write_emotion_title_atv"
+                        style="@style/Pome.SemiBold.16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/record_write_emotion_title_text"
+                        android:textColor="@color/grey_8"
+                        app:layout_constraintStart_toEndOf="@id/record_write_emotion_heart_aiv"
+                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_heart_aiv" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_arrow_right_big_24"
+                        app:layout_constraintBottom_toBottomOf="@id/record_write_emotion_title_atv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_title_atv" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/record_write_emotion_subtitle_atv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@{@string/record_write_emotion_subtitle_text(recordWeekData.remindCount)}"
+                        tools:text="다시 돌아볼 씀씀이가 0건 있어요"
+                        app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
+                        app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/record_no_write_emotion_container_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:visibility="@{recordWeekData.recordWeekItem == null ? View.VISIBLE : View.GONE}"
+                    tools:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/record_no_write_emotion_aiv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/more_circle"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/record_no_write_emotion_text"
+                            android:layout_marginTop="12dp"
+                            app:layout_constraintTop_toBottomOf="@id/record_no_write_emotion_aiv"
+                            app:layout_constraintStart_toStartOf="@id/record_no_write_emotion_aiv"
+                            app:layout_constraintEnd_toEndOf="@id/record_no_write_emotion_aiv"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/record_emotion_rv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_record_emotion_card"
+                    android:layout_marginTop="12dp"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
 
         <!-- 그림자나 딱히 Floating Action Button을 사용할 필요성이 없어 이미지뷰로 구현 -->
         <androidx.constraintlayout.widget.ConstraintLayout
