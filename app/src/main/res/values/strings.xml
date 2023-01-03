@@ -69,4 +69,12 @@
     <string name="goal_more_title_text">목표 편집</string>
     <string name="remove_yes_text">삭제할래요</string>
     <string name="remove_no_text">아니요</string>
+    <string name="modify_record_goal_title_text">목표</string>
+    <string name="modify_record_goal_hint_text">목표를 선택해주세요</string>
+    <string name="modify_record_date_title_text">소비날짜</string>
+    <string name="modify_record_price_hint_text">50,000</string>
+    <string name="modify_record_price_title_text">소비 금액</string>
+    <string name="modify_record_content_title_text">소비 기록</string>
+    <string name="modify_record_content_hint_text">소비에 대한 감상을 적어주세요 (150자)</string>
+    <string name="modify_record_check_button_text">수정했어요</string>
 </resources>

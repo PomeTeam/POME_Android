@@ -3,6 +3,7 @@ package com.teampome.pome.presentation.record
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentModifyRecordCardBinding
@@ -19,6 +20,8 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     }
 
     override fun initListener() {
-
+        binding.modifyRecordLeftArrowAiv.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 }
