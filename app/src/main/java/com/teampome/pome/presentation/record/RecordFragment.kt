@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.Toast
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -185,9 +186,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 수정하기 클릭
         recordDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
-            Toast.makeText(requireContext(), "기록 카드 수정하기", Toast.LENGTH_SHORT).show()
-
             recordDialog.dismiss()
+
+            moveToModifyRecordCard()
         }
 
         // 삭제 클릭
@@ -226,5 +227,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
             removeCardDialog.dismiss()
         }
+    }
+
+    private fun moveToModifyRecordCard() {
+        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment()
+
+        findNavController().navigate(action)
     }
 }
