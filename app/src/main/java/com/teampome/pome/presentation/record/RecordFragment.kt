@@ -136,13 +136,19 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         removeDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
         removeDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
-        
+
+        // 삭제하기 버튼 클릭
         removeDialogBinding.removeYesTextAtv.setOnClickListener {
             Toast.makeText(requireContext(), "Yes", Toast.LENGTH_SHORT).show()
+            goalMoreBottomSheetDialog.dismiss()
+            removeDialog.dismiss()
         }
-        
+
+        // 아니요 버튼 클릭
         removeDialogBinding.removeNoTextAtv.setOnClickListener {
             Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
+            goalMoreBottomSheetDialog.dismiss()
+            removeDialog.dismiss()
         }
     }
 }
