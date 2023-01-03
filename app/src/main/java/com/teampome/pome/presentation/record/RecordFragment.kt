@@ -5,13 +5,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -36,8 +33,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var goalMoreBottomSheetDialog: BottomSheetDialog
 
     // 목표 삭제 클릭 다이얼로그
-    private lateinit var removeDialogBinding: PomeRemoveDialogBinding
-    private lateinit var removeDialog: Dialog
+    private lateinit var removeGoalDialogBinding: PomeRemoveDialogBinding
+    private lateinit var removeGoalDialog: Dialog
+
+    // 목표 삭제 클릭 다이얼로그
+    private lateinit var removeCardDialogBinding: PomeRemoveDialogBinding
+    private lateinit var removeCardDialog: Dialog
 
     // Todo : 공통 다이얼로그로 변경
     private lateinit var recordDialogBinding: PomeRegisterBottomSheetDialogBinding
@@ -50,6 +51,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         super.onViewCreated(view, savedInstanceState)
 
         makeBottomSheetDialog()
+        makeRecordDialog()
+        makeGoalRemoveDialog()
+        makeCardRemoveDialog()
 
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
@@ -115,7 +119,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 // content card more 버튼 클릭 리스너 등록
                 (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
                     override fun onMoreIconClick(item: RecordWeekItem) {
-                        makeRecordDialog()
                         recordWeekItem = item
 
                         recordDialog.show()
@@ -128,6 +131,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
     }
 
+    // 목표 카드 더보기 클릭
     private fun makeBottomSheetDialog() {
         goalMoreBottomSheetDialog = BottomSheetDialog(requireContext())
         goalMoreBottomSheetDialogBinding = PomeRecordMoreGoalBottomSheetDialogBinding.inflate(layoutInflater, null, false)
@@ -136,39 +140,41 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // bottom sheet 삭제하기 클릭
         goalMoreBottomSheetDialogBinding.goalMoreTrashTv.setOnClickListener {
-            makeRemoveDialog()
+            goalMoreBottomSheetDialog.dismiss()
 
-            removeDialog.show()
+            removeGoalDialog.show()
         }
     }
 
-    private fun makeRemoveDialog() {
-        removeDialog = Dialog(requireContext())
-        removeDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
+    // 목표 카드 삭제하기 클릭
+    private fun makeGoalRemoveDialog() {
+        removeGoalDialog = Dialog(requireContext())
+        removeGoalDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
         
-        removeDialog.setContentView(removeDialogBinding.root)
+        removeGoalDialog.setContentView(removeGoalDialogBinding.root)
+
+        removeGoalDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
+        removeGoalDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
 
         // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
-        removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
-        removeDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
-        removeDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
+        removeGoalDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         // 삭제하기 버튼 클릭
-        removeDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "Yes", Toast.LENGTH_SHORT).show()
-            goalMoreBottomSheetDialog.dismiss()
-            removeDialog.dismiss()
+        removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "목표 삭제하기 Yes", Toast.LENGTH_SHORT).show()
+
+            removeGoalDialog.dismiss()
         }
 
         // 아니요 버튼 클릭
-        removeDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "No", Toast.LENGTH_SHORT).show()
-            goalMoreBottomSheetDialog.dismiss()
-            removeDialog.dismiss()
+        removeGoalDialogBinding.removeNoTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "목표 삭제하기 No", Toast.LENGTH_SHORT).show()
+
+            removeGoalDialog.dismiss()
         }
     }
 
+    // 카드 더보기 클릭
     private fun makeRecordDialog() {
         recordDialog = BottomSheetDialog(requireContext())
         recordDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
@@ -179,16 +185,46 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 수정하기 클릭
         recordDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
-            Toast.makeText(requireContext(), "$recordWeekItem 수정하기", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "기록 카드 수정하기", Toast.LENGTH_SHORT).show()
 
             recordDialog.dismiss()
         }
 
         // 삭제 클릭
         recordDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            Toast.makeText(requireContext(), "$recordWeekItem 삭제하기", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "기록 카드 삭제하기", Toast.LENGTH_SHORT).show()
 
             recordDialog.dismiss()
+
+            removeCardDialog.show()
+        }
+    }
+
+    // 카드 삭제하기 클릭
+    private fun makeCardRemoveDialog() {
+        removeCardDialog = Dialog(requireContext())
+        removeCardDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
+
+        removeCardDialog.setContentView(removeCardDialogBinding.root)
+
+        removeCardDialogBinding.removeDialogTitleAtv.text = "기록을 삭제하시겠어요?"
+        removeCardDialogBinding.removeDialogSubtitleAtv.text = "삭제한 내용은 다시 되돌릴 수 없어요"
+
+        // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
+        removeCardDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        // 삭제하기 버튼 클릭
+        removeCardDialogBinding.removeYesTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "카드 삭제 Yes", Toast.LENGTH_SHORT).show()
+
+            removeCardDialog.dismiss()
+        }
+
+        // 아니요 버튼 클릭
+        removeCardDialogBinding.removeNoTextAtv.setOnClickListener {
+            Toast.makeText(requireContext(), "카드 삭제 No", Toast.LENGTH_SHORT).show()
+
+            removeCardDialog.dismiss()
         }
     }
 }
