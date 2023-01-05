@@ -9,6 +9,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentModifyRecordCardBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 
 class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R.layout.fragment_modify_record_card) {
@@ -28,6 +29,11 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     }
 
     override fun initListener() {
+        // 키보드 자연스럽게 처리
+        binding.modifyRecordCardContainerCl.setOnClickListener {
+            CommonUtil.hideKeyboard(requireActivity())
+        }
+
         binding.modifyRecordLeftArrowAiv.setOnClickListener {
             findNavController().navigateUp()
         }
@@ -44,11 +50,16 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         goalBottomSheetDialog.setContentView(goalBottomSheetDialogBinding.root)
 
         goalBottomSheetDialogBinding.title = "목표"
-        goalBottomSheetDialogBinding.textListRv.adapter = TextListAdapter()
-        (goalBottomSheetDialogBinding.textListRv.adapter as TextListAdapter).submitList(
-            args.categoryList.asList()
-        )
+        goalBottomSheetDialogBinding.textListRv.adapter = TextListAdapter().apply {
+            submitList(args.categoryList.asList())
+            setOnGoalCategoryClickListener(object : OnGoalCategoryClickListener {
+                override fun categoryClick(category: String) {
+                    binding.modifyRecordGoalAet.setText(category)
 
+                    goalBottomSheetDialog.dismiss()
+                }
+            })
+        }
         goalBottomSheetDialogBinding.executePendingBindings()
     }
 }

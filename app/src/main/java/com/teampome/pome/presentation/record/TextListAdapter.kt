@@ -11,6 +11,11 @@ class TextListAdapter : ListAdapter<String, TextListAdapter.TextListViewHolder>(
     TextListDiffCallback()
 ) {
     private lateinit var binding: ItemTextListBinding
+    private var onGoalCategoryClickListener: OnGoalCategoryClickListener? = null
+
+    fun setOnGoalCategoryClickListener(listener: OnGoalCategoryClickListener) {
+        onGoalCategoryClickListener = listener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TextListViewHolder {
         binding = ItemTextListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,6 +30,10 @@ class TextListAdapter : ListAdapter<String, TextListAdapter.TextListViewHolder>(
     inner class TextListViewHolder(bind: ItemTextListBinding) : RecyclerView.ViewHolder(bind.root) {
         fun bind(category: String) {
             binding.text = category
+
+            binding.itemTextTv.setOnClickListener {
+                onGoalCategoryClickListener?.categoryClick(category)
+            }
             binding.executePendingBindings()
         }
     }
