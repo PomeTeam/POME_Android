@@ -11,6 +11,8 @@ import com.teampome.pome.databinding.FragmentModifyRecordCardBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R.layout.fragment_modify_record_card) {
 
@@ -24,6 +26,12 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
 
         binding.modifyRecordGoalAet.setText(args.currentCategory)
         makeGoalBottomSheetDialog()
+
+        // 일단 현재 시간으로...
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val sdf = SimpleDateFormat("yy.MM.dd")
+        binding.modifyRecordDateAet.setText(sdf.format(date))
 
         Log.d("test", "args : ${args.recordWeekItem}")
     }
