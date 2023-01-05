@@ -1,5 +1,6 @@
 package com.teampome.pome.presentation.record
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -21,6 +22,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     private lateinit var goalBottomSheetDialog: BottomSheetDialog
     private lateinit var goalBottomSheetDialogBinding: PomeTextListBottomSheetDialogBinding
 
+    @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
