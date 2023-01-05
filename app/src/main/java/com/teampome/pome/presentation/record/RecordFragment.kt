@@ -48,6 +48,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
     private lateinit var recordWeekItem: RecordWeekItem
     private lateinit var categoryList: List<String>
+    private lateinit var currentCategory: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,6 +64,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: RemindCategoryData, position: Int) {
                         binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
                         binding.executePendingBindings()
+
+                        currentCategory = item.category
                     }
                 })
             }
@@ -113,6 +116,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     categoryList = recordGoalItemList.map { recordGoalItem ->
                         recordGoalItem.category
                     }
+                    currentCategory = recordGoalItemList[0].category
 
                     // 초기 값은 0번
                     binding.recordGoalItem = recordGoalItemList[0]
@@ -238,7 +242,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private fun moveToModifyRecordCard() {
         val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
             recordWeekItem,
-            categoryList.toTypedArray()
+            categoryList.toTypedArray(),
+            currentCategory
         )
 
         findNavController().navigate(action)

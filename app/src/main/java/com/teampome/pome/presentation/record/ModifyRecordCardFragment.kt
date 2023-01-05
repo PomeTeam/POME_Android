@@ -21,6 +21,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.modifyRecordGoalAet.setText(args.currentCategory)
         makeGoalBottomSheetDialog()
 
         Log.d("test", "args : ${args.recordWeekItem}")

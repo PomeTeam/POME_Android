@@ -162,5 +162,8 @@
         <argument
             android:name="category_list"
             app:argType="string[]" />
+        <argument
+            android:name="current_category"
+            app:argType="string"/>
     </fragment>
 </navigation>
