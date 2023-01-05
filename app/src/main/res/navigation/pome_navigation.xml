@@ -159,5 +159,8 @@
         <argument
             android:name="record_week_item"
             app:argType="com.teampome.pome.model.RecordWeekItem" />
+        <argument
+            android:name="category_list"
+            app:argType="string[]" />
     </fragment>
 </navigation>
