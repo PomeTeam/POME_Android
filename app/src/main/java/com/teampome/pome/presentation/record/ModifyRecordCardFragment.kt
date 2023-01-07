@@ -99,6 +99,11 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
                 binding.modifyRecordContentCharacterCountAtv.text = "${p0?.length}/150"
             }
         })
+
+        // 수정했어요 클릭
+        binding.modifyRecordCheckAcb.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     private fun makeGoalBottomSheetDialog() {
