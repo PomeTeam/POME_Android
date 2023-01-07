@@ -103,4 +103,5 @@
     <string name="modify_record_content_title_text">소비 기록</string>
     <string name="modify_record_content_hint_text">소비에 대한 감상을 적어주세요 (150자)</string>
     <string name="modify_record_check_button_text">수정했어요</string>
+    <string name="calendar_button_select_text">선택했어요</string>
 </resources>

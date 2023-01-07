@@ -2,16 +2,17 @@ package com.teampome.pome.presentation.record
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.prolificinteractive.materialcalendarview.CalendarDay
-import com.prolificinteractive.materialcalendarview.DayViewDecorator
-import com.prolificinteractive.materialcalendarview.DayViewFacade
+import com.prolificinteractive.materialcalendarview.*
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter
@@ -21,7 +22,10 @@ import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import org.threeten.bp.DateTimeUtils
 import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Instant
+import org.threeten.bp.ZoneId
 import java.text.SimpleDateFormat
 import java.util.Date
 
@@ -37,21 +41,28 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     private lateinit var calendarBottomSheetDialog: BottomSheetDialog
     private lateinit var calendarBottomSheetDialogBinding: PomeCalendarBottomSheetDialogBinding
 
+    // 나중에 viewModel로 이동
+    private var dateData: String? = null
+    private var curDate: Date? = null
+
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.modifyRecordGoalAet.setText(args.currentCategory)
-        makeGoalBottomSheetDialog()
-        makeCalendarBottomSheetDialog()
 
         // 일단 현재 시간으로...
         val now = System.currentTimeMillis()
         val date = Date(now)
         val sdf = SimpleDateFormat("yy.MM.dd")
+
+        dateData = sdf.format(date)
+        curDate = date
+
         binding.modifyRecordDateAet.setText(sdf.format(date))
 
-        Log.d("test", "args : ${args.recordWeekItem}")
+        makeGoalBottomSheetDialog()
+        makeCalendarBottomSheetDialog()
     }
 
     override fun initListener() {
@@ -102,6 +113,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         settingCustomCalendar()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun settingCustomCalendar() {
         calendarBottomSheetDialogBinding.calendarMcv.apply {
             // 첫 시작 요일 - 월요일
@@ -116,6 +128,21 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
 
             // 선택시 드로어블 적용
             addDecorators(DayDecorator(requireContext()))
+
+            isDynamicHeightEnabled = true
+
+            // 현재 선택중인 날짜 설정
+            val localDate = curDate?.let{Instant.ofEpochMilli(it.time).atZone(ZoneId.systemDefault()).toLocalDate()}
+            setSelectedDate(localDate)
+
+            setOnDateChangedListener { _, date, _ ->
+                Toast.makeText(requireContext(), "date : $date", Toast.LENGTH_SHORT).show()
+                val sdf = SimpleDateFormat("yy.MM.dd")
+                val realDate = DateTimeUtils.toDate(date.date.atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+                dateData = sdf.format(realDate)
+                curDate = realDate
+            }
         }
 
         calendarBottomSheetDialogBinding.calendarMcv.setTitleFormatter(object : TitleFormatter{
@@ -126,6 +153,11 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
                 } ?: return ""
             }
         })
+
+        calendarBottomSheetDialogBinding.calendarSelectAtb.setOnClickListener {
+            binding.modifyRecordDateAet.setText(dateData)
+            calendarBottomSheetDialog.dismiss()
+        }
     }
 }
 
