@@ -47,6 +47,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     private var dateData: String? = null
     private var curDate: Date? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -126,6 +127,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         goalBottomSheetDialogBinding.executePendingBindings()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun makeCalendarBottomSheetDialog() {
         calendarBottomSheetDialog = BottomSheetDialog(requireContext())
         calendarBottomSheetDialogBinding = PomeCalendarBottomSheetDialogBinding.inflate(layoutInflater, null, false)
