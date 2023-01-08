@@ -1,16 +1,23 @@
 package com.teampome.pome.presentation.record
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.view.Window
+import android.view.WindowManager.LayoutParams
 import android.widget.Toast
-import androidx.databinding.ViewDataBinding
+import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
+import androidx.core.view.marginStart
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -18,9 +25,12 @@ import com.teampome.pome.databinding.FragmentRecordBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
+import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
+import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.OnItemClickListener
 import com.teampome.pome.viewmodel.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,10 +55,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var recordDialogBinding: PomeRegisterBottomSheetDialogBinding
     private lateinit var recordDialog: BottomSheetDialog
 
+    // 불가 다이얼로그
+    private lateinit var noticeDialogBinding: TopImgNoticeDialogBinding
+    private lateinit var noticeDialog: Dialog
+
     // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
     private lateinit var recordWeekItem: RecordWeekItem
     private lateinit var categoryList: List<String>
     private lateinit var currentCategory: String
+    private var currentCategoryPosition: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -57,6 +72,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         makeRecordDialog()
         makeGoalRemoveDialog()
         makeCardRemoveDialog()
+        makeWarningDialog()
 
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
@@ -66,11 +82,22 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         binding.executePendingBindings()
 
                         currentCategory = item.category
+                        currentCategoryPosition = position
                     }
                 })
             }
 
-        binding.recordEmotionRv.adapter = RecordContentsCardAdapter()
+        binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
+            setOnBodyClickListener(object : OnItemClickListener {
+                override fun itemClick() {
+                    alertWarningDialog(
+                        R.drawable.pen_pink,
+                        "아직은 감정을 기록할 수 없어요",
+                        "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
+                    )
+                }
+            })
+        }
 
         binding.recordAmountProgressAsb.apply {
             isEnabled = false
@@ -139,6 +166,30 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 binding.recordWeekData = it.recordWeekData
                 binding.executePendingBindings()
             }
+        }
+
+        // floating button click
+        binding.recordWriteButtonCl.setOnClickListener {
+            viewModel.recordTestData.value?.let { recordTestData ->
+                // 목표가 없는데 기록카드 쓰기 버튼을 누른 경우
+                if(recordTestData.recordGoalData.isNullOrEmpty()) {
+                    alertWarningDialog(
+                        R.drawable.writing_warning_alert_3d_component,
+                        "지금은 씀씀이를 기록할 수 없어요",
+                        "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
+                    )
+                }
+            }
+        }
+
+        // category plus button click
+        binding.recordCategoryPlusTv.setOnClickListener {
+            // Todo: 조건은 목표가 10개 이상일 때, Alert지만 임시로 클릭시 바로 alert발생
+            alertWarningDialog(
+                R.drawable.number_10,
+                "목표는 10개를 넘을 수 없어요",
+                "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
+            )
         }
     }
 
@@ -236,6 +287,55 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             Toast.makeText(requireContext(), "카드 삭제 No", Toast.LENGTH_SHORT).show()
 
             removeCardDialog.dismiss()
+        }
+    }
+
+    // notice dialog 만들기
+    private fun makeWarningDialog() {
+        noticeDialogBinding = TopImgNoticeDialogBinding.inflate(layoutInflater, null, false)
+        noticeDialog = Dialog(requireContext())
+
+        noticeDialog.setContentView(noticeDialogBinding.root)
+
+        // close 버튼 정의
+        noticeDialogBinding.noticeCloseButtonAiv.setOnClickListener {
+            noticeDialog.dismiss()
+        }
+    }
+
+    // Warning 다이얼로그 띄우기
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun alertWarningDialog(
+        @RawRes @DrawableRes drawable: Int,
+        title: String,
+        subTitle: String
+    ) {
+        noticeDialogBinding.apply {
+            // top 이미지 변경
+            Glide.with(noticeImageAiv)
+                .load(drawable)
+                .into(noticeImageAiv)
+
+            // title 변경
+            noticeTitleAtv.text = title
+
+            // subTitle 변경
+            noticeSubtitleAtv.text = subTitle
+        }
+
+        noticeDialog.show()
+
+        // dialog의 window가 wrap_content이기 때문에 화면에 꽉 안차게 나옴
+        noticeDialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+
+        val deviceSize = CommonUtil.getDeviceSize(requireContext())
+        noticeDialog.window?.let {
+            // dialog 둥글게 처리
+            it.setBackgroundDrawable(resources.getDrawable(R.drawable.white_r8_background, null))
+
+            val params = it.attributes
+            params.width = (deviceSize[0] * 0.8).toInt()
+            it.attributes = params as LayoutParams
         }
     }
 

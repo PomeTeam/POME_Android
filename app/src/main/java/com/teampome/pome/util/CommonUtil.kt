@@ -2,6 +2,8 @@ package com.teampome.pome.util
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Point
+import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
 import com.teampome.pome.viewmodel.Emotion
@@ -62,5 +64,16 @@ object CommonUtil {
         val scale = context.resources.displayMetrics.density
 
         return (wantDp * scale + 0.5f).toInt()
+    }
+
+    // device size
+    fun getDeviceSize(context: Context): IntArray {
+        val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val display = windowManager.defaultDisplay
+        val size = Point()
+
+        display.getSize(size)
+
+        return intArrayOf(size.x, size.y)
     }
 }

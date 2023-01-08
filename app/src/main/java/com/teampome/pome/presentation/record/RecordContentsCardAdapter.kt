@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
 import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.OnItemClickListener
 
 class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
@@ -15,8 +16,14 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
     private lateinit var binding: ItemRecordEmotionCardBinding
     private var moreItemClickListener: OnMoreItemClickListener? = null
 
+    private var bodyClickListener: OnItemClickListener? = null
+
     fun setOnMoreItemClickListener(listener: OnMoreItemClickListener) {
         moreItemClickListener = listener
+    }
+
+    fun setOnBodyClickListener(listener: OnItemClickListener) {
+        bodyClickListener = listener
     }
 
     override fun onCreateViewHolder(
@@ -42,6 +49,10 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
 
             binding.recordContentsCardMoreAiv.setOnClickListener {
                 moreItemClickListener?.onMoreIconClick(item)
+            }
+
+            binding.recordContentsCardContainerCv.setOnClickListener {
+                bodyClickListener?.itemClick()
             }
 
             binding.executePendingBindings()
