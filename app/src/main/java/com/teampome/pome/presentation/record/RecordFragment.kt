@@ -191,6 +191,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
             )
         }
+
+        binding.recordNoticeBellAiv.setOnClickListener {
+            moveToRecordAlarms()
+        }
     }
 
     // 목표 카드 더보기 클릭
@@ -345,6 +349,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             categoryList.toTypedArray(),
             currentCategory
         )
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToRecordAlarms() {
+        val action = RecordFragmentDirections.actionRecordFragmentToRecordAlarmsFragment()
 
         findNavController().navigate(action)
     }

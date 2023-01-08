@@ -100,4 +100,33 @@ class RecordTestDataSource @Inject constructor(
             )
         )
     }
+
+    override suspend fun getRecordTestAlarmsData(): List<TestAlarmsData> {
+        return listOf(
+            TestAlarmsData(
+                title = "돌아보기",
+                time = "· 1시간 전",
+                content = "기록을 남긴지 일주일이 되었어요!\n" +
+                        "일주일이 지난 오늘의 감정을 남겨주세요"
+            ),
+            TestAlarmsData(
+                title = "목표종료",
+                time = "· 1시간 전",
+                content = "목표 기간이 종료되었어요!\n" +
+                        "기록을 돌아보고 새로운 목표를 시작해봐요"
+            ),
+            TestAlarmsData(
+                title = "돌아보기",
+                time = "· 1시간 전",
+                content = "기록을 남긴지 일주일이 되었어요!\n" +
+                        "일주일이 지난 오늘의 감정을 남겨주세요"
+            ),
+            TestAlarmsData(
+                title = "목표종료",
+                time = "· 1시간 전",
+                content = "목표 기간이 종료되었어요!\n" +
+                        "기록을 돌아보고 새로운 목표를 시작해봐요"
+            )
+        )
+    }
 }

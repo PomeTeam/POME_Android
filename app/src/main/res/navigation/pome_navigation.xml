@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_record_fragment_to_modifyRecordCardFragment"
             app:destination="@id/modifyRecordCardFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_recordAlarmsFragment"
+            app:destination="@id/recordAlarmsFragment" />
     </fragment>
 
     <fragment
@@ -166,4 +169,9 @@
             android:name="current_category"
             app:argType="string"/>
     </fragment>
+    <fragment
+        android:id="@+id/recordAlarmsFragment"
+        android:name="com.teampome.pome.presentation.record.RecordAlarmsFragment"
+        android:label="RecordAlarmsFragment"
+        tools:layout="@layout/fragment_record_alarms"/>
 </navigation>
