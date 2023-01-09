@@ -6,7 +6,22 @@ import android.graphics.Point
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.Toast
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter
+import com.teampome.pome.R
+import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
+import org.threeten.bp.DateTimeUtils
+import org.threeten.bp.DayOfWeek
+import org.threeten.bp.Instant
+import org.threeten.bp.LocalDate
+import org.threeten.bp.ZoneId
+import java.text.SimpleDateFormat
 
 object CommonUtil {
 
@@ -75,5 +90,100 @@ object CommonUtil {
         display.getSize(size)
 
         return intArrayOf(size.x, size.y)
+    }
+
+    // setting calendar
+    fun settingCalendarBottomSheetDialog(
+        context: Context,
+        calendar : MaterialCalendarView,
+        checkBtn : Button,
+        dateCallback: (String) -> Unit,
+        btnCallback: () -> Unit
+    ) {
+        var isButtonEnabled = false
+
+        // 초기 캘린더 버튼 설정
+        disabledCalendarBtn(checkBtn)
+
+        calendar.apply {
+            // 첫 시작 요일 - 월요일
+            state().edit().setFirstDayOfWeek(DayOfWeek.MONDAY).commit()
+
+            // 한글 설정
+            setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_months)))
+            setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
+
+            // 헤더 폰트 설정
+            setHeaderTextAppearance(R.style.Pome_SemiBold_16)
+
+            // 선택시 드로어블 적용
+            addDecorators(DayDecorator(context))
+
+            isDynamicHeightEnabled = true
+
+            setOnDateChangedListener { _, date, _ ->
+                val sdf = SimpleDateFormat("yy.MM.dd")
+                val realDate = DateTimeUtils.toDate(date.date.atStartOfDay(ZoneId.systemDefault()).toInstant())
+
+                val dateStr = sdf.format(realDate)
+
+                dateCallback(dateStr)
+
+                if(!isButtonEnabled) {
+                    isButtonEnabled = true
+
+                    enabledCalendarBtn(checkBtn)
+                }
+            }
+
+            setTitleFormatter(object : TitleFormatter {
+                override fun format(day: CalendarDay?): CharSequence {
+                    day?.let {
+                        val calendarElement = it.date.toString().split("-")
+                        return "${calendarElement[0]}년 ${calendarElement[1]}월"
+                    } ?: return ""
+                }
+            })
+        }
+
+        checkBtn.setOnClickListener {
+            btnCallback()
+        }
+    }
+
+    private fun enabledCalendarBtn(
+        button: Button
+    ) {
+        button.isClickable = true
+        button.isEnabled = true
+        button.setBackgroundResource(R.drawable.register_profile_name_check_available_btn_background)
+    }
+
+    private fun disabledCalendarBtn(
+        button: Button
+    ) {
+        button.isClickable = false
+        button.isEnabled = false
+        button.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
+    }
+
+    fun settingAlreadySelectedCalendarBottomSheetDialog(
+        context: Context,
+        calendar: MaterialCalendarView,
+        checkBtn: Button,
+        localDate: LocalDate,
+        dateCallback: (String) -> Unit,
+        btnCallback: () -> Unit
+    ) {
+        settingCalendarBottomSheetDialog(
+            context,
+            calendar,
+            checkBtn,
+            dateCallback,
+            btnCallback
+        )
+
+        // 현재 선택중인 날짜 설정
+        calendar.setSelectedDate(localDate)
     }
 }
