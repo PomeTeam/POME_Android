@@ -181,5 +181,14 @@
         android:id="@+id/addGoalCalendarFragment"
         android:name="com.teampome.pome.presentation.record.add.AddGoalCalendarFragment"
         android:label="AddGoalCalendarFragment"
-        tools:layout="@layout/fragment_add_goal_calendar"/>
+        tools:layout="@layout/fragment_add_goal_calendar">
+        <action
+            android:id="@+id/action_addGoalCalendarFragment_to_addGoalContentsFragment"
+            app:destination="@id/addGoalContentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalContentsFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalContentsFragment"
+        android:label="AddGoalContentsFragment"
+        tools:layout="@layout/fragment_add_goal_contents"/>
 </navigation>

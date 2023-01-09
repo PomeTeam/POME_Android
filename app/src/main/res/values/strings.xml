@@ -114,4 +114,15 @@
     <string name="add_goal_end_date_title_text">목표 종료 날짜</string>
     <string name="add_goal_end_date_hint_text">목표 종료 날짜를 선택해주세요</string>
     <string name="add_goal_check_button_text">선택했어요</string>
+    <string name="add_goal_contents_title_text">행복한 소비를 위해\n목표를 만들어보세요!</string>
+    <string name="add_goal_contents_subtitle_text">행복한 소비는 늘리고 후회되는 소비는 줄여봐요</string>
+    <string name="add_goal_contents_category_title_text">목표 카테고리</string>
+    <string name="add_goal_contents_category_hint_text">택시/건강 (8자)</string>
+    <string name="add_goal_contents_promise_title_text">한 줄 다짐</string>
+    <string name="add_goal_contents_promise_hint_text">걸어다니기/건강 관리에는 넉넉히 쓰자 (18자)</string>
+    <string name="add_goal_contents_amount_title_text">목표 금액</string>
+    <string name="add_goal_contents_amount_hint_text">50,000</string>
+    <string name="add_goal_contents_check_button_text">작성했어요</string>
+    <string name="add_goal_contents_private_title_text">목표 공개 설정</string>
+    <string name="add_goal_contents_private_subtitle_text">친구들에게 이 목표를 공개할까요?</string>
 </resources>

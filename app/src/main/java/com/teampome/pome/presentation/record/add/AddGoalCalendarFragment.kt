@@ -51,7 +51,7 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
 
         // 선택했어요 버튼 클릭
         binding.addGoalCheckButtonAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "선택했어요", Toast.LENGTH_SHORT).show()
+            moveToAddGoalContents()
         }
 
         binding.addGoalStartDateAet.addTextChangedListener(object : TextWatcher {
@@ -123,5 +123,11 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             binding.addGoalEndDateAet.setText(endDate)
             endCalendarDialog.dismiss()
         }
+    }
+
+    private fun moveToAddGoalContents() {
+        val action = AddGoalCalendarFragmentDirections.actionAddGoalCalendarFragmentToAddGoalContentsFragment()
+
+        findNavController().navigate(action)
     }
 }
