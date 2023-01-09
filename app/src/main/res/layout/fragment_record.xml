@@ -128,26 +128,34 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/record_no_goal_subtitle_atv"
-                                style="@style/Pome.Medium.14"
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:id="@+id/record_no_goal_subtitle_container_cl"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:paddingStart="20dp"
-                                android:paddingEnd="0dp"
-                                android:text="@string/record_no_goal_subtitle_text"
-                                android:textColor="@color/main"
                                 app:layout_constraintStart_toStartOf="@id/record_no_goal_title_atv"
-                                app:layout_constraintTop_toBottomOf="@id/record_no_goal_title_atv" />
+                                app:layout_constraintTop_toBottomOf="@id/record_no_goal_title_atv">
 
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_arrow_right_24"
-                                app:layout_constraintBottom_toBottomOf="@id/record_no_goal_subtitle_atv"
-                                app:layout_constraintStart_toEndOf="@id/record_no_goal_subtitle_atv"
-                                app:layout_constraintTop_toTopOf="@id/record_no_goal_subtitle_atv" />
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/record_no_goal_subtitle_atv"
+                                    style="@style/Pome.Medium.14"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp"
+                                    android:paddingStart="20dp"
+                                    android:paddingEnd="0dp"
+                                    android:text="@string/record_no_goal_subtitle_text"
+                                    android:textColor="@color/main"
+                                    app:layout_constraintTop_toTopOf="parent"
+                                    app:layout_constraintStart_toStartOf="parent"/>
+
+                                <androidx.appcompat.widget.AppCompatImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_arrow_right_24"
+                                    app:layout_constraintBottom_toBottomOf="@id/record_no_goal_subtitle_atv"
+                                    app:layout_constraintStart_toEndOf="@id/record_no_goal_subtitle_atv"
+                                    app:layout_constraintTop_toTopOf="@id/record_no_goal_subtitle_atv" />
+                            </androidx.constraintlayout.widget.ConstraintLayout>
                         </androidx.constraintlayout.widget.ConstraintLayout>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

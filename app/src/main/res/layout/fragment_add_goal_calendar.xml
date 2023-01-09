@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/add_goal_back_button_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left_24"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="6dp"
+            android:padding="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/back_button_text" />
+
+        <TextView
+            style="@style/Pome.SemiBold.20"
+            android:id="@+id/add_goal_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_goal_title_text"
+            android:textColor="@color/grey_8"
+            android:lineSpacingExtra="6sp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_back_button_iv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/add_goal_subtitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_goal_subtitle_text"
+            android:textColor="@color/grey_5"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_title_tv"
+            app:layout_constraintStart_toStartOf="@id/add_goal_title_tv"/>
+
+        <TextView
+            style="@style/Pome.SemiBold.14"
+            android:id="@+id/add_goal_start_date_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_goal_start_date_title_text"
+            android:textColor="@color/grey_7"
+            android:layout_marginTop="35dp"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_subtitle_tv"
+            app:layout_constraintStart_toStartOf="@id/add_goal_subtitle_tv"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            style="@style/Pome.Regular.14"
+            android:id="@+id/add_goal_start_date_aet"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:hint="@string/add_goal_start_date_text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey_5"
+            android:textCursorDrawable="@drawable/register_profile_name_cursor"
+            android:background="@drawable/register_profile_name_background"
+            android:enabled="false"
+            android:paddingHorizontal="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_start_date_title_tv"/>
+
+        <ImageView
+            android:id="@+id/add_goal_start_calendar_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_calender_24"
+            android:contentDescription="@string/ic_caledar_24_desc"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@id/add_goal_start_date_aet"
+            app:layout_constraintBottom_toBottomOf="@id/add_goal_start_date_aet"
+            app:layout_constraintEnd_toEndOf="@id/add_goal_start_date_aet"/>
+
+        <TextView
+            style="@style/Pome.SemiBold.14"
+            android:id="@+id/add_goal_end_date_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_goal_end_date_title_text"
+            android:textColor="@color/grey_7"
+            android:layout_marginTop="24dp"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_start_date_aet"
+            app:layout_constraintStart_toStartOf="@id/add_goal_start_date_aet"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            style="@style/Pome.Regular.14"
+            android:id="@+id/add_goal_end_date_aet"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:hint="@string/add_goal_end_date_hint_text"
+            android:textColor="@color/black"
+            android:textColorHint="@color/grey_5"
+            android:textCursorDrawable="@drawable/register_profile_name_cursor"
+            android:background="@drawable/register_profile_name_background"
+            android:enabled="false"
+            android:paddingHorizontal="16dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_end_date_title_tv"/>
+
+        <ImageView
+            android:id="@+id/add_goal_end_calendar_iv"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/ic_calender_24"
+            android:contentDescription="@string/ic_caledar_24_desc"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toTopOf="@id/add_goal_end_date_aet"
+            app:layout_constraintBottom_toBottomOf="@id/add_goal_end_date_aet"
+            app:layout_constraintEnd_toEndOf="@id/add_goal_end_date_aet"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Pome.Bold.18"
+            android:id="@+id/add_goal_check_button_acb"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/add_goal_check_button_text"
+            android:background="@drawable/register_profile_name_check_disable_btn_background"
+            android:clickable="false"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="14dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

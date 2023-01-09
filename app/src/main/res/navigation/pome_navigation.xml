@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_record_fragment_to_recordAlarmsFragment"
             app:destination="@id/recordAlarmsFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_addGoalCalendarFragment"
+            app:destination="@id/addGoalCalendarFragment" />
     </fragment>
 
     <fragment
@@ -174,4 +177,9 @@
         android:name="com.teampome.pome.presentation.record.RecordAlarmsFragment"
         android:label="RecordAlarmsFragment"
         tools:layout="@layout/fragment_record_alarms"/>
+    <fragment
+        android:id="@+id/addGoalCalendarFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalCalendarFragment"
+        android:label="AddGoalCalendarFragment"
+        tools:layout="@layout/fragment_add_goal_calendar"/>
 </navigation>

@@ -7,7 +7,6 @@ import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.Toast
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
@@ -18,7 +17,6 @@ import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.DateTimeUtils
 import org.threeten.bp.DayOfWeek
-import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
 import java.text.SimpleDateFormat
@@ -104,7 +102,7 @@ object CommonUtil {
         var isButtonEnabled = false
 
         // 초기 캘린더 버튼 설정
-        disabledCalendarBtn(checkBtn)
+        disabledPomeBtn(checkBtn)
 
         calendar.apply {
             // 첫 시작 요일 - 월요일
@@ -133,7 +131,7 @@ object CommonUtil {
                 if(!isButtonEnabled) {
                     isButtonEnabled = true
 
-                    enabledCalendarBtn(checkBtn)
+                    enabledPomeBtn(checkBtn)
                 }
             }
 
@@ -152,7 +150,7 @@ object CommonUtil {
         }
     }
 
-    private fun enabledCalendarBtn(
+    fun enabledPomeBtn(
         button: Button
     ) {
         button.isClickable = true
@@ -160,7 +158,7 @@ object CommonUtil {
         button.setBackgroundResource(R.drawable.register_profile_name_check_available_btn_background)
     }
 
-    private fun disabledCalendarBtn(
+    fun disabledPomeBtn(
         button: Button
     ) {
         button.isClickable = false

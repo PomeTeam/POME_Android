@@ -123,6 +123,16 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordGoalMoreAiv.setOnClickListener {
             goalMoreBottomSheetDialog.show()
         }
+
+        // 목표 + 클릭
+        binding.recordCategoryPlusTv.setOnClickListener {
+            moveToAddGoal()
+        }
+
+        // 목표 없을 때 목표 만들기 클릭
+        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
+            moveToAddGoal()
+        }
     }
 
     override fun initListener() {
@@ -355,6 +365,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToRecordAlarms() {
         val action = RecordFragmentDirections.actionRecordFragmentToRecordAlarmsFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToAddGoal() {
+        val action = RecordFragmentDirections.actionRecordFragmentToAddGoalCalendarFragment()
 
         findNavController().navigate(action)
     }

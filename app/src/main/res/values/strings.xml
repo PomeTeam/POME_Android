@@ -105,4 +105,13 @@
     <string name="modify_record_check_button_text">수정했어요</string>
     <string name="calendar_button_select_text">선택했어요</string>
     <string name="record_alarms_title_text">알람</string>
+    <string name="back_button_text">back button</string>
+    <string name="add_goal_title_text">시작이 반이에요!\n오늘부터 언제까지 해볼까요?</string>
+    <string name="add_goal_subtitle_text">최대 한달까지 목표를 세울 수 있어요</string>
+    <string name="add_goal_start_date_title_text">목표 시작 날짜</string>
+    <string name="add_goal_start_date_text">목표 시작 날짜를 선택해주세요</string>
+    <string name="ic_caledar_24_desc">캘린더 아이콘</string>
+    <string name="add_goal_end_date_title_text">목표 종료 날짜</string>
+    <string name="add_goal_end_date_hint_text">목표 종료 날짜를 선택해주세요</string>
+    <string name="add_goal_check_button_text">선택했어요</string>
 </resources>
