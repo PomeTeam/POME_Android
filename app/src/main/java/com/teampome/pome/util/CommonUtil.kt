@@ -22,6 +22,7 @@ import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.ZoneId
 import java.text.SimpleDateFormat
+import java.util.*
 
 object CommonUtil {
 
@@ -97,7 +98,7 @@ object CommonUtil {
         context: Context,
         calendar : MaterialCalendarView,
         checkBtn : Button,
-        dateCallback: (String) -> Unit,
+        dateCallback: (Date, String) -> Unit,
         btnCallback: () -> Unit
     ) {
         var isButtonEnabled = false
@@ -127,7 +128,7 @@ object CommonUtil {
 
                 val dateStr = sdf.format(realDate)
 
-                dateCallback(dateStr)
+                dateCallback(realDate, dateStr)
 
                 if(!isButtonEnabled) {
                     isButtonEnabled = true
@@ -171,8 +172,8 @@ object CommonUtil {
         context: Context,
         calendar: MaterialCalendarView,
         checkBtn: Button,
-        localDate: LocalDate,
-        dateCallback: (String) -> Unit,
+        localDate: LocalDate?,
+        dateCallback: (Date, String) -> Unit,
         btnCallback: () -> Unit
     ) {
         settingCalendarBottomSheetDialog(

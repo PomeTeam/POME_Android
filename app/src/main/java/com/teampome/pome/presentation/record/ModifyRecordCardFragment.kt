@@ -47,7 +47,6 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     private var dateData: String? = null
     private var curDate: Date? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -127,14 +126,25 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         goalBottomSheetDialogBinding.executePendingBindings()
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun makeCalendarBottomSheetDialog() {
         calendarBottomSheetDialog = BottomSheetDialog(requireContext())
         calendarBottomSheetDialogBinding = PomeCalendarBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
         calendarBottomSheetDialog.setContentView(calendarBottomSheetDialogBinding.root)
 
-        settingCustomCalendar()
+        CommonUtil.settingAlreadySelectedCalendarBottomSheetDialog(
+            requireContext(),
+            calendarBottomSheetDialogBinding.calendarMcv,
+            calendarBottomSheetDialogBinding.calendarSelectAtb,
+            curDate?.let{Instant.ofEpochMilli(it.time).atZone(ZoneId.systemDefault()).toLocalDate()},
+            { date, str ->
+                curDate = date
+                dateData = str
+            }
+        ) {
+            binding.modifyRecordDateAet.setText(dateData)
+            calendarBottomSheetDialog.dismiss()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -179,8 +189,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         })
 
         calendarBottomSheetDialogBinding.calendarSelectAtb.setOnClickListener {
-            binding.modifyRecordDateAet.setText(dateData)
-            calendarBottomSheetDialog.dismiss()
+
         }
     }
 }
