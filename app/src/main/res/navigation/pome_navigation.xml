@@ -199,5 +199,9 @@
         android:id="@+id/addGoalCompleteFragment"
         android:name="com.teampome.pome.presentation.record.add.AddGoalCompleteFragment"
         android:label="AddGoalCompleteFragment"
-        tools:layout="@layout/fragment_add_goal_complete"/>
+        tools:layout="@layout/fragment_add_goal_complete">
+        <action
+            android:id="@+id/action_addGoalCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
 </navigation>

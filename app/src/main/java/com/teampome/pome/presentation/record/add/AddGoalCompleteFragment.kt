@@ -2,7 +2,7 @@ package com.teampome.pome.presentation.record.add
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalCompleteBinding
 import com.teampome.pome.util.base.BaseFragment
@@ -14,7 +14,13 @@ class AddGoalCompleteFragment : BaseFragment<FragmentAddGoalCompleteBinding>(R.l
 
     override fun initListener() {
         binding.addGoalCompleteCheckButtonAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "확인했어요", Toast.LENGTH_SHORT).show()
+            moveToRecord()
         }
+    }
+
+    private fun moveToRecord() {
+        val action = AddGoalCompleteFragmentDirections.actionAddGoalCompleteFragmentToRecordFragment()
+
+        findNavController().navigate(action)
     }
 }
