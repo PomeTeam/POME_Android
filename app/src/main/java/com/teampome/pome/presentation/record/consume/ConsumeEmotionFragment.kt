@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
@@ -19,11 +20,41 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        settingBackPressedCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                CommonUtil.showBackButtonDialog(
+                    requireContext(),
+                    "작성을 그만두시겠어요?",
+                    "지금까지 작성한 내용은 모두 사라져요",
+                    R.drawable.pen_mint,
+                    "그만둘래요",
+                    "이어서 쓸래요",
+                    {
+                        moveToRecord()
+                    }
+                ) {
+
+                }
+            }
+        })
     }
 
     override fun initListener() {
         binding.consumeEmotionBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            CommonUtil.showBackButtonDialog(
+                requireContext(),
+                "작성을 그만두시겠어요?",
+                "지금까지 작성한 내용은 모두 사라져요",
+                R.drawable.pen_mint,
+                "그만둘래요",
+                "이어서 쓸래요",
+                {
+                    moveToRecord()
+                }
+            ) {
+
+            }
         }
 
         binding.consumeEmotionHappyContainerCl.setOnClickListener {
@@ -123,6 +154,12 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
 
     private fun moveToConsumeComplete() {
         val action = ConsumeEmotionFragmentDirections.actionConsumeEmotionFragmentToConsumeCompleteFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToRecord() {
+        val action = ConsumeEmotionFragmentDirections.actionConsumeEmotionFragmentToRecordFragment()
 
         findNavController().navigate(action)
     }
