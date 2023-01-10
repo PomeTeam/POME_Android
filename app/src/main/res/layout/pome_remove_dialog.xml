@@ -38,16 +38,17 @@
             android:layout_height="wrap_content"
             tools:text="지금까지 작성한 기록들은 모두 사라져요"
             android:textColor="@color/grey_5"
+            android:gravity="center"
             android:layout_marginTop="2dp"
-            android:paddingHorizontal="2dp"
+            android:paddingHorizontal="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/remove_dialog_title_atv"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/remove_trash_aiv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/trash_green"
             android:layout_marginTop="12dp"
             app:layout_constraintTop_toBottomOf="@id/remove_dialog_subtitle_atv"
@@ -62,9 +63,10 @@
             android:text="@string/remove_yes_text"
             android:textColor="@color/main"
             android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="9dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             app:layout_constraintTop_toBottomOf="@id/remove_trash_aiv"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -77,6 +79,7 @@
             android:text="@string/remove_no_text"
             android:textColor="@color/main"
             android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
             android:layout_marginEnd="19dp"
             app:layout_constraintTop_toTopOf="@id/remove_yes_text_atv"
             app:layout_constraintEnd_toStartOf="@id/remove_yes_text_atv"/>

@@ -194,6 +194,9 @@
         <action
             android:id="@+id/action_addGoalContentsFragment_to_addGoalCompleteFragment"
             app:destination="@id/addGoalCompleteFragment" />
+        <action
+            android:id="@+id/action_addGoalContentsFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
     </fragment>
     <fragment
         android:id="@+id/addGoalCompleteFragment"

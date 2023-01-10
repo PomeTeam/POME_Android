@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
@@ -21,6 +22,25 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // back button 클릭시 back button dialog show
+        settingBackPressedCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                CommonUtil.showBackButtonDialog(
+                    requireContext(),
+                    "작성을 그만두시겠어요?",
+                    "지금까지 작성한 내용은 모두 사라져요",
+                    R.drawable.pen_mint,
+                    "그만둘래요",
+                    "이어서 쓸래요",
+                    {
+                        moveToRecord()
+                    }
+                ) {
+
+                }
+            }
+        })
     }
 
     override fun initListener() {
@@ -107,6 +127,12 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
     private fun moveToAddGoalComplete() {
         val action = AddGoalContentsFragmentDirections.actionAddGoalContentsFragmentToAddGoalCompleteFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToRecord() {
+        val action = AddGoalContentsFragmentDirections.actionAddGoalContentsFragmentToRecordFragment()
 
         findNavController().navigate(action)
     }

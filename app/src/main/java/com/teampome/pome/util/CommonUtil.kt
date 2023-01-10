@@ -1,18 +1,26 @@
 package com.teampome.pome.util
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import androidx.annotation.DrawableRes
+import androidx.annotation.RawRes
+import androidx.core.content.res.ResourcesCompat
+import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
 import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
 import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import com.teampome.pome.R
+import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.DateTimeUtils
@@ -184,5 +192,47 @@ object CommonUtil {
 
         // 현재 선택중인 날짜 설정
         calendar.setSelectedDate(localDate)
+    }
+
+
+    fun showBackButtonDialog(
+        context: Context,
+        title: String,
+        subtitle: String,
+        @DrawableRes @RawRes imgDrawable: Int,
+        yesText: String,
+        noText: String,
+        onYesClick: () -> Unit,
+        onNoClick: () -> Unit
+    ) {
+        // Todo : 일단 pome_remove_dialog를 재사용 : trash랑 yes와 No가 반대임
+        val backButtonDialogBinding = PomeRemoveDialogBinding.inflate(LayoutInflater.from(context), null, false)
+        val backButtonDialog = Dialog(context)
+
+        backButtonDialog.setContentView(backButtonDialogBinding.root)
+
+        backButtonDialogBinding.apply {
+            removeDialogTitleAtv.text = title
+            removeDialogSubtitleAtv.text = subtitle
+            removeYesTextAtv.text = noText
+            removeYesTextAtv.setTextColor(ResourcesCompat.getColor(context.resources, R.color.grey_5, null))
+            removeNoTextAtv.text = yesText
+
+            Glide.with(removeTrashAiv)
+                .load(imgDrawable)
+                .into(removeTrashAiv)
+
+            removeYesTextAtv.setOnClickListener {
+                onNoClick()
+                backButtonDialog.dismiss()
+            }
+
+            removeNoTextAtv.setOnClickListener {
+                onYesClick()
+                backButtonDialog.dismiss()
+            }
+        }
+
+        backButtonDialog.show()
     }
 }

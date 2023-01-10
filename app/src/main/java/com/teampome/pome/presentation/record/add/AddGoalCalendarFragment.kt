@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -31,6 +32,25 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
 
         makeStartCalenderView()
         makeEndCalendarView()
+
+        // back button 클릭시 back button dialog show
+        settingBackPressedCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                CommonUtil.showBackButtonDialog(
+                    requireContext(),
+                    "작성을 그만두시겠어요?",
+                    "지금까지 작성한 내용은 모두 사라져요",
+                    R.drawable.pen_mint,
+                    "그만둘래요",
+                    "이어서 쓸래요",
+                    {
+                        findNavController().navigateUp()
+                    }
+                ) {
+
+                }
+            }
+        })
     }
 
     override fun initListener() {
