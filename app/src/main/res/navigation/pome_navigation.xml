@@ -223,5 +223,19 @@
         android:id="@+id/consumeEmotionFragment"
         android:name="com.teampome.pome.presentation.record.consume.ConsumeEmotionFragment"
         android:label="ConsumeEmotionFragment"
-        tools:layout="@layout/fragment_consume_emotion"/>
+        tools:layout="@layout/fragment_consume_emotion">
+        <action
+            android:id="@+id/action_consumeEmotionFragment_to_consumeCompleteFragment"
+            app:destination="@id/consumeCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumeCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeCompleteFragment"
+        android:label="ConsumeCompleteFragment"
+        tools:layout="@layout/fragment_consume_complete">
+
+        <action
+            android:id="@+id/action_consumeCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
 </navigation>

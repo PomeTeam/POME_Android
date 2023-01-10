@@ -42,7 +42,7 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         }
 
         binding.consumeEmotionCheckButtonAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "남겼어요", Toast.LENGTH_SHORT).show()
+            moveToConsumeComplete()
         }
     }
 
@@ -119,5 +119,11 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
     ) {
         backgroundImg.background = ResourcesCompat.getDrawable(resources, R.drawable.grey0_circle_background, null)
         descText.setTextColor(resources.getColor(R.color.grey_7, null))
+    }
+
+    private fun moveToConsumeComplete() {
+        val action = ConsumeEmotionFragmentDirections.actionConsumeEmotionFragmentToConsumeCompleteFragment()
+
+        findNavController().navigate(action)
     }
 }

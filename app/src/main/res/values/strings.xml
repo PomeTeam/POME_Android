@@ -140,4 +140,8 @@
     <string name="consume_emotion_check_button_text">남겼어요</string>
     <string name="consume_emotion_what_text">모르겠어요</string>
     <string name="consume_emotion_sad_text">후회해요</string>
+    <string name="consume_complete_title_text">새로운 씀씀이 기록이\n추가되었어요!</string>
+    <string name="consume_complete_subtitle_text">잊지 않고 기록해주셨네요! 정말 대단해요</string>
+    <string name="consume_complete_check_button_text">확인했어요</string>
+    <string name="consume_complete_image_desc">분홍 종이</string>
 </resources>
