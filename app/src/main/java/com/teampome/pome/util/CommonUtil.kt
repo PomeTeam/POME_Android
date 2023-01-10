@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Point
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
@@ -23,10 +22,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
-import org.threeten.bp.DateTimeUtils
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalDate
-import org.threeten.bp.ZoneId
+import org.threeten.bp.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -97,6 +93,24 @@ object CommonUtil {
         display.getSize(size)
 
         return intArrayOf(size.x, size.y)
+    }
+
+    fun dateToLocalDate(date: Date) : LocalDate {
+        return Instant.ofEpochMilli(date.time).atZone(ZoneId.systemDefault()).toLocalDate()
+    }
+
+    fun getCurrentDate(): Date {
+        val now = System.currentTimeMillis()
+
+        return Date(now)
+    }
+
+    fun getCurrentDateString(): String {
+        val now = System.currentTimeMillis()
+        val date = Date(now)
+        val sdf = SimpleDateFormat("yy.MM.dd")
+
+        return sdf.format(date)
     }
 
     // setting calendar
