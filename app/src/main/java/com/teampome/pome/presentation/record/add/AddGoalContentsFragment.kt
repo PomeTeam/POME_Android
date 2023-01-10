@@ -39,7 +39,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
         }
 
         binding.addGoalContentsCheckButtonAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "작성했어요", Toast.LENGTH_SHORT).show()
+            moveToAddGoalComplete()
         }
 
         // edittext listener
@@ -97,5 +97,11 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
     private fun isCheckButtonEnabled() : Boolean {
         return !(category.isEmpty() || promise.isEmpty() || amount.isEmpty())
+    }
+
+    private fun moveToAddGoalComplete() {
+        val action = AddGoalContentsFragmentDirections.actionAddGoalContentsFragmentToAddGoalCompleteFragment()
+
+        findNavController().navigate(action)
     }
 }

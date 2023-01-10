@@ -190,5 +190,14 @@
         android:id="@+id/addGoalContentsFragment"
         android:name="com.teampome.pome.presentation.record.add.AddGoalContentsFragment"
         android:label="AddGoalContentsFragment"
-        tools:layout="@layout/fragment_add_goal_contents"/>
+        tools:layout="@layout/fragment_add_goal_contents">
+        <action
+            android:id="@+id/action_addGoalContentsFragment_to_addGoalCompleteFragment"
+            app:destination="@id/addGoalCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalCompleteFragment"
+        android:label="AddGoalCompleteFragment"
+        tools:layout="@layout/fragment_add_goal_complete"/>
 </navigation>

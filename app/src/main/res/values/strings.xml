@@ -125,4 +125,7 @@
     <string name="add_goal_contents_check_button_text">작성했어요</string>
     <string name="add_goal_contents_private_title_text">목표 공개 설정</string>
     <string name="add_goal_contents_private_subtitle_text">친구들에게 이 목표를 공개할까요?</string>
+    <string name="add_goal_complete_title_text">새로운 목표를\n추가했어요!</string>
+    <string name="add_goal_complete_subtitle_text">목표를 달성할 수 있도록 포미가 응원할게요!</string>
+    <string name="add_goal_complete_check_button_text">확인했어요</string>
 </resources>
