@@ -8,80 +8,100 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/modify_record_card_container_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/modify_record_left_arrow_aiv"
+        <ImageView
+            android:id="@+id/consume_record_back_button_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="10dp"
-            android:padding="6dp"
+            android:contentDescription="@string/back_button_text"
             android:src="@drawable/ic_arrow_left_24"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:padding="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.SemiBold.20"
+            android:id="@+id/consume_record_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_record_title_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_back_button_iv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/consume_record_subtitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_record_subtitle_text"
+            android:textColor="@color/grey_5"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_record_title_tv"/>
 
         <TextView
             style="@style/Pome.SemiBold.14"
-            android:id="@+id/modify_record_goal_title_tv"
+            android:id="@+id/consume_record_goal_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/modify_record_goal_title_text"
+            android:text="@string/consume_record_goal_text"
             android:textColor="@color/grey_7"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_left_arrow_aiv"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginTop="35dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_subtitle_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_record_subtitle_tv"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             style="@style/Pome.Regular.14"
-            android:id="@+id/modify_record_goal_aet"
+            android:id="@+id/consume_record_goal_aet"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:hint="@string/modify_record_goal_hint_text"
-            android:textColor="@color/grey_8"
+            android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
-            android:background="@drawable/grey0_r6_background"
+            android:textCursorDrawable="@drawable/register_profile_name_cursor"
+            android:background="@drawable/register_profile_name_background"
             android:enabled="false"
-            android:focusable="false"
-            android:paddingStart="16dp"
-            android:paddingEnd="50dp"
-            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_goal_title_tv"
-            app:layout_constraintStart_toStartOf="@id/modify_record_goal_title_tv"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_goal_tv"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/modify_record_down_arrow_aiv"
+            android:id="@+id/consume_record_down_arrow_aiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_arrow_down_24"
             android:layout_marginEnd="8dp"
             android:padding="8dp"
-            app:layout_constraintTop_toTopOf="@id/modify_record_goal_aet"
-            app:layout_constraintBottom_toBottomOf="@id/modify_record_goal_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_goal_aet"/>
+            app:layout_constraintTop_toTopOf="@id/consume_record_goal_aet"
+            app:layout_constraintBottom_toBottomOf="@id/consume_record_goal_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_goal_aet"/>
 
         <TextView
             style="@style/Pome.SemiBold.14"
-            android:id="@+id/modify_record_date_title_tv"
+            android:id="@+id/consume_record_date_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/modify_record_date_title_text"
             android:textColor="@color/grey_7"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_goal_aet"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_goal_aet"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             style="@style/Pome.Regular.14"
-            android:id="@+id/modify_record_date_aet"
+            android:id="@+id/consume_record_date_aet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/grey0_r6_background"
@@ -93,36 +113,36 @@
             android:paddingEnd="50dp"
             android:paddingVertical="12dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_date_title_tv"
-            app:layout_constraintStart_toStartOf="@id/modify_record_goal_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_goal_aet"/>
+            app:layout_constraintTop_toBottomOf="@id/consume_record_date_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_record_goal_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_goal_aet"/>
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/modify_record_calender_aiv"
+            android:id="@+id/consume_record_calender_aiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_calender_24"
             android:layout_marginEnd="8dp"
             android:padding="8dp"
-            app:layout_constraintTop_toTopOf="@id/modify_record_date_aet"
-            app:layout_constraintBottom_toBottomOf="@id/modify_record_date_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_date_aet"/>
+            app:layout_constraintTop_toTopOf="@id/consume_record_date_aet"
+            app:layout_constraintBottom_toBottomOf="@id/consume_record_date_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_date_aet"/>
 
         <TextView
             style="@style/Pome.SemiBold.14"
-            android:id="@+id/modify_record_price_title_tv"
+            android:id="@+id/consume_record_price_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/modify_record_price_title_text"
             android:textColor="@color/grey_7"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_date_aet"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_date_aet"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             style="@style/Pome.Regular.14"
-            android:id="@+id/modify_record_price_aet"
+            android:id="@+id/consume_record_price_aet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/grey0_r6_background"
@@ -134,25 +154,25 @@
             android:paddingEnd="50dp"
             android:paddingVertical="12dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_price_title_tv"
-            app:layout_constraintStart_toStartOf="@id/modify_record_goal_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_goal_aet"/>
+            app:layout_constraintTop_toBottomOf="@id/consume_record_price_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_record_goal_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_goal_aet"/>
 
         <TextView
             style="@style/Pome.SemiBold.14"
-            android:id="@+id/modify_record_content_title_tv"
+            android:id="@+id/consume_record_content_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="24dp"
             android:text="@string/modify_record_content_title_text"
             android:textColor="@color/grey_7"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_price_aet"
+            app:layout_constraintTop_toBottomOf="@id/consume_record_price_aet"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatEditText
             style="@style/Pome.Regular.14"
-            android:id="@+id/modify_record_content_aet"
+            android:id="@+id/consume_record_content_aet"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/grey0_r6_background"
@@ -166,13 +186,13 @@
             android:paddingTop="12dp"
             android:paddingBottom="44dp"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/modify_record_content_title_tv"
-            app:layout_constraintStart_toStartOf="@id/modify_record_goal_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_goal_aet"/>
+            app:layout_constraintTop_toBottomOf="@id/consume_record_content_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_record_goal_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_goal_aet" />
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/Pome.Regular.14"
-            android:id="@+id/modify_record_content_character_count_atv"
+            android:id="@+id/consume_record_content_character_count_atv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="00/150"
@@ -180,12 +200,12 @@
             android:textColor="@color/grey_ad"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
-            app:layout_constraintBottom_toBottomOf="@id/modify_record_content_aet"
-            app:layout_constraintEnd_toEndOf="@id/modify_record_content_aet"/>
+            app:layout_constraintBottom_toBottomOf="@id/consume_record_content_aet"
+            app:layout_constraintEnd_toEndOf="@id/consume_record_content_aet"/>
 
         <androidx.appcompat.widget.AppCompatButton
             style="@style/Pome.Bold.18"
-            android:id="@+id/modify_record_check_acb"
+            android:id="@+id/consume_record_check_acb"
             android:textColor="@color/white"
             android:layout_width="0dp"
             android:layout_height="50dp"

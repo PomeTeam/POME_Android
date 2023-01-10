@@ -133,6 +133,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
             moveToAddGoal()
         }
+
+        // float button 클릭
+        binding.recordWriteButtonCl.setOnClickListener {
+            moveToConsume()
+        }
     }
 
     override fun initListener() {
@@ -371,6 +376,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToAddGoal() {
         val action = RecordFragmentDirections.actionRecordFragmentToAddGoalCalendarFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToConsume() {
+        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment()
 
         findNavController().navigate(action)
     }

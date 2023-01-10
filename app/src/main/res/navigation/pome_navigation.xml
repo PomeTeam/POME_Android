@@ -56,6 +56,9 @@
         <action
             android:id="@+id/action_record_fragment_to_addGoalCalendarFragment"
             app:destination="@id/addGoalCalendarFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_consumeRecordFragment"
+            app:destination="@id/consumeRecordFragment" />
     </fragment>
 
     <fragment
@@ -207,4 +210,9 @@
             android:id="@+id/action_addGoalCompleteFragment_to_record_fragment"
             app:destination="@id/record_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/consumeRecordFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeRecordFragment"
+        android:label="ConsumeRecordFragment"
+        tools:layout="@layout/fragment_consume_record"/>
 </navigation>

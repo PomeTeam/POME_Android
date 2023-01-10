@@ -128,4 +128,7 @@
     <string name="add_goal_complete_title_text">새로운 목표를\n추가했어요!</string>
     <string name="add_goal_complete_subtitle_text">목표를 달성할 수 있도록 포미가 응원할게요!</string>
     <string name="add_goal_complete_check_button_text">확인했어요</string>
+    <string name="consume_record_title_text">어떤 소비를 하셨나요?</string>
+    <string name="consume_record_subtitle_text">소비에 대한 간단한 기록을 남겨보세요</string>
+    <string name="consume_record_goal_text">목표</string>
 </resources>
