@@ -82,7 +82,8 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_calender_24"
             android:contentDescription="@string/ic_caledar_24_desc"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
             app:layout_constraintTop_toTopOf="@id/add_goal_start_date_aet"
             app:layout_constraintBottom_toBottomOf="@id/add_goal_start_date_aet"
             app:layout_constraintEnd_toEndOf="@id/add_goal_start_date_aet"/>
@@ -122,7 +123,8 @@
             android:layout_height="24dp"
             android:src="@drawable/ic_calender_24"
             android:contentDescription="@string/ic_caledar_24_desc"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="8dp"
+            android:padding="8dp"
             app:layout_constraintTop_toTopOf="@id/add_goal_end_date_aet"
             app:layout_constraintBottom_toBottomOf="@id/add_goal_end_date_aet"
             app:layout_constraintEnd_toEndOf="@id/add_goal_end_date_aet"/>
