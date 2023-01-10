@@ -78,7 +78,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
         // 선택했어요 클릭
         binding.consumeRecordCheckAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "선택했어요", Toast.LENGTH_SHORT).show()
+            moveToConsumeEmotion()
         }
 
         // 글자수 체크
@@ -127,5 +127,11 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
         calendarBottomSheetDialog = BottomSheetDialog(requireContext())
         calendarBottomSheetDialog.setContentView(calendarBottomSheetDialogBinding.root)
+    }
+
+    private fun moveToConsumeEmotion() {
+        val action = ConsumeRecordFragmentDirections.actionConsumeRecordFragmentToConsumeEmotionFragment()
+
+        findNavController().navigate(action)
     }
 }

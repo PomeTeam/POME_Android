@@ -214,5 +214,14 @@
         android:id="@+id/consumeRecordFragment"
         android:name="com.teampome.pome.presentation.record.consume.ConsumeRecordFragment"
         android:label="ConsumeRecordFragment"
-        tools:layout="@layout/fragment_consume_record"/>
+        tools:layout="@layout/fragment_consume_record">
+        <action
+            android:id="@+id/action_consumeRecordFragment_to_consumeEmotionFragment"
+            app:destination="@id/consumeEmotionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumeEmotionFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeEmotionFragment"
+        android:label="ConsumeEmotionFragment"
+        tools:layout="@layout/fragment_consume_emotion"/>
 </navigation>

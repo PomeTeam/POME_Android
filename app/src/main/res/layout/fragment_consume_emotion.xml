@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/consume_emotion_back_button_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left_24"
+            android:contentDescription="@string/back_button_text"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="6dp"
+            android:padding="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/consume_emotion_close_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_emotion_close_text"
+            android:textColor="@color/grey_8"
+            android:padding="6dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintTop_toTopOf="@id/consume_emotion_back_button_iv"
+            app:layout_constraintBottom_toBottomOf="@id/consume_emotion_back_button_iv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            style="@style/Pome.SemiBold.20"
+            android:id="@+id/consume_emotion_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_emotion_title_text"
+            android:textColor="@color/grey_8"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_emotion_back_button_iv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/consume_emotion_subtitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_emotion_subtitle_text"
+            android:textColor="@color/grey_5"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_emotion_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_emotion_title_tv"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consume_emotion_happy_container_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:padding="6dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_emotion_subtitle_tv"
+            app:layout_constraintBottom_toTopOf="@id/consume_emotion_what_container_cl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/consume_emotion_happy_background_iv"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:background="@drawable/grey0_circle_background"
+                android:contentDescription="@string/consume_emotion_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/consume_emotion_happy_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emoji_mint_happy_110"
+                android:contentDescription="@string/consume_happy_icon_desc"
+                app:layout_constraintTop_toTopOf="@id/consume_emotion_happy_background_iv"
+                app:layout_constraintStart_toStartOf="@id/consume_emotion_happy_background_iv"/>
+
+            <TextView
+                style="@style/Pome.SemiBold.14"
+                android:id="@+id/consume_emotion_happy_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/consume_emotion_happy_text"
+                android:textColor="@color/grey_7"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/consume_emotion_happy_background_iv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consume_emotion_what_container_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_emotion_happy_container_cl"
+            app:layout_constraintBottom_toTopOf="@id/consume_emotion_sad_container_cl"
+            app:layout_constraintStart_toStartOf="@id/consume_emotion_happy_container_cl">
+
+            <ImageView
+                android:id="@+id/consume_emotion_what_background_iv"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:background="@drawable/grey0_circle_background"
+                android:contentDescription="@string/consume_emotion_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/consume_emotion_what_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emoji_mint_what_110"
+                android:contentDescription="@string/consume_happy_icon_desc"
+                app:layout_constraintTop_toTopOf="@id/consume_emotion_what_background_iv"
+                app:layout_constraintStart_toStartOf="@id/consume_emotion_what_background_iv"/>
+
+            <TextView
+                style="@style/Pome.SemiBold.14"
+                android:id="@+id/consume_emotion_what_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/consume_emotion_what_text"
+                android:textColor="@color/grey_7"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/consume_emotion_what_background_iv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consume_emotion_sad_container_cl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="6dp"
+            android:layout_marginBottom="7dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_emotion_what_container_cl"
+            app:layout_constraintStart_toStartOf="@id/consume_emotion_what_container_cl"
+            app:layout_constraintBottom_toTopOf="@id/consume_emotion_check_button_acb">
+
+            <ImageView
+                android:id="@+id/consume_emotion_sad_background_iv"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:background="@drawable/grey0_circle_background"
+                android:contentDescription="@string/consume_emotion_background"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <ImageView
+                android:id="@+id/consume_emotion_sad_icon_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_emoji_mint_sad_110"
+                android:contentDescription="@string/consume_happy_icon_desc"
+                app:layout_constraintTop_toTopOf="@id/consume_emotion_sad_background_iv"
+                app:layout_constraintStart_toStartOf="@id/consume_emotion_sad_background_iv"/>
+
+            <TextView
+                style="@style/Pome.SemiBold.14"
+                android:id="@+id/consume_emotion_sad_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/consume_emotion_sad_text"
+                android:textColor="@color/grey_7"
+                android:layout_marginStart="15dp"
+                app:layout_constraintStart_toEndOf="@id/consume_emotion_sad_background_iv"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Pome.Bold.18"
+            android:id="@+id/consume_emotion_check_button_acb"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/consume_emotion_check_button_text"
+            android:background="@drawable/register_profile_name_check_disable_btn_background"
+            android:stateListAnimator="@null"
+            android:enabled="false"
+            android:clickable="false"
+            android:layout_marginBottom="14dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

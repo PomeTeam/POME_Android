@@ -131,4 +131,13 @@
     <string name="consume_record_title_text">어떤 소비를 하셨나요?</string>
     <string name="consume_record_subtitle_text">소비에 대한 간단한 기록을 남겨보세요</string>
     <string name="consume_record_goal_text">목표</string>
+    <string name="consume_emotion_close_text">닫기</string>
+    <string name="consume_emotion_title_text">소비한 순간의\n솔직한 감정을 남겨주세요</string>
+    <string name="consume_emotion_subtitle_text">포미는 순간의 감정에 집중해\n한번 기록된 감정은 바꿀 수 없어요</string>
+    <string name="consume_emotion_background">이모션 백그라운드</string>
+    <string name="consume_happy_icon_desc">happy emotion</string>
+    <string name="consume_emotion_happy_text">행복해요</string>
+    <string name="consume_emotion_check_button_text">남겼어요</string>
+    <string name="consume_emotion_what_text">모르겠어요</string>
+    <string name="consume_emotion_sad_text">후회해요</string>
 </resources>
