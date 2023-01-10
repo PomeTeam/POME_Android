@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalContentsBinding
@@ -36,6 +36,12 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
         binding.addGoalContentsPrivateSwitchSc.setOnCheckedChangeListener { compoundButton, b ->
             // 스위치 기본 애니메이션 제거를 위해
             binding.addGoalContentsPrivateSwitchSc.jumpDrawablesToCurrentState()
+
+            if(b) {
+                binding.addGoalContentsPrivateContainerCl.background = ResourcesCompat.getDrawable(resources, R.drawable.item_grey1_r8_background, null)
+            } else {
+                binding.addGoalContentsPrivateContainerCl.background = ResourcesCompat.getDrawable(resources, R.drawable.item_pink10_r8_background, null)
+            }
         }
 
         binding.addGoalContentsCheckButtonAcb.setOnClickListener {
