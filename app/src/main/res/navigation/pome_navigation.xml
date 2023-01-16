@@ -62,6 +62,9 @@
         <action
             android:id="@+id/action_record_fragment_to_recordLeaveEmotionFragment"
             app:destination="@id/recordLeaveEmotionFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_recordGoalFinishFragment"
+            app:destination="@id/recordGoalFinishFragment" />
     </fragment>
 
     <fragment
@@ -249,4 +252,9 @@
         android:name="com.teampome.pome.presentation.record.leave.RecordLeaveEmotionFragment"
         android:label="RecordLeaveEmotionFragment"
         tools:layout="@layout/fragment_record_leave_emotion"/>
+    <fragment
+        android:id="@+id/recordGoalFinishFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishFragment"
+        android:label="RecordGoalFinishFragment"
+        tools:layout="@layout/fragment_record_goal_finish"/>
 </navigation>

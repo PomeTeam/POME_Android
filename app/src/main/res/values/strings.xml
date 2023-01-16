@@ -150,4 +150,7 @@
     <string name="record_goal_complete_flag_desc">목표 완료 깃발 이미지</string>
     <string name="record_goal_complete_title_text">목표가 종료되었어요!\n지난 기록들을 확인해보세요</string>
     <string name="record_goal_complete_subtitle_text">목표 종료하기</string>
+    <string name="record_goal_finish_title_text">모든 기록</string>
+    <string name="record_goal_finish_subtitle_text">목표를 종료하기 전에 기록을 돌아보세요</string>
+    <string name="record_goal_finish_check_button_text">남겼어요</string>
 </resources>

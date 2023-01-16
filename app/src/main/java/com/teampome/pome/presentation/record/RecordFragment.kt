@@ -142,6 +142,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordWriteEmotionContainerCl.setOnClickListener {
             moveToRecordLeaveEmotion()
         }
+
+        binding.recordGoalCompleteCl.setOnClickListener {
+            moveToRecordGoalFinish()
+        }
     }
 
     override fun initListener() {
@@ -392,6 +396,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToRecordLeaveEmotion() {
         val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToRecordGoalFinish() {
+        val action = RecordFragmentDirections.actionRecordFragmentToRecordGoalFinishFragment()
 
         findNavController().navigate(action)
     }
