@@ -147,4 +147,7 @@
     <string name="record_leave_emotion_pen_desc">감정을 남겨주세요 펜 이미지</string>
     <string name="record_leave_emotion_title_text">감정을 남겨주세요</string>
     <string name="record_leave_emotion_subtitle_text">일주일이 지난 오늘, 그때의 씀씀이를 돌아보세요</string>
+    <string name="record_goal_complete_flag_desc">목표 완료 깃발 이미지</string>
+    <string name="record_goal_complete_title_text">목표가 종료되었어요!\n지난 기록들을 확인해보세요</string>
+    <string name="record_goal_complete_subtitle_text">목표 종료하기</string>
 </resources>

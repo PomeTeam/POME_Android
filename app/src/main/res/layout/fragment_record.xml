@@ -82,8 +82,8 @@
                     android:id="@+id/record_goal_card_cv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
                     app:cardCornerRadius="6dp"
+                    android:layout_marginHorizontal="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -94,7 +94,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="33dp"
-                        tools:visibility="visible"
+                        tools:visibility="gone"
                         android:visibility="@{recordGoalItem == null ? View.VISIBLE : View.GONE}">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -167,7 +167,7 @@
                         android:paddingStart="0dp"
                         android:paddingEnd="16dp"
                         tools:visibility="gone"
-                        android:visibility="@{recordGoalItem == null ? View.GONE : View.VISIBLE}">
+                        android:visibility="@{recordGoalItem != null &amp;&amp; recordGoalItem.recordGoalCard.timeLimit != 0 ? View.VISIBLE : View.GONE}">
 
                         <TextView
                             android:id="@+id/record_goal_card_public_chip_tv"
@@ -293,7 +293,67 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="@id/record_amount_progress_asb" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/record_goal_complete_cl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:visibility="visible"
+                        android:visibility="@{recordGoalItem != null &amp;&amp; recordGoalItem.recordGoalCard.timeLimit == 0 ? View.VISIBLE : View.GONE}"
+                        android:paddingHorizontal="20dp"
+                        android:paddingVertical="33.5dp">
+
+                        <ImageView
+                            android:id="@+id/record_goal_complete_flag_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/flag_pink"
+                            android:contentDescription="@string/record_goal_complete_flag_desc"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent" />
+
+                        <TextView
+                            style="@style/Pome.SemiBold.16"
+                            android:id="@+id/record_goal_complete_title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/record_goal_complete_title_text"
+                            android:textColor="@color/grey_8"
+                            android:lineSpacingExtra="3dp"
+                            android:letterSpacing="-0.03"
+                            android:layout_marginStart="20dp"
+                            app:layout_constraintStart_toEndOf="@id/record_goal_complete_flag_iv"
+                            app:layout_constraintTop_toTopOf="@id/record_goal_complete_flag_iv"
+                            app:layout_constraintBottom_toTopOf="@id/record_goal_complete_subtitle_tv"/>
+
+                        <TextView
+                            style="@style/Pome.Medium.14"
+                            android:id="@+id/record_goal_complete_subtitle_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/record_goal_complete_subtitle_text"
+                            android:textColor="@color/pink_100"
+                            android:lineSpacingExtra="3sp"
+                            android:letterSpacing="-0.03"
+                            android:layout_marginTop="10dp"
+                            app:layout_constraintTop_toBottomOf="@id/record_goal_complete_title_tv"
+                            app:layout_constraintBottom_toBottomOf="@id/record_goal_complete_flag_iv"
+                            app:layout_constraintStart_toStartOf="@id/record_goal_complete_title_tv"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_arrow_right_24"
+                            app:tint="@color/pink_100"
+                            android:layout_marginStart="1dp"
+                            app:layout_constraintStart_toEndOf="@id/record_goal_complete_subtitle_tv"
+                            app:layout_constraintTop_toTopOf="@id/record_goal_complete_subtitle_tv"
+                            app:layout_constraintBottom_toBottomOf="@id/record_goal_complete_subtitle_tv" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/record_week_consume_title_atv"
