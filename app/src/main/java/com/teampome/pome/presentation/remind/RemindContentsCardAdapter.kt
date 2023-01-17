@@ -12,7 +12,7 @@ import com.teampome.pome.util.Constants
 import com.teampome.pome.viewmodel.Emotion
 
 class RemindContentsCardAdapter(
-    private val remindItemClickListener: RemindItemClickListener
+    private val remindItemClickListener: RemindItemClickListener? = null
 ) : ListAdapter<ContentCardItem, RemindContentsCardAdapter.RemindContentsCardViewHolder>(
     RemindContentsCardDiffCallback()
 ) {

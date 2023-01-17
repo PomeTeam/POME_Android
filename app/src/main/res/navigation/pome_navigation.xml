@@ -46,7 +46,26 @@
         android:id="@+id/record_fragment"
         android:name="com.teampome.pome.presentation.record.RecordFragment"
         android:label="RecordFragment"
-        tools:layout="@layout/fragment_record"/>
+        tools:layout="@layout/fragment_record">
+        <action
+            android:id="@+id/action_record_fragment_to_modifyRecordCardFragment"
+            app:destination="@id/modifyRecordCardFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_recordAlarmsFragment"
+            app:destination="@id/recordAlarmsFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_addGoalCalendarFragment"
+            app:destination="@id/addGoalCalendarFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_consumeRecordFragment"
+            app:destination="@id/consumeRecordFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_recordLeaveEmotionFragment"
+            app:destination="@id/recordLeaveEmotionFragment" />
+        <action
+            android:id="@+id/action_record_fragment_to_recordGoalFinishFragment"
+            app:destination="@id/recordGoalFinishFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/remind_fragment"
@@ -191,4 +210,117 @@
         android:label="MyPageFriendFragment"
         tools:layout="@layout/fragment_mypage_friend"/>
 
+    <fragment
+        android:id="@+id/modifyRecordCardFragment"
+        android:name="com.teampome.pome.presentation.record.ModifyRecordCardFragment"
+        android:label="ModifyRecordCardFragment"
+        tools:layout="@layout/fragment_modify_record_card">
+        <argument
+            android:name="record_week_item"
+            app:argType="com.teampome.pome.model.RecordWeekItem" />
+        <argument
+            android:name="category_list"
+            app:argType="string[]" />
+        <argument
+            android:name="current_category"
+            app:argType="string"/>
+    </fragment>
+    <fragment
+        android:id="@+id/recordAlarmsFragment"
+        android:name="com.teampome.pome.presentation.record.RecordAlarmsFragment"
+        android:label="RecordAlarmsFragment"
+        tools:layout="@layout/fragment_record_alarms"/>
+    <fragment
+        android:id="@+id/addGoalCalendarFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalCalendarFragment"
+        android:label="AddGoalCalendarFragment"
+        tools:layout="@layout/fragment_add_goal_calendar">
+        <action
+            android:id="@+id/action_addGoalCalendarFragment_to_addGoalContentsFragment"
+            app:destination="@id/addGoalContentsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalContentsFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalContentsFragment"
+        android:label="AddGoalContentsFragment"
+        tools:layout="@layout/fragment_add_goal_contents">
+        <action
+            android:id="@+id/action_addGoalContentsFragment_to_addGoalCompleteFragment"
+            app:destination="@id/addGoalCompleteFragment" />
+        <action
+            android:id="@+id/action_addGoalContentsFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addGoalCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.add.AddGoalCompleteFragment"
+        android:label="AddGoalCompleteFragment"
+        tools:layout="@layout/fragment_add_goal_complete">
+        <action
+            android:id="@+id/action_addGoalCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumeRecordFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeRecordFragment"
+        android:label="ConsumeRecordFragment"
+        tools:layout="@layout/fragment_consume_record">
+        <action
+            android:id="@+id/action_consumeRecordFragment_to_consumeEmotionFragment"
+            app:destination="@id/consumeEmotionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumeEmotionFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeEmotionFragment"
+        android:label="ConsumeEmotionFragment"
+        tools:layout="@layout/fragment_consume_emotion">
+        <action
+            android:id="@+id/action_consumeEmotionFragment_to_consumeCompleteFragment"
+            app:destination="@id/consumeCompleteFragment" />
+        <action
+            android:id="@+id/action_consumeEmotionFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/consumeCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.consume.ConsumeCompleteFragment"
+        android:label="ConsumeCompleteFragment"
+        tools:layout="@layout/fragment_consume_complete">
+
+        <action
+            android:id="@+id/action_consumeCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordLeaveEmotionFragment"
+        android:name="com.teampome.pome.presentation.record.leave.RecordLeaveEmotionFragment"
+        android:label="RecordLeaveEmotionFragment"
+        tools:layout="@layout/fragment_record_leave_emotion"/>
+    <fragment
+        android:id="@+id/recordGoalFinishFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishFragment"
+        android:label="RecordGoalFinishFragment"
+        tools:layout="@layout/fragment_record_goal_finish">
+        <action
+            android:id="@+id/action_recordGoalFinishFragment_to_recordGoalFinishCommentFragment"
+            app:destination="@id/recordGoalFinishCommentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordGoalFinishCommentFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishCommentFragment"
+        android:label="RecordGoalFinishCommentFragment"
+        tools:layout="@layout/fragment_record_goal_finish_comment">
+        <action
+            android:id="@+id/action_recordGoalFinishCommentFragment_to_recordGoalFinishCompleteFragment"
+            app:destination="@id/recordGoalFinishCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordGoalFinishCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishCompleteFragment"
+        android:label="RecordGoalFinishCompleteFragment"
+        tools:layout="@layout/fragment_record_goal_finish_complete">
+        <action
+            android:id="@+id/action_recordGoalFinishCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
 </navigation>

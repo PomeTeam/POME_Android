@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/consume_complete_back_button_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_left_24"
+            android:contentDescription="@string/back_button_text"
+            android:padding="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="6dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/consume_complete_close_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_emotion_close_text"
+            android:textColor="@color/grey_8"
+            android:padding="6dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintTop_toTopOf="@id/consume_complete_back_button_iv"
+            app:layout_constraintBottom_toBottomOf="@id/consume_complete_back_button_iv"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            style="@style/Pome.SemiBold.20"
+            android:id="@+id/consume_complete_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_complete_title_text"
+            android:textColor="@color/grey_8"
+            android:lineSpacingExtra="6sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_complete_back_button_iv"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/consume_complete_subtitle_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consume_complete_subtitle_text"
+            android:textColor="@color/grey_5"
+            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_complete_title_tv"
+            app:layout_constraintStart_toStartOf="@id/consume_complete_title_tv"/>
+
+        <ImageView
+            android:id="@+id/consume_complete_image_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/paper_pink_270"
+            android:contentDescription="@string/consume_complete_image_desc"
+            android:layout_marginBottom="35dp"
+            app:layout_constraintTop_toBottomOf="@id/consume_complete_subtitle_tv"
+            app:layout_constraintBottom_toTopOf="@id/consume_complete_check_button_acb"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            style="@style/Pome.Bold.18"
+            android:id="@+id/consume_complete_check_button_acb"
+            android:textColor="@color/white"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/consume_complete_check_button_text"
+            android:background="@drawable/register_profile_name_check_available_btn_background"
+            android:stateListAnimator="@null"
+            android:layout_marginBottom="14dp"
+            android:layout_marginHorizontal="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

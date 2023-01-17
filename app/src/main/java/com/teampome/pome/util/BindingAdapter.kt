@@ -75,9 +75,15 @@ fun bindingRemindFirstEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
                     .into(imageView)
             }
             else -> {
-
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mono_16)
+                    .into(imageView)
             }
         }
+    } ?: run {
+        Glide.with(imageView)
+            .load(R.drawable.emoji_mono_16)
+            .into(imageView)
     }
 }
 
@@ -101,8 +107,41 @@ fun bindingRemindLastEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
                     .into(imageView)
             }
             else -> {
-
+                Glide.with(imageView)
+                    .load(R.drawable.emoji_mono_16)
+                    .into(imageView)
             }
         }
+    } ?: run {
+        Glide.with(imageView)
+            .load(R.drawable.emoji_mono_16)
+            .into(imageView)
+    }
+}
+
+@BindingAdapter("bind:recordAlarmsIcon")
+fun bindingRecordAlarmsIcon(imageView: ImageView, data: String?) {
+    data?.let {
+        when(data) {
+            "돌아보기" -> {
+                Glide.with(imageView)
+                    .load(R.drawable.ic_heart_16)
+                    .into(imageView)
+            }
+            "목표종료" -> {
+                Glide.with(imageView)
+                    .load(R.drawable.ic_check_16)
+                    .into(imageView)
+            }
+            else -> {
+                Glide.with(imageView)
+                    .load(R.drawable.ic_heart_16)
+                    .into(imageView)
+            }
+        }
+    } ?: run {
+        Glide.with(imageView)
+            .load(R.drawable.ic_heart_16)
+            .into(imageView)
     }
 }
