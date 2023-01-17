@@ -162,4 +162,8 @@
     <string name="goal_finish_complete_subtitle_text">저장된 목표와 코멘트는\n시간이 지나도 확인할 수 있어요</string>
     <string name="goal_finish_complete_check_button_text">확인했어요</string>
     <string name="goal_finish_complete_image_desc">코멘트 완료 이미지</string>
+    <string name="alert_close_button_desc">닫힘 버튼</string>
+    <string name="pink_pen_desc">핑크색 펜</string>
+    <string name="alert_title_text">아직 돌아보지 않은 기록이 있어요!</string>
+    <string name="alert_subtitle_text">씀씀이 기록 후 일주일 뒤에\n감정을 돌아보고 목표를 종료할 수 있어요</string>
 </resources>

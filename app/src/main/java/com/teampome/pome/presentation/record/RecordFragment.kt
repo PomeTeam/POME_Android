@@ -4,17 +4,14 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.Window
 import android.view.WindowManager.LayoutParams
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
-import androidx.core.view.marginStart
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -22,6 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRecordBinding
+import com.teampome.pome.databinding.PomeAlertDialogBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
@@ -59,6 +57,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var noticeDialogBinding: TopImgNoticeDialogBinding
     private lateinit var noticeDialog: Dialog
 
+    // 목표 완료 경고 다이얼로그
+    private lateinit var finishGoalAlertDialogBinding: PomeAlertDialogBinding
+    private lateinit var finishGoalAlertDialog: Dialog
+
     // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
     private lateinit var recordWeekItem: RecordWeekItem
     private lateinit var categoryList: List<String>
@@ -73,6 +75,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         makeGoalRemoveDialog()
         makeCardRemoveDialog()
         makeWarningDialog()
+        makeFinishGoalAlertDialog()
 
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
@@ -146,6 +149,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordGoalCompleteCl.setOnClickListener {
             moveToRecordGoalFinish()
         }
+
+        // 일단 임시로 계속 호출
+        finishGoalAlertDialog.show()
     }
 
     override fun initListener() {
@@ -363,6 +369,22 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             val params = it.attributes
             params.width = (deviceSize[0] * 0.8).toInt()
             it.attributes = params as LayoutParams
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun makeFinishGoalAlertDialog() {
+        finishGoalAlertDialogBinding = PomeAlertDialogBinding.inflate(layoutInflater, null, false)
+
+        finishGoalAlertDialog = Dialog(requireContext())
+        finishGoalAlertDialog.setContentView(finishGoalAlertDialogBinding.root)
+
+//        finishGoalAlertDialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+        finishGoalAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        finishGoalAlertDialog.window?.setBackgroundDrawable(resources.getDrawable(R.drawable.white_r8_background, null))
+
+        finishGoalAlertDialogBinding.alertCloseButtonIv.setOnClickListener {
+            finishGoalAlertDialog.dismiss()
         }
     }
 
