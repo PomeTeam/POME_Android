@@ -256,5 +256,27 @@
         android:id="@+id/recordGoalFinishFragment"
         android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishFragment"
         android:label="RecordGoalFinishFragment"
-        tools:layout="@layout/fragment_record_goal_finish"/>
+        tools:layout="@layout/fragment_record_goal_finish">
+        <action
+            android:id="@+id/action_recordGoalFinishFragment_to_recordGoalFinishCommentFragment"
+            app:destination="@id/recordGoalFinishCommentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordGoalFinishCommentFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishCommentFragment"
+        android:label="RecordGoalFinishCommentFragment"
+        tools:layout="@layout/fragment_record_goal_finish_comment">
+        <action
+            android:id="@+id/action_recordGoalFinishCommentFragment_to_recordGoalFinishCompleteFragment"
+            app:destination="@id/recordGoalFinishCompleteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recordGoalFinishCompleteFragment"
+        android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishCompleteFragment"
+        android:label="RecordGoalFinishCompleteFragment"
+        tools:layout="@layout/fragment_record_goal_finish_complete">
+        <action
+            android:id="@+id/action_recordGoalFinishCompleteFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
+    </fragment>
 </navigation>

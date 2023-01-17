@@ -31,6 +31,10 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
                     binding.recordAmountProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
                 }
             })
+
+            binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
+                moveToGoalFinishComment()
+            }
         }
 
         binding.recordGoalEmotionCardListRv.adapter = RemindContentsCardAdapter().apply {
@@ -145,5 +149,11 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
 
     override fun initListener() {
 
+    }
+
+    private fun moveToGoalFinishComment() {
+        val action = RecordGoalFinishFragmentDirections.actionRecordGoalFinishFragmentToRecordGoalFinishCommentFragment()
+
+        findNavController().navigate(action)
     }
 }

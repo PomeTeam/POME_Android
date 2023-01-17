@@ -153,4 +153,13 @@
     <string name="record_goal_finish_title_text">모든 기록</string>
     <string name="record_goal_finish_subtitle_text">목표를 종료하기 전에 기록을 돌아보세요</string>
     <string name="record_goal_finish_check_button_text">남겼어요</string>
+    <string name="finish_comment_title_text">한줄 코멘트</string>
+    <string name="finish_comment_subtitle_text">목표를 달성하면서 어떤 변화를 느끼셨나요?</string>
+    <string name="finish_comment_content_text">목표에 대한 한줄 코멘트를 남겨보세요</string>
+    <string name="finish_comment_yes_button_text">저장할게요</string>
+    <string name="finish_comment_no_button_text">저장 안할래요</string>
+    <string name="goal_finish_complete_title_text">종료된 목표를\n목표 보관함에 저장했어요</string>
+    <string name="goal_finish_complete_subtitle_text">저장된 목표와 코멘트는\n시간이 지나도 확인할 수 있어요</string>
+    <string name="goal_finish_complete_check_button_text">확인했어요</string>
+    <string name="goal_finish_complete_image_desc">코멘트 완료 이미지</string>
 </resources>
