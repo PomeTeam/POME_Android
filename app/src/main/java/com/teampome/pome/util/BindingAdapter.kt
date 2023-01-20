@@ -9,8 +9,17 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.teampome.pome.R
+import com.teampome.pome.util.customview.PomeSmallGoalCardView
 import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
+
+// attrs로 정의하려고 하였지만, binding Error가 발생 -> 따라서 BindingAdapter로 대체
+@BindingAdapter("pome:setRemainDays")
+fun bindingSetRemainDays(pomeSmallGoalCardView: PomeSmallGoalCardView, days: String?) {
+    pomeSmallGoalCardView.remainDays = days?.let {
+        Integer.parseInt(it)
+    } ?: 0
+}
 
 @BindingAdapter("bind:pomeImage44")
 fun bindingPomeImage44(imageView: ImageView, src: String?){

@@ -2,7 +2,6 @@
 <resources>
     <declare-styleable name="PomeSmallGoalCardView">
         <attr name="setPrivate" format="boolean" />
-        <attr name="setDay" format="integer" />
         <attr name="setGoalText" format="string" />
     </declare-styleable>
 </resources>

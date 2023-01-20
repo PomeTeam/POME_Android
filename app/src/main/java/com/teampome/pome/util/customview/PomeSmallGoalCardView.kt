@@ -7,7 +7,7 @@ import com.google.android.material.card.MaterialCardView
 import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeSmallGoalCardviewBinding
 
-class PomeSmallGoalCardView(context: Context, attrs: AttributeSet) : MaterialCardView(context, attrs) {
+class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : MaterialCardView(context, attrs) {
     private var binding: PomeSmallGoalCardviewBinding
     var goalText: String? = ""
         set(value) {
@@ -44,8 +44,9 @@ class PomeSmallGoalCardView(context: Context, attrs: AttributeSet) : MaterialCar
 
         try {
             goalText = attr.getString(R.styleable.PomeSmallGoalCardView_setGoalText)
-            isPrivate = attr.getBoolean(R.styleable.PomeSmallGoalCardView_setPrivate, false)
-            remainDays = attr.getInt(R.styleable.PomeSmallGoalCardView_setDay, 0)
+            isPrivate = !attr.getBoolean(R.styleable.PomeSmallGoalCardView_setPrivate, false)
+//            remainDays = attr.getInt(R.styleable.PomeSmallGoalCardView_setDay, 0)
+            remainDays = 0
         } finally {
             attr.recycle()
         }
