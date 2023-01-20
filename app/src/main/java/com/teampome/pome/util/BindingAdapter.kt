@@ -14,7 +14,7 @@ import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
 
 // attrs로 정의하려고 하였지만, binding Error가 발생 -> 따라서 BindingAdapter로 대체
-@BindingAdapter("pome:setRemainDays")
+@BindingAdapter("bind:setRemainDays")
 fun bindingSetRemainDays(pomeSmallGoalCardView: PomeSmallGoalCardView, days: String?) {
     pomeSmallGoalCardView.remainDays = days?.let {
         Integer.parseInt(it)

@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:pome="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -77,6 +78,7 @@
                     android:layout_marginHorizontal="16dp"
                     pome:setGoalText="커피를 마시고 싶다."
                     pome:setPrivate="false"
+                    bind:setRemainDays="0"
                     app:layout_constraintTop_toBottomOf="@id/record_leave_emotion_subtitle_tv"/>
 
                 <TextView
