@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="PomeSmallGoalCardView">
+    <declare-styleable name="PomeGoalCardView">
         <attr name="setPrivate" format="boolean" />
         <attr name="setGoalText" format="string" />
+        <attr name="setRemainDays" format="string" />
     </declare-styleable>
 </resources>

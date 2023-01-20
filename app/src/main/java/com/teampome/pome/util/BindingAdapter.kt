@@ -1,5 +1,6 @@
 package com.teampome.pome.util
 
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
@@ -13,8 +14,8 @@ import com.teampome.pome.util.customview.PomeSmallGoalCardView
 import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
 
-// attrs로 정의하려고 하였지만, binding Error가 발생 -> 따라서 BindingAdapter로 대체
-@BindingAdapter("bind:setRemainDays")
+// attrs와 정의하려고 하였지만 둘다 정의해야 에러가 안남...
+@BindingAdapter("pome:setRemainDays")
 fun bindingSetRemainDays(pomeSmallGoalCardView: PomeSmallGoalCardView, days: String?) {
     pomeSmallGoalCardView.remainDays = days?.let {
         Integer.parseInt(it)

@@ -9,7 +9,7 @@
 
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/small_card_mcv"
+        android:id="@+id/goal_card_mcv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="6dp"
@@ -18,14 +18,14 @@
         app:strokeWidth="1dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/small_card_container_cl"
+            android:id="@+id/goal_card_container_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:paddingVertical="14dp">
 
             <TextView
-                android:id="@+id/small_card_public_chip_tv"
+                android:id="@+id/goal_card_public_chip_tv"
                 style="@style/Pome.SemiBold.10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                 tools:text="공개" />
 
             <TextView
-                android:id="@+id/small_card_day_chip_tv"
+                android:id="@+id/goal_card_day_chip_tv"
                 style="@style/Pome.SemiBold.10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -47,13 +47,13 @@
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="4dp"
                 android:textColor="@color/pink_100"
-                app:layout_constraintBottom_toBottomOf="@id/small_card_public_chip_tv"
-                app:layout_constraintStart_toEndOf="@id/small_card_public_chip_tv"
-                app:layout_constraintTop_toTopOf="@id/small_card_public_chip_tv"
+                app:layout_constraintBottom_toBottomOf="@id/goal_card_public_chip_tv"
+                app:layout_constraintStart_toEndOf="@id/goal_card_public_chip_tv"
+                app:layout_constraintTop_toTopOf="@id/goal_card_public_chip_tv"
                 tools:text="END" />
 
             <ImageView
-                android:id="@+id/small_card_goal_empty_iv"
+                android:id="@+id/goal_card_empty_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/no_goal_icon_desc"
@@ -62,11 +62,11 @@
                 android:paddingEnd="5dp"
                 android:paddingStart="0dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/small_card_public_chip_tv"
+                app:layout_constraintTop_toBottomOf="@id/goal_card_public_chip_tv"
                 android:src="@drawable/ic_empty_goal"/>
 
             <TextView
-                android:id="@+id/small_card_goal_tv"
+                android:id="@+id/goal_card_text_tv"
                 style="@style/Pome.SemiBold.18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,8 +74,8 @@
                 android:maxLines="1"
                 android:textColor="@color/grey_8"
                 android:layout_marginTop="8dp"
-                app:layout_constraintStart_toEndOf="@+id/small_card_goal_empty_iv"
-                app:layout_constraintTop_toBottomOf="@id/small_card_public_chip_tv"
+                app:layout_constraintStart_toEndOf="@+id/goal_card_empty_iv"
+                app:layout_constraintTop_toBottomOf="@id/goal_card_public_chip_tv"
                 tools:text="커피 대신 물을 마시자" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
