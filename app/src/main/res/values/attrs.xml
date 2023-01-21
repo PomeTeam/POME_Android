@@ -8,4 +8,10 @@
         <attr name="setGoalAmount" format="string" />
         <attr name="setPomeProgress" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="PomeEditText">
+        <attr name="setMaxCount" format="integer" />
+        <attr name="setHint" format="string" />
+        <attr name="setMaxLines" format="integer" />
+    </declare-styleable>
 </resources>

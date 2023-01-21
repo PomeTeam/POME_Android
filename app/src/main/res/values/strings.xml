@@ -218,4 +218,5 @@
     <string name="no_goal_icon_desc">목표 없음 이미지</string>
 
     <string name="card_day_chip_text">D-%d</string>
+    <string name="edittext_char_count_text">%d/%d</string>
 </resources>
