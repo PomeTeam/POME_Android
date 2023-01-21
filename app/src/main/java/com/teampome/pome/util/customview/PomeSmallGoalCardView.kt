@@ -7,8 +7,8 @@ import com.google.android.material.card.MaterialCardView
 import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeGoalCardBinding
 
-class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : MaterialCardView(context, attrs) {
-    private var binding: PomeGoalCardBinding
+open class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : MaterialCardView(context, attrs) {
+    protected var binding: PomeGoalCardBinding
     var goalText: String? = ""
         set(value) {
             field = value
@@ -34,7 +34,7 @@ class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, attrs: A
     init {
         binding = PomeGoalCardBinding.inflate(LayoutInflater.from(context), null, false)
 
-        addView(binding.root)
+        this.addView(binding.root)
 
         val attr = context.theme.obtainStyledAttributes(
             attrs,

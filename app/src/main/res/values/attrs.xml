@@ -4,5 +4,8 @@
         <attr name="setPrivate" format="boolean" />
         <attr name="setGoalText" format="string" />
         <attr name="setRemainDays" format="string" />
+        <attr name="setUsedAmount" format="string" />
+        <attr name="setGoalAmount" format="string" />
+        <attr name="setPomeProgress" format="integer" />
     </declare-styleable>
 </resources>

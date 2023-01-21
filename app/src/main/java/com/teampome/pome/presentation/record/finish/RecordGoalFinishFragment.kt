@@ -15,26 +15,8 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recordAmountProgressAsb.apply {
-            isEnabled = false
-
-            binding.recordAmountProgressTextTv.text = getString(R.string.record_progress_percent).format(progress)
-
-            viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-                    val thumbBounds = thumb.bounds
-                    val progressTextWidth = binding.recordAmountProgressTextTv.width
-
-                    Log.d("progress", "thumbBounds center : ${thumbBounds.exactCenterX()}, progressTextWidth : $progressTextWidth")
-
-                    // thumb의 중간 - (progressTv 길이 / 2) -1f => 1f는 살짝 왼쪽으로 조정하는 값
-                    binding.recordAmountProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
-                }
-            })
-
-            binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
-                moveToGoalFinishComment()
-            }
+        binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
+            moveToGoalFinishComment()
         }
 
         binding.recordGoalEmotionCardListRv.adapter = RemindContentsCardAdapter().apply {
