@@ -10,6 +10,7 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.teampome.pome.R
+import com.teampome.pome.util.customview.PomeBigGoalCardView
 import com.teampome.pome.util.customview.PomeSmallGoalCardView
 import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
@@ -20,6 +21,22 @@ fun bindingSetRemainDays(pomeSmallGoalCardView: PomeSmallGoalCardView, days: Str
     pomeSmallGoalCardView.remainDays = days?.let {
         Integer.parseInt(it)
     } ?: 0
+}
+
+@BindingAdapter("pome:setUsedAmount")
+fun bindingSetUsedAmount(pomeBigGoalCardView: PomeBigGoalCardView, amount: String?) {
+    amount?.let {
+        pomeBigGoalCardView.useAmount = amount
+    }
+}
+
+@BindingAdapter("pome:setPomeProgress")
+fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: Int?) {
+    progress?.let {
+        pomeBigGoalCardView.progress = it
+    } ?: run {
+        pomeBigGoalCardView.progress = 0
+    }
 }
 
 @BindingAdapter("bind:pomeImage44")

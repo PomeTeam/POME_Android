@@ -7,7 +7,7 @@ import android.view.ViewTreeObserver
 import com.teampome.pome.R
 
 class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : PomeSmallGoalCardView(context, attrs) {
-    private var progress: Int = 0
+    var progress: Int = 0
         set(value) {
             field = value
 
@@ -31,14 +31,14 @@ class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: Att
             }
         }
 
-    private var useAmount: String = ""
+    var useAmount: String = ""
         set(value) {
             field = value
 
             binding.goalCardUsedAmountAtv.text = value
         }
 
-    private var goalAmount: String = ""
+    var goalAmount: String = ""
         set(value) {
             field = value
 
