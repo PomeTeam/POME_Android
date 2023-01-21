@@ -28,10 +28,10 @@
                 style="@style/Pome.SemiBold.10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:background="@drawable/item_grey1_r4_background"
                 android:paddingHorizontal="6dp"
                 android:paddingVertical="4dp"
-                android:layout_marginStart="16dp"
                 android:textColor="@color/grey_5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -56,11 +56,11 @@
                 android:id="@+id/goal_card_empty_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 android:contentDescription="@string/no_goal_icon_desc"
                 android:paddingStart="0dp"
                 android:paddingEnd="5dp"
-                android:layout_marginStart="16dp"
                 android:src="@drawable/ic_empty_goal"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +72,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:paddingHorizontal="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:paddingHorizontal="16dp"
                 android:textColor="@color/grey_8"
                 app:layout_constraintStart_toEndOf="@+id/goal_card_empty_iv"
                 app:layout_constraintTop_toBottomOf="@id/goal_card_public_chip_tv"
@@ -85,15 +85,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/goal_card_text_tv" >
+                app:layout_constraintTop_toBottomOf="@id/goal_card_text_tv">
 
                 <TextView
                     android:id="@+id/goal_card_used_amount_title_atv"
                     style="@style/Pome.SemiBold.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
                     android:text="@string/record_goal_used_amount_title_text"
                     android:textColor="@color/grey_5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -144,14 +144,14 @@
                     tools:progress="0" />
 
                 <TextView
-                    style="@style/Pome.SemiBold.12"
                     android:id="@+id/goal_card_progress_text_tv"
+                    style="@style/Pome.SemiBold.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/goal_card_amount_progress_asb"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/goal_card_amount_progress_asb"
-                    app:layout_constraintBottom_toBottomOf="@id/goal_card_amount_progress_asb"/>
+                    app:layout_constraintTop_toTopOf="@id/goal_card_amount_progress_asb" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

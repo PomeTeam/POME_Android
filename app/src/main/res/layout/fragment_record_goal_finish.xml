@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:pome="http://schemas.android.com/apk/res-auto">
+    xmlns:pome="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,81 +17,81 @@
             android:id="@+id/record_goal_finish_back_button_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_left_24"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="10dp"
             android:contentDescription="@string/back_button_text"
             android:padding="6dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="6dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:src="@drawable/ic_arrow_left_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/record_goal_finish_back_button_iv"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/record_goal_finish_back_button_iv">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
-                    style="@style/Pome.SemiBold.18"
                     android:id="@+id/record_goal_finish_title_tv"
+                    style="@style/Pome.SemiBold.18"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
                     android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/record_goal_finish_title_text"
                     android:textColor="@color/grey_8"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    style="@style/Pome.Medium.14"
                     android:id="@+id/record_goal_finish_subtitle_tv"
+                    style="@style/Pome.Medium.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="@string/record_goal_finish_subtitle_text"
                     android:textColor="@color/grey_5"
-                    android:layout_marginTop="6dp"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_title_tv"
-                    app:layout_constraintStart_toStartOf="@id/record_goal_finish_title_tv"/>
+                    app:layout_constraintStart_toStartOf="@id/record_goal_finish_title_tv"
+                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_title_tv" />
 
                 <com.teampome.pome.util.customview.PomeBigGoalCardView
                     android:id="@+id/record_goal_card_mcv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
                     android:layout_marginHorizontal="16dp"
-                    pome:setPrivate="false"
-                    pome:setGoalText="커피를 마시고 싶었나"
-                    pome:setRemainDays="20"
-                    pome:setUsedAmount="20,000원"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_subtitle_tv"
                     pome:setGoalAmount="· 200,000원"
+                    pome:setGoalText="커피를 마시고 싶었나"
                     pome:setPomeProgress="15"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_subtitle_tv" />
+                    pome:setPrivate="false"
+                    pome:setRemainDays="20"
+                    pome:setUsedAmount="20,000원" />
 
                 <TextView
-                    style="@style/Pome.Medium.14"
                     android:id="@+id/record_goal_finish_count_tv"
+                    style="@style/Pome.Medium.14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="전체 0건"
-                    android:textColor="@color/grey_5"
-                    android:letterSpacing="-0.03"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_card_mcv"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    android:letterSpacing="-0.03"
+                    android:text="전체 0건"
+                    android:textColor="@color/grey_5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_goal_card_mcv" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/record_goal_finish_no_emotion_container_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingVertical="100dp"
-                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_count_tv"
-                    app:layout_constraintBottom_toBottomOf="parent">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/record_goal_finish_count_tv">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/record_goal_finish_no_write_emotion_aiv"
@@ -105,13 +105,13 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/record_no_write_emotion_text"
                         android:layout_marginTop="12dp"
                         android:layout_marginBottom="30dp"
-                        app:layout_constraintTop_toBottomOf="@id/record_goal_finish_no_write_emotion_aiv"
+                        android:text="@string/record_no_write_emotion_text"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/record_goal_finish_no_write_emotion_aiv"
                         app:layout_constraintStart_toStartOf="@id/record_goal_finish_no_write_emotion_aiv"
-                        app:layout_constraintEnd_toEndOf="@id/record_goal_finish_no_write_emotion_aiv"/>
+                        app:layout_constraintTop_toBottomOf="@id/record_goal_finish_no_write_emotion_aiv" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -121,26 +121,26 @@
                     android:layout_marginTop="14dp"
                     android:layout_marginBottom="70dp"
                     android:paddingHorizontal="16dp"
-                    tools:listitem="@layout/item_remind_contents_card"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_goal_card_mcv"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    tools:listitem="@layout/item_remind_contents_card" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/Pome.Bold.18"
             android:id="@+id/record_goal_finish_check_button_acb"
-            android:textColor="@color/white"
+            style="@style/Pome.Bold.18"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:text="@string/record_goal_finish_check_button_text"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/register_profile_name_check_available_btn_background"
             android:stateListAnimator="@null"
-            android:layout_marginBottom="14dp"
-            android:layout_marginHorizontal="16dp"
+            android:text="@string/record_goal_finish_check_button_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

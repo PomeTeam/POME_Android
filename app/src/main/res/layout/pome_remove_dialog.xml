@@ -14,74 +14,74 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="36dp"
         android:background="@drawable/white_r8_background"
-        android:paddingHorizontal="28dp"
-        android:layout_marginHorizontal="36dp">
+        android:paddingHorizontal="28dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Pome.SemiBold.16"
             android:id="@+id/remove_dialog_title_atv"
+            style="@style/Pome.SemiBold.16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="종료된 목표를 삭제하시겠어요?"
-            android:textColor="@color/grey_9"
-            android:paddingTop="24dp"
             android:paddingHorizontal="2dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:paddingTop="24dp"
+            android:textColor="@color/grey_9"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="종료된 목표를 삭제하시겠어요?" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Pome.Medium.14"
             android:id="@+id/remove_dialog_subtitle_atv"
+            style="@style/Pome.Medium.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="지금까지 작성한 기록들은 모두 사라져요"
-            android:textColor="@color/grey_5"
-            android:gravity="center"
             android:layout_marginTop="2dp"
+            android:gravity="center"
             android:paddingHorizontal="0dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="@color/grey_5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/remove_dialog_title_atv"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remove_dialog_title_atv"
+            tools:text="지금까지 작성한 기록들은 모두 사라져요" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/remove_trash_aiv"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/trash_green"
             android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/remove_dialog_subtitle_atv"
+            android:src="@drawable/trash_green"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/remove_dialog_subtitle_atv" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Pome.Medium.14"
             android:id="@+id/remove_yes_text_atv"
+            style="@style/Pome.Medium.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/remove_yes_text"
-            android:textColor="@color/main"
-            android:paddingHorizontal="5dp"
-            android:paddingVertical="5dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="9dp"
             android:layout_marginBottom="15dp"
-            app:layout_constraintTop_toBottomOf="@id/remove_trash_aiv"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/Pome.Medium.14"
-            android:id="@+id/remove_no_text_atv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/remove_no_text"
-            android:textColor="@color/main"
             android:paddingHorizontal="5dp"
             android:paddingVertical="5dp"
+            android:text="@string/remove_yes_text"
+            android:textColor="@color/main"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remove_trash_aiv" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/remove_no_text_atv"
+            style="@style/Pome.Medium.14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="19dp"
-            app:layout_constraintTop_toTopOf="@id/remove_yes_text_atv"
-            app:layout_constraintEnd_toStartOf="@id/remove_yes_text_atv"/>
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="5dp"
+            android:text="@string/remove_no_text"
+            android:textColor="@color/main"
+            app:layout_constraintEnd_toStartOf="@id/remove_yes_text_atv"
+            app:layout_constraintTop_toTopOf="@id/remove_yes_text_atv" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

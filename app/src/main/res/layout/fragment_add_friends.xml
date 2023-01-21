@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:letterSpacing="-0.03"
             android:text="@string/add_friends_title_text"
             android:textColor="@color/grey_9"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,6 +35,7 @@
             android:layout_marginTop="38dp"
             android:background="@drawable/register_profile_name_background"
             android:hint="@string/add_friends_name_hint_text"
+            android:lineSpacingExtra="6sp"
             android:maxLength="10"
             android:maxLines="1"
             android:paddingHorizontal="16dp"
@@ -48,11 +50,11 @@
             android:id="@+id/add_friends_name_search_aiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_search_20"
             android:layout_marginEnd="16dp"
-            app:layout_constraintTop_toTopOf="@id/add_friends_name_et"
+            android:src="@drawable/ic_search_20"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_name_et"
-            app:layout_constraintEnd_toEndOf="@id/add_friends_name_et"/>
+            app:layout_constraintEnd_toEndOf="@id/add_friends_name_et"
+            app:layout_constraintTop_toTopOf="@id/add_friends_name_et" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/add_friends_list_rv"
@@ -62,17 +64,17 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_add_friends_list"
+            app:layout_constraintBottom_toTopOf="@id/add_friends_check_btn"
             app:layout_constraintTop_toBottomOf="@id/add_friends_name_et"
-            app:layout_constraintBottom_toTopOf="@id/add_friends_check_btn" />
+            tools:listitem="@layout/item_add_friends_list" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/add_friends_no_search_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/add_friends_name_et"
-            app:layout_constraintBottom_toTopOf="@id/add_friends_check_btn">
+            app:layout_constraintBottom_toTopOf="@id/add_friends_check_btn"
+            app:layout_constraintTop_toBottomOf="@id/add_friends_name_et">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/add_friends_no_search_icon_aiv"
@@ -80,39 +82,39 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_warning_24"
                 app:layout_constraintBottom_toTopOf="@id/add_friends_no_search_desc_tv"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                style="@style/Pome.Medium.14"
                 android:id="@+id/add_friends_no_search_desc_tv"
+                style="@style/Pome.Medium.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:gravity="center"
+                android:paddingBottom="10dp"
                 android:text="@string/add_friends_no_search_desc_text"
                 android:textColor="@color/grey_5"
-                android:gravity="center"
-                android:layout_marginTop="14dp"
-                android:paddingBottom="10dp"
-                app:layout_constraintTop_toBottomOf="@id/add_friends_no_search_icon_aiv"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/add_friends_no_search_icon_aiv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/Pome.Bold.18"
             android:id="@+id/add_friends_check_btn"
-            android:textColor="@color/white"
+            style="@style/Pome.Bold.18"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:text="@string/add_friends_check_btn_text"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="14dp"
             android:background="@drawable/register_profile_name_check_available_btn_background"
             android:stateListAnimator="@null"
-            android:layout_marginBottom="14dp"
-            android:layout_marginHorizontal="16dp"
+            android:text="@string/add_friends_check_btn_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -16,185 +16,185 @@
             android:id="@+id/add_goal_contents_back_button_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_left_24"
-            android:contentDescription="@string/back_button_text"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="6dp"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/back_button_text"
             android:padding="6dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:src="@drawable/ic_arrow_left_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            style="@style/Pome.SemiBold.20"
             android:id="@+id/add_goal_contents_title_tv"
+            style="@style/Pome.SemiBold.20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="6sp"
             android:text="@string/add_goal_contents_title_text"
             android:textColor="@color/grey_8"
-            android:lineSpacingExtra="6sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_back_button_iv"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_back_button_iv" />
 
         <TextView
-            style="@style/Pome.Medium.14"
             android:id="@+id/add_goal_contents_subtitle_tv"
+            style="@style/Pome.Medium.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
             android:text="@string/add_goal_contents_subtitle_text"
             android:textColor="@color/grey_5"
-            android:layout_marginTop="12dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_title_tv"
-            app:layout_constraintStart_toStartOf="@id/add_goal_contents_title_tv"/>
+            app:layout_constraintStart_toStartOf="@id/add_goal_contents_title_tv"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_title_tv" />
 
         <TextView
-            style="@style/Pome.SemiBold.14"
             android:id="@+id/add_goal_contents_category_title_tv"
+            style="@style/Pome.SemiBold.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
             android:text="@string/add_goal_contents_category_title_text"
             android:textColor="@color/grey_7"
-            android:layout_marginTop="35dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_subtitle_tv"
-            app:layout_constraintStart_toStartOf="@id/add_goal_contents_subtitle_tv"/>
+            app:layout_constraintStart_toStartOf="@id/add_goal_contents_subtitle_tv"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_subtitle_tv" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            style="@style/Pome.Regular.14"
             android:id="@+id/add_goal_contents_category_aet"
+            style="@style/Pome.Regular.14"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/register_profile_name_background"
             android:hint="@string/add_goal_contents_category_hint_text"
+            android:maxLength="8"
+            android:paddingHorizontal="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
             android:textCursorDrawable="@drawable/register_profile_name_cursor"
-            android:background="@drawable/register_profile_name_background"
-            android:paddingHorizontal="16dp"
-            android:maxLength="8"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_category_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_category_title_tv" />
 
         <TextView
-            style="@style/Pome.SemiBold.14"
             android:id="@+id/add_goal_contents_promise_title_tv"
+            style="@style/Pome.SemiBold.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/add_goal_contents_promise_title_text"
             android:textColor="@color/grey_7"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_category_aet"
-            app:layout_constraintStart_toStartOf="@id/add_goal_contents_category_aet"/>
+            app:layout_constraintStart_toStartOf="@id/add_goal_contents_category_aet"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_category_aet" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            style="@style/Pome.Regular.14"
             android:id="@+id/add_goal_contents_promise_aet"
+            style="@style/Pome.Regular.14"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/register_profile_name_background"
             android:hint="@string/add_goal_contents_promise_hint_text"
+            android:maxLength="18"
+            android:maxLines="1"
+            android:paddingHorizontal="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
             android:textCursorDrawable="@drawable/register_profile_name_cursor"
-            android:background="@drawable/register_profile_name_background"
-            android:paddingHorizontal="16dp"
-            android:maxLines="1"
-            android:maxLength="18"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_promise_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_promise_title_tv" />
 
         <TextView
-            style="@style/Pome.SemiBold.14"
             android:id="@+id/add_goal_contents_amount_title_tv"
+            style="@style/Pome.SemiBold.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:text="@string/add_goal_contents_amount_title_text"
             android:textColor="@color/grey_7"
-            android:layout_marginTop="24dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_promise_aet"
-            app:layout_constraintStart_toStartOf="@id/add_goal_contents_promise_aet"/>
+            app:layout_constraintStart_toStartOf="@id/add_goal_contents_promise_aet"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_promise_aet" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            style="@style/Pome.Regular.14"
             android:id="@+id/add_goal_contents_amount_aet"
+            style="@style/Pome.Regular.14"
             android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/register_profile_name_background"
             android:hint="@string/add_goal_contents_amount_hint_text"
+            android:inputType="numberDecimal"
+            android:paddingHorizontal="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
             android:textCursorDrawable="@drawable/register_profile_name_cursor"
-            android:background="@drawable/register_profile_name_background"
-            android:inputType="numberDecimal"
-            android:paddingHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginHorizontal="20dp"
-            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_amount_title_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/add_goal_contents_amount_title_tv" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/add_goal_contents_private_container_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="24dp"
             android:background="@drawable/item_pink10_r8_background"
             android:padding="16dp"
-            android:layout_marginHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@id/add_goal_contents_check_button_acb">
 
             <TextView
-                style="@style/Pome.SemiBold.14"
                 android:id="@+id/add_goal_contents_private_title_tv"
+                style="@style/Pome.SemiBold.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/add_goal_contents_private_title_text"
                 android:textColor="@color/grey_8"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                style="@style/Pome.Medium.14"
                 android:id="@+id/add_goal_contents_private_subtitle_tv"
+                style="@style/Pome.Medium.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:text="@string/add_goal_contents_private_subtitle_text"
                 android:textColor="@color/grey_6"
-                android:layout_marginTop="4dp"
-                app:layout_constraintTop_toBottomOf="@id/add_goal_contents_private_title_tv"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_goal_contents_private_title_tv" />
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/add_goal_contents_private_switch_sc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:track="@drawable/private_switch_track_selector"
-                android:thumb="@drawable/private_switch_thumb_selector"
                 android:elevation="1dp"
+                android:thumb="@drawable/private_switch_thumb_selector"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:track="@drawable/private_switch_track_selector" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            style="@style/Pome.Bold.18"
             android:id="@+id/add_goal_contents_check_button_acb"
-            android:textColor="@color/white"
+            style="@style/Pome.Bold.18"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:text="@string/add_goal_contents_check_button_text"
-            android:background="@drawable/register_profile_name_check_disable_btn_background"
-            android:stateListAnimator="@null"
-            android:enabled="false"
-            android:clickable="false"
-            android:layout_marginBottom="14dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/register_profile_name_check_disable_btn_background"
+            android:clickable="false"
+            android:enabled="false"
+            android:stateListAnimator="@null"
+            android:text="@string/add_goal_contents_check_button_text"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
