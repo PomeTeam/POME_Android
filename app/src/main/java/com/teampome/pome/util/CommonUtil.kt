@@ -3,7 +3,9 @@ package com.teampome.pome.util
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
@@ -208,7 +210,6 @@ object CommonUtil {
         calendar.setSelectedDate(localDate)
     }
 
-
     fun showBackButtonDialog(
         context: Context,
         title: String,
@@ -247,6 +248,22 @@ object CommonUtil {
             }
         }
 
+        makePomeDialog(backButtonDialog)
+
         backButtonDialog.show()
+    }
+
+    fun makePomeDialog(dialog: Dialog) {
+        val deviceSize = getDeviceSize(dialog.context)
+
+        dialog.window?.let {
+            it.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            it.setBackgroundDrawable(ResourcesCompat.getDrawable(dialog.context.resources, R.drawable.white_r8_background, null))
+
+            val params = it.attributes
+            params.width = (deviceSize[0] * 0.75).toInt()
+            it.attributes = params
+        }
     }
 }

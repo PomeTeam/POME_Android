@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordGoalFinishCommentBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 
 class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCommentBinding>(R.layout.fragment_record_goal_finish_comment) {
@@ -50,8 +51,7 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
         removeDialogBinding.removeYesTextAtv.text = "삭제할래요"
         removeDialogBinding.removeNoTextAtv.text = "아니요"
 
-        // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
-        removeDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        CommonUtil.makePomeDialog(removeDialog)
 
         // 그만둘래요 클릭
         removeDialogBinding.removeYesTextAtv.setOnClickListener {

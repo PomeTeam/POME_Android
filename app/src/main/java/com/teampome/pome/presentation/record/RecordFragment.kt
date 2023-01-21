@@ -2,13 +2,8 @@ package com.teampome.pome.presentation.record
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.WindowManager.LayoutParams
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
@@ -231,8 +226,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         removeGoalDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
         removeGoalDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
 
-        // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
-        removeGoalDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        CommonUtil.makePomeDialog(removeGoalDialog)
 
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
@@ -285,8 +279,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         removeCardDialogBinding.removeDialogTitleAtv.text = "기록을 삭제하시겠어요?"
         removeCardDialogBinding.removeDialogSubtitleAtv.text = "삭제한 내용은 다시 되돌릴 수 없어요"
 
-        // round background 적용을 위해, root view의 코너를 가리기 위해 투명처리
-        removeCardDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        CommonUtil.makePomeDialog(removeCardDialog)
 
         // 삭제하기 버튼 클릭
         removeCardDialogBinding.removeYesTextAtv.setOnClickListener {
@@ -309,6 +302,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         noticeDialog = Dialog(requireContext())
 
         noticeDialog.setContentView(noticeDialogBinding.root)
+
+        CommonUtil.makePomeDialog(noticeDialog)
 
         // close 버튼 정의
         noticeDialogBinding.noticeCloseButtonAiv.setOnClickListener {
@@ -337,19 +332,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         noticeDialog.show()
-
-        // dialog의 window가 wrap_content이기 때문에 화면에 꽉 안차게 나옴
-        noticeDialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-
-        val deviceSize = CommonUtil.getDeviceSize(requireContext())
-        noticeDialog.window?.let {
-            // dialog 둥글게 처리
-            it.setBackgroundDrawable(resources.getDrawable(R.drawable.white_r8_background, null))
-
-            val params = it.attributes
-            params.width = (deviceSize[0] * 0.8).toInt()
-            it.attributes = params as LayoutParams
-        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
@@ -359,9 +341,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         finishGoalAlertDialog = Dialog(requireContext())
         finishGoalAlertDialog.setContentView(finishGoalAlertDialogBinding.root)
 
-//        finishGoalAlertDialog.window?.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-        finishGoalAlertDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        finishGoalAlertDialog.window?.setBackgroundDrawable(resources.getDrawable(R.drawable.white_r8_background, null))
+        CommonUtil.makePomeDialog(finishGoalAlertDialog)
 
         finishGoalAlertDialogBinding.alertCloseButtonIv.setOnClickListener {
             finishGoalAlertDialog.dismiss()
