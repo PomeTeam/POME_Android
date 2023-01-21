@@ -16,21 +16,21 @@ import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
 
 // attrs와 정의하려고 하였지만 둘다 정의해야 에러가 안남...
-@BindingAdapter("pome:setRemainDays")
+@BindingAdapter("setRemainDays")
 fun bindingSetRemainDays(pomeSmallGoalCardView: PomeSmallGoalCardView, days: String?) {
     pomeSmallGoalCardView.remainDays = days?.let {
         Integer.parseInt(it)
     } ?: 0
 }
 
-@BindingAdapter("pome:setUsedAmount")
+@BindingAdapter("setUsedAmount")
 fun bindingSetUsedAmount(pomeBigGoalCardView: PomeBigGoalCardView, amount: String?) {
     amount?.let {
         pomeBigGoalCardView.useAmount = amount
     }
 }
 
-@BindingAdapter("pome:setPomeProgress")
+@BindingAdapter("setPomeProgress")
 fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: Int?) {
     progress?.let {
         pomeBigGoalCardView.progress = it
@@ -39,7 +39,7 @@ fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: I
     }
 }
 
-@BindingAdapter("bind:pomeImage44")
+@BindingAdapter("pomeImage44")
 fun bindingPomeImage44(imageView: ImageView, src: String?){
     src?.let {
         Glide.with(imageView)
@@ -59,7 +59,7 @@ fun bindingPomeImage44(imageView: ImageView, src: String?){
     }
 }
 
-@BindingAdapter("bind:remindEmotionText")
+@BindingAdapter("remindEmotionText")
 fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
     emotion?.let {
         when(emotion) {
@@ -82,7 +82,7 @@ fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
     }
 }
 
-@BindingAdapter("bind:remindFirstEmotionDrawable")
+@BindingAdapter("remindFirstEmotionDrawable")
 fun bindingRemindFirstEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
     emotion?.let{
         when(emotion) {
@@ -114,7 +114,7 @@ fun bindingRemindFirstEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
     }
 }
 
-@BindingAdapter("bind:remindLastEmotionDrawable")
+@BindingAdapter("remindLastEmotionDrawable")
 fun bindingRemindLastEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
     emotion?.let{
         when(emotion) {
@@ -146,7 +146,7 @@ fun bindingRemindLastEmotionDrawable(imageView: ImageView, emotion: Emotion?) {
     }
 }
 
-@BindingAdapter("bind:recordAlarmsIcon")
+@BindingAdapter("recordAlarmsIcon")
 fun bindingRecordAlarmsIcon(imageView: ImageView, data: String?) {
     data?.let {
         when(data) {
