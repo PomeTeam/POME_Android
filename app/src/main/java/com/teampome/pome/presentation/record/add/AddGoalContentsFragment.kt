@@ -53,7 +53,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
             findNavController().navigateUp()
         }
 
-        binding.addGoalContentsPrivateSwitchSc.setOnCheckedChangeListener { compoundButton, b ->
+        binding.addGoalContentsPrivateSwitchSc.setOnCheckedChangeListener { _, b ->
             // 스위치 기본 애니메이션 제거를 위해
             binding.addGoalContentsPrivateSwitchSc.jumpDrawablesToCurrentState()
 
