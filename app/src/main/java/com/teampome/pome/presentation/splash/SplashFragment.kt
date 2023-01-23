@@ -21,13 +21,13 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         if(isFirstLogin) {
             // 2초 뒤 register로 move
             MainScope().launch(context = Dispatchers.Main) {
-                delay(3000)
+                delay(2000)
                 moveToLogin()
             }
         } else {
            // 이미 로그인한 상태라면 main으로 이동
             MainScope().launch(context = Dispatchers.Main) {
-                delay(3000)
+                delay(2000)
                 moveToRecord()
             }
         }
