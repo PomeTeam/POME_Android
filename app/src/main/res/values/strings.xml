@@ -124,6 +124,10 @@
 
     <!--  POME Mypage -> Setting -> Alarm -->
     <string name="mypage_alarm_title_text">알림 설정</string>
+    <string name="mypage_alarm_see_text">돌아보기</string>
+    <string name="mypage_alarm_record_text">일주일 뒤 감정을 기록할 때 알 수 있어요</string>
+    <string name="mypage_alarm_finish_text">목표종료</string>
+    <string name="mypage_alarm_record_finish_text">목표가 끝나고 종료할 때 알 수 있어요</string>
 
     <!--  POME Mypage -> Setting -> Friend -->
     <string name="mypage_friend_title_text">친구 관리</string>
@@ -134,6 +138,7 @@
 
     <!--  POME Mypage -> Setting -> Logout -->
     <string name="mypage_logout_title_text">로그아웃 하시겠어요?</string>
+
     <string name="record_progress_percent">%d%%</string>
     <string name="record_week_consume_title_text">일주일 씀씀이</string>
     <string name="record_write_emotion_title_text">감정을 남겨주세요</string>
