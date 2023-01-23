@@ -38,6 +38,7 @@
     <string name="splash_marshmallow_3d_image_description">splash marshmallow 3d image description</string>
     <string name="splash_logo_image_description">splash logo image description</string>
     <string name="splash_marshmallow_is_yours_image_description">splash marshmallow is yours image description</string>
+    <string name="login_start_btn_text">시작하기</string>
 
     <!-- Pome Register -->
     <string name="register_title_text">나만의 프로필을\n만들어 볼까요?</string>

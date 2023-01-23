@@ -11,13 +11,6 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splash_fragment_to_register_profile_fragment"
-            app:destination="@id/register_profile_fragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
-        <action
             android:id="@+id/action_splash_fragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:enterAnim="@anim/fade_in"
@@ -105,14 +98,8 @@
         android:label="SplashLoginFragment"
         tools:layout="@layout/fragment_login_splash">
         <action
-            android:id="@+id/action_splashLoginFragment_to_register_profile_fragment"
-            app:destination="@id/register_profile_fragment" />
-        <action
             android:id="@+id/action_splashLoginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_splashLoginFragment_to_registerTermsFragment"
-            app:destination="@id/registerTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsNoticeFragment"
