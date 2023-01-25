@@ -1,10 +1,16 @@
+@file:Suppress("DEPRECATION")
+
 package com.teampome.pome.util
 
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.graphics.Point
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.view.LayoutInflater
+import android.view.WindowInsets
 import android.view.WindowManager
 import android.view.WindowManager.LayoutParams
 import android.view.inputmethod.InputMethodManager
@@ -85,14 +91,30 @@ object CommonUtil {
     }
 
     // device size
-    fun getDeviceSize(context: Context): IntArray {
+    private fun getDeviceSize(context: Context): IntArray {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val display = windowManager.defaultDisplay
-        val size = Point()
 
-        display.getSize(size)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = windowManager.currentWindowMetrics
+            val windowInsets = windowMetrics.windowInsets
 
-        return intArrayOf(size.x, size.y)
+            val insets = windowInsets.getInsetsIgnoringVisibility(
+                WindowInsets.Type.navigationBars() or WindowInsets.Type.displayCutout()
+            )
+            val insetsWidth = insets.right + insets.left
+            val insetsHeight = insets.top + insets.bottom
+
+            val bounds = windowMetrics.bounds
+
+            return intArrayOf(bounds.width() - insetsWidth, bounds.height() - insetsHeight)
+        } else {
+            val display = windowManager.defaultDisplay
+            val size = Point()
+
+            display?.getSize(size)
+
+            return intArrayOf(size.x, size.y)
+        }
     }
 
     fun dateToLocalDate(date: Date) : LocalDate {
@@ -208,7 +230,6 @@ object CommonUtil {
         calendar.setSelectedDate(localDate)
     }
 
-
     fun showBackButtonDialog(
         context: Context,
         title: String,
@@ -247,6 +268,22 @@ object CommonUtil {
             }
         }
 
+        makePomeDialog(backButtonDialog)
+
         backButtonDialog.show()
+    }
+
+    fun makePomeDialog(dialog: Dialog) {
+        val deviceSize = getDeviceSize(dialog.context)
+
+        dialog.window?.let {
+            it.setLayout(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            it.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            it.setBackgroundDrawable(ResourcesCompat.getDrawable(dialog.context.resources, R.drawable.white_r8_background, null))
+
+            val params = it.attributes
+            params.width = (deviceSize[0] * 0.75).toInt()
+            it.attributes = params
+        }
     }
 }

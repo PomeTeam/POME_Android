@@ -85,21 +85,6 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
             calendarBottomSheetDialog.show()
         }
 
-        // 글자수 체크
-        binding.modifyRecordContentAet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                binding.modifyRecordContentCharacterCountAtv.text = "${p0?.length}/150"
-            }
-        })
-
         // 수정했어요 클릭
         binding.modifyRecordCheckAcb.setOnClickListener {
             findNavController().navigateUp()

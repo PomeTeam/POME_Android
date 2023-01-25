@@ -26,6 +26,7 @@ import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 
 // Todo : ViewModel data 구분 짓기
+@Suppress("DEPRECATION")
 class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog

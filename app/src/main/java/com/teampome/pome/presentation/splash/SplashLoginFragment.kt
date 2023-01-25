@@ -29,32 +29,10 @@ class SplashLoginFragment : BaseFragment<FragmentLoginSplashBinding>(R.layout.fr
             // kakao 인증 후 register 화면으로 이동
             moveToRegister()
         }
-        
-        // kakao login btn click
-        binding.loginKakaoBtnAiv.setOnClickListener {
-            Toast.makeText(requireContext(), "kakao login", Toast.LENGTH_SHORT).show()
-            moveToRegisterTerms()
-        }
-        
-        // google login btn click
-        binding.loginGoogleBtnAiv.setOnClickListener {
-            Toast.makeText(requireContext(), "google login", Toast.LENGTH_SHORT).show()
-            moveToRegisterTerms()
-        }
-    }
-
-    private fun moveToRegisterProfile() {
-        val loginToRegisterProfileAction = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterProfileFragment()
-        findNavController().navigate(loginToRegisterProfileAction)
     }
 
     private fun moveToRegister() {
         val loginToRegisterAction = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterFragment()
         findNavController().navigate(loginToRegisterAction)
-    }
-
-    private fun moveToRegisterTerms() {
-        val loginToRegisterTerms = SplashLoginFragmentDirections.actionSplashLoginFragmentToRegisterTermsFragment()
-        findNavController().navigate(loginToRegisterTerms)
     }
 }

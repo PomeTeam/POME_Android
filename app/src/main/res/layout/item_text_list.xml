@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="text"
             type="String" />
@@ -14,18 +15,18 @@
         android:layout_height="wrap_content">
 
         <TextView
-            style="@style/Pome.Medium.16"
             android:id="@+id/item_text_tv"
+            style="@style/Pome.Medium.16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/grey_7"
-            android:text="@{text}"
-            tools:text="커피"
             android:layout_marginStart="24dp"
             android:paddingVertical="18dp"
+            android:text="@{text}"
+            android:textColor="@color/grey_7"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            tools:text="커피" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

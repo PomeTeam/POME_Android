@@ -11,13 +11,6 @@
         android:label="SplashFragment"
         tools:layout="@layout/fragment_splash">
         <action
-            android:id="@+id/action_splash_fragment_to_register_profile_fragment"
-            app:destination="@id/register_profile_fragment"
-            app:enterAnim="@anim/fade_in"
-            app:exitAnim="@anim/fade_out"
-            app:popEnterAnim="@anim/fade_in"
-            app:popExitAnim="@anim/fade_out" />
-        <action
             android:id="@+id/action_splash_fragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:enterAnim="@anim/fade_in"
@@ -105,14 +98,8 @@
         android:label="SplashLoginFragment"
         tools:layout="@layout/fragment_login_splash">
         <action
-            android:id="@+id/action_splashLoginFragment_to_register_profile_fragment"
-            app:destination="@id/register_profile_fragment" />
-        <action
             android:id="@+id/action_splashLoginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
-        <action
-            android:id="@+id/action_splashLoginFragment_to_registerTermsFragment"
-            app:destination="@id/registerTermsFragment" />
     </fragment>
     <fragment
         android:id="@+id/addFriendsNoticeFragment"
@@ -121,7 +108,8 @@
         tools:layout="@layout/fragment_add_friends_notice">
         <action
             android:id="@+id/action_addFriendsNoticeFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/splash_fragment"/>
         <action
             android:id="@+id/action_addFriendsNoticeFragment_to_addFriendsFragment"
             app:destination="@id/addFriendsFragment" />
@@ -133,7 +121,8 @@
         tools:layout="@layout/fragment_add_friends">
         <action
             android:id="@+id/action_addFriendsFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/splash_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -249,7 +238,8 @@
             app:destination="@id/addGoalCompleteFragment" />
         <action
             android:id="@+id/action_addGoalContentsFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/record_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/addGoalCompleteFragment"
@@ -258,7 +248,8 @@
         tools:layout="@layout/fragment_add_goal_complete">
         <action
             android:id="@+id/action_addGoalCompleteFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/record_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/consumeRecordFragment"
@@ -279,7 +270,8 @@
             app:destination="@id/consumeCompleteFragment" />
         <action
             android:id="@+id/action_consumeEmotionFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/record_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/consumeCompleteFragment"
@@ -289,7 +281,8 @@
 
         <action
             android:id="@+id/action_consumeCompleteFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/record_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/recordLeaveEmotionFragment"
@@ -321,6 +314,7 @@
         tools:layout="@layout/fragment_record_goal_finish_complete">
         <action
             android:id="@+id/action_recordGoalFinishCompleteFragment_to_record_fragment"
-            app:destination="@id/record_fragment" />
+            app:destination="@id/record_fragment"
+            app:popUpTo="@id/record_fragment" />
     </fragment>
 </navigation>

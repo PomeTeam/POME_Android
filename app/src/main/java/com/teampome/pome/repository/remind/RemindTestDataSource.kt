@@ -23,7 +23,7 @@ class RemindTestDataSource @Inject constructor(
                     goalCardItem = GoalCardItem(
                         categories = listOf(
                             "공개",
-                            "D-12"
+                            "12"
                         ),
                         goal = "커피 대신 물을 마시자"
                     ),
@@ -74,8 +74,8 @@ class RemindTestDataSource @Inject constructor(
                     mainCategory = "아이스크림",
                     goalCardItem = GoalCardItem(
                         categories = listOf(
-                            "공개",
-                            "D-12"
+                            "비공개",
+                            "0"
                         ),
                         goal = "아이스크림 대신 물을 마시자"
                     ),
@@ -127,7 +127,7 @@ class RemindTestDataSource @Inject constructor(
                     goalCardItem = GoalCardItem(
                         categories = listOf(
                             "공개",
-                            "D-12"
+                            "33"
                         ),
                         goal = "택시 대신 물을 마시자"
                     ),

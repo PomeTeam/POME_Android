@@ -15,45 +15,45 @@
             android:id="@+id/splash_marshmallow_background_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/big_marshmallow_background"
             android:layout_marginTop="156dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/splash_marshmallow_background_image_description"
+            android:src="@drawable/big_marshmallow_background"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/splash_marshmallow_background_image_description" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/splash_marshmallow_3d_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/marshmallow_white_3d"
             android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="@id/splash_marshmallow_background_iv"
-            app:layout_constraintEnd_toEndOf="@id/splash_marshmallow_background_iv"
-            app:layout_constraintTop_toTopOf="@id/splash_marshmallow_background_iv"
+            android:contentDescription="@string/splash_marshmallow_3d_image_description"
+            android:src="@drawable/marshmallow_white_3d"
             app:layout_constraintBottom_toBottomOf="@id/splash_marshmallow_background_iv"
-            android:contentDescription="@string/splash_marshmallow_3d_image_description" />
+            app:layout_constraintEnd_toEndOf="@id/splash_marshmallow_background_iv"
+            app:layout_constraintStart_toStartOf="@id/splash_marshmallow_background_iv"
+            app:layout_constraintTop_toTopOf="@id/splash_marshmallow_background_iv" />
 
         <ImageView
             android:id="@+id/splash_logo_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
+            android:contentDescription="@string/splash_logo_image_description"
             android:src="@drawable/logo"
-            app:layout_constraintTop_toBottomOf="@id/splash_marshmallow_background_iv"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:contentDescription="@string/splash_logo_image_description" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/splash_marshmallow_background_iv" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/mashmallow_is_yours__1"
             android:layout_marginTop="12dp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/splash_marshmallow_is_yours_image_description"
+            android:src="@drawable/mashmallow_is_yours__1"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/splash_logo_iv"
-            android:contentDescription="@string/splash_marshmallow_is_yours_image_description" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/splash_logo_iv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

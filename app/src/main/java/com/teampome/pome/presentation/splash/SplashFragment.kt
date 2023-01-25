@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash){
 
-    private var isFirstLogin = false
+    private var isFirstLogin = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,14 +20,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         // 이미 로그인한 상태에 따라 나눠줘야할듯
         if(isFirstLogin) {
             // 2초 뒤 register로 move
-            GlobalScope.launch(context = Dispatchers.Main) {
-                delay(3000)
+            MainScope().launch(context = Dispatchers.Main) {
+                delay(2000)
                 moveToLogin()
             }
         } else {
            // 이미 로그인한 상태라면 main으로 이동
-            GlobalScope.launch(context = Dispatchers.Main) {
-                delay(3000)
+            MainScope().launch(context = Dispatchers.Main) {
+                delay(2000)
                 moveToRecord()
             }
         }

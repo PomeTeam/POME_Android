@@ -38,6 +38,7 @@
     <string name="splash_marshmallow_3d_image_description">splash marshmallow 3d image description</string>
     <string name="splash_logo_image_description">splash logo image description</string>
     <string name="splash_marshmallow_is_yours_image_description">splash marshmallow is yours image description</string>
+    <string name="login_start_btn_text">시작하기</string>
 
     <!-- Pome Register -->
     <string name="register_title_text">나만의 프로필을\n만들어 볼까요?</string>
@@ -215,4 +216,8 @@
     <string name="pink_pen_desc">핑크색 펜</string>
     <string name="alert_title_text">아직 돌아보지 않은 기록이 있어요!</string>
     <string name="alert_subtitle_text">씀씀이 기록 후 일주일 뒤에\n감정을 돌아보고 목표를 종료할 수 있어요</string>
+    <string name="no_goal_icon_desc">목표 없음 이미지</string>
+
+    <string name="card_day_chip_text">D-%d</string>
+    <string name="edittext_char_count_text">%d/%d</string>
 </resources>

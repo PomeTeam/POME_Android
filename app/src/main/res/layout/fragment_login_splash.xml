@@ -14,10 +14,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/login_middle_marshmallow_background_aiv"
@@ -57,54 +57,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/mashmallow_is_yours"
-                app:layout_constraintBottom_toTopOf="@id/login_container_cl"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/login_middle_logo_aiv" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/login_container_cl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                app:layout_constraintBottom_toTopOf="@id/login_start_btn_acb"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_middle_logo_desc_aiv">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/login_kakao_btn_aiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/kakao"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/login_google_btn_aiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:src="@drawable/apple"
-                    app:layout_constraintStart_toEndOf="@id/login_kakao_btn_aiv"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
             <androidx.appcompat.widget.AppCompatButton
-                style="@style/Pome.SemiBold.16"
                 android:id="@+id/login_start_btn_acb"
+                style="@style/Pome.SemiBold.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="시작하기"
-                android:textColor="@color/white"
+                android:layout_marginTop="120dp"
                 android:background="@drawable/button_main_r6_background"
-                android:layout_marginTop="16dp"
                 android:paddingHorizontal="88dp"
                 android:paddingVertical="12dp"
+                android:text="@string/login_start_btn_text"
+                android:textColor="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/login_container_cl" />
+                app:layout_constraintTop_toBottomOf="@id/login_middle_logo_desc_aiv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

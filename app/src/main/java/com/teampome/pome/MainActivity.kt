@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when(destination.id) {
                 R.id.record_fragment -> {
-                    changeStatusBarColor(R.color.background)
                     binding.activityMainBnv.visibility = View.VISIBLE
+                    changeStatusBarColor(R.color.white)
                 }
                 R.id.remind_fragment -> {
                     binding.activityMainBnv.visibility = View.VISIBLE
@@ -48,9 +48,11 @@ class MainActivity : AppCompatActivity() {
                     binding.activityMainBnv.visibility = View.GONE
                     changeStatusBarColor(R.color.main)
                 }
+                R.id.splashLoginFragment -> {
+                    changeStatusBarColor(R.color.white)
+                }
                 R.id.register_profile_fragment -> {
                     binding.activityMainBnv.visibility = View.GONE
-                    changeStatusBarColor(R.color.background)
                 }
                 else -> {
                     binding.activityMainBnv.visibility = View.GONE
