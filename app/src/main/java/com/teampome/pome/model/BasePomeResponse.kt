@@ -1,6 +1,6 @@
 package com.teampome.pome.model
 
-data class BasePomeDataModel<T>(
+data class BasePomeResponse<T>(
     val success: Boolean,
     val localDateTime: String,
     val httpStatus: String,
