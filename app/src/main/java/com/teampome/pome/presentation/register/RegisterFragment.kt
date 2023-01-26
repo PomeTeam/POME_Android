@@ -24,6 +24,7 @@ import kotlinx.coroutines.*
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
 
     private val viewModel: RegisterViewModel by viewModels()
+
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
 
@@ -54,41 +55,17 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             false
         }
 
-        // Todo : two-way binding
-        // 이름 입력
-        binding.registerNameAet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
-                p0?.let {
-                    viewModel._registerName.value = it.toString()
-                }
-
-                settingAgreeButton()
-            }
-        })
-
         // 번호 입력
         binding.registerPhoneAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
                 p0?.let {
-                    viewModel._registerPhone.value = it.toString()
+                    viewModel.registerPhone.value = it.toString()
                 }
 
                 settingAgreeButton()
@@ -98,17 +75,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 인증 번호
         binding.registerCertNumAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
                 p0?.let {
-                    viewModel._registerCertNum.value = it.toString()
+                    viewModel.registerCertNum.value = it.toString()
                 }
 
                 settingAgreeButton()
@@ -148,8 +122,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
      *  button 활성화 여부 체크
      */
     private fun checkAgreeBtnEnable() : Boolean {
-        return (!viewModel.registerName.value.isNullOrEmpty()
-                && !viewModel.registerPhone.value.isNullOrEmpty()
+        return (!viewModel.registerPhone.value.isNullOrEmpty()
                 && !viewModel.registerCertNum.value.isNullOrEmpty())
     }
 
