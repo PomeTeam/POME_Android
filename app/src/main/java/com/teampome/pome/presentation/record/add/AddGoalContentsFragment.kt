@@ -22,7 +22,9 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         // back button 클릭시 back button dialog show
         settingBackPressedCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

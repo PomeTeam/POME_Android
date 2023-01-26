@@ -23,6 +23,10 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
         resources.getColor(R.color.grey_3, null)
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         // 전체 동의 클릭
         binding.registerAllAgreeCheckAiv.setOnClickListener {

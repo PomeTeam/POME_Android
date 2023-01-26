@@ -28,6 +28,7 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         initListener()
     }
 
@@ -44,6 +45,10 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
         backPressedCallback?.remove()
     }
 
+    // View 초기화 작업
+    protected abstract fun initView()
+
+    // Observing 작업 및 listener setting 작업
     protected abstract fun initListener()
 
     fun settingBackPressedCallback(callback: OnBackPressedCallback) {

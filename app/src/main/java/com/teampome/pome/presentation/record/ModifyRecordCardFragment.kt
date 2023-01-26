@@ -50,7 +50,9 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
     @SuppressLint("SimpleDateFormat")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         binding.modifyRecordGoalAet.setText(args.currentCategory)
 
         // 일단 현재 시간으로...
@@ -129,52 +131,6 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         ) {
             binding.modifyRecordDateAet.setText(dateData)
             calendarBottomSheetDialog.dismiss()
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun settingCustomCalendar() {
-        calendarBottomSheetDialogBinding.calendarMcv.apply {
-            // 첫 시작 요일 - 월요일
-            state().edit().setFirstDayOfWeek(DayOfWeek.MONDAY).commit()
-
-            // 한글 설정
-            setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_months)))
-            setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
-
-            // 헤더 폰트 설정
-            setHeaderTextAppearance(R.style.Pome_SemiBold_16)
-
-            // 선택시 드로어블 적용
-            addDecorators(DayDecorator(requireContext()))
-
-            isDynamicHeightEnabled = true
-
-            // 현재 선택중인 날짜 설정
-            val localDate = curDate?.let{Instant.ofEpochMilli(it.time).atZone(ZoneId.systemDefault()).toLocalDate()}
-            setSelectedDate(localDate)
-
-            setOnDateChangedListener { _, date, _ ->
-                Toast.makeText(requireContext(), "date : $date", Toast.LENGTH_SHORT).show()
-                val sdf = SimpleDateFormat("yy.MM.dd")
-                val realDate = DateTimeUtils.toDate(date.date.atStartOfDay(ZoneId.systemDefault()).toInstant())
-
-                dateData = sdf.format(realDate)
-                curDate = realDate
-            }
-        }
-
-        calendarBottomSheetDialogBinding.calendarMcv.setTitleFormatter(object : TitleFormatter{
-            override fun format(day: CalendarDay?): CharSequence {
-                day?.let {
-                    val calendarElement = it.date.toString().split("-")
-                    return "${calendarElement[0]}년 ${calendarElement[1]}월"
-                } ?: return ""
-            }
-        })
-
-        calendarBottomSheetDialogBinding.calendarSelectAtb.setOnClickListener {
-
         }
     }
 }

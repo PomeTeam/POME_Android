@@ -34,14 +34,14 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
-        // initListener가 먼저 불려 super보다 먼저 호출
+    override fun initView() {
         // pomeBottomSheetDialog 뷰 인플레이션 과정
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
         pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업

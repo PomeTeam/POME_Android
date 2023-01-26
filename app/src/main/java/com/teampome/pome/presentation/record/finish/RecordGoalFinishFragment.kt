@@ -14,11 +14,9 @@ import com.teampome.pome.util.base.BaseFragment
 class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R.layout.fragment_record_goal_finish) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
-        binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
-            moveToGoalFinishComment()
-        }
-
+    override fun initView() {
         binding.recordGoalEmotionCardListRv.adapter = RemindContentsCardAdapter().apply {
             submitList(listOf(
                 ContentCardItem(
@@ -123,14 +121,16 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
                 )
             ))
         }
+    }
+
+    override fun initListener() {
+        binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
+            moveToGoalFinishComment()
+        }
 
         binding.recordGoalFinishBackButtonIv.setOnClickListener {
             findNavController().navigateUp()
         }
-    }
-
-    override fun initListener() {
-
     }
 
     private fun moveToGoalFinishComment() {

@@ -9,6 +9,10 @@ import com.teampome.pome.databinding.FragmentMypageGoalBinding
 
 //마이페이지 알림설정 뷰
 class MyPageAlarmFragment : BaseFragment<FragmentMypageAlarmBinding>(R.layout.fragment_mypage_alarm) {
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         //뒤로가기
         binding.mypageAlarmArrowIv.setOnClickListener {

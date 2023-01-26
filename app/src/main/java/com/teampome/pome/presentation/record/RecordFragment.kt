@@ -64,7 +64,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -95,34 +97,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     )
                 }
             })
-        }
-
-        // 목표의 더보기 클릭
-        binding.recordGoalMoreAiv.setOnClickListener {
-            goalMoreBottomSheetDialog.show()
-        }
-
-        // 목표 + 클릭
-        binding.recordCategoryPlusTv.setOnClickListener {
-            moveToAddGoal()
-        }
-
-        // 목표 없을 때 목표 만들기 클릭
-        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
-            moveToAddGoal()
-        }
-
-        // float button 클릭
-        binding.recordWriteButtonCl.setOnClickListener {
-            moveToConsume()
-        }
-
-        binding.recordWriteEmotionContainerCl.setOnClickListener {
-            moveToRecordLeaveEmotion()
-        }
-
-        binding.recordGoalCompleteCl.setOnClickListener {
-            moveToRecordGoalFinish()
         }
 
         // 일단 임시로 계속 호출
@@ -198,6 +172,34 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         binding.recordNoticeBellAiv.setOnClickListener {
             moveToRecordAlarms()
+        }
+
+        // 목표의 더보기 클릭
+        binding.recordGoalMoreAiv.setOnClickListener {
+            goalMoreBottomSheetDialog.show()
+        }
+
+        // 목표 + 클릭
+        binding.recordCategoryPlusTv.setOnClickListener {
+            moveToAddGoal()
+        }
+
+        // 목표 없을 때 목표 만들기 클릭
+        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
+            moveToAddGoal()
+        }
+
+        // float button 클릭
+        binding.recordWriteButtonCl.setOnClickListener {
+            moveToConsume()
+        }
+
+        binding.recordWriteEmotionContainerCl.setOnClickListener {
+            moveToRecordLeaveEmotion()
+        }
+
+        binding.recordGoalCompleteCl.setOnClickListener {
+            moveToRecordGoalFinish()
         }
     }
 

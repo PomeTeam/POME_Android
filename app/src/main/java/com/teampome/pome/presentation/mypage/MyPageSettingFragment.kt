@@ -10,6 +10,10 @@ import com.teampome.pome.databinding.FragmentMypageSettingBinding
 
 //마이페이지 설정 뷰
 class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         //뒤로가기
         binding.mypageSettingArrowIv.setOnClickListener {

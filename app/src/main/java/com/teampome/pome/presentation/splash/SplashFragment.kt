@@ -12,7 +12,7 @@ import kotlinx.coroutines.*
 
 class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_splash){
 
-    private var isFirstLogin = true
+    private var isFirstLogin = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +31,10 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                 moveToRecord()
             }
         }
+    }
+
+    override fun initView() {
+
     }
 
     override fun initListener() {

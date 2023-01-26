@@ -24,6 +24,10 @@ class SplashLoginFragment : BaseFragment<FragmentLoginSplashBinding>(R.layout.fr
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         binding.loginStartBtnAcb.setOnClickListener {
             // kakao 인증 후 register 화면으로 이동

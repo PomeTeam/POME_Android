@@ -12,6 +12,10 @@ class ConsumeCompleteFragment : BaseFragment<FragmentConsumeCompleteBinding>(R.l
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         binding.consumeCompleteBackButtonIv.setOnClickListener {
             findNavController().navigateUp()
