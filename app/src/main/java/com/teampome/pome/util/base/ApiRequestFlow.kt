@@ -1,5 +1,8 @@
 package com.teampome.pome.util.base
 
+import android.util.Log
+import com.google.gson.Gson
+import com.teampome.pome.model.ErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -23,8 +26,8 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
             } else {
                 response.errorBody()?.let { error ->
                     error.close()
-
-                    // error emit 과정 필요
+                    val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                    emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
                 }
             }
         } catch (e: Exception) {

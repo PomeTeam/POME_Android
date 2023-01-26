@@ -2,18 +2,27 @@ package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterTermsBinding
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterTermsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layout.fragment_register_terms) {
     private val viewModel by viewModels<RegisterTermsViewModel>()
+
+    @Inject
+    lateinit var userManager: UserManager
 
     private val checkColor by lazy {
         resources.getColor(R.color.main, null)
@@ -24,7 +33,15 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
     }
 
     override fun initView() {
+        Log.d("test", "terms fragment in")
 
+        CoroutineScope(Dispatchers.Main).launch {
+            userManager.getUserPhone().collect {
+                withContext(Dispatchers.Main) {
+                    Log.d("test", "phone num is $it")
+                }
+            }
+        }
     }
 
     override fun initListener() {

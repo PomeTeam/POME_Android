@@ -2,9 +2,11 @@ package com.teampome.pome.di
 
 import android.content.Context
 import com.teampome.pome.network.AuthService
+import com.teampome.pome.network.RegisterService
 import com.teampome.pome.util.token.AuthAuthenticator
 import com.teampome.pome.util.token.AuthInterceptor
 import com.teampome.pome.util.token.TokenManager
+import com.teampome.pome.util.token.UserManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +28,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideTokenManager(@ApplicationContext context: Context): TokenManager = TokenManager(context)
+
+    @Singleton
+    @Provides
+    fun provideUserManager(@ApplicationContext context: Context): UserManager = UserManager(context)
 
     @Singleton
     @Provides
@@ -65,4 +71,11 @@ object NetworkModule {
         retrofit
             .build()
             .create(AuthService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideRegisterService(retrofit: Retrofit.Builder) : RegisterService =
+        retrofit
+            .build()
+            .create(RegisterService::class.java)
 }
