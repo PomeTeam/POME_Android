@@ -15,5 +15,17 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         binding.mypageSettingArrowIv.setOnClickListener {
             findNavController().popBackStack()
         }
+
+        //알림설정
+        binding.mypageAlarmSettingCl.setOnClickListener {
+            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageAlarmFragment()
+            findNavController().navigate(action)
+        }
+
+        //친구관리
+        binding.mypageFriendSettingCl.setOnClickListener {
+            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
+            findNavController().navigate(action)
+        }
     }
 }

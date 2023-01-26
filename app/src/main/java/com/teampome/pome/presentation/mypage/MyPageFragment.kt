@@ -16,7 +16,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         }
 
         //목표설정화면으로
-        binding.mypageIcArrowIv.setOnClickListener {
+        binding.mypageMainCl.setOnClickListener {
             val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
             findNavController().navigate(action)
         }
