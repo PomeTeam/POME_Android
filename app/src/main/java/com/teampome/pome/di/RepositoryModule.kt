@@ -1,11 +1,15 @@
 package com.teampome.pome.di
 
+import com.teampome.pome.network.RegisterService
 import com.teampome.pome.repository.friend.AddFriendsDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
 import com.teampome.pome.repository.friend.AddFriendsTestDataSource
 import com.teampome.pome.repository.record.RecordDataSource
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.repository.record.RecordTestDataSource
+import com.teampome.pome.repository.register.RegisterDataSource
+import com.teampome.pome.repository.register.RegisterRemoteDataSource
+import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.repository.remind.RemindDataSource
 import com.teampome.pome.repository.remind.RemindRepository
 import com.teampome.pome.repository.remind.RemindTestDataSource
@@ -53,5 +57,17 @@ object RepositoryModule {
     @Singleton
     fun provideRecordRepository(dataSource: RecordDataSource) : RecordRepository {
         return RecordRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegisterDataSource(service: RegisterService) : RegisterDataSource {
+        return RegisterRemoteDataSource(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegisterRepository(dataSource: RegisterDataSource) : RegisterRepository {
+        return RegisterRepository(dataSource)
     }
 }
