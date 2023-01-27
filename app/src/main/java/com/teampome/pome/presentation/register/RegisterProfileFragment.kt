@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -22,12 +24,19 @@ import com.teampome.pome.databinding.FragmentRegisterProfileBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.viewmodel.RegisterProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 
 // Todo : ViewModel data 구분 짓기
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
+
+    private val viewModel: RegisterProfileViewModel by viewModels()
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
@@ -47,6 +56,29 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
     @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun initListener() {
+        viewModel.nicknameResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("test", "data : ${it.data}")
+
+                    binding.registerProfileNameCheckTv.text = it.data.message
+
+                    if(it.data.data == true) {
+                        enableName()
+                    } else {
+                        disableName()
+                    }
+                }
+                is ApiResponse.Failure -> {
+                    binding.registerProfileNameCheckTv.text = it.errorMessage
+                    disableName()
+                }
+                is ApiResponse.Loading -> {
+
+                }
+            }
+        }
+
         // 키보드 자연스럽게 처리
         binding.registerProfileCl.setOnTouchListener { _, _ ->
             CommonUtil.hideKeyboard(requireActivity())
@@ -71,14 +103,24 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 editable?.let { name ->
                     binding.registerProfileNameCheckTv.visibility = View.VISIBLE
 
-                    if(name.length <= 3) { // 일단 테스트용으로 텍스트가 3이하일 때, 불가능 처리
+                    if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
+                        binding.registerProfileNameCheckTv.text = "닉네임은 6~18글자의 영소문자, 숫자, 한글만 가능합니다."
+
                         disableName()
                     } else {
-                        enableName()
+                        viewModel.userName.value = name.toString()
+
+                        viewModel.checkNickname(object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     }
                 } ?: kotlin.run { // 만약 값이 비어있다면, 밑에 desc를 표기하면 안됨
                     // GONE이 아니고 INVISIBLE 처리 => 공간을 차지해야 constraintLayout 알맞게 동작
                     binding.registerProfileNameCheckTv.visibility = View.INVISIBLE
+                    binding.registerProfileNameCheckTv.text = "닉네임은 6~18글자의 영소문자, 숫자, 한글만 가능합니다."
+
                     disableName()
                 }
             }
@@ -120,7 +162,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
      *  button 활성화
      */
     private fun enableName() {
-        binding.registerProfileNameCheckTv.text = resources.getText(R.string.pome_name_check_impossible_text)
         binding.registerProfileNameCheckTv.setTextColor(resources.getColor(R.color.main, null))
         binding.registerProfileCheckBtn.setBackgroundResource(R.drawable.register_profile_name_check_available_btn_background)
         binding.registerProfileCheckBtn.isClickable = true
@@ -132,7 +173,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
      *  button 비활성화
      */
     private fun disableName() {
-        binding.registerProfileNameCheckTv.text = resources.getText(R.string.pome_name_check_impossible_text)
         binding.registerProfileNameCheckTv.setTextColor(resources.getColor(R.color.red, null))
         binding.registerProfileCheckBtn.setBackgroundResource(R.drawable.register_profile_name_check_disable_btn_background)
         binding.registerProfileCheckBtn.isClickable = false

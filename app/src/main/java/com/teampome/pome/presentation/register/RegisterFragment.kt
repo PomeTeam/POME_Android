@@ -53,6 +53,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
         pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
+
+        // Todo : 임시작업
+        enableAgreeBtn()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -143,6 +146,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
 
                 moveToRegisterTerms()
             } else {
+                // Todo : 임시작업
+                moveToRegisterTerms()
+
                 Toast.makeText(requireContext(), "인증번호가 다릅니다.", Toast.LENGTH_SHORT).show()
             }
         }

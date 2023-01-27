@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface RegisterDataSource {
     fun sendSms(phoneNum: String) : Flow<ApiResponse<BasePomeResponse<SmsData>>>
+
+    fun checkNickname(nickName: String) : Flow<ApiResponse<BasePomeResponse<Boolean>>>
 }
