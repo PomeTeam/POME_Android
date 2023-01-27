@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -118,7 +119,17 @@
             android:layout_marginTop="24dp"
             />
 
-        <!-- Todo : RV or Card View 정하기 (CV 로 하면 스크롤뷰로 해야할지?) -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_emotion_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_mypage_card"
+            android:layout_marginTop="14dp"
+            android:layout_marginHorizontal="15dp"
+            app:layout_constraintTop_toBottomOf="@id/mypage_marshmallow_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
 
