@@ -9,6 +9,9 @@ import retrofit2.http.POST
 
 interface RegisterService {
 
+    /**
+     *  회원가입 시, 인증번호를 요청한다.
+     */
     @POST("api/v1/sms/send")
     suspend fun sendSms(
         @Body phoneBody: PhoneDataBody
