@@ -286,4 +286,19 @@ object CommonUtil {
             it.attributes = params
         }
     }
+
+    /**
+     *  Random Text를 만드는 메소드
+     */
+    private val randomChar = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z".split(",")
+
+    fun getRandomString(len: Int) : String {
+        val sb = java.lang.StringBuilder()
+
+        for(i in 0 until len) {
+            sb.append(randomChar[(randomChar.indices).random()])
+        }
+
+        return sb.toString()
+    }
 }

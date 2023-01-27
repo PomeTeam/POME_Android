@@ -56,6 +56,19 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
     @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun initListener() {
+        viewModel.presignedImageUrlResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("test", "success data : ${it.data}")
+                }
+                is ApiResponse.Failure -> {
+                    Log.d("test", "failure data : ${it.errorMessage}")
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
+        }
+
         viewModel.nicknameResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
@@ -185,6 +198,14 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val imageUri = result.data?.data
+
+                // 이미지 url 요청
+                viewModel.getPresignedImageUrl(object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                        Log.d("test", "error : $message")
+                    }
+                })
 
                 try {
                     if(Build.VERSION.SDK_INT < 28) {

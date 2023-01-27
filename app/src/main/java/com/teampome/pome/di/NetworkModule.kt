@@ -2,6 +2,7 @@ package com.teampome.pome.di
 
 import android.content.Context
 import com.teampome.pome.network.AuthService
+import com.teampome.pome.network.ImageService
 import com.teampome.pome.network.RegisterService
 import com.teampome.pome.util.token.AuthAuthenticator
 import com.teampome.pome.util.token.AuthInterceptor
@@ -20,6 +21,7 @@ import retrofit2.create
 import javax.inject.Singleton
 
 const val BASE_URL = "http://52.79.89.129/"
+const val IMAGE_BASE_URL = "http://image-main-server.ap-northeast-2.elasticbeanstalk.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -78,4 +80,14 @@ object NetworkModule {
         retrofit
             .build()
             .create(RegisterService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideImageService() : ImageService {
+        return Retrofit.Builder()
+            .baseUrl(IMAGE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ImageService::class.java)
+    }
 }
