@@ -262,14 +262,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                                     bitmapTransform(MultiTransformation(CenterCrop(),
                                     MaskTransformation(R.drawable.user_profile_empty_160)))
                                 ).into(binding.registerProfileAiv)
-
-//                            val byteArray = CommonUtil.getImageByteArray(requireContext(), it)
-//
-//                            byteArray?.let {
-//                                val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-//
-//                                binding.registerProfileAiv.setImageBitmap(Bitmap.createBitmap(bmp))
-//                            }
                         }
                     }
                 } catch (e: Exception) {
