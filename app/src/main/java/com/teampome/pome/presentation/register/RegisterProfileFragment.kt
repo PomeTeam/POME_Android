@@ -26,10 +26,12 @@ import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 // Todo : ViewModel data 구분 짓기
 @Suppress("DEPRECATION")
@@ -40,6 +42,9 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
+
+    @Inject
+    lateinit var userManger: UserManager
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,10 +61,19 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
     @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
     override fun initListener() {
+
+        // 갤러리에서 이미지 선택시 호출
         viewModel.presignedImageUrlResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("test", "success data : ${it.data}")
+                    // 이미지의 PresignedUrl 저장
+                    runBlocking {
+                        userManger.saveUserProfileUrl(it.data.presignedUrl)
+                    }
+
+                    // 저장 이후 aws에 이미지 저장
+
                 }
                 is ApiResponse.Failure -> {
                     Log.d("test", "failure data : ${it.errorMessage}")
