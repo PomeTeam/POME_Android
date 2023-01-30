@@ -39,7 +39,7 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator = AuthAuthenticator(tokenManager)
+    fun provideAuthAuthenticator(tokenManager: TokenManager, userManager: UserManager): AuthAuthenticator = AuthAuthenticator(tokenManager, userManager)
 
     @Singleton
     @Provides

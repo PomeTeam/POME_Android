@@ -19,7 +19,7 @@ class TokenViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            tokenManager.getToken().collect() {
+            tokenManager.getToken().collect {
                 withContext(Dispatchers.Main) {
                     token.value = it
                 }

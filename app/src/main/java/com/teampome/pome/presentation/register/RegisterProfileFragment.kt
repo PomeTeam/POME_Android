@@ -28,6 +28,7 @@ import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,6 +55,9 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
     @Inject
     lateinit var userManger: UserManager
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -144,10 +148,18 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             }
         }
 
+        // signUp 결과
         viewModel.signUpResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("signUp","signUp success data is ${it.data}")
+
+                    runBlocking {
+                        it.data.data?.let { userData ->
+                            tokenManager.saveToken(userData.accessToken)
+                        }
+                    }
+
                     // 회원가입이 정상적으로 이루어짐
                     moveToAddFriends()
                 }

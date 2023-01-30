@@ -2,6 +2,8 @@ package com.teampome.pome.util.token
 
 import com.teampome.pome.di.BASE_URL
 import com.teampome.pome.model.BasePomeResponse
+import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.model.request.PhoneNumberDataBody
 import com.teampome.pome.network.AuthService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -13,15 +15,23 @@ import retrofit2.create
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(
-    private val tokenManager: TokenManager
+    private val tokenManager: TokenManager,
+    private val userManager: UserManager
 ) : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
         val token = runBlocking {
             tokenManager.getToken().first()
         }
 
+        val phoneNum = runBlocking {
+            userManager.getUserPhone().first()
+        }
+
         return runBlocking {
-            val newToken = getNewToken(token)
+            if(phoneNum == null) {
+                return@runBlocking null
+            }
+            val newToken = getNewToken(phoneNum)
 
             if(!newToken.isSuccessful || newToken.body() == null) {
                 tokenManager.deleteToken()
@@ -29,7 +39,7 @@ class AuthAuthenticator @Inject constructor(
 
             newToken.body()?.let { basePomeResponse ->
                 basePomeResponse.data?.let {
-                    tokenManager.saveToken(it)
+                    tokenManager.saveToken(it.accessToken)
                     response.request.newBuilder()
                         .header("Authorization", "Bearer $it")
                         .build()
@@ -38,7 +48,7 @@ class AuthAuthenticator @Inject constructor(
         }
     }
 
-    private suspend fun getNewToken(refreshToken: String?): retrofit2.Response<BasePomeResponse<String>> {
+    private suspend fun getNewToken(phoneNum: String): retrofit2.Response<BasePomeResponse<UserInfoData>> {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         val okHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
@@ -50,6 +60,6 @@ class AuthAuthenticator @Inject constructor(
             .build()
 
         val service = retrofit.create(AuthService::class.java)
-        return service.refreshToken()
+        return service.refreshToken(PhoneNumberDataBody(phoneNum))
     }
 }

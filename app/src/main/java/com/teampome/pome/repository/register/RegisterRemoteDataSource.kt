@@ -3,7 +3,7 @@ package com.teampome.pome.repository.register
 import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.request.PhoneDataBody
 import com.teampome.pome.model.SmsData
-import com.teampome.pome.model.UserSignUpData
+import com.teampome.pome.model.UserInfoData
 import com.teampome.pome.model.request.NicknameDataBody
 import com.teampome.pome.model.request.UserInfoDataBody
 import com.teampome.pome.network.RegisterService
@@ -24,7 +24,7 @@ class RegisterRemoteDataSource @Inject constructor(
         service.checkNickname(NicknameDataBody(nickName))
     }
 
-    override fun signUp(userInfoDataBody: UserInfoDataBody): Flow<ApiResponse<BasePomeResponse<UserSignUpData>>> = apiRequestFlow {
+    override fun signUp(userInfoDataBody: UserInfoDataBody): Flow<ApiResponse<BasePomeResponse<UserInfoData>>> = apiRequestFlow {
         service.signUp(userInfoDataBody)
     }
 }
