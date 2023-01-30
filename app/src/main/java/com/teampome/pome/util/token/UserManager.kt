@@ -2,6 +2,7 @@ package com.teampome.pome.util.token
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.preferencesOf
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -11,6 +12,7 @@ class UserManager(private val context: Context) {
         private val USER_ID_KEY = stringPreferencesKey("pome_user_id")
         private val USER_NICKNAME_KEY = stringPreferencesKey("pome_user_nickname")
         private val USER_PHONE_KEY = stringPreferencesKey("pome_user_phone")
+        private val USER_PROFILE_PRE_URL_KEY = stringPreferencesKey("pome_profile_pre_url")
     }
 
     fun getUser(): Flow<List<String?>> {
@@ -19,12 +21,6 @@ class UserManager(private val context: Context) {
                 preferences[USER_ID_KEY],
                 preferences[USER_NICKNAME_KEY]
             )
-        }
-    }
-
-    fun getUserPhone(): Flow<String?> {
-        return context.dataStore.data.map { preferences ->
-            preferences[USER_PHONE_KEY]
         }
     }
 
@@ -42,6 +38,12 @@ class UserManager(private val context: Context) {
         }
     }
 
+    fun getUserPhone(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[USER_PHONE_KEY]
+        }
+    }
+
     suspend fun saveUserPhone(userPhone: String) {
         context.dataStore.edit { preferences ->
             preferences[USER_PHONE_KEY] = userPhone
@@ -51,6 +53,24 @@ class UserManager(private val context: Context) {
     suspend fun deleteUserPhone() {
         context.dataStore.edit { preferences ->
             preferences.remove(USER_PHONE_KEY)
+        }
+    }
+
+    fun getUserProfileUrl(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            preferences[USER_PROFILE_PRE_URL_KEY]
+        }
+    }
+
+    suspend fun saveUserProfileUrl(url: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_PROFILE_PRE_URL_KEY] = url
+        }
+    }
+
+    suspend fun deleteUserProfileUrl() {
+        context.dataStore.edit { preferences ->
+            preferences.remove(USER_PROFILE_PRE_URL_KEY)
         }
     }
 }
