@@ -24,6 +24,8 @@ class ImageUrlInterceptor @Inject constructor(
         return preSignedUrl?.let {
             newRequest.url(it)
 
+            Log.d("presignedUrl", "send new request ${chain.proceed(newRequest.build())}")
+
             chain.proceed(newRequest.build())
         } ?: run {
             chain.proceed(baseRequest)

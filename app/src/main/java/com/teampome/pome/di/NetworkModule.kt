@@ -102,7 +102,7 @@ object NetworkModule {
         imageUrlInterceptor: ImageUrlInterceptor
     ) : PreSignedImageService {
         return Retrofit.Builder()
-            .client(OkHttpClient.Builder().addInterceptor(imageUrlInterceptor).build())
+            .client(OkHttpClient.Builder().addInterceptor(imageUrlInterceptor).addInterceptor(HttpLoggingInterceptor()).build())
             .baseUrl("http://localhost/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()

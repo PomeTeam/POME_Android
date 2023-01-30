@@ -20,7 +20,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
     // 먼저, Loading 상태 표현
     emit(ApiResponse.Loading)
 
-    // 2초 TimeOut
+    // 20초 TimeOut
     withTimeoutOrNull(20000L) {
         val response = call()
 

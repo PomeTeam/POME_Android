@@ -13,7 +13,7 @@ interface PreSignedImageService {
 
     @Multipart
     @PUT(".")
-    fun sendImage(
+    suspend fun sendImage(
         @Part file: MultipartBody.Part
     ) : Response<Void>
 }
