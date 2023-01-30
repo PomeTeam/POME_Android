@@ -31,6 +31,15 @@ class RegisterProfileViewModel @Inject constructor(
     private val _presignedImageResponse = MutableLiveData<ApiResponse<Void>>()
     val presignedImageResponse: LiveData<ApiResponse<Void>> = _presignedImageResponse
 
+    private val _profileImageByteArr = MutableLiveData<ByteArray>()
+    val profileImageByteArr: LiveData<ByteArray> = _profileImageByteArr
+
+    fun settingProfileImageByteArray(file: ByteArray?) {
+        file?.let {
+            _profileImageByteArr.value = it
+        }
+    }
+
     fun checkNickname(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _nicknameResponse,
         coroutineErrorHandler

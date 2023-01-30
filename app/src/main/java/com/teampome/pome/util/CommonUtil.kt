@@ -2,12 +2,14 @@
 
 package com.teampome.pome.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.WindowInsets
@@ -29,6 +31,7 @@ import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.*
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -300,5 +303,13 @@ object CommonUtil {
         }
 
         return sb.toString()
+    }
+
+    /**
+     *  file to byteArray
+     */
+    @SuppressLint("Recycle")
+    fun getImageByteArray(context: Context, uri: Uri) : ByteArray? {
+        return context.contentResolver.openInputStream(uri)?.buffered()?.use { it.readBytes() }
     }
 }

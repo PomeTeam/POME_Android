@@ -73,11 +73,13 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     }
 
                     // 저장 이후 aws에 이미지 저장
-                    viewModel.sendPreSignedImage(byteArrayOf(), object : CoroutineErrorHandler {
-                        override fun onError(message: String) {
-                            Log.d("error", "error by $message")
-                        }
-                    })
+                    viewModel.profileImageByteArr.value?.let {
+                        viewModel.sendPreSignedImage(it, object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Log.d("error", "error by $message")
+                            }
+                        })
+                    } ?: Log.d("error", "image의 byteArray를 가져오지 못했습니다.")
                 }
                 is ApiResponse.Failure -> {
                     Log.d("test", "failure data : ${it.errorMessage}")
@@ -238,6 +240,11 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         Log.d("test", "error : $message")
                     }
                 })
+
+                // 이미지 byteArray 세팅
+                imageUri?.let {
+                    viewModel.settingProfileImageByteArray(CommonUtil.getImageByteArray(requireContext(), it))
+                }
 
                 try {
                     if(Build.VERSION.SDK_INT < 28) {
