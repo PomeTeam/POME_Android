@@ -5,10 +5,7 @@ import com.teampome.pome.network.AuthService
 import com.teampome.pome.network.ImageService
 import com.teampome.pome.network.PreSignedImageService
 import com.teampome.pome.network.RegisterService
-import com.teampome.pome.util.token.AuthAuthenticator
-import com.teampome.pome.util.token.AuthInterceptor
-import com.teampome.pome.util.token.TokenManager
-import com.teampome.pome.util.token.UserManager
+import com.teampome.pome.util.token.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,6 +40,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideAuthAuthenticator(tokenManager: TokenManager): AuthAuthenticator = AuthAuthenticator(tokenManager)
+
+    @Singleton
+    @Provides
+    fun provideUserUrlInterceptor(userManager: UserManager): ImageUrlInterceptor = ImageUrlInterceptor(userManager)
 
     @Singleton
     @Provides
@@ -97,8 +98,11 @@ object NetworkModule {
      */
     @Singleton
     @Provides
-    fun providePreSignedImageService() : PreSignedImageService {
+    fun providePreSignedImageService(
+        imageUrlInterceptor: ImageUrlInterceptor
+    ) : PreSignedImageService {
         return Retrofit.Builder()
+            .client(OkHttpClient.Builder().addInterceptor(imageUrlInterceptor).build())
             .baseUrl("http://localhost/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
