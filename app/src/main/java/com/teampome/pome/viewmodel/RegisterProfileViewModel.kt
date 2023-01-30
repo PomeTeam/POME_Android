@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.PresignedUrlImageData
+import com.teampome.pome.model.UserSignUpData
 import com.teampome.pome.repository.register.PresignedUrlRepository
 import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.repository.register.SendPreSignedImageRepository
@@ -34,6 +35,9 @@ class RegisterProfileViewModel @Inject constructor(
     private val _profileImageByteArr = MutableLiveData<ByteArray>()
     val profileImageByteArr: LiveData<ByteArray> = _profileImageByteArr
 
+    private val _signUpResponse = MutableLiveData<ApiResponse<BasePomeResponse<UserSignUpData>>>()
+    val signUpResponse: LiveData<ApiResponse<BasePomeResponse<UserSignUpData>>> = _signUpResponse
+
     fun settingProfileImageByteArray(file: ByteArray?) {
         file?.let {
             _profileImageByteArr.value = it
@@ -59,5 +63,19 @@ class RegisterProfileViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         sendImageRepository.sendImage(file)
+    }
+
+    fun signUp(
+        imageKey: String,
+        nickname: String,
+        phoneNum: String,
+        coroutineErrorHandler: CoroutineErrorHandler
+    ) = baseRequest(
+        _signUpResponse,
+        coroutineErrorHandler
+    ) {
+        repository.signUp(
+            imageKey, nickname, phoneNum
+        )
     }
 }

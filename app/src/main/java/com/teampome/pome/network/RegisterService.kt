@@ -3,7 +3,9 @@ package com.teampome.pome.network
 import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.request.PhoneDataBody
 import com.teampome.pome.model.SmsData
+import com.teampome.pome.model.UserSignUpData
 import com.teampome.pome.model.request.NicknameDataBody
+import com.teampome.pome.model.request.UserInfoDataBody
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -25,4 +27,12 @@ interface RegisterService {
     suspend fun checkNickname(
         @Body nickName: NicknameDataBody
     ) : Response<BasePomeResponse<Boolean>>
+
+    /**
+     *  회원가입
+     */
+    @POST("api/v1/users/sign-up")
+    suspend fun signUp(
+        @Body userInfo: UserInfoDataBody
+    ) : Response<BasePomeResponse<UserSignUpData>>
 }

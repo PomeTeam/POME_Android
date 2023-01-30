@@ -16,25 +16,20 @@ class UserManager(private val context: Context) {
         private val USER_PROFILE_IMAGE_ID = stringPreferencesKey("pome_profile_image_id")
     }
 
-    fun getUser(): Flow<List<String?>> {
+    fun getUserNickName(): Flow<String?> {
         return context.dataStore.data.map { preferences ->
-            listOf(
-                preferences[USER_ID_KEY],
-                preferences[USER_NICKNAME_KEY]
-            )
+            preferences[USER_NICKNAME_KEY]
         }
     }
 
-    suspend fun saveUser(userId: String, userNickname: String) {
+    suspend fun saveUserNickName(userNickname: String) {
         context.dataStore.edit { preferences ->
-            preferences[USER_ID_KEY] = userId
             preferences[USER_NICKNAME_KEY] = userNickname
         }
     }
 
-    suspend fun deleteUser() {
+    suspend fun deleteUserNickName() {
         context.dataStore.edit { preferences ->
-            preferences.remove(USER_ID_KEY)
             preferences.remove(USER_NICKNAME_KEY)
         }
     }

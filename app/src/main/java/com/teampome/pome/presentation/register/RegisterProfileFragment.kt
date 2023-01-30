@@ -33,12 +33,20 @@ import com.teampome.pome.viewmodel.RegisterProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 // Todo : ViewModel data 구분 짓기
 @AndroidEntryPoint
 class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
-
+    
+    // signup coroutine handler
+    inner class SignUpCoroutineErrorHandler : CoroutineErrorHandler {
+        override fun onError(message: String) {
+            Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+    
     private val viewModel: RegisterProfileViewModel by viewModels()
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
@@ -105,12 +113,20 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             }
         }
 
+        // 닉네임 중복 관련 api 결과
         viewModel.nicknameResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("test", "data : ${it.data}")
 
                     binding.registerProfileNameCheckTv.text = it.data.message
+
+                    // userManager에 닉네임 관련 정보 저장
+                    runBlocking {
+                        viewModel.userName.value?.let { name ->
+                            userManger.saveUserNickName(name)
+                        }
+                    }
 
                     if(it.data.data == true) {
                         enableName()
@@ -124,6 +140,22 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 }
                 is ApiResponse.Loading -> {
 
+                }
+            }
+        }
+
+        viewModel.signUpResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("signUp","signUp success data is ${it.data}")
+                    // 회원가입이 정상적으로 이루어짐
+                    moveToAddFriends()
+                }
+                is ApiResponse.Failure -> {
+                    Log.d("signUp", "signUp error by $it")
+                    Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                }
+                is ApiResponse.Loading -> {
                 }
             }
         }
@@ -177,12 +209,25 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // 확인 버튼
         binding.registerProfileCheckBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "만들었어요.", Toast.LENGTH_SHORT).show()
-            moveToAddFriends()
-        }
+            runBlocking {
+                val profileKey = userManger.getProfileKey().first() 
+                val nickName = userManger.getUserNickName().first()
+                val userPhone = userManger.getUserPhone().first()
+                
+                if(!nickName.isNullOrEmpty() &&
+                    !userPhone.isNullOrEmpty()) {
 
-        binding.registerProfileAiv.setOnClickListener {
-            pomeBottomSheetDialog.show()
+                    Log.d("user", "userData profileKey : $profileKey, nickName : $nickName, userPhone : $userPhone")
+
+                    profileKey?.let {
+                        viewModel.signUp(it, nickName, userPhone, SignUpCoroutineErrorHandler())
+                    } ?: run { // profile 이미지가 없으면 default로 설정
+                        viewModel.signUp("default", nickName, userPhone, SignUpCoroutineErrorHandler())
+                    }
+                } else {
+                    Toast.makeText(requireContext(), "닉네임 혹은 휴대폰 정보가 정상적으로 들어가지 못했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         // dialog 수정 click
