@@ -68,8 +68,9 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("test", "success data : ${it.data}")
-                    // 이미지의 PresignedUrl 저장
+                    // 이미지의 PresignedUrl 및 image key 저장
                     runBlocking {
+                        userManger.saveProfileKey(it.data.id)
                         userManger.saveUserProfileUrl(it.data.presignedUrl)
                     }
 

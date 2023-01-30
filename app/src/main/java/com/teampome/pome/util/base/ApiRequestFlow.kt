@@ -25,7 +25,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
     withTimeoutOrNull(20000L) {
         val response = call()
 
-        Log.d("call", "call in ${response}")
+        Log.d("call", "call in $response")
 
         try {
             if(response.isSuccessful) {
