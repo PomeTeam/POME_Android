@@ -1,5 +1,6 @@
 package com.teampome.pome.util.base
 
+import android.util.Log
 import com.google.gson.Gson
 import com.teampome.pome.model.ErrorResponse
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,8 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
     // 20초 TimeOut
     withTimeoutOrNull(20000L) {
         val response = call()
+
+        Log.d("call", "call in ${response}")
 
         try {
             if(response.isSuccessful) {

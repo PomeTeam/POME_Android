@@ -34,6 +34,7 @@ import org.threeten.bp.*
 import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 object CommonUtil {
 
@@ -299,7 +300,7 @@ object CommonUtil {
         val sb = java.lang.StringBuilder()
 
         for(i in 0 until len) {
-            sb.append(randomChar[(randomChar.indices).random()])
+            sb.append(randomChar[(randomChar.indices).random(Random(System.currentTimeMillis()))])
         }
 
         return sb.toString()
