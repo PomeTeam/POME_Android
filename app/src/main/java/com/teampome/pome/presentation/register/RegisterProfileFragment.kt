@@ -14,6 +14,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -31,6 +32,7 @@ import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterProfileViewModel
+import com.teampome.pome.viewmodel.TokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
@@ -49,6 +51,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     }
     
     private val viewModel: RegisterProfileViewModel by viewModels()
+    private val tokenViewModel: TokenViewModel by activityViewModels()
 
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
@@ -154,10 +157,9 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 is ApiResponse.Success -> {
                     Log.d("signUp","signUp success data is ${it.data}")
 
-                    runBlocking {
-                        it.data.data?.let { userData ->
-                            tokenManager.saveToken(userData.accessToken)
-                        }
+                    // accessToken 저장
+                    it.data.data?.let { userData ->
+                        tokenViewModel.saveToken(userData.accessToken)
                     }
 
                     // 회원가입이 정상적으로 이루어짐
