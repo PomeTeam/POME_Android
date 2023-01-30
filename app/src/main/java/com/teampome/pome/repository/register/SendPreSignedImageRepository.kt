@@ -1,8 +1,7 @@
 package com.teampome.pome.repository.register
 
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.RequestBody
 import javax.inject.Inject
 
 class SendPreSignedImageRepository @Inject constructor(
@@ -10,6 +9,6 @@ class SendPreSignedImageRepository @Inject constructor(
 ) {
     fun sendImage(file: ByteArray) =
         sendPreSignedImageDataSource.sendImage(
-            MultipartBody.Part.create(file.toRequestBody("image/jpeg".toMediaTypeOrNull()))
+            RequestBody.create("application/octet".toMediaTypeOrNull(), file)
         )
 }

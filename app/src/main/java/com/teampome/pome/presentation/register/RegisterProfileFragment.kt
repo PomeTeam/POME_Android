@@ -3,6 +3,8 @@ package com.teampome.pome.presentation.register
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -73,8 +75,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     }
 
                     // 저장 이후 aws에 이미지 저장
-                    viewModel.profileImageByteArr.value?.let {
-                        viewModel.sendPreSignedImage(it, object : CoroutineErrorHandler {
+                    viewModel.profileImageByteArr.value?.let { byteArray ->
+                        viewModel.sendPreSignedImage(byteArray, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
                                 Log.d("error", "error by $message")
                             }
@@ -261,6 +263,14 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                                     bitmapTransform(MultiTransformation(CenterCrop(),
                                     MaskTransformation(R.drawable.user_profile_empty_160)))
                                 ).into(binding.registerProfileAiv)
+
+//                            val byteArray = CommonUtil.getImageByteArray(requireContext(), it)
+//
+//                            byteArray?.let {
+//                                val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+//
+//                                binding.registerProfileAiv.setImageBitmap(Bitmap.createBitmap(bmp))
+//                            }
                         }
                     }
                 } catch (e: Exception) {

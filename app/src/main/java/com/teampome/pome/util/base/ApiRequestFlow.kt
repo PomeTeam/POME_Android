@@ -22,7 +22,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
     emit(ApiResponse.Loading)
 
     // 20초 TimeOut
-    withTimeoutOrNull(20000L) {
+    withTimeoutOrNull(60000L) {
         val response = call()
 
         Log.d("call", "call in ${response}")
