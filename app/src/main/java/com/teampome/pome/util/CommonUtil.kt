@@ -307,7 +307,7 @@ object CommonUtil {
     }
 
     /**
-     *  file to byteArray
+     *  image file to byteArray
      */
     @SuppressLint("Recycle")
     fun getImageByteArray(context: Context, uri: Uri) : ByteArray? {
