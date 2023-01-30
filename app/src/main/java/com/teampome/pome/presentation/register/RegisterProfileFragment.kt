@@ -36,7 +36,6 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 // Todo : ViewModel data 구분 짓기
-@Suppress("DEPRECATION")
 @AndroidEntryPoint
 class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
 
