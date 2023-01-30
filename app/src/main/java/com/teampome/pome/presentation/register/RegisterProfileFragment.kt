@@ -73,10 +73,28 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     }
 
                     // 저장 이후 aws에 이미지 저장
-
+                    viewModel.sendPreSignedImage(byteArrayOf(), object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Log.d("error", "error by $message")
+                        }
+                    })
                 }
                 is ApiResponse.Failure -> {
                     Log.d("test", "failure data : ${it.errorMessage}")
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
+        }
+
+        // presignedImage 저장 결과
+        viewModel.presignedImageResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("image", "upload success by ${it.data}")
+                }
+                is ApiResponse.Failure -> {
+                    Log.d("image", "upload failure by ${it.errorMessage}")
                 }
                 is ApiResponse.Loading -> {
                 }

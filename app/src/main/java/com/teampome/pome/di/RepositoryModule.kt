@@ -1,6 +1,7 @@
 package com.teampome.pome.di
 
 import com.teampome.pome.network.ImageService
+import com.teampome.pome.network.PreSignedImageService
 import com.teampome.pome.network.RegisterService
 import com.teampome.pome.repository.friend.AddFriendsDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
@@ -80,5 +81,17 @@ object RepositoryModule {
     @Singleton
     fun providePresignedUrlRepository(dataSource: PresignedUrlDataSource) : PresignedUrlRepository {
         return PresignedUrlRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSendPreSignedImageDataSource(service: PreSignedImageService) : SendPreSignedImageDataSource {
+        return SendPreSignedImageRemoteDataSource(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSendPreSignedImageRepository(dataSource: SendPreSignedImageDataSource) : SendPreSignedImageRepository {
+        return SendPreSignedImageRepository(dataSource)
     }
 }

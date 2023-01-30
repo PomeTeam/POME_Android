@@ -3,6 +3,7 @@ package com.teampome.pome.di
 import android.content.Context
 import com.teampome.pome.network.AuthService
 import com.teampome.pome.network.ImageService
+import com.teampome.pome.network.PreSignedImageService
 import com.teampome.pome.network.RegisterService
 import com.teampome.pome.util.token.AuthAuthenticator
 import com.teampome.pome.util.token.AuthInterceptor
@@ -89,5 +90,18 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ImageService::class.java)
+    }
+
+    /**
+     *  baseUrl은 임시 url -> Interceptor로 변경 예정
+     */
+    @Singleton
+    @Provides
+    fun providePreSignedImageService() : PreSignedImageService {
+        return Retrofit.Builder()
+            .baseUrl("http://localhost/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(PreSignedImageService::class.java)
     }
 }
