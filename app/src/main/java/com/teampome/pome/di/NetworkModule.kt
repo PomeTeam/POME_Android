@@ -1,10 +1,7 @@
 package com.teampome.pome.di
 
 import android.content.Context
-import com.teampome.pome.network.AuthService
-import com.teampome.pome.network.ImageService
-import com.teampome.pome.network.PreSignedImageService
-import com.teampome.pome.network.RegisterService
+import com.teampome.pome.network.*
 import com.teampome.pome.util.token.*
 import dagger.Module
 import dagger.Provides
@@ -16,6 +13,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 const val BASE_URL = "http://52.79.89.129/"
@@ -24,6 +22,22 @@ const val IMAGE_BASE_URL = "http://image-main-server.ap-northeast-2.elasticbeans
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class BaseRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class AuthRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class ImageRetrofit
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class TempRetrofit
 
     @Singleton
     @Provides
@@ -61,51 +75,94 @@ object NetworkModule {
             .build()
     }
 
+    @BaseRetrofit
     @Singleton
     @Provides
-    fun provideRetrofitBuilder() : Retrofit.Builder {
+    fun provideBaseRetrofitBuilder() : Retrofit.Builder {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
 
+    @AuthRetrofit
     @Singleton
     @Provides
-    fun provideAuthService(retrofit: Retrofit.Builder) : AuthService =
+    fun provideAuthRetrofitBuilder() : Retrofit.Builder {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+    }
+
+    @ImageRetrofit
+    @Singleton
+    @Provides
+    fun provideImageRetrofitBuilder() : Retrofit.Builder {
+        return Retrofit.Builder()
+            .baseUrl(IMAGE_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+    }
+
+    /**
+     *  baseUrl은 임시 url -> Interceptor로 url변경 예정
+     */
+    @TempRetrofit
+    @Singleton
+    @Provides
+    fun provideTempRetrofitBuilder(
+        imageUrlInterceptor: ImageUrlInterceptor
+    ) : Retrofit.Builder {
+        return  Retrofit.Builder()
+            .client(OkHttpClient.Builder()
+                .addInterceptor(imageUrlInterceptor)
+                .addInterceptor(HttpLoggingInterceptor()
+                    .setLevel(HttpLoggingInterceptor.Level.BODY)
+                ).build()
+            )
+            .baseUrl("http://localhost/")
+            .addConverterFactory(GsonConverterFactory.create())
+    }
+
+    @Singleton
+    @Provides
+    fun provideAuthService(@AuthRetrofit retrofit: Retrofit.Builder) : AuthService =
         retrofit
             .build()
             .create(AuthService::class.java)
 
     @Singleton
     @Provides
-    fun provideRegisterService(retrofit: Retrofit.Builder) : RegisterService =
+    fun provideRegisterService(@BaseRetrofit retrofit: Retrofit.Builder) : RegisterService =
         retrofit
             .build()
             .create(RegisterService::class.java)
 
     @Singleton
     @Provides
-    fun provideImageService() : ImageService {
-        return Retrofit.Builder()
-            .baseUrl(IMAGE_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
+    fun provideImageService(
+        @ImageRetrofit retrofit: Retrofit.Builder
+    ) : ImageService {
+        return retrofit
             .build()
             .create(ImageService::class.java)
     }
 
-    /**
-     *  baseUrl은 임시 url -> Interceptor로 변경 예정
-     */
     @Singleton
     @Provides
     fun providePreSignedImageService(
-        imageUrlInterceptor: ImageUrlInterceptor
+        @TempRetrofit retrofit: Retrofit.Builder
     ) : PreSignedImageService {
-        return Retrofit.Builder()
-            .client(OkHttpClient.Builder().addInterceptor(imageUrlInterceptor).addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)).build())
-            .baseUrl("http://localhost/")
-            .addConverterFactory(GsonConverterFactory.create())
+        return retrofit
             .build()
             .create(PreSignedImageService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideLoginService(
+        @BaseRetrofit retrofit: Retrofit.Builder
+    ) : LoginService {
+        return retrofit
+            .build()
+            .create(LoginService::class.java)
     }
 }
