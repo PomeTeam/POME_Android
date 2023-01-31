@@ -17,6 +17,7 @@ import retrofit2.Response
  *   또한, 2초이상 요청이 길어질 경우 자동으로 TimeOut된다.
  */
 
+// Todo : Success지만 failure인 경우, BasePomeResponse의 success가 false인 경우도 failure처리 ... 고민..
 fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = flow {
     // 먼저, Loading 상태 표현
     emit(ApiResponse.Loading)

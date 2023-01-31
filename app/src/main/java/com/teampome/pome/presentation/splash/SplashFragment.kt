@@ -97,9 +97,14 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                         moveToLogin()
 //                        moveToRecord()
                     } ?: run {
-                        // 로그인 시, 서버통신은 정상이나 token을 못받아오는 경우
-                        Toast.makeText(requireContext(), "서버에러가 발생했습니다", Toast.LENGTH_SHORT).show()
-
+                        // 로그인 시, 서버통신은 정상이나 token을 못받아오는 경우, success가 false인 경우
+//                        Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                        if(it.data.success) {
+                            Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                        } else {
+                            // 로그인이 실패한 경우이다.
+                            moveToLogin()
+                        }
                     }
                 }
                 is ApiResponse.Failure -> {

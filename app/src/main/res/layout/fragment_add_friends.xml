@@ -4,7 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.util.List" />
+        <import type="android.view.View" />
 
+        <variable
+            name="friendData"
+            type="List&lt;com.teampome.pome.model.FriendData>" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -62,7 +67,8 @@
             android:id="@+id/add_friends_name_search_aiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
+            android:layout_marginStart="12dp"
+            android:padding="6dp"
             android:src="@drawable/ic_search_20"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_name_et"
             app:layout_constraintStart_toStartOf="@id/add_friends_name_et"
@@ -84,7 +90,8 @@
             android:id="@+id/add_friends_no_search_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{friendData.size() == 0 ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/add_friends_check_btn"
             app:layout_constraintTop_toBottomOf="@id/add_friends_name_et">
 

@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.datastore.preferences.protobuf.Api
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
@@ -45,10 +44,6 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
     override fun initListener() {
 
-//        viewModel.testFriendsList.observe(viewLifecycleOwner) {
-//            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it)
-//        }
-
         binding.addFriendsCl.setOnClickListener {
             CommonUtil.hideKeyboard(requireActivity())
         }
@@ -62,15 +57,7 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
             override fun afterTextChanged(name: Editable?) {
                 name?.let {
-                    showLoading()
-
-                    viewModel.findFriendsData(it.toString(), object : CoroutineErrorHandler {
-                        override fun onError(message: String) {
-                            Toast.makeText(requireContext(), "친구 찾기 중 서버 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
-                            Log.e("findFriend", "findFriendError by $message")
-                            hideLoading()
-                        }
-                    })
+                    viewModel.findText.value = it.toString()
                 }
             }
         })
@@ -82,11 +69,17 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                     Log.d("findFriend", "success by ${it.data}")
 
                     (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it.data.data)
+                    binding.friendData = it.data.data
+                    binding.executePendingBindings()
 
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
-                    Log.e("findFriend", "findFriendError by ${it.errorMessage}")
+                    if(it.code != 400) {
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                        Log.e("findFriend", "findFriendFailure by ${it.errorMessage}")
+                    }
+                    bindEmptyFriendData()
                     hideLoading()
                 }
                 is ApiResponse.Loading -> {
@@ -98,10 +91,37 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
             moveToRecordView()
         }
 
+        // 검색버튼 클릭
+        binding.addFriendsNameSearchAiv.setOnClickListener {
+            showLoading()
+
+            viewModel.findText.value?.let {
+                viewModel.findFriendsData(it, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.e("findFriend", "findFriendError by $message")
+
+                        bindEmptyFriendData()
+
+                        hideLoading()
+                    }
+                })
+            } ?: run {
+                bindEmptyFriendData()
+                hideLoading()
+            }
+        }
+
         // edittext x버튼 클릭
         binding.addFriendsFindDeleteAtv.setOnClickListener {
             binding.addFriendsNameEt.setText("")
         }
+    }
+
+    private fun bindEmptyFriendData() {
+        binding.friendData = listOf()
+        binding.executePendingBindings()
+
+        (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(listOf())
     }
 
     private fun moveToRecordView() {

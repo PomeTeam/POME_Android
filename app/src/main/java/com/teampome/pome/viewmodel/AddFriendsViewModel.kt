@@ -16,6 +16,8 @@ class AddFriendsViewModel @Inject constructor(
     private val repository: AddFriendsRepository
 ) : BaseViewModel() {
 
+    val findText = MutableLiveData<String>()
+
     private val _findFriendsDataResponse = MutableLiveData<ApiResponse<BasePomeListResponse<FriendData>>>()
     val findFriendsDataResponse: LiveData<ApiResponse<BasePomeListResponse<FriendData>>> = _findFriendsDataResponse
 

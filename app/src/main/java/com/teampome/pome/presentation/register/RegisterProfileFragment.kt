@@ -94,13 +94,18 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     viewModel.profileImageByteArr.value?.let { byteArray ->
                         viewModel.sendPreSignedImage(byteArray, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
+                                hideLoading()
                                 Log.d("error", "error by $message")
                             }
                         })
-                    } ?: Log.d("error", "image의 byteArray를 가져오지 못했습니다.")
+                    } ?: run {
+                        hideLoading()
+                        Log.d("error", "image의 byteArray를 가져오지 못했습니다.")
+                    }
                 }
                 is ApiResponse.Failure -> {
                     Log.d("test", "failure data : ${it.errorMessage}")
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> {
                 }
@@ -111,9 +116,13 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         viewModel.presignedImageResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
+                    hideLoading()
+                    Toast.makeText(requireContext(), "정상적으로 이미지가 업로드되었습니다.", Toast.LENGTH_SHORT).show()
                     Log.d("image", "upload success by ${it.data}")
                 }
                 is ApiResponse.Failure -> {
+                    hideLoading()
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("image", "upload failure by ${it.errorMessage}")
                 }
                 is ApiResponse.Loading -> {
@@ -267,6 +276,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // dialog 수정 click
         pomeBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
+            showLoading()
+
             openGallery()
         }
 
