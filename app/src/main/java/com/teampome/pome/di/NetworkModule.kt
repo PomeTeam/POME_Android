@@ -65,12 +65,12 @@ object NetworkModule {
         authInterceptor: AuthInterceptor,
         authAuthenticator: AuthAuthenticator
     ): OkHttpClient {
-        val logginInterceptor = HttpLoggingInterceptor()
-        logginInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
-            .addInterceptor(logginInterceptor)
+            .addInterceptor(loggingInterceptor)
             .authenticator(authAuthenticator)
             .build()
     }
@@ -87,8 +87,11 @@ object NetworkModule {
     @AuthRetrofit
     @Singleton
     @Provides
-    fun provideAuthRetrofitBuilder() : Retrofit.Builder {
+    fun provideAuthRetrofitBuilder(
+        okHttpClient: OkHttpClient
+    ) : Retrofit.Builder {
         return Retrofit.Builder()
+            .client(okHttpClient)
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
     }
@@ -164,5 +167,15 @@ object NetworkModule {
         return retrofit
             .build()
             .create(LoginService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRecordService(
+        @AuthRetrofit retrofit: Retrofit.Builder
+    ) : RecordService {
+        return retrofit
+            .build()
+            .create(RecordService::class.java)
     }
 }

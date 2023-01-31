@@ -1,9 +1,6 @@
 package com.teampome.pome.di
 
-import com.teampome.pome.network.ImageService
-import com.teampome.pome.network.LoginService
-import com.teampome.pome.network.PreSignedImageService
-import com.teampome.pome.network.RegisterService
+import com.teampome.pome.network.*
 import com.teampome.pome.repository.friend.AddFriendsDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
 import com.teampome.pome.repository.friend.AddFriendsTestDataSource
@@ -17,6 +14,7 @@ import com.teampome.pome.repository.register.*
 import com.teampome.pome.repository.remind.RemindDataSource
 import com.teampome.pome.repository.remind.RemindRepository
 import com.teampome.pome.repository.remind.RemindTestDataSource
+import com.teampome.pome.util.token.UserManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,14 +51,14 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTestRecordDataSource() : RecordDataSource {
-        return RecordTestDataSource()
+    fun provideTestRecordDataSource(service: RecordService) : RecordDataSource {
+        return RecordTestDataSource(service)
     }
 
     @Provides
     @Singleton
-    fun provideRecordRepository(dataSource: RecordDataSource) : RecordRepository {
-        return RecordRepository(dataSource)
+    fun provideRecordRepository(dataSource: RecordDataSource, userManager: UserManager) : RecordRepository {
+        return RecordRepository(dataSource, userManager)
     }
 
     @Provides

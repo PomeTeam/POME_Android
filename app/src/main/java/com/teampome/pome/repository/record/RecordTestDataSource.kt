@@ -1,10 +1,15 @@
 package com.teampome.pome.repository.record
 
 import com.teampome.pome.model.*
+import com.teampome.pome.model.request.BasePomeListResponse
+import com.teampome.pome.network.RecordService
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.apiRequestFlow
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RecordTestDataSource @Inject constructor(
-
+    private val service: RecordService
 ): RecordDataSource {
     override suspend fun getRecordTestData(): RecordTestData? {
 //        return null
@@ -128,5 +133,9 @@ class RecordTestDataSource @Inject constructor(
                         "기록을 돌아보고 새로운 목표를 시작해봐요"
             )
         )
+    }
+
+    override fun getRecordDataByUserId(userId: String): Flow<ApiResponse<BasePomeListResponse<RecordData>>> = apiRequestFlow {
+        service.getRecordDataByUserId(userId)
     }
 }

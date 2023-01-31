@@ -79,6 +79,16 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                                 tokenManager.deleteToken()
                             }
                             tokenManager.saveToken(userInfo.accessToken)
+
+                            if(userManager.getUserId().first() != null) {
+                                userManager.deleteUserId()
+                            }
+                            userManager.saveUserId(userInfo.userId)
+
+                            if(userManager.getUserNickName().first() != null) {
+                                userManager.deleteUserNickName()
+                            }
+                            userManager.saveUserNickName(userInfo.nickname)
                         }
 
                         moveToRecord()

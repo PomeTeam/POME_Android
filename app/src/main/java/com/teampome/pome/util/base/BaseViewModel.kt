@@ -20,7 +20,7 @@ open class BaseViewModel : ViewModel() {
     protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorHandler: CoroutineErrorHandler, request: () -> Flow<T>) {
         job = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler {_, error ->
             viewModelScope.launch(Dispatchers.Main) {
-                errorHandler.onError(error.localizedMessage ?: "API Request 도중 Error 발생")
+                errorHandler.onError(error.localizedMessage ?: "API Request 도중 Error 발생 $error")
             }
         }) {
             request().collect {

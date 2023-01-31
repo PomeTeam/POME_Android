@@ -35,6 +35,10 @@ class AuthAuthenticator @Inject constructor(
             if(userId == null || userNickname == null) {
                 return@runBlocking null
             }
+
+            userManager.deleteUserId()
+            userManager.deleteUserNickName()
+
             val newToken = getNewToken(userId, userNickname)
 
             if(!newToken.isSuccessful || newToken.body() == null) {
@@ -43,6 +47,8 @@ class AuthAuthenticator @Inject constructor(
 
             newToken.body()?.let { basePomeResponse ->
                 basePomeResponse.data?.let {
+                    userManager.saveUserId(it.userId)
+                    userManager.saveUserNickName(it.nickname)
                     tokenManager.saveToken(it.accessToken)
                     response.request.newBuilder()
                         .header("Authorization", it.accessToken)
