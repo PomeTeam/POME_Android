@@ -174,10 +174,13 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     } ?: run {
                         Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
                     }
+
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Log.d("signUp", "signUp error by $it")
                     Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> {
                 }
@@ -234,6 +237,9 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // 확인 버튼
         binding.registerProfileCheckBtn.setOnClickListener {
+            // loading progressbar 보이게
+            showLoading()
+
             runBlocking {
                 val profileKey = userManger.getProfileKey().first() 
                 val nickName = userManger.getUserNickName().first()
@@ -250,6 +256,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         viewModel.signUp("default", nickName, userPhone, SignUpCoroutineErrorHandler())
                     }
                 } else {
+                    hideLoading()
+
                     Toast.makeText(requireContext(), "닉네임 혹은 휴대폰 정보가 정상적으로 들어가지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
