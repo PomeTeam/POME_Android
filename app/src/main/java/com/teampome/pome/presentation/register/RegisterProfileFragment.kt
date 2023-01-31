@@ -272,7 +272,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // dialog 삭제 click
         pomeBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_160, null))
+            binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_150, null))
             binding.registerProfilePlusAiv.visibility = View.VISIBLE
 
             runBlocking {
@@ -348,7 +348,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                                 .load(it)
                                 .apply(
                                     bitmapTransform(MultiTransformation(CenterCrop(),
-                                    MaskTransformation(R.drawable.user_profile_empty_160)))
+                                    MaskTransformation(R.drawable.user_profile_empty_150)))
                                 ).into(binding.registerProfileAiv)
                         }
                     }

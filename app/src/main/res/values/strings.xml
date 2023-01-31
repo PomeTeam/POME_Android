@@ -226,4 +226,6 @@
     <string name="card_day_chip_text">D-%d</string>
     <string name="edittext_char_count_text">%d/%d</string>
     <string name="register_profile_name_chek_hint_text">닉네임은 6~18글자의 영소문자, 숫자, 한글만 가능합니다.</string>
+    <string name="register_profile_check_btn_text">입력했어요</string>
+    <string name="add_friends_notice_check_btn_text">추가할래요</string>
 </resources>

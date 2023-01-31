@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager.LayoutParams
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
+import com.teampome.pome.util.CommonUtil.getPixelToDp
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -121,6 +123,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             Toast.makeText(requireContext(), "번호 인증 요청", Toast.LENGTH_SHORT).show()
 
             binding.registerCertPhoneAcb.text = "재요청"
+
+            binding.registerCertPhoneAcb.setPadding(
+                getPixelToDp(requireContext(), 12),
+                getPixelToDp(requireContext(), 4),
+                getPixelToDp(requireContext(), 12),
+                getPixelToDp(requireContext(), 4))
 
             viewModel.sendSms(object : CoroutineErrorHandler {
                 override fun onError(message: String) {

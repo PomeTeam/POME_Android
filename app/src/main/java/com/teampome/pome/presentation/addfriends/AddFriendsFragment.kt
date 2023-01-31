@@ -97,6 +97,11 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
         binding.addFriendsCheckBtn.setOnClickListener {
             moveToRecordView()
         }
+
+        // edittext x버튼 클릭
+        binding.addFriendsFindDeleteAtv.setOnClickListener {
+            binding.addFriendsNameEt.setText("")
+        }
     }
 
     private fun moveToRecordView() {

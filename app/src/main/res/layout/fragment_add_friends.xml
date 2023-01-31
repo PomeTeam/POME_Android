@@ -38,7 +38,8 @@
             android:lineSpacingExtra="6sp"
             android:maxLength="10"
             android:maxLines="1"
-            android:paddingHorizontal="16dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="16dp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
             android:textCursorDrawable="@drawable/register_profile_name_cursor"
@@ -47,13 +48,24 @@
             app:layout_constraintTop_toBottomOf="@id/add_friends_title_tv" />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/add_friends_find_delete_atv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_20"
+            android:layout_marginEnd="10dp"
+            android:padding="6dp"
+            app:layout_constraintEnd_toEndOf="@id/add_friends_name_et"
+            app:layout_constraintTop_toTopOf="@id/add_friends_name_et"
+            app:layout_constraintBottom_toBottomOf="@id/add_friends_name_et"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/add_friends_name_search_aiv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="18dp"
             android:src="@drawable/ic_search_20"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_name_et"
-            app:layout_constraintEnd_toEndOf="@id/add_friends_name_et"
+            app:layout_constraintStart_toStartOf="@id/add_friends_name_et"
             app:layout_constraintTop_toTopOf="@id/add_friends_name_et" />
 
         <androidx.recyclerview.widget.RecyclerView
