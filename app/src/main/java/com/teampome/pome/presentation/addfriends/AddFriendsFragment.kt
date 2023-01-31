@@ -43,7 +43,16 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
         binding.addFriendsListRv.adapter = AddFriendsListAdapter().apply {
             setOnAddFriendClickListener(object : OnAddFriendClickListener {
                 override fun onAddFriendClick(friendId: String) {
+                    showLoading()
+
                     Log.d("friend", "on Click $friendId")
+
+                    viewModel.addFriend(friendId, object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Log.e("friend", message)
+                            hideLoading()
+                        }
+                    })
                 }
             })
         }
@@ -87,6 +96,21 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                         Log.e("findFriend", "findFriendFailure by ${it.errorMessage}")
                     }
                     bindEmptyFriendData()
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
+        }
+
+        // 친구 추가 관련 api
+        viewModel.addFriendResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("friend", "친구추가 완료 $it")
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
                     hideLoading()
                 }
                 is ApiResponse.Loading -> {

@@ -37,10 +37,10 @@ class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddF
             binding.executePendingBindings()
 
             binding.addFriendsListAddAiv.setOnClickListener {
-                onAddFriendClickListener?.onAddFriendClick(item.friendUserId)
+                onAddFriendClickListener?.onAddFriendClick(item.friendNickName)
 
                 binding.friendData = item.apply {
-                    isAdd = true
+                    isAdd = true // Todo : 만약 실패하는 경우, 뷰쪽에서 데이터 변경이 일어나야함
                 }
                 binding.executePendingBindings()
             }

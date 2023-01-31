@@ -1,5 +1,6 @@
 package com.teampome.pome.repository.friend
 
+import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.FriendData
 import com.teampome.pome.model.request.BasePomeListResponse
 import com.teampome.pome.network.AddFriendsService
@@ -13,5 +14,9 @@ class AddFriendsRemoteDataSource @Inject constructor(
 ) : AddFriendsDataSource {
     override fun findFriendsData(nickName: String) : Flow<ApiResponse<BasePomeListResponse<FriendData>>> = apiRequestFlow {
         service.findFriendsData(nickName)
+    }
+
+    override fun addFriend(friendId: String): Flow<ApiResponse<BasePomeResponse<Boolean>>> = apiRequestFlow {
+        service.addFriend(friendId)
     }
 }

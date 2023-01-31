@@ -2,6 +2,7 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.FriendData
 import com.teampome.pome.model.request.BasePomeListResponse
 import com.teampome.pome.repository.friend.AddFriendsRepository
@@ -21,10 +22,20 @@ class AddFriendsViewModel @Inject constructor(
     private val _findFriendsDataResponse = MutableLiveData<ApiResponse<BasePomeListResponse<FriendData>>>()
     val findFriendsDataResponse: LiveData<ApiResponse<BasePomeListResponse<FriendData>>> = _findFriendsDataResponse
 
+    private val _addFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<Boolean>>>()
+    val addFriendResponse: LiveData<ApiResponse<BasePomeResponse<Boolean>>> = _addFriendResponse
+
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _findFriendsDataResponse,
         coroutineErrorHandler
     ) {
         repository.findFriendsData(nickName)
+    }
+
+    fun addFriend(friendId: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _addFriendResponse,
+        coroutineErrorHandler
+    ) {
+        repository.addFriend(friendId)
     }
 }
