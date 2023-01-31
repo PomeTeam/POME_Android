@@ -274,6 +274,15 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             Toast.makeText(requireContext(), "삭제하기", Toast.LENGTH_SHORT).show()
             binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_160, null))
             binding.registerProfilePlusAiv.visibility = View.VISIBLE
+
+            runBlocking {
+                if(userManger.getUserProfileUrl().first() != null) {
+                    userManger.deleteUserProfileUrl()
+                }
+
+                userManger.saveUserProfileUrl("default")
+            }
+
             pomeBottomSheetDialog.dismiss()
         }
 
