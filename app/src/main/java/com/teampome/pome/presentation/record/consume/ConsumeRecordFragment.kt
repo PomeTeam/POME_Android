@@ -33,7 +33,9 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         makeGoalBottomSheetDialog()
         makeCalendarBottomSheetDialog()
 

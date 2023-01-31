@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.teampome.pome.MainActivity
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId: Int): Fragment() {
     private var backPressedCallback: OnBackPressedCallback? = null
@@ -28,6 +29,9 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = viewLifecycleOwner
+
+        initView()
         initListener()
     }
 
@@ -44,11 +48,23 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
         backPressedCallback?.remove()
     }
 
+    // View 초기화 작업
+    protected abstract fun initView()
+
+    // Observing 작업 및 listener setting 작업
     protected abstract fun initListener()
 
     fun settingBackPressedCallback(callback: OnBackPressedCallback) {
         this.backPressedCallback = callback
 
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun showLoading() {
+        (requireActivity() as MainActivity).showLoadingProgress()
+    }
+
+    fun hideLoading() {
+        (requireActivity() as MainActivity).hideLoadingProgress()
     }
 }

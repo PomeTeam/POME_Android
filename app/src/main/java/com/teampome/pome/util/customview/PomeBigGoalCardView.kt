@@ -31,18 +31,22 @@ class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: Att
             }
         }
 
-    var useAmount: String = ""
+    var useAmount: String? = ""
         set(value) {
             field = value
 
-            binding.goalCardUsedAmountAtv.text = value
+            field?.let {
+                binding.goalCardUsedAmountAtv.text = it
+            }
         }
 
-    var goalAmount: String = ""
+    var goalAmount: String? = ""
         set(value) {
             field = value
 
-            binding.goalCardAmountAtv.text = value
+            field?.let {
+                binding.goalCardAmountAtv.text = it
+            }
         }
 
     init {

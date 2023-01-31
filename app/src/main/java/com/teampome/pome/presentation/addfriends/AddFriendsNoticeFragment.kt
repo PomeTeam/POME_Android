@@ -22,6 +22,10 @@ class AddFriendsNoticeFragment : BaseFragment<FragmentAddFriendsNoticeBinding>(R
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         binding.addFriendsNoticeCheckFalseAtv.setOnClickListener {
             moveToRecord()

@@ -10,14 +10,16 @@ import com.teampome.pome.util.base.BaseFragment
 class RecordGoalFinishCompleteFragment : BaseFragment<FragmentRecordGoalFinishCompleteBinding>(R.layout.fragment_record_goal_finish_complete) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
-        binding.goalFinishCompleteCheckButtonAcb.setOnClickListener {
-            moveToRecordView()
-        }
+    override fun initView() {
+
     }
 
     override fun initListener() {
-
+        binding.goalFinishCompleteCheckButtonAcb.setOnClickListener {
+            moveToRecordView()
+        }
     }
 
     private fun moveToRecordView() {

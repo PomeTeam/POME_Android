@@ -8,6 +8,10 @@ import com.teampome.pome.databinding.FragmentMypageGoalBinding
 
 //마이페이지 완료된 목표 뷰
 class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.fragment_mypage_goal) {
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         //뒤로가기
         binding.mypageGoalArrowIv.setOnClickListener {

@@ -1,13 +1,15 @@
-@file:Suppress("DEPRECATION")
-
 package com.teampome.pome.util
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.WindowInsets
@@ -17,6 +19,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
+import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -29,10 +32,41 @@ import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.*
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random
 
 object CommonUtil {
+
+    /**
+     *  check network
+     */
+    fun checkNetwork(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+            capabilities?.let {
+                if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    return true
+                } else if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    return true
+                } else return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+            } ?: run {
+                return false
+            }
+        } else {
+            val activeNetwork = connectivityManager.activeNetworkInfo
+
+            return activeNetwork?.let {
+                return activeNetwork.isConnectedOrConnecting
+            } ?: run {
+                return false
+            }
+        }
+    }
 
     /**
      *  키보드 자연스럽게 처리를 위한 메소드 (키보드 바깥쪽 클릭시 키보드 hide)
@@ -285,5 +319,28 @@ object CommonUtil {
             params.width = (deviceSize[0] * 0.75).toInt()
             it.attributes = params
         }
+    }
+
+    /**
+     *  Random Text를 만드는 메소드
+     */
+    private val randomChar = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z".split(",")
+
+    fun getRandomString(len: Int) : String {
+        val sb = java.lang.StringBuilder()
+
+        for(i in 0 until len) {
+            sb.append(randomChar[(randomChar.indices).random(Random(System.currentTimeMillis()))])
+        }
+
+        return sb.toString()
+    }
+
+    /**
+     *  image file to byteArray
+     */
+    @SuppressLint("Recycle")
+    fun getImageByteArray(context: Context, uri: Uri) : ByteArray? {
+        return context.contentResolver.openInputStream(uri)?.buffered()?.use { it.readBytes() }
     }
 }

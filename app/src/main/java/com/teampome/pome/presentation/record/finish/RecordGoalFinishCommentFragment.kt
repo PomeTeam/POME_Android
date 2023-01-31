@@ -19,7 +19,9 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         makeRemoveDialog()
 
         binding.finishCommentBackButtonIv.setOnClickListener {

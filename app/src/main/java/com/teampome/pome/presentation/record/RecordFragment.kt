@@ -3,6 +3,7 @@ package com.teampome.pome.presentation.record
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
@@ -24,6 +25,8 @@ import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -65,6 +68,29 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // for Test
+        viewModel.recordDataByUserId(object : CoroutineErrorHandler {
+            override fun onError(message: String) {
+                Log.e("record", "record error by $message")
+            }
+        })
+
+        viewModel.recordDataByUserIdResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Loading -> {
+
+                }
+                is ApiResponse.Failure -> {
+                    Log.e("record", "error by ${it.errorMessage}")
+                }
+                is ApiResponse.Success -> {
+                    Log.d("record", "success by ${it.data}")
+                }
+            }
+        }
+    }
+
+    override fun initView() {
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -95,34 +121,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     )
                 }
             })
-        }
-
-        // 목표의 더보기 클릭
-        binding.recordGoalMoreAiv.setOnClickListener {
-            goalMoreBottomSheetDialog.show()
-        }
-
-        // 목표 + 클릭
-        binding.recordCategoryPlusTv.setOnClickListener {
-            moveToAddGoal()
-        }
-
-        // 목표 없을 때 목표 만들기 클릭
-        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
-            moveToAddGoal()
-        }
-
-        // float button 클릭
-        binding.recordWriteButtonCl.setOnClickListener {
-            moveToConsume()
-        }
-
-        binding.recordWriteEmotionContainerCl.setOnClickListener {
-            moveToRecordLeaveEmotion()
-        }
-
-        binding.recordGoalCompleteCl.setOnClickListener {
-            moveToRecordGoalFinish()
         }
 
         // 일단 임시로 계속 호출
@@ -198,6 +196,34 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         binding.recordNoticeBellAiv.setOnClickListener {
             moveToRecordAlarms()
+        }
+
+        // 목표의 더보기 클릭
+        binding.recordGoalMoreAiv.setOnClickListener {
+            goalMoreBottomSheetDialog.show()
+        }
+
+        // 목표 + 클릭
+        binding.recordCategoryPlusTv.setOnClickListener {
+            moveToAddGoal()
+        }
+
+        // 목표 없을 때 목표 만들기 클릭
+        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
+            moveToAddGoal()
+        }
+
+        // float button 클릭
+        binding.recordWriteButtonCl.setOnClickListener {
+            moveToConsume()
+        }
+
+        binding.recordWriteEmotionContainerCl.setOnClickListener {
+            moveToRecordLeaveEmotion()
+        }
+
+        binding.recordGoalCompleteCl.setOnClickListener {
+            moveToRecordGoalFinish()
         }
     }
 

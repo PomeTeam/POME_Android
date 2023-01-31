@@ -12,6 +12,10 @@ class AddGoalCompleteFragment : BaseFragment<FragmentAddGoalCompleteBinding>(R.l
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         binding.addGoalCompleteCheckButtonAcb.setOnClickListener {
             moveToRecord()

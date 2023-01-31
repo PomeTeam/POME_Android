@@ -36,6 +36,10 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     private val viewModel: RemindViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun initView() {
         pomeRemindBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeRemindBottomSheetDialogBinding = PomeRemindBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
@@ -57,8 +61,6 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
                 }
             }
         )
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun initListener() {

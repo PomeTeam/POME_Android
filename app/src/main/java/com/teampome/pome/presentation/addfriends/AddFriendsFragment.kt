@@ -32,9 +32,11 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.addFriendsListRv.adapter = AddFriendsListAdapter()
-
         CommonUtil.inputModePan(requireActivity())
+    }
+
+    override fun initView() {
+        binding.addFriendsListRv.adapter = AddFriendsListAdapter()
     }
 
     override fun initListener() {

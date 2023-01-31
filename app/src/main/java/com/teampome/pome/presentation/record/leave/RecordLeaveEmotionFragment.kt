@@ -12,7 +12,9 @@ import com.teampome.pome.util.base.BaseFragment
 class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBinding>(R.layout.fragment_record_leave_emotion) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         binding.recordLeaveEmotionRv.adapter = RecordContentsCardAdapter().apply {
             submitList(listOf(
                 RecordWeekItem(

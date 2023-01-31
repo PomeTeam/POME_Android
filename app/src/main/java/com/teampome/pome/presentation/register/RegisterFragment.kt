@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,17 +16,25 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment_register) {
 
     private val viewModel: RegisterViewModel by viewModels()
+
     private lateinit var pomeBottomSheetDialog: BottomSheetDialog
     private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
+
+    @Inject
+    lateinit var userManager: UserManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,59 +45,54 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
 
-        // initListener가 먼저 불려 super보다 먼저 호출
+    override fun initView() {
         // pomeBottomSheetDialog 뷰 인플레이션 과정
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
         pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
-
-        super.onViewCreated(view, savedInstanceState)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun initListener() {
+        viewModel.smsResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("test", "data : ${it.data}")
+
+                    it.data.data?.let { smsData ->
+                        viewModel.smsValidate = smsData.value
+                    }
+                }
+
+                is ApiResponse.Failure -> {
+                    Log.d("test", "fail : ${it.errorMessage}")
+                }
+
+                is ApiResponse.Loading -> {
+                }
+            }
+        }
+
         // 키보드 자연스럽게 처리
         binding.registerCl.setOnTouchListener { _, _ ->
             CommonUtil.hideKeyboard(requireActivity())
             false
         }
 
-        // Todo : two-way binding
-        // 이름 입력
-        binding.registerNameAet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
-                p0?.let {
-                    viewModel._registerName.value = it.toString()
-                }
-
-                settingAgreeButton()
-            }
-        })
-
         // 번호 입력
         binding.registerPhoneAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
                 p0?.let {
-                    viewModel._registerPhone.value = it.toString()
+                    viewModel.registerPhone.value = it.toString()
                 }
 
                 settingAgreeButton()
@@ -98,17 +102,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 인증 번호
         binding.registerCertNumAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                // Todo : 임시 작업 삭제
                 p0?.let {
-                    viewModel._registerCertNum.value = it.toString()
+                    viewModel.registerCertNum.value = it.toString()
                 }
 
                 settingAgreeButton()
@@ -118,13 +119,32 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
         // 번호 인증 요청
         binding.registerCertPhoneAcb.setOnClickListener {
             Toast.makeText(requireContext(), "번호 인증 요청", Toast.LENGTH_SHORT).show()
+
             binding.registerCertPhoneAcb.text = "재요청"
+
+            viewModel.sendSms(object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.d("test", "error : $message")
+                    Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         // 동의하고 시작하기 버튼
         binding.registerAgreeAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "동의하고 시작하기", Toast.LENGTH_SHORT).show()
-            moveToRegisterTerms()
+            if(viewModel.smsValidate == viewModel.registerCertNum.value) {
+
+                // 인증이 완료된 유저 폰번호 저장
+                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        userManager.saveUserPhone(viewModel.registerPhone.value ?: "")
+                    }
+                }
+
+                moveToRegisterTerms()
+            } else {
+                Toast.makeText(requireContext(), "인증번호가 다릅니다.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         // 뒤로가기 버튼
@@ -148,8 +168,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
      *  button 활성화 여부 체크
      */
     private fun checkAgreeBtnEnable() : Boolean {
-        return (!viewModel.registerName.value.isNullOrEmpty()
-                && !viewModel.registerPhone.value.isNullOrEmpty()
+        return (!viewModel.registerPhone.value.isNullOrEmpty()
                 && !viewModel.registerCertNum.value.isNullOrEmpty())
     }
 

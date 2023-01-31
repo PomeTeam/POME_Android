@@ -7,8 +7,11 @@ import com.teampome.pome.databinding.FragmentMypageBinding
 
 //마이페이지 탭
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
-    override fun initListener() {
+    override fun initView() {
 
+    }
+
+    override fun initListener() {
         //설정화면으로
         binding.mypageSettingIv.setOnClickListener {
             val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()

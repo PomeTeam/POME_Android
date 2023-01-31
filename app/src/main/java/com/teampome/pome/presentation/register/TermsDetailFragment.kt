@@ -14,7 +14,9 @@ class TermsDetailFragment : BaseFragment<FragmentTermsDetailBinding>(R.layout.fr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         binding.termsDetailTitleTv.text = termsDetailArgs.termsDetailTitle
         binding.termsDetailContentsTv.text = termsDetailArgs.termsDetailContent
     }

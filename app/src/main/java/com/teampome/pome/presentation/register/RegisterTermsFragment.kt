@@ -2,14 +2,21 @@ package com.teampome.pome.presentation.register
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterTermsBinding
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.RegisterTermsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layout.fragment_register_terms) {
@@ -23,9 +30,19 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
         resources.getColor(R.color.grey_3, null)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun initView() {
+        Log.d("test", "terms fragment in")
+
+        CommonUtil.disabledPomeBtn(binding.registerAgreeAcb)
+    }
+
     override fun initListener() {
         // 전체 동의 클릭
-        binding.registerAllAgreeCheckAiv.setOnClickListener {
+        binding.registerTermsAllAgreeAtv.setOnClickListener {
             if(viewModel.agreeAllCheck.value == true) {
                 viewModel._agreeAllCheck.value = false
                 viewModel._agreeUsingTermsCheck.value = false
@@ -121,12 +138,6 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-
-    }
-
     /**
      *  동의했어요 버튼 활성화 여부 판단 (한 메소드에 한가지 역할!)
      */
@@ -140,26 +151,10 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
      */
     private fun checkAgreeButtonActive() {
         if(isAgreeButtonActive()) {
-            ableAgreeButton()
+            CommonUtil.enabledPomeBtn(binding.registerAgreeAcb)
         } else {
-            disableAgreeButton()
+            CommonUtil.disabledPomeBtn(binding.registerAgreeAcb)
         }
-    }
-
-    /**
-     *  동의 버튼 비활성화
-     */
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun disableAgreeButton() {
-        binding.registerAgreeAcb.setBackgroundDrawable(resources.getDrawable(R.drawable.register_profile_name_check_disable_btn_background, null))
-    }
-
-    /**
-     *  동의 버튼 활성화
-     */
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun ableAgreeButton() {
-        binding.registerAgreeAcb.setBackgroundDrawable(resources.getDrawable(R.drawable.register_profile_name_check_available_btn_background, null))
     }
 
     /**

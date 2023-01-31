@@ -40,6 +40,10 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         })
     }
 
+    override fun initView() {
+
+    }
+
     override fun initListener() {
         binding.consumeEmotionBackButtonIv.setOnClickListener {
             CommonUtil.showBackButtonDialog(

@@ -16,7 +16,9 @@ class RecordAlarmsFragment : BaseFragment<FragmentRecordAlarmsBinding>(R.layout.
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
 
+    override fun initView() {
         binding.recordAlarmsRv.adapter = RecordAlarmsAdapter()
     }
 
