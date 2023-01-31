@@ -72,12 +72,15 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         viewModel.loginResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
+                    Log.d("token", "userInfo : $it")
+
                     it.data.data?.let { userInfo ->
                         // signIn 정보를 토대로 토큰 저장
                         runBlocking {
                             if(tokenManager.getToken().first() != null) {
                                 tokenManager.deleteToken()
                             }
+
                             tokenManager.saveToken(userInfo.accessToken)
 
                             if(userManager.getUserId().first() != null) {
@@ -90,7 +93,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                             }
                             userManager.saveUserNickName(userInfo.nickname)
                         }
-
                         // Todo: Test용 모두 login view로 이동
                         moveToLogin()
 //                        moveToRecord()

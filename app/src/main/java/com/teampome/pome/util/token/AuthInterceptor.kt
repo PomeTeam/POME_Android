@@ -1,5 +1,6 @@
 package com.teampome.pome.util.token
 
+import android.util.Log
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -14,9 +15,11 @@ class AuthInterceptor @Inject constructor(
             tokenManager.getToken().first() // 항상 첫번째 element만
         }
 
+        Log.d("token", "token value is $token")
+
         // token을 가져와서 넣어주는 작업
         val request = chain.request().newBuilder()
-        request.addHeader("Authorization", "$token")
+        request.addHeader("ACCESS-TOKEN", "$token")
         return chain.proceed(request.build())
     }
 }

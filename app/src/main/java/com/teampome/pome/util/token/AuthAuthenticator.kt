@@ -40,7 +40,6 @@ class AuthAuthenticator @Inject constructor(
             userManager.deleteUserNickName()
 
             val newToken = getNewToken(userId, userNickname)
-
             if(!newToken.isSuccessful || newToken.body() == null) {
                 tokenManager.deleteToken()
             }
@@ -51,7 +50,7 @@ class AuthAuthenticator @Inject constructor(
                     userManager.saveUserNickName(it.nickname)
                     tokenManager.saveToken(it.accessToken)
                     response.request.newBuilder()
-                        .header("Authorization", it.accessToken)
+                        .header("ACCESS-TOKEN", it.accessToken)
                         .build()
                 }
             }
