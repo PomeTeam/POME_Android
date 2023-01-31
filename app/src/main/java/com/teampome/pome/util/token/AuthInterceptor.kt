@@ -16,7 +16,7 @@ class AuthInterceptor @Inject constructor(
 
         // token을 가져와서 넣어주는 작업
         val request = chain.request().newBuilder()
-        request.addHeader("Authorization", "Bearer $token")
+        request.addHeader("Authorization", "$token")
         return chain.proceed(request.build())
     }
 }
