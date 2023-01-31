@@ -178,4 +178,14 @@ object NetworkModule {
             .build()
             .create(RecordService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideAddFriendsService(
+        @AuthRetrofit retrofit: Retrofit.Builder
+    ) : AddFriendsService {
+        return retrofit
+            .build()
+            .create(AddFriendsService::class.java)
+    }
 }

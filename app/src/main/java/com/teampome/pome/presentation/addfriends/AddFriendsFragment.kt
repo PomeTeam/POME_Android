@@ -7,13 +7,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.datastore.preferences.protobuf.Api
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
 import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.AddFriendsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -41,9 +45,9 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
     override fun initListener() {
 
-        viewModel.testFriendsList.observe(viewLifecycleOwner) {
-            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it)
-        }
+//        viewModel.testFriendsList.observe(viewLifecycleOwner) {
+//            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it)
+//        }
 
         binding.addFriendsCl.setOnClickListener {
             CommonUtil.hideKeyboard(requireActivity())
@@ -57,9 +61,35 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
             }
 
             override fun afterTextChanged(name: Editable?) {
+                name?.let {
+                    showLoading()
 
+                    viewModel.findFriendsData(it.toString(), object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), "친구 찾기 중 서버 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                            Log.e("findFriend", "findFriendError by $message")
+                            hideLoading()
+                        }
+                    })
+                }
             }
         })
+
+        // find friends data Response
+        viewModel.findFriendsDataResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("findFriend", "success by ${it.data}")
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Log.e("findFriend", "findFriendError by ${it.errorMessage}")
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
+        }
 
         binding.addFriendsCheckBtn.setOnClickListener {
             moveToRecordView()

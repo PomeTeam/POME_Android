@@ -2,8 +2,8 @@ package com.teampome.pome.di
 
 import com.teampome.pome.network.*
 import com.teampome.pome.repository.friend.AddFriendsDataSource
+import com.teampome.pome.repository.friend.AddFriendsRemoteDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
-import com.teampome.pome.repository.friend.AddFriendsTestDataSource
 import com.teampome.pome.repository.login.LoginDataSource
 import com.teampome.pome.repository.login.LoginRemoteDataSource
 import com.teampome.pome.repository.login.LoginRepository
@@ -27,8 +27,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideAddFriendsDataSource() : AddFriendsDataSource {
-        return AddFriendsTestDataSource() // 이렇게 객체로 넣는게 맞는걸까?
+    fun provideAddFriendsDataSource(service: AddFriendsService) : AddFriendsDataSource {
+        return AddFriendsRemoteDataSource(service)
     }
 
     @Provides

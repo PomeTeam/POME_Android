@@ -2,29 +2,27 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.teampome.pome.model.AddFriendsTestData
+import com.teampome.pome.model.FriendData
+import com.teampome.pome.model.request.BasePomeListResponse
 import com.teampome.pome.repository.friend.AddFriendsRepository
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseViewModel
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddFriendsViewModel @Inject constructor(
     private val repository: AddFriendsRepository
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val _testFriendsList = MutableLiveData<List<AddFriendsTestData>>()
-    val testFriendsList: LiveData<List<AddFriendsTestData>> = _testFriendsList
+    private val _findFriendsDataResponse = MutableLiveData<ApiResponse<BasePomeListResponse<FriendData>>>()
+    val findFriendsDataResponse: LiveData<ApiResponse<BasePomeListResponse<FriendData>>> = _findFriendsDataResponse
 
-    init {
-        getTestData()
-    }
-
-    private fun getTestData() {
-        viewModelScope.launch {
-            _testFriendsList.value = repository.getFriendsTestData()
-        }
+    fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _findFriendsDataResponse,
+        coroutineErrorHandler
+    ) {
+        repository.findFriendsData(nickName)
     }
 }
