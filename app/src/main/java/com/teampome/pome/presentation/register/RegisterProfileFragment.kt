@@ -160,6 +160,10 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     // accessToken 저장
                     it.data.data?.let { userData ->
                         tokenViewModel.saveToken(userData.accessToken)
+
+                        runBlocking {
+                            userManger.saveUserId(userData.userId)
+                        }
                     }
 
                     // 회원가입이 정상적으로 이루어짐
