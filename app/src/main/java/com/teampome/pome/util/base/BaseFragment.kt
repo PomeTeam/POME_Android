@@ -10,6 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.teampome.pome.MainActivity
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId: Int): Fragment() {
     private var backPressedCallback: OnBackPressedCallback? = null
@@ -57,5 +58,13 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
         this.backPressedCallback = callback
 
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    fun showLoading() {
+        (requireActivity() as MainActivity).showLoadingProgress()
+    }
+
+    fun hideLoading() {
+        (requireActivity() as MainActivity).hideLoadingProgress()
     }
 }

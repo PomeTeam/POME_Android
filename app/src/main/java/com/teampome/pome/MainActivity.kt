@@ -1,5 +1,6 @@
 package com.teampome.pome
 
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,11 +10,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.teampome.pome.databinding.ActivityMainBinding
+import com.teampome.pome.util.customview.PomeLoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    // loading 관련 dialog
+    private lateinit var loadingDialog: PomeLoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +64,10 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        loadingDialog = PomeLoadingDialog(this)
+        loadingDialog.window?.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+        loadingDialog.setCancelable(false)
     }
 
     // status bar color 바꾸기
@@ -67,5 +76,13 @@ class MainActivity : AppCompatActivity() {
             addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             statusBarColor = resources.getColor(color, null)
         }
+    }
+
+    fun showLoadingProgress() {
+        loadingDialog.show()
+    }
+
+    fun hideLoadingProgress() {
+        loadingDialog.dismiss()
     }
 }
