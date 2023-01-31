@@ -12,6 +12,7 @@ import com.teampome.pome.databinding.FragmentSplashBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.safeNavigate
 import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.SplashViewModel
@@ -91,7 +92,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                             userManager.saveUserNickName(userInfo.nickname)
                         }
 
-                        moveToRecord()
+                        // Todo: Test용 모두 login view로 이동
+//                        moveToRecord()
+                        moveToLogin()
                     } ?: run {
                         // 로그인 시, 서버통신은 정상이나 token을 못받아오는 경우
                         Toast.makeText(requireContext(), "서버에러가 발생했습니다", Toast.LENGTH_SHORT).show()
@@ -120,7 +123,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
         dummyTime(1)
 
         val splashToLoginAction = SplashFragmentDirections.actionSplashFragmentToSplashLoginFragment()
-        findNavController().navigate(splashToLoginAction)
+        findNavController().safeNavigate(splashToLoginAction)
     }
 
     private fun moveToRecord() {
