@@ -7,8 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemAddFriendsListBinding
 import com.teampome.pome.model.AddFriendsTestData
+import com.teampome.pome.model.FriendData
 
-class AddFriendsListAdapter : ListAdapter<AddFriendsTestData, AddFriendsListAdapter.AddFriendsListViewHolder>(AddFriendsTestDataDiffCallback()) {
+class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddFriendsListViewHolder>(AddFriendsTestDataDiffCallback()) {
 
     private lateinit var binding: ItemAddFriendsListBinding
 
@@ -25,26 +26,25 @@ class AddFriendsListAdapter : ListAdapter<AddFriendsTestData, AddFriendsListAdap
     inner class AddFriendsListViewHolder(val binding: ItemAddFriendsListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: AddFriendsTestData) {
-            binding.addFriendsTestData = item
+        fun bind(item: FriendData) {
+            binding.friendData = item
             binding.executePendingBindings()
         }
     }
 }
 
-class AddFriendsTestDataDiffCallback() : DiffUtil.ItemCallback<AddFriendsTestData>() {
+class AddFriendsTestDataDiffCallback : DiffUtil.ItemCallback<FriendData>() {
     override fun areItemsTheSame(
-        oldItem: AddFriendsTestData,
-        newItem: AddFriendsTestData
+        oldItem: FriendData,
+        newItem: FriendData
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.friendUserId == newItem.friendUserId
     }
 
     override fun areContentsTheSame(
-        oldItem: AddFriendsTestData,
-        newItem: AddFriendsTestData
+        oldItem: FriendData,
+        newItem: FriendData
     ): Boolean {
         return oldItem == newItem
     }
-
 }

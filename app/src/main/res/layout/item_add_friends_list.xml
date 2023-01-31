@@ -7,8 +7,8 @@
     <data>
 
         <variable
-            name="addFriendsTestData"
-            type="com.teampome.pome.model.AddFriendsTestData" />
+            name="friendData"
+            type="com.teampome.pome.model.FriendData"/>
 
         <import type="android.view.View" />
     </data>
@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- bind:pomeImage44="@{}" -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/add_friends_list_profile_aiv"
             android:layout_width="44dp"
@@ -24,10 +25,10 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="13dp"
             android:layout_marginBottom="13dp"
+            android:src="@drawable/mask_pome_44"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:pomeImage44="@{addFriendsTestData.imageUrl}"
             tools:src="@drawable/mask_pome_44" />
 
         <TextView
@@ -37,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:letterSpacing="-0.03"
-            android:text="@{addFriendsTestData.name}"
+            android:text="@{friendData.friendNickName}"
             android:textColor="@color/grey_21"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_list_profile_aiv"
             app:layout_constraintStart_toEndOf="@id/add_friends_list_profile_aiv"
@@ -50,7 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_plus_20"
-            android:visibility="@{addFriendsTestData.isAdd() ? View.GONE : View.VISIBLE}"
+            android:visibility="@{friendData.isAdd ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_list_name_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/add_friends_list_name_tv" />
@@ -66,7 +67,7 @@
             android:paddingVertical="4dp"
             android:text="@string/add_friends_list_add_complete_text"
             android:textColor="@color/grey_5"
-            android:visibility="@{addFriendsTestData.isAdd() ? View.VISIBLE : View.GONE}"
+            android:visibility="@{friendData.isAdd ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/add_friends_list_name_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/add_friends_list_name_tv"

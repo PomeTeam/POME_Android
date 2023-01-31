@@ -80,6 +80,9 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("findFriend", "success by ${it.data}")
+
+                    (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it.data.data)
+
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
