@@ -55,7 +55,7 @@
             android:layout_marginTop="38dp"
             android:background="@drawable/register_profile_name_background"
             android:hint="@string/register_profile_name_hint_text"
-            android:maxLength="10"
+            android:maxLength="18"
             android:maxLines="1"
             android:paddingHorizontal="16dp"
             android:textColor="@color/black"

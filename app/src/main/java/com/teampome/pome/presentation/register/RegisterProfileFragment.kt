@@ -39,7 +39,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
-// Todo : ViewModel data 구분 짓기
 @AndroidEntryPoint
 class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.layout.fragment_register_profile) {
     
@@ -72,6 +71,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         pomeBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
         pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
+
+        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
     }
 
     // onTouchListener에 performClick을 정의하지 않아서 Lint skip 작업
@@ -137,13 +138,16 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
                     if(it.data.data == true) {
                         enableName()
+                        CommonUtil.enabledPomeBtn(binding.registerProfileCheckBtn)
                     } else {
                         disableName()
+                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
                     }
                 }
                 is ApiResponse.Failure -> {
                     binding.registerProfileNameCheckTv.text = it.errorMessage
                     disableName()
+                    CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
                 }
                 is ApiResponse.Loading -> {
 
@@ -164,10 +168,12 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         runBlocking {
                             userManger.saveUserId(userData.userId)
                         }
-                    }
 
-                    // 회원가입이 정상적으로 이루어짐
-                    moveToAddFriends()
+                        // 회원가입이 정상적으로 이루어짐
+                        moveToAddFriends()
+                    } ?: run {
+                        Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 is ApiResponse.Failure -> {
                     Log.d("signUp", "signUp error by $it")
@@ -198,14 +204,14 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             }
             override fun afterTextChanged(editable: Editable?) {
                 // 텍스트가 완전히 변경될때, 닉네임 검증 필요
-                // Todo : 서버 연결하여 닉네임 유효값 검증작업 진행
                 editable?.let { name ->
                     binding.registerProfileNameCheckTv.visibility = View.VISIBLE
 
                     if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
-                        binding.registerProfileNameCheckTv.text = "닉네임은 6~18글자의 영소문자, 숫자, 한글만 가능합니다."
+                        binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
 
                         disableName()
+                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
                     } else {
                         viewModel.userName.value = name.toString()
 
@@ -218,9 +224,10 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 } ?: kotlin.run { // 만약 값이 비어있다면, 밑에 desc를 표기하면 안됨
                     // GONE이 아니고 INVISIBLE 처리 => 공간을 차지해야 constraintLayout 알맞게 동작
                     binding.registerProfileNameCheckTv.visibility = View.INVISIBLE
-                    binding.registerProfileNameCheckTv.text = "닉네임은 6~18글자의 영소문자, 숫자, 한글만 가능합니다."
+                    binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
 
                     disableName()
+                    CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
                 }
             }
         })
