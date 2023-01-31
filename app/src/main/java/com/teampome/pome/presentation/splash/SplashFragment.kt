@@ -92,8 +92,7 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                         }
 
                         // Todo: Test용 모두 login view로 이동
-//                        moveToRecord()
-                        moveToLogin()
+                        moveToRecord()
                     } ?: run {
                         // 로그인 시, 서버통신은 정상이나 token을 못받아오는 경우
                         Toast.makeText(requireContext(), "서버에러가 발생했습니다", Toast.LENGTH_SHORT).show()

@@ -172,7 +172,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         // 회원가입이 정상적으로 이루어짐
                         moveToAddFriends()
                     } ?: run {
-                        Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                     }
 
                     hideLoading()
@@ -265,13 +265,11 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // dialog 수정 click
         pomeBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
-            Toast.makeText(requireContext(), "수정하기", Toast.LENGTH_SHORT).show()
             openGallery()
         }
 
         // dialog 삭제 click
         pomeBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            Toast.makeText(requireContext(), "삭제하기", Toast.LENGTH_SHORT).show()
             binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_160, null))
             binding.registerProfilePlusAiv.visibility = View.VISIBLE
 
