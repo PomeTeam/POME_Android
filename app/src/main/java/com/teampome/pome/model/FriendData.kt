@@ -5,5 +5,5 @@ data class FriendData(
     val friendNickName: String,
     val friendUserId: String,
     val imageKey: String,
-    val isAdd: Boolean? = false
+    var isAdd: Boolean? = false
 )

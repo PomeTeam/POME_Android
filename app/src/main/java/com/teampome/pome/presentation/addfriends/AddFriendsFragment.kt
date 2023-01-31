@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
 import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
+import com.teampome.pome.presentation.addfriends.recyclerview.OnAddFriendClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
@@ -39,7 +40,13 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     }
 
     override fun initView() {
-        binding.addFriendsListRv.adapter = AddFriendsListAdapter()
+        binding.addFriendsListRv.adapter = AddFriendsListAdapter().apply {
+            setOnAddFriendClickListener(object : OnAddFriendClickListener {
+                override fun onAddFriendClick(friendId: String) {
+                    Log.d("friend", "on Click $friendId")
+                }
+            })
+        }
     }
 
     override fun initListener() {

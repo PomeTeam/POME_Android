@@ -13,6 +13,12 @@ class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddF
 
     private lateinit var binding: ItemAddFriendsListBinding
 
+    private var onAddFriendClickListener: OnAddFriendClickListener? = null
+
+    fun setOnAddFriendClickListener(addFriendClickListener: OnAddFriendClickListener) {
+        onAddFriendClickListener = addFriendClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AddFriendsListViewHolder {
         binding = ItemAddFriendsListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -29,6 +35,15 @@ class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddF
         fun bind(item: FriendData) {
             binding.friendData = item
             binding.executePendingBindings()
+
+            binding.addFriendsListAddAiv.setOnClickListener {
+                onAddFriendClickListener?.onAddFriendClick(item.friendUserId)
+
+                binding.friendData = item.apply {
+                    isAdd = true
+                }
+                binding.executePendingBindings()
+            }
         }
     }
 }
