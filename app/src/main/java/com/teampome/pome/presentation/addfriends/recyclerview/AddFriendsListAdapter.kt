@@ -26,24 +26,20 @@ class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddF
     }
 
     override fun onBindViewHolder(holder: AddFriendsListViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class AddFriendsListViewHolder(val binding: ItemAddFriendsListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: FriendData) {
+        fun bind(item: FriendData, pos: Int) {
             binding.friendData = item
-            binding.executePendingBindings()
 
             binding.addFriendsListAddAiv.setOnClickListener {
-                onAddFriendClickListener?.onAddFriendClick(item.friendNickName)
-
-                binding.friendData = item.apply {
-                    isAdd = true // Todo : 만약 실패하는 경우, 뷰쪽에서 데이터 변경이 일어나야함
-                }
-                binding.executePendingBindings()
+                onAddFriendClickListener?.onAddFriendClick(item.friendNickName, pos)
             }
+
+            binding.executePendingBindings()
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.teampome.pome.presentation.addfriends
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -33,6 +34,8 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
 
     private val viewModel: AddFriendsViewModel by viewModels()
 
+    private var checkPos: Int = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -42,9 +45,10 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     override fun initView() {
         binding.addFriendsListRv.adapter = AddFriendsListAdapter().apply {
             setOnAddFriendClickListener(object : OnAddFriendClickListener {
-                override fun onAddFriendClick(friendId: String) {
+                override fun onAddFriendClick(friendId: String, position: Int) {
                     showLoading()
 
+                    checkPos = position
                     Log.d("friend", "on Click $friendId")
 
                     viewModel.addFriend(friendId, object : CoroutineErrorHandler {
@@ -85,8 +89,7 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                     Log.d("findFriend", "success by ${it.data}")
 
                     (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it.data.data)
-                    binding.friendData = it.data.data
-                    binding.executePendingBindings()
+                    viewModel.settingFriendsData(it.data.data)
 
                     hideLoading()
                 }
@@ -107,7 +110,20 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
         viewModel.addFriendResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    Log.d("friend", "친구추가 완료 $it")
+
+                    // U0004 -> 이미 팔로우한 유저 에러, 일단 추가완료 처리..
+                    if(it.data.success || it.data.errorCode == "U0004") {
+                        if(it.data.errorCode == "U0004") {
+                            Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                        }
+
+                        viewModel.settingFriendsData(
+                            viewModel.friendsData.value.apply {
+                                this?.get(checkPos)?.isAdd = true
+                            }
+                        )
+                    }
+
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
@@ -116,6 +132,16 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                 is ApiResponse.Loading -> {
                 }
             }
+        }
+
+        viewModel.friendsData.observe(viewLifecycleOwner) {
+            Log.d("friendsData", "observe $it")
+
+            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(it)
+            (binding.addFriendsListRv.adapter as AddFriendsListAdapter).notifyItemChanged(checkPos)
+
+            binding.friendData = it
+            binding.executePendingBindings()
         }
 
         binding.addFriendsCheckBtn.setOnClickListener {
@@ -132,7 +158,6 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                         Log.e("findFriend", "findFriendError by $message")
 
                         bindEmptyFriendData()
-
                         hideLoading()
                     }
                 })
@@ -149,10 +174,7 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     }
 
     private fun bindEmptyFriendData() {
-        binding.friendData = listOf()
-        binding.executePendingBindings()
-
-        (binding.addFriendsListRv.adapter as AddFriendsListAdapter).submitList(listOf())
+        viewModel.settingFriendsData(null)
     }
 
     private fun moveToRecordView() {
