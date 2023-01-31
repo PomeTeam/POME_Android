@@ -1,5 +1,3 @@
-@file:Suppress("DEPRECATION")
-
 package com.teampome.pome.util
 
 import android.annotation.SuppressLint
@@ -9,6 +7,8 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
 import android.view.LayoutInflater
@@ -19,6 +19,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
+import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -37,6 +38,35 @@ import java.util.*
 import kotlin.random.Random
 
 object CommonUtil {
+
+    /**
+     *  check network
+     */
+    fun checkNetwork(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+            capabilities?.let {
+                if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    return true
+                } else if(capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                    return true
+                } else return capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+            } ?: run {
+                return false
+            }
+        } else {
+            val activeNetwork = connectivityManager.activeNetworkInfo
+
+            return activeNetwork?.let {
+                return activeNetwork.isConnectedOrConnecting
+            } ?: run {
+                return false
+            }
+        }
+    }
 
     /**
      *  키보드 자연스럽게 처리를 위한 메소드 (키보드 바깥쪽 클릭시 키보드 hide)

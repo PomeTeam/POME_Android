@@ -1,11 +1,15 @@
 package com.teampome.pome.di
 
 import com.teampome.pome.network.ImageService
+import com.teampome.pome.network.LoginService
 import com.teampome.pome.network.PreSignedImageService
 import com.teampome.pome.network.RegisterService
 import com.teampome.pome.repository.friend.AddFriendsDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
 import com.teampome.pome.repository.friend.AddFriendsTestDataSource
+import com.teampome.pome.repository.login.LoginDataSource
+import com.teampome.pome.repository.login.LoginRemoteDataSource
+import com.teampome.pome.repository.login.LoginRepository
 import com.teampome.pome.repository.record.RecordDataSource
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.repository.record.RecordTestDataSource
@@ -93,5 +97,17 @@ object RepositoryModule {
     @Singleton
     fun provideSendPreSignedImageRepository(dataSource: SendPreSignedImageDataSource) : SendPreSignedImageRepository {
         return SendPreSignedImageRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginDataSource(service: LoginService) : LoginDataSource {
+        return LoginRemoteDataSource(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(dataSource: LoginDataSource) : LoginRepository {
+        return LoginRepository(dataSource)
     }
 }
