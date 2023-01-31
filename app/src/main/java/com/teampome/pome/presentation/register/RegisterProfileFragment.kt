@@ -179,13 +179,11 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         }
 
                         // 회원가입이 정상적으로 이루어짐
-//                        moveToAddFriends()
+                        moveToAddFriends()
                     } ?: run {
                         Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                     }
 
-                    // Todo : for test
-                    moveToAddFriends()
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {

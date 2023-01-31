@@ -93,12 +93,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                             }
                             userManager.saveUserNickName(userInfo.nickname)
                         }
-                        // Todo: Test용 모두 login view로 이동
-                        moveToLogin()
-//                        moveToRecord()
+
+                        moveToRecord()
                     } ?: run {
-                        // 로그인 시, 서버통신은 정상이나 token을 못받아오는 경우, success가 false인 경우
-//                        Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                         if(it.data.success) {
                             Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
                         } else {
