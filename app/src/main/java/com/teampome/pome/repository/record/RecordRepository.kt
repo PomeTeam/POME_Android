@@ -4,7 +4,7 @@ import android.util.Log
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.TestAlarmsData
-import com.teampome.pome.model.request.BasePomeListResponse
+import com.teampome.pome.model.BasePomeListResponse
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.token.UserManager
 import kotlinx.coroutines.flow.Flow

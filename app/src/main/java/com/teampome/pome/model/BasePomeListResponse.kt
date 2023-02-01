@@ -1,4 +1,4 @@
-package com.teampome.pome.model.request
+package com.teampome.pome.model
 
 /**
  *  data가 array일 때, 사용

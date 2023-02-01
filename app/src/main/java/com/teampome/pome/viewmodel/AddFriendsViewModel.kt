@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teampome.pome.model.BasePomeResponse
 import com.teampome.pome.model.FriendData
-import com.teampome.pome.model.request.BasePomeListResponse
+import com.teampome.pome.model.BasePomeListResponse
 import com.teampome.pome.repository.friend.AddFriendsRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel

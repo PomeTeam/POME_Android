@@ -1,11 +1,10 @@
 package com.teampome.pome.network
 
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.model.request.BasePomeListResponse
+import com.teampome.pome.model.BasePomeListResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface RecordService {
 
