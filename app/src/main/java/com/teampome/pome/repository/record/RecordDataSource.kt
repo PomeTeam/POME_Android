@@ -3,7 +3,7 @@ package com.teampome.pome.repository.record
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.TestAlarmsData
-import com.teampome.pome.model.BasePomeListResponse
+import com.teampome.pome.model.base.BasePomeListResponse
 import com.teampome.pome.util.base.ApiResponse
 import kotlinx.coroutines.flow.Flow
 

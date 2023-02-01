@@ -1,4 +1,4 @@
-package com.teampome.pome.model
+package com.teampome.pome.model.base
 
 data class BasePomeResponse<T>(
     val success: Boolean,

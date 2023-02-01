@@ -1,7 +1,7 @@
 package com.teampome.pome.repository.record
 
 import com.teampome.pome.model.*
-import com.teampome.pome.model.BasePomeListResponse
+import com.teampome.pome.model.base.BasePomeListResponse
 import com.teampome.pome.network.RecordService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow

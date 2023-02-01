@@ -9,7 +9,7 @@
 
         <variable
             name="friendData"
-            type="List&lt;com.teampome.pome.model.FriendData>" />
+            type="com.teampome.pome.model.friend.FriendData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

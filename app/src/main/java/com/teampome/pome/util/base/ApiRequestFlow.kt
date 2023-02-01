@@ -2,7 +2,7 @@ package com.teampome.pome.util.base
 
 import android.util.Log
 import com.google.gson.Gson
-import com.teampome.pome.model.ErrorResponse
+import com.teampome.pome.model.base.ErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

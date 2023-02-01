@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
-import com.teampome.pome.model.BasePomeListResponse
+import com.teampome.pome.model.base.BasePomeListResponse
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel

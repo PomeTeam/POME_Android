@@ -1,4 +1,4 @@
-package com.teampome.pome.model
+package com.teampome.pome.model.friend
 
 data class FriendData(
     val friend: String,
