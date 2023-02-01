@@ -88,6 +88,24 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 }
             }
         }
+
+        viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
+            override fun onError(message: String) {
+                Log.e("test", "error by $message")
+            }
+        })
+
+        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("test", "success by $it")
+                }
+                is ApiResponse.Failure -> {
+                    Log.e("test", "failure by $it")
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
     }
 
     override fun initView() {
