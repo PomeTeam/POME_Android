@@ -8,6 +8,7 @@ import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.base.BasePomeListResponse
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
+import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.util.base.ApiResponse
@@ -38,6 +39,9 @@ class RecordViewModel @Inject constructor(
     private val _findAllGoalByUserResponse = MutableLiveData<ApiResponse<BasePomeResponse<AllGoalData>>>()
     val findAllGoalByUserResponse: LiveData<ApiResponse<BasePomeResponse<AllGoalData>>> = _findAllGoalByUserResponse
 
+    private val _getGoalByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<GoalData>>>()
+    val getGoalByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<GoalData>>> = _getGoalByGoalIdResponse
+
     fun recordDataByUserId(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _recordDataByUserIdResponse,
         coroutineErrorHandler
@@ -50,5 +54,12 @@ class RecordViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         goalRepository.findAllGoalByUser()
+    }
+
+    fun getGoalByGoalId(goalId: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getGoalByGoalIdResponse,
+        coroutineErrorHandler
+    )  {
+        goalRepository.getGoalByGoalId(goalId)
     }
 }

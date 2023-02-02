@@ -2,6 +2,7 @@ package com.teampome.pome.repository.goal
 
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
+import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.network.GoalService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow
@@ -13,5 +14,9 @@ class GoalRemoteDataSource @Inject constructor(
 ) : GoalDataSource {
     override fun findAllGoalByUser(): Flow<ApiResponse<BasePomeResponse<AllGoalData>>> = apiRequestFlow {
         service.findAllGoalByUser()
+    }
+
+    override fun getGoalByGoalId(goalId: String): Flow<ApiResponse<BasePomeResponse<GoalData>>> = apiRequestFlow {
+        service.getGoalByGoalId(goalId)
     }
 }
