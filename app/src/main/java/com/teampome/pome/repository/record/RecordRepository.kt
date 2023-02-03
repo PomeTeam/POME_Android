@@ -4,7 +4,7 @@ import android.util.Log
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.TestAlarmsData
-import com.teampome.pome.model.base.BasePomeListResponse
+import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.token.UserManager
 import kotlinx.coroutines.flow.Flow
@@ -24,7 +24,7 @@ class RecordRepository @Inject constructor(
         return recordDataSource.getRecordTestAlarmsData()
     }
 
-    fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeListResponse<RecordData>>> {
+    fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> {
         val userId = runBlocking {
             userManager.getUserId().first()
         }

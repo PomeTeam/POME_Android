@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
-import com.teampome.pome.model.base.BasePomeListResponse
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
 import com.teampome.pome.model.goal.GoalData
@@ -33,8 +32,8 @@ class RecordViewModel @Inject constructor(
         }
     }
 
-    private val _recordDataByUserIdResponse = MutableLiveData<ApiResponse<BasePomeListResponse<RecordData>>>()
-    val recordDataByUserIdResponse: LiveData<ApiResponse<BasePomeListResponse<RecordData>>> = _recordDataByUserIdResponse
+    private val _recordDataByUserIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<List<RecordData>>>>()
+    val recordDataByUserIdResponse: LiveData<ApiResponse<BasePomeResponse<List<RecordData>>>> = _recordDataByUserIdResponse
 
     private val _findAllGoalByUserResponse = MutableLiveData<ApiResponse<BasePomeResponse<AllGoalData>>>()
     val findAllGoalByUserResponse: LiveData<ApiResponse<BasePomeResponse<AllGoalData>>> = _findAllGoalByUserResponse
