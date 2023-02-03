@@ -99,6 +99,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("test", "success by $it")
+                    Log.d("test", "category is ${viewModel.goalCategory.value}")
                 }
                 is ApiResponse.Failure -> {
                     Log.e("test", "failure by $it")

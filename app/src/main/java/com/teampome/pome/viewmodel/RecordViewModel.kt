@@ -2,11 +2,13 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
+import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.record.RecordRepository
@@ -40,6 +42,22 @@ class RecordViewModel @Inject constructor(
 
     private val _getGoalByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<GoalData>>>()
     val getGoalByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<GoalData>>> = _getGoalByGoalIdResponse
+
+    val goalCategory: LiveData<List<GoalCategoryResponse>> = Transformations.map(_findAllGoalByUserResponse) {
+        when(it) {
+            is ApiResponse.Success -> {
+                it.data.data?.let { allGoalData ->
+                    allGoalData.content?.let { goalData ->
+                        goalData.map { data ->
+                            data.goalCategoryResponse
+                        }
+                    } ?: run { listOf() }
+                } ?: run { listOf() }
+            }
+            is ApiResponse.Loading -> { listOf() }
+            is ApiResponse.Failure -> { listOf() }
+        }
+    }
 
     fun recordDataByUserId(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _recordDataByUserIdResponse,
