@@ -1,6 +1,8 @@
 package com.teampome.pome.di
 
 import android.content.Context
+import com.teampome.pome.BuildConfig.BASE_URL
+import com.teampome.pome.BuildConfig.IMAGE_BASE_URL
 import com.teampome.pome.network.*
 import com.teampome.pome.util.token.*
 import dagger.Module
@@ -12,12 +14,8 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Singleton
-
-const val BASE_URL = "http://52.79.89.129/"
-const val IMAGE_BASE_URL = "http://image-main-server.ap-northeast-2.elasticbeanstalk.com/"
 
 @Module
 @InstallIn(SingletonComponent::class)

@@ -1,7 +1,7 @@
 package com.teampome.pome.util.token
 
 import android.util.Log
-import com.teampome.pome.di.BASE_URL
+import com.teampome.pome.BuildConfig.BASE_URL
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.model.request.AuthDataBody
