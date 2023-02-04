@@ -7,7 +7,9 @@ data class GoalData(
     val isEnd: Boolean,
     val isPublic: Boolean,
     val nickname: String,
-    val oneLineMind: String,
+    val oneLineMind: String?,
     val price: Long,
-    val startDate: String
+    val startDate: String,
+    val usePrice: Int,
+    val oneLineComment: String?
 )

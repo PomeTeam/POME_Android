@@ -22,6 +22,7 @@ import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.model.RemindCategoryData
+import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.OnItemClickListener
@@ -91,20 +92,32 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
-                Log.e("test", "error by $message")
+                Log.e("test", "findAllGoalByUser Error by $message")
             }
         })
 
         viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    Log.d("test", "success by $it")
-                    Log.d("test", "category is ${viewModel.goalCategory.value}")
+                    Log.d("test", "findAllGoalById by $it")
                 }
                 is ApiResponse.Failure -> {
-                    Log.e("test", "failure by $it")
+                    Log.e("test", "findAllGoalById by $it")
                 }
                 is ApiResponse.Loading -> {}
+            }
+        }
+
+        // category listener - category를 주입
+        viewModel.goalCategory.observe(viewLifecycleOwner) {
+            it?.let {
+                currentCategory = it[0].name
+
+                Log.d("category", "category item $it")
+
+                (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
+                    it
+                )
             }
         }
     }
@@ -120,12 +133,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
-                    override fun onCategoryItemClick(item: RemindCategoryData, position: Int) {
-                        binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
-                        binding.executePendingBindings()
-
-                        currentCategory = item.category
+                    override fun onCategoryItemClick(item: GoalCategoryResponse, position: Int) {
+                        currentCategory = item.name
                         currentCategoryPosition = position
+//                        binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
+//                        binding.executePendingBindings()
+//
+//                        currentCategory = item.category
+//                        currentCategoryPosition = position
                     }
                 })
             }
@@ -150,21 +165,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
             recordTestData?.let {
 
-                // category Adapter data 주입
                 it.recordGoalData?.let { recordGoalItemList ->
-                    (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
-                        recordGoalItemList.map { recordGoalItem ->
-                            RemindCategoryData(
-                                recordGoalItem.category
-                            )
-                        }
-                    )
-
                     // categoryList 데이터 주입
                     categoryList = recordGoalItemList.map { recordGoalItem ->
                         recordGoalItem.category
                     }
-                    currentCategory = recordGoalItemList[0].category
 
                     // 초기 값은 0번
                     binding.recordGoalItem = recordGoalItemList[0]

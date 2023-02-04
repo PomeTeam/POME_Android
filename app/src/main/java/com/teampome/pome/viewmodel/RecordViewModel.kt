@@ -1,5 +1,6 @@
 package com.teampome.pome.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -44,6 +45,9 @@ class RecordViewModel @Inject constructor(
     val getGoalByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<GoalData>>> = _getGoalByGoalIdResponse
 
     val goalCategory: LiveData<List<GoalCategoryResponse>> = Transformations.map(_findAllGoalByUserResponse) {
+
+        Log.d("transformation", "transformation $it")
+
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
@@ -51,11 +55,11 @@ class RecordViewModel @Inject constructor(
                         goalData.map { data ->
                             data.goalCategoryResponse
                         }
-                    } ?: run { listOf() }
-                } ?: run { listOf() }
+                    } ?: run { null }
+                } ?: run { null }
             }
-            is ApiResponse.Loading -> { listOf() }
-            is ApiResponse.Failure -> { listOf() }
+            is ApiResponse.Loading -> { null }
+            is ApiResponse.Failure -> { null }
         }
     }
 

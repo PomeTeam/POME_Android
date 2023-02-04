@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordCategoryChipBinding
 import com.teampome.pome.model.RemindCategoryData
+import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 
-class RecordCategoryAdapter : ListAdapter<RemindCategoryData, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
+class RecordCategoryAdapter : ListAdapter<GoalCategoryResponse, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
     lateinit var bind: ItemRecordCategoryChipBinding
 
     // category click 관리 변수
@@ -33,8 +34,8 @@ class RecordCategoryAdapter : ListAdapter<RemindCategoryData, RecordCategoryAdap
     inner class RecordCategoryViewHolder(
         val binding: ItemRecordCategoryChipBinding) : RecyclerView.ViewHolder(binding.root) {
 
-            fun bind(item: RemindCategoryData) {
-                binding.remindCategoryData = item
+            fun bind(item: GoalCategoryResponse) {
+                binding.goalCategoryResponse = item
 
                 currentList[adapterPosition].isSelected = selectedPosition == adapterPosition
                 submitList(currentList)
@@ -54,17 +55,17 @@ class RecordCategoryAdapter : ListAdapter<RemindCategoryData, RecordCategoryAdap
         }
 }
 
-class RecordCategoryDiffCallback : DiffUtil.ItemCallback<RemindCategoryData>() {
+class RecordCategoryDiffCallback : DiffUtil.ItemCallback<GoalCategoryResponse>() {
     override fun areItemsTheSame(
-        oldItem: RemindCategoryData,
-        newItem: RemindCategoryData
+        oldItem: GoalCategoryResponse,
+        newItem: GoalCategoryResponse
     ): Boolean {
         return oldItem == newItem
     }
 
     override fun areContentsTheSame(
-        oldItem: RemindCategoryData,
-        newItem: RemindCategoryData
+        oldItem: GoalCategoryResponse,
+        newItem: GoalCategoryResponse
     ): Boolean {
         return oldItem == newItem
     }
