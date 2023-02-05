@@ -7,25 +7,34 @@ import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalContentsBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.viewmodel.record.AddGoalContentsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
 @AndroidEntryPoint
 class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.layout.fragment_add_goal_contents) {
     private val args: AddGoalContentsFragmentArgs by navArgs()
 
+    private val viewModel: AddGoalContentsViewModel by viewModels()
+
     // Todo : viewModel 처리
     private lateinit var startDate: String
     private lateinit var endDate: String
 
-    private var category = ""
-    private var promise = ""
-    private var amount = ""
+    // price value
+    private val df = DecimalFormat("#,###.##").apply {
+        isDecimalSeparatorAlwaysShown = false
+    }
+    private val dfnd = DecimalFormat("#,###")
+    private var hasFractionalPart: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -89,12 +98,8 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
             }
             override fun afterTextChanged(p0: Editable?) {
-                category = p0?.toString() ?: ""
-
-                if(isCheckButtonEnabled()) {
-                    CommonUtil.enabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
-                } else {
-                    CommonUtil.disabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
+                p0?.let {
+                    viewModel.setCategory(it.toString())
                 }
             }
         })
@@ -106,35 +111,79 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                promise = p0?.toString() ?: ""
-
-                if(isCheckButtonEnabled()) {
-                    CommonUtil.enabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
-                } else {
-                    CommonUtil.disabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
+                p0?.let {
+                    viewModel.setOneLineMind(it.toString())
                 }
             }
         })
 
+        // Price 형태 작업 진행
         binding.addGoalContentsAmountAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                p0?.let {
+                    hasFractionalPart = it.toString().contains(df.decimalFormatSymbols.groupingSeparator.toString())
+                }
             }
             override fun afterTextChanged(p0: Editable?) {
-                amount = p0?.toString() ?: ""
+                p0?.let {
+                    binding.addGoalContentsAmountAet.removeTextChangedListener(this)
 
-                if(isCheckButtonEnabled()) {
-                    CommonUtil.enabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
-                } else {
-                    CommonUtil.disabledPomeBtn(binding.addGoalContentsCheckButtonAcb)
+                    val iniLen = binding.addGoalContentsAmountAet.text?.length ?: 0
+
+                    val s = it.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
+                    val n = df.parse(s)
+
+                    val cp = binding.addGoalContentsAmountAet.selectionStart
+
+                    if(hasFractionalPart) {
+                        binding.addGoalContentsAmountAet.setText(df.format(n))
+                    } else {
+                        binding.addGoalContentsAmountAet.setText(dfnd.format(n))
+                    }
+
+                    val endLen = binding.addGoalContentsAmountAet.text?.length ?: 0
+                    val sel = (cp + (endLen - iniLen))
+
+                    if(sel > 0 && sel <= (binding.addGoalContentsAmountAet.text?.length ?: 1)) {
+                        binding.addGoalContentsAmountAet.setSelection(sel)
+                    } else {
+                        binding.addGoalContentsAmountAet.setSelection(
+                            (binding.addGoalContentsAmountAet.text?.length ?: 1) - 1
+                        )
+                    }
+
+                    binding.addGoalContentsAmountAet.addTextChangedListener(this)
+
+                    viewModel.setGoalPrice(it.toString().replace(",",""))
                 }
             }
         })
-    }
 
-    private fun isCheckButtonEnabled() : Boolean {
-        return !(category.isEmpty() || promise.isEmpty() || amount.isEmpty())
+        // switch listener
+        binding.addGoalContentsPrivateSwitchSc.setOnCheckedChangeListener { _, b ->
+            if(b) {
+                viewModel.setPrivate(true)
+            } else {
+                viewModel.setPrivate(false)
+            }
+        }
+
+        viewModel.goalCategory.observe(viewLifecycleOwner) {
+            binding.category = it
+            binding.executePendingBindings()
+        }
+
+        viewModel.oneLineMind.observe(viewLifecycleOwner) {
+            binding.mind = it
+            binding.executePendingBindings()
+        }
+
+        viewModel.goalPrice.observe(viewLifecycleOwner) {
+            binding.price = it
+            binding.executePendingBindings()
+        }
     }
 
     private fun moveToAddGoalComplete() {
