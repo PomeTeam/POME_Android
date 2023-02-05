@@ -136,11 +136,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: GoalCategoryResponse, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-//                        binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
-//                        binding.executePendingBindings()
-//
-//                        currentCategory = item.category
-//                        currentCategoryPosition = position
                     }
                 })
             }

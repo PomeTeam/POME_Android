@@ -125,7 +125,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:padding="8dp"
-            android:src="@drawable/ic_calender_24"
+            android:src="@drawable/ic_calender_on_24"
             app:layout_constraintBottom_toBottomOf="@id/consume_record_date_aet"
             app:layout_constraintEnd_toEndOf="@id/consume_record_date_aet"
             app:layout_constraintTop_toTopOf="@id/consume_record_date_aet" />

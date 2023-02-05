@@ -3,10 +3,12 @@ package com.teampome.pome.presentation.record.add
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalContentsBinding
 import com.teampome.pome.util.CommonUtil
@@ -15,13 +17,21 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.layout.fragment_add_goal_contents) {
+    private val args: AddGoalContentsFragmentArgs by navArgs()
+
     // Todo : viewModel 처리
+    private lateinit var startDate: String
+    private lateinit var endDate: String
+
     private var category = ""
     private var promise = ""
     private var amount = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        startDate = args.startDate
+        endDate = args.endDate
     }
 
     override fun initView() {

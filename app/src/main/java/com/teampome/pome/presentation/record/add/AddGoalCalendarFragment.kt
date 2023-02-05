@@ -1,12 +1,11 @@
 package com.teampome.pome.presentation.record.add
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -14,6 +13,7 @@ import com.teampome.pome.databinding.FragmentAddGoalCalendarBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.viewmodel.AddGoalCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,8 +24,7 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
     private lateinit var endCalendarBinding: PomeCalendarBottomSheetDialogBinding
     private lateinit var endCalendarDialog: BottomSheetDialog
 
-    private var startDate: String = ""
-    private var endDate: String = ""
+    private val viewModel: AddGoalCalendarViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,11 +83,11 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
-                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
-                } else {
-                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
-                }
+//                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
+//                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
+//                } else {
+//                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
+//                }
             }
         })
 
@@ -100,13 +99,23 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
-                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
-                } else {
-                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
-                }
+//                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
+//                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
+//                } else {
+//                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
+//                }
             }
         })
+
+        viewModel.startDate.observe(viewLifecycleOwner) {
+            binding.startDate = it
+            binding.executePendingBindings()
+        }
+
+        viewModel.endDate.observe(viewLifecycleOwner) {
+            binding.endDate = it
+            binding.executePendingBindings()
+        }
     }
 
     private fun makeStartCalenderView() {
@@ -120,10 +129,9 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             startCalendarBinding.calendarMcv,
             startCalendarBinding.calendarSelectAtb,
             { _, str ->
-                startDate = str
+                viewModel.setStartDate(str)
             }
         ) {
-            binding.addGoalStartDateAet.setText(startDate)
             startCalendarDialog.dismiss()
         }
     }
@@ -139,16 +147,18 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             endCalendarBinding.calendarMcv,
             endCalendarBinding.calendarSelectAtb,
             { _, str ->
-                endDate = str
+                viewModel.setEndDate(str)
             }
         ) {
-            binding.addGoalEndDateAet.setText(endDate)
             endCalendarDialog.dismiss()
         }
     }
 
     private fun moveToAddGoalContents() {
-        val action = AddGoalCalendarFragmentDirections.actionAddGoalCalendarFragmentToAddGoalContentsFragment()
+        val action = AddGoalCalendarFragmentDirections.actionAddGoalCalendarFragmentToAddGoalContentsFragment(
+            viewModel.startDate.value ?: "2023.01.01",
+            viewModel.endDate.value ?: "2023.01.01"
+        )
 
         findNavController().navigate(action)
     }

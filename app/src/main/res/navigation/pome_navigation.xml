@@ -240,6 +240,12 @@
             android:id="@+id/action_addGoalContentsFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/record_fragment"/>
+        <argument
+            android:name="start_date"
+            app:argType="string" />
+        <argument
+            android:name="end_date"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addGoalCompleteFragment"

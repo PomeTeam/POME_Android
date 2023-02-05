@@ -199,7 +199,7 @@ object CommonUtil {
             isDynamicHeightEnabled = true
 
             setOnDateChangedListener { _, date, _ ->
-                val sdf = SimpleDateFormat("yy.MM.dd")
+                val sdf = SimpleDateFormat("yyyy.MM.dd")
                 val realDate = DateTimeUtils.toDate(date.date.atStartOfDay(ZoneId.systemDefault()).toInstant())
 
                 val dateStr = sdf.format(realDate)
