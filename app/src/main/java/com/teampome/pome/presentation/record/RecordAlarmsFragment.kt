@@ -7,7 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordAlarmsBinding
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.viewmodel.RecordAlarmsViewModel
+import com.teampome.pome.viewmodel.record.RecordAlarmsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

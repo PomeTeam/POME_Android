@@ -3,8 +3,6 @@ package com.teampome.pome.presentation.register
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -31,7 +29,7 @@ import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
-import com.teampome.pome.viewmodel.RegisterProfileViewModel
+import com.teampome.pome.viewmodel.register.RegisterProfileViewModel
 import com.teampome.pome.viewmodel.TokenViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation

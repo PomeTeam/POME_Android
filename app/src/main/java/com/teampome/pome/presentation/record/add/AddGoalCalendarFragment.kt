@@ -13,7 +13,7 @@ import com.teampome.pome.databinding.FragmentAddGoalCalendarBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.viewmodel.AddGoalCalendarViewModel
+import com.teampome.pome.viewmodel.record.AddGoalCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

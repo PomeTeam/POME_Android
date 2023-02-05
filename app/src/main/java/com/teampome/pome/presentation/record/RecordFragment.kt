@@ -21,14 +21,13 @@ import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordWeekItem
-import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.RecordViewModel
+import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
