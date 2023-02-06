@@ -5,6 +5,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.viewModels
@@ -13,17 +14,25 @@ import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalContentsBinding
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.record.AddGoalContentsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
-import java.text.NumberFormat
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.layout.fragment_add_goal_contents) {
     private val args: AddGoalContentsFragmentArgs by navArgs()
 
     private val viewModel: AddGoalContentsViewModel by viewModels()
+
+    @Inject
+    lateinit var userManager: UserManager
 
     // Todo : viewModel 처리
     private lateinit var startDate: String
@@ -85,8 +94,17 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
             }
         }
 
+        // 확인 버튼
         binding.addGoalContentsCheckButtonAcb.setOnClickListener {
-            moveToAddGoalComplete()
+            showLoading()
+
+            viewModel.makeGoal(endDate, startDate, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.d("goal", "goalResponseError : $message")
+                    Toast.makeText(requireContext(), "목표 생성중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                }
+            })
         }
 
         // edittext listener
@@ -183,6 +201,23 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
         viewModel.goalPrice.observe(viewLifecycleOwner) {
             binding.price = it
             binding.executePendingBindings()
+        }
+
+        viewModel.makeGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("goal", "goalResponseSuccess : $it")
+                    hideLoading()
+                    moveToAddGoalComplete()
+                }
+                is ApiResponse.Failure -> {
+                    Log.d("goal", "goalResponseFailure : $it")
+                    Toast.makeText(requireContext(), "목표 생성중 에러가 발생했습니다", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.teampome.pome.repository.goal
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.model.request.GoalDataBody
 import com.teampome.pome.network.GoalService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow
@@ -18,5 +19,9 @@ class GoalRemoteDataSource @Inject constructor(
 
     override fun getGoalByGoalId(goalId: String): Flow<ApiResponse<BasePomeResponse<GoalData>>> = apiRequestFlow {
         service.getGoalByGoalId(goalId)
+    }
+
+    override fun makeGoal(goalDataBody: GoalDataBody): Flow<ApiResponse<BasePomeResponse<GoalData>>> = apiRequestFlow {
+        service.makeGoal(goalDataBody)
     }
 }
