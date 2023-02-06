@@ -415,6 +415,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         } ?: GoalState.Empty
     }
 
+    // record view refresh 작업 => 뷰 데이터 처리 반영 시 사용
+    private fun refresh() {
+        val id = findNavController().currentDestination?.id
+        findNavController().popBackStack(id!!, true)
+        findNavController().navigate(id)
+    }
+
     private fun moveToModifyRecordCard() {
         val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
             recordWeekItem,
