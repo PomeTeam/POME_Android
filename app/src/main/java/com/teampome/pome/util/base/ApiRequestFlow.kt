@@ -2,6 +2,7 @@ package com.teampome.pome.util.base
 
 import android.util.Log
 import com.google.gson.Gson
+import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.base.ErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -29,15 +30,29 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
         Log.d("call", "call in $response")
 
         try {
-            if(response.isSuccessful) {
-                response.body()?.let { data ->
-                    emit(ApiResponse.Success(data))
+            if(response.body() is BasePomeResponse<*>) {
+                if(response.isSuccessful && (response.body() as BasePomeResponse<*>).success) {
+                    response.body()?.let { data ->
+                        emit(ApiResponse.Success(data))
+                    }
+                } else {
+                    response.errorBody()?.let { error ->
+                        error.close()
+                        val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                    }
                 }
             } else {
-                response.errorBody()?.let { error ->
-                    error.close()
-                    val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                    emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                if(response.isSuccessful) {
+                    response.body()?.let { data ->
+                        emit(ApiResponse.Success(data))
+                    }
+                } else {
+                    response.errorBody()?.let { error ->
+                        error.close()
+                        val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                    }
                 }
             }
         } catch (e: Exception) {
