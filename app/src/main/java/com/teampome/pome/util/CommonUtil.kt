@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -354,5 +355,25 @@ object CommonUtil {
         }
 
         return df.format(df.parse(price))
+    }
+
+    /**
+     *  시간 차이 구하는 메소드
+     *  end date - current date
+     */
+    fun calDiffDate(endDate: String?) : Int {
+        endDate?.let {
+            val sdf = SimpleDateFormat("yyyy.MM.dd")
+            val ed = sdf.parse(endDate)
+            val today = Calendar.getInstance()
+
+            val challengeDay = (ed.time - today.time.time) / (60 * 60 * 24 * 1000)
+
+            return if(challengeDay >= 0) {
+                challengeDay.toInt()
+            } else {
+                0
+            }
+        } ?: return 0
     }
 }

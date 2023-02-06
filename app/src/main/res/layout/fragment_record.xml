@@ -23,6 +23,7 @@
 
         <import type="android.view.View" />
         <import type="com.teampome.pome.presentation.record.GoalState" />
+        <import type="com.teampome.pome.util.CommonUtil" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -178,7 +179,7 @@
                         pome:setGoalText="@{goalDetails.oneLineMind}"
                         pome:setPomeProgress="@{goalDetails.price == 0 ? 0 : (int)goalDetails.usePrice * 100 / (int)goalDetails.price }"
                         pome:setPrivate="@{!goalDetails.public}"
-                        pome:setRemainDays="@{Integer.toString(recordGoalItem.recordGoalCard.timeLimit)}"
+                        pome:setRemainDays="@{Integer.toString(CommonUtil.INSTANCE.calDiffDate(goalDetails.endDate))}"
                         pome:setUsedAmount="@{Long.toString(goalDetails.usePrice)}" />
 
                     <!-- more button은 처리를 어떻게? -->
