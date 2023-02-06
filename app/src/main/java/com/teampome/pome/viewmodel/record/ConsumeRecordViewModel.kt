@@ -8,13 +8,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ConsumeRecordViewModel @Inject constructor(): BaseViewModel(){
-    private val _consumePrice = MutableLiveData<Int>()
-    val consumePrice: LiveData<Int> = _consumePrice
+    private val _consumePrice = MutableLiveData<Long>()
+    val consumePrice: LiveData<Long> = _consumePrice
 
     private val _consumeRecord = MutableLiveData<String>()
     val consumeRecord: LiveData<String> = _consumeRecord
 
-    fun setPrice(price: Int) {
+    fun setPrice(price: Long) {
         _consumePrice.value = price
     }
 

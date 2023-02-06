@@ -13,12 +13,12 @@ data class RecordData(
 
 data class EmotionResponse(
     val firstEmotion: Int,
-    val friendEmotions: List<FriendEmotion>,
+    val friendEmotions: List<FriendEmotion?>,
     val myEmotion: Int,
     val secondEmotion: Int
 )
 
 data class FriendEmotion(
-    val emotionId: Int,
-    val nickname: String
+    val emotionId: Int?,
+    val nickname: String?
 )

@@ -2,6 +2,7 @@ package com.teampome.pome.repository.record
 
 import com.teampome.pome.model.*
 import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.request.ConsumeRecordDataBody
 import com.teampome.pome.network.RecordService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow
@@ -137,5 +138,9 @@ class RecordTestDataSource @Inject constructor(
 
     override fun getRecordDataByUserId(userId: String): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> = apiRequestFlow {
         service.getRecordDataByUserId(userId)
+    }
+
+    override fun writeConsumeRecord(consumeRecordDataBody: ConsumeRecordDataBody): Flow<ApiResponse<BasePomeResponse<RecordData>>> = apiRequestFlow {
+        service.writeConsumeRecord(consumeRecordDataBody)
     }
 }

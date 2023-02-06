@@ -14,6 +14,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentConsumeRecordBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
+import com.teampome.pome.model.consume.ConsumeRecord
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.record.OnGoalCategoryClickListener
 import com.teampome.pome.presentation.record.TextListAdapter
@@ -68,6 +69,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
         // 현재 날짜로 항상 시작
         binding.consumeRecordDateAet.setText(getCurrentDateString())
+        selectedDateStr = getCurrentDateString()
 
         // 목표도 이전 페이지의 목표로 고정
         binding.consumeRecordGoalAet.setText(currentGoal.name)
@@ -135,7 +137,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
                     binding.consumeRecordPriceAet.addTextChangedListener(this)
 
-                    viewModel.setPrice(it.toString().replace(",", "").toInt())
+                    viewModel.setPrice(it.toString().replace(",", "").toLong())
                 }
             }
         })
@@ -219,7 +221,14 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
     }
 
     private fun moveToConsumeEmotion() {
-        val action = ConsumeRecordFragmentDirections.actionConsumeRecordFragmentToConsumeEmotionFragment()
+        val action = ConsumeRecordFragmentDirections.actionConsumeRecordFragmentToConsumeEmotionFragment(
+            ConsumeRecord(
+                category = currentGoal,
+                date = selectedDateStr,
+                price = viewModel.consumePrice.value ?: 0,
+                record = viewModel.consumeRecord.value ?: ""
+            )
+        )
 
         findNavController().navigate(action)
     }

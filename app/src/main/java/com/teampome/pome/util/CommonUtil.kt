@@ -376,4 +376,44 @@ object CommonUtil {
             }
         } ?: return 0
     }
+
+    /**
+     *  서버 상호작용을 위한 num -> Emotion 변경
+     */
+    fun numToEmotion(num: Int): Emotion {
+        return when(num) {
+            0 -> {
+                Emotion.HAPPY_EMOTION
+            }
+            1 -> {
+                Emotion.WHAT_EMOTION
+            }
+            2 -> {
+                Emotion.SAD_EMOTION
+            }
+            else -> {
+                Emotion.HAPPY_EMOTION
+            }
+        }
+    }
+
+    /**
+     *  서버 상호작용을 위한 Emotion -> Num 변경
+     */
+    fun emotionToNum(emotion: Emotion): Int {
+        return when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                0
+            }
+            Emotion.WHAT_EMOTION -> {
+                1
+            }
+            Emotion.SAD_EMOTION -> {
+                2
+            }
+            else -> {
+                0
+            }
+        }
+    }
 }
