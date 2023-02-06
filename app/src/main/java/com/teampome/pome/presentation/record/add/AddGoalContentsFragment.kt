@@ -135,6 +135,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
             }
         })
 
+        // Todo: Price style method화 진행
         // Price 형태 작업 진행
         binding.addGoalContentsAmountAet.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

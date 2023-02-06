@@ -22,13 +22,17 @@ import com.teampome.pome.util.CommonUtil.dateToLocalDate
 import com.teampome.pome.util.CommonUtil.getCurrentDate
 import com.teampome.pome.util.CommonUtil.getCurrentDateString
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.viewmodel.record.ConsumeRecordViewModel
 import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.DecimalFormat
 import java.util.Date
 
 // Todo : 일단 navArgs를 통해 category 목록을 전달 -> activityViewModel로 관리하는게 편하지 않을까?
 @AndroidEntryPoint
 class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layout.fragment_consume_record) {
+    private val viewModel: ConsumeRecordViewModel by viewModels()
+
     private val navArgs: ConsumeRecordFragmentArgs by navArgs()
 
     private lateinit var goalBottomSheetDialogBinding: PomeTextListBottomSheetDialogBinding
@@ -42,6 +46,14 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
     private lateinit var currentGoal: GoalCategoryResponse
     private lateinit var goalList: List<GoalCategoryResponse>
+
+    // for price
+    // price value
+    private val df = DecimalFormat("#,###.##").apply {
+        isDecimalSeparatorAlwaysShown = false
+    }
+    private val dfnd = DecimalFormat("#,###")
+    private var hasFractionalPart: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         currentGoal = navArgs.goalCategoryResponse
@@ -79,6 +91,76 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
         // 키보드 부드럽게
         binding.consumeRecordContainerCl.setOnClickListener {
             CommonUtil.hideKeyboard(requireActivity())
+        }
+
+        // 소비 금액 작성
+        binding.consumeRecordPriceAet.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                p0?.let {
+                    hasFractionalPart = it.toString().contains(df.decimalFormatSymbols.groupingSeparator.toString())
+                }
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                p0?.let {
+                    binding.consumeRecordPriceAet.removeTextChangedListener(this)
+
+                    val iniLen = binding.consumeRecordPriceAet.text?.length ?: 0
+
+                    val s = it.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
+                    val n = df.parse(s)
+
+                    val cp = binding.consumeRecordPriceAet.selectionStart
+
+                    if(hasFractionalPart) {
+                        binding.consumeRecordPriceAet.setText(df.format(n))
+                    } else {
+                        binding.consumeRecordPriceAet.setText(dfnd.format(n))
+                    }
+
+                    val endLen = binding.consumeRecordPriceAet.text?.length ?: 0
+                    val sel = (cp + (endLen - iniLen))
+
+                    if(sel > 0 && sel <= (binding.consumeRecordPriceAet.text?.length ?: 1)) {
+                        binding.consumeRecordPriceAet.setSelection(sel)
+                    } else {
+                        binding.consumeRecordPriceAet.setSelection(
+                            (binding.consumeRecordPriceAet.text?.length ?: 1) - 1
+                        )
+                    }
+
+                    binding.consumeRecordPriceAet.addTextChangedListener(this)
+
+                    viewModel.setPrice(it.toString().replace(",", "").toInt())
+                }
+            }
+        })
+
+        // 소비 기록 작성
+        binding.consumeRecordContentPet.addTextWatcher(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+            override fun afterTextChanged(p0: Editable?) {
+                p0?.let {
+                    viewModel.setRecord(it.toString())
+                }
+            }
+        })
+
+        viewModel.consumePrice.observe(viewLifecycleOwner) {
+            binding.price = it
+            binding.executePendingBindings()
+        }
+
+        viewModel.consumeRecord.observe(viewLifecycleOwner) {
+            binding.record = it
+            binding.executePendingBindings()
         }
 
         // 뒤로가기 버튼 클릭

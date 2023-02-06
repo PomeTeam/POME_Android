@@ -57,4 +57,12 @@ class PomeEditText @JvmOverloads constructor(context: Context, attrs: AttributeS
     override fun afterTextChanged(p0: Editable?) {
         binding.pomeCharCountTv.text = context.getString(R.string.edittext_char_count_text, p0?.length ,maxCount)
     }
+
+    fun addTextWatcher(textWatcher: TextWatcher) {
+        binding.pomeContentAet.addTextChangedListener(textWatcher)
+    }
+
+    fun removeTextWatcher(textWatcher: TextWatcher) {
+        binding.pomeContentAet.removeTextChangedListener(textWatcher)
+    }
 }
