@@ -44,6 +44,9 @@ class RecordViewModel @Inject constructor(
     private val _getGoalByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<GoalData>>>()
     val getGoalByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<GoalData>>> = _getGoalByGoalIdResponse
 
+    private val _deleteGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
+    val deleteGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteGoalResponse
+
     val goalCategory: LiveData<List<GoalCategoryResponse>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {
@@ -91,5 +94,12 @@ class RecordViewModel @Inject constructor(
         coroutineErrorHandler
     )  {
         goalRepository.getGoalByGoalId(goalId)
+    }
+
+    fun deleteGoal(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _deleteGoalResponse,
+        coroutineErrorHandler
+    ) {
+        goalRepository.deleteGoal(goalId)
     }
 }

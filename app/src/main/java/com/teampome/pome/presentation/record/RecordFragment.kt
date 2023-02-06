@@ -97,33 +97,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 Log.e("test", "findAllGoalByUser Error by $message")
             }
         })
-
-        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
-            when(it) {
-                is ApiResponse.Success -> {
-                    binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
-                    binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
-                    binding.executePendingBindings()
-                }
-                is ApiResponse.Failure -> {
-                    Log.e("test", "findAllGoalById by $it")
-                }
-                is ApiResponse.Loading -> {}
-            }
-        }
-
-        // category listener - category를 주입
-        viewModel.goalCategory.observe(viewLifecycleOwner) {
-            it?.let {
-                currentCategory = it[0].name
-
-                Log.d("category", "category item $it")
-
-                (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
-                    it
-                )
-            }
-        }
     }
 
     override fun initView() {
@@ -165,10 +138,40 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     override fun initListener() {
+        // 모든 목표 Response observe
+        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
+                    binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
+                    binding.executePendingBindings()
+                }
+                is ApiResponse.Failure -> {
+                    Log.e("test", "findAllGoalById by $it")
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
+
+        // goal Details Observe 등록
         viewModel.goalDetails.observe(viewLifecycleOwner) {
             Log.d("goalDetails", "goalDetails : $it")
         }
 
+        // category listener - category를 주입
+        viewModel.goalCategory.observe(viewLifecycleOwner) {
+            it?.let {
+                currentCategory = it[0].name
+
+                Log.d("category", "category item $it")
+
+                (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
+                    it
+                )
+            }
+        }
+
+        // for test
         viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
             recordTestData?.let {
 
@@ -198,6 +201,25 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
                 binding.recordWeekData = it.recordWeekData
                 binding.executePendingBindings()
+            }
+        }
+
+        // 삭제하기 response
+        viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Toast.makeText(requireContext(), "목표 삭제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    refresh()
+                    removeGoalDialog.dismiss()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    removeGoalDialog.dismiss()
+                }
+                is ApiResponse.Loading -> {
+                }
             }
         }
 
@@ -287,15 +309,27 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "목표 삭제하기 Yes", Toast.LENGTH_SHORT).show()
 
-            removeGoalDialog.dismiss()
+            showLoading()
+
+            viewModel.goalDetails.value?.get(currentCategoryPosition)?.id?.let {
+                viewModel.deleteGoal(
+                    it,
+                    object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+            } ?: run {
+                Toast.makeText(requireContext(), "목표 삭제 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                hideLoading()
+                removeGoalDialog.dismiss()
+            }
         }
 
         // 아니요 버튼 클릭
         removeGoalDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "목표 삭제하기 No", Toast.LENGTH_SHORT).show()
-
             removeGoalDialog.dismiss()
         }
     }

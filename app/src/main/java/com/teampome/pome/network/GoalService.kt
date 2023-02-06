@@ -6,6 +6,7 @@ import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.model.request.GoalDataBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -33,4 +34,12 @@ interface GoalService {
     suspend fun makeGoal(
         @Body goalDataBody: GoalDataBody
     ) : Response<BasePomeResponse<GoalData>>
+
+    /**
+     *  목표 삭제
+     */
+    @DELETE("api/v1/goals/{goalId}")
+    suspend fun deleteGoal(
+        @Path("goalId") goalId: Int
+    ) : Response<BasePomeResponse<Any>>
 }

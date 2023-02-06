@@ -11,4 +11,5 @@ interface GoalDataSource {
     fun findAllGoalByUser() : Flow<ApiResponse<BasePomeResponse<AllGoalData>>>
     fun getGoalByGoalId(goalId: String) : Flow<ApiResponse<BasePomeResponse<GoalData>>>
     fun makeGoal(goalDataBody: GoalDataBody) : Flow<ApiResponse<BasePomeResponse<GoalData>>>
+    fun deleteGoal(goalId: Int) : Flow<ApiResponse<BasePomeResponse<Any>>>
 }

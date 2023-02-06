@@ -24,4 +24,8 @@ class GoalRemoteDataSource @Inject constructor(
     override fun makeGoal(goalDataBody: GoalDataBody): Flow<ApiResponse<BasePomeResponse<GoalData>>> = apiRequestFlow {
         service.makeGoal(goalDataBody)
     }
+
+    override fun deleteGoal(goalId: Int): Flow<ApiResponse<BasePomeResponse<Any>>> = apiRequestFlow {
+        service.deleteGoal(goalId)
+    }
 }

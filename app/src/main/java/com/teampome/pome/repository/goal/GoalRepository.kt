@@ -26,4 +26,6 @@ class GoalRepository @Inject constructor(
             )
         )
     }
+
+    fun deleteGoal(goalId: Int) = dataSource.deleteGoal(goalId)
 }
