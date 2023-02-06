@@ -6,11 +6,13 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentConsumeRecordBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
+import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.record.OnGoalCategoryClickListener
 import com.teampome.pome.presentation.record.TextListAdapter
 import com.teampome.pome.util.CommonUtil
@@ -18,10 +20,13 @@ import com.teampome.pome.util.CommonUtil.dateToLocalDate
 import com.teampome.pome.util.CommonUtil.getCurrentDate
 import com.teampome.pome.util.CommonUtil.getCurrentDateString
 import com.teampome.pome.util.base.BaseFragment
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
-
+@AndroidEntryPoint
 class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layout.fragment_consume_record) {
+    private val navArgs: ConsumeRecordFragmentArgs by navArgs()
+
     private lateinit var goalBottomSheetDialogBinding: PomeTextListBottomSheetDialogBinding
     private lateinit var goalBottomSheetDialog: BottomSheetDialog
 
@@ -31,7 +36,11 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
     private var selectedDate: Date? = null
     private var selectedDateStr: String = ""
 
+    private lateinit var currentGoal: GoalCategoryResponse
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        currentGoal = navArgs.goalCategoryResponse
+
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -41,6 +50,9 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
         // 현재 날짜로 항상 시작
         binding.consumeRecordDateAet.setText(getCurrentDateString())
+
+        // 목표도 이전 페이지의 목표로 고정
+        binding.consumeRecordGoalAet.setText(currentGoal.name)
 
         CommonUtil.settingAlreadySelectedCalendarBottomSheetDialog(
             requireContext(),

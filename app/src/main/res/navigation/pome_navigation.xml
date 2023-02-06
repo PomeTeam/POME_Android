@@ -265,6 +265,9 @@
         <action
             android:id="@+id/action_consumeRecordFragment_to_consumeEmotionFragment"
             app:destination="@id/consumeEmotionFragment" />
+        <argument
+            android:name="goalCategoryResponse"
+            app:argType="com.teampome.pome.model.goal.GoalCategoryResponse" />
     </fragment>
     <fragment
         android:id="@+id/consumeEmotionFragment"

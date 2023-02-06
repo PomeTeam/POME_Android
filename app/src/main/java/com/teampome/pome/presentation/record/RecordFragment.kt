@@ -477,7 +477,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToConsume() {
-        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment()
+        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment(
+            goalCategoryResponse = viewModel.goalDetails.value?.get(currentCategoryPosition)?.goalCategoryResponse ?: GoalCategoryResponse(id = 0, name = "")
+        )
 
         findNavController().navigate(action)
     }
