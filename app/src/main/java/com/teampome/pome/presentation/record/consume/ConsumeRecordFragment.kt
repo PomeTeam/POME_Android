@@ -3,8 +3,10 @@ package com.teampome.pome.presentation.record.consume
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,9 +22,11 @@ import com.teampome.pome.util.CommonUtil.dateToLocalDate
 import com.teampome.pome.util.CommonUtil.getCurrentDate
 import com.teampome.pome.util.CommonUtil.getCurrentDateString
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Date
 
+// Todo : 일단 navArgs를 통해 category 목록을 전달 -> activityViewModel로 관리하는게 편하지 않을까?
 @AndroidEntryPoint
 class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layout.fragment_consume_record) {
     private val navArgs: ConsumeRecordFragmentArgs by navArgs()
@@ -37,9 +41,11 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
     private var selectedDateStr: String = ""
 
     private lateinit var currentGoal: GoalCategoryResponse
+    private lateinit var goalList: List<GoalCategoryResponse>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         currentGoal = navArgs.goalCategoryResponse
+        goalList = navArgs.listGoal.toList()
 
         super.onViewCreated(view, savedInstanceState)
     }
@@ -94,17 +100,6 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
         binding.consumeRecordCheckAcb.setOnClickListener {
             moveToConsumeEmotion()
         }
-
-//        // 글자수 체크
-//        binding.consumeRecordContentAet.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//            override fun afterTextChanged(p0: Editable?) {
-//                binding.consumeRecordContentCharacterCountAtv.text = "${p0?.length}/150"
-//            }
-//        })
     }
 
     private fun makeGoalBottomSheetDialog() {
@@ -116,12 +111,10 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
         goalBottomSheetDialogBinding.apply {
             title = "목표"
             textListRv.adapter = TextListAdapter().apply {
-                // 일단 임시 값 출력
-                submitList(listOf(
-                    "커피",
-                    "택시",
-                    "아이스크림"
-                ))
+                // 목표 리스트 받아서 적용
+                submitList(goalList.map {
+                    it.name
+                })
 
                 setOnGoalCategoryClickListener(object : OnGoalCategoryClickListener {
                     override fun categoryClick(category: String) {

@@ -268,6 +268,9 @@
         <argument
             android:name="goalCategoryResponse"
             app:argType="com.teampome.pome.model.goal.GoalCategoryResponse" />
+        <argument
+            android:name="list_goal"
+            app:argType="com.teampome.pome.model.goal.GoalCategoryResponse[]" />
     </fragment>
     <fragment
         android:id="@+id/consumeEmotionFragment"
