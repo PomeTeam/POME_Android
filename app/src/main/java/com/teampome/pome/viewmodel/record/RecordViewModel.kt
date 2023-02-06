@@ -45,9 +45,6 @@ class RecordViewModel @Inject constructor(
     val getGoalByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<GoalData>>> = _getGoalByGoalIdResponse
 
     val goalCategory: LiveData<List<GoalCategoryResponse>> = Transformations.map(_findAllGoalByUserResponse) {
-
-        Log.d("transformation", "transformation $it")
-
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
@@ -56,6 +53,18 @@ class RecordViewModel @Inject constructor(
                             data.goalCategoryResponse
                         }
                     } ?: run { null }
+                } ?: run { null }
+            }
+            is ApiResponse.Loading -> { null }
+            is ApiResponse.Failure -> { null }
+        }
+    }
+
+    val goalDetails: LiveData<List<GoalData>> = Transformations.map(_findAllGoalByUserResponse) {
+        when(it) {
+            is ApiResponse.Success -> {
+                it.data.data?.let { allGoalData ->
+                    allGoalData.content ?: run { null }
                 } ?: run { null }
             }
             is ApiResponse.Loading -> { null }

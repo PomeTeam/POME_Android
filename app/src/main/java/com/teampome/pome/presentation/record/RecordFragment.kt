@@ -22,6 +22,7 @@ import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.model.goal.GoalCategoryResponse
+import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.OnItemClickListener
@@ -98,7 +99,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    Log.d("test", "findAllGoalById by $it")
+                    binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
+                    binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
+                    binding.executePendingBindings()
                 }
                 is ApiResponse.Failure -> {
                     Log.e("test", "findAllGoalById by $it")
@@ -135,6 +138,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: GoalCategoryResponse, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
+
+                        binding.goalDetails = viewModel.goalDetails.value?.get(position)
+                        binding.currentGoalState = setGoalState(viewModel.goalDetails.value?.get(position))
+                        binding.executePendingBindings()
                     }
                 })
             }
@@ -156,6 +163,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     override fun initListener() {
+        viewModel.goalDetails.observe(viewLifecycleOwner) {
+            Log.d("goalDetails", "goalDetails : $it")
+        }
+
         viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
             recordTestData?.let {
 
@@ -390,6 +401,16 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         finishGoalAlertDialogBinding.alertCloseButtonIv.setOnClickListener {
             finishGoalAlertDialog.dismiss()
         }
+    }
+
+    private fun setGoalState(goalData: GoalData?) : GoalState {
+        return goalData?.let {
+            if(it.isEnd) {
+                GoalState.End
+            } else {
+                GoalState.InProgress
+            }
+        } ?: GoalState.Empty
     }
 
     private fun moveToModifyRecordCard() {

@@ -5,6 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="goalDetails"
+            type="com.teampome.pome.model.goal.GoalData" />
+
+        <variable
+            name="currentGoalState"
+            type="com.teampome.pome.presentation.record.GoalState" />
 
         <variable
             name="recordGoalItem"
@@ -15,6 +22,7 @@
             type="com.teampome.pome.model.RecordWeekData" />
 
         <import type="android.view.View" />
+        <import type="com.teampome.pome.presentation.record.GoalState" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -96,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="33dp"
-                        android:visibility="@{recordGoalItem == null ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{currentGoalState instanceof GoalState.Empty ? View.VISIBLE : View.GONE}"
                         tools:visibility="gone">
 
                         <androidx.appcompat.widget.AppCompatImageView
@@ -165,13 +173,13 @@
                         android:id="@+id/record_goal_card_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="@{recordGoalItem != null &amp;&amp; recordGoalItem.recordGoalCard.timeLimit != 0 ? View.VISIBLE : View.GONE}"
-                        pome:setGoalAmount="@{recordGoalItem.recordGoalCard.goalAmount}"
-                        pome:setGoalText="@{recordGoalItem.recordGoalCard.title}"
-                        pome:setPomeProgress="@{recordGoalItem.recordGoalCard.progress}"
-                        pome:setPrivate="@{recordGoalItem.recordGoalCard.private}"
+                        android:visibility="@{currentGoalState instanceof GoalState.InProgress ? View.VISIBLE : View.GONE}"
+                        pome:setGoalAmount="@{Long.toString(goalDetails.price)}"
+                        pome:setGoalText="@{goalDetails.oneLineMind}"
+                        pome:setPomeProgress="@{goalDetails.price == 0 ? 0 : (int)goalDetails.usePrice * 100 / (int)goalDetails.price }"
+                        pome:setPrivate="@{!goalDetails.public}"
                         pome:setRemainDays="@{Integer.toString(recordGoalItem.recordGoalCard.timeLimit)}"
-                        pome:setUsedAmount="@{recordGoalItem.recordGoalCard.useAmount}" />
+                        pome:setUsedAmount="@{Long.toString(goalDetails.usePrice)}" />
 
                     <!-- more button은 처리를 어떻게? -->
                     <androidx.appcompat.widget.AppCompatImageView
@@ -184,7 +192,7 @@
                         android:elevation="2dp"
                         android:padding="6dp"
                         android:src="@drawable/ic_more_vertical_24"
-                        android:visibility="@{recordGoalItem != null &amp;&amp; recordGoalItem.recordGoalCard.timeLimit != 0 ? View.VISIBLE : View.GONE}" />
+                        android:visibility="@{currentGoalState instanceof GoalState.InProgress ? View.VISIBLE : View.GONE}" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/record_goal_complete_cl"
@@ -192,7 +200,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="33.5dp"
-                        android:visibility="@{recordGoalItem != null &amp;&amp; recordGoalItem.recordGoalCard.timeLimit == 0 ? View.VISIBLE : View.GONE}"
+                        android:visibility="@{currentGoalState instanceof GoalState.End ? View.VISIBLE : View.GONE}"
                         tools:visibility="visible">
 
                         <ImageView

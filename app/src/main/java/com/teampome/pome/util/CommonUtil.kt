@@ -33,6 +33,7 @@ import com.teampome.pome.presentation.record.DayDecorator
 import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.*
 import java.io.InputStream
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
@@ -342,5 +343,16 @@ object CommonUtil {
     @SuppressLint("Recycle")
     fun getImageByteArray(context: Context, uri: Uri) : ByteArray? {
         return context.contentResolver.openInputStream(uri)?.buffered()?.use { it.readBytes() }
+    }
+
+    /**
+     *  make price style
+     */
+    fun makePriceStyle(price: String) : String {
+        val df = DecimalFormat("#,###").apply {
+            isDecimalSeparatorAlwaysShown = false
+        }
+
+        return df.format(df.parse(price))
     }
 }

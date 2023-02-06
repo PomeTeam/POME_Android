@@ -1,7 +1,7 @@
 package com.teampome.pome.model.goal
 
 data class GoalData(
-    val endData: String,
+    val endDate: String,
     val goalCategoryResponse: GoalCategoryResponse,
     val id: Int,
     val isEnd: Boolean,
@@ -10,6 +10,6 @@ data class GoalData(
     val oneLineMind: String?,
     val price: Long,
     val startDate: String,
-    val usePrice: Int,
+    val usePrice: Long,
     val oneLineComment: String?
 )
