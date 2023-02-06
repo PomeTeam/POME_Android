@@ -69,8 +69,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        CommonUtil.calDiffDate("2023.02.06")
-
         // for Test
         viewModel.recordDataByUserId(object : CoroutineErrorHandler {
             override fun onError(message: String) {

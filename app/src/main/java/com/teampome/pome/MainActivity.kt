@@ -9,6 +9,7 @@ import androidx.annotation.ColorRes
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.teampome.pome.databinding.ActivityMainBinding
 import com.teampome.pome.util.customview.PomeLoadingDialog
 import dagger.hilt.android.AndroidEntryPoint
