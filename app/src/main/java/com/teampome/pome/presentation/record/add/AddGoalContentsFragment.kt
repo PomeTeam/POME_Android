@@ -212,7 +212,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
                 }
                 is ApiResponse.Failure -> {
                     Log.d("goal", "goalResponseFailure : $it")
-                    Toast.makeText(requireContext(), "목표 생성중 에러가 발생했습니다", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
                 is ApiResponse.Loading -> {

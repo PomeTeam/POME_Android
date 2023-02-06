@@ -35,11 +35,13 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
                     response.body()?.let { data ->
                         emit(ApiResponse.Success(data))
                     }
+                } else if (!(response.body() as BasePomeResponse<*>).success) {
+                    emit(ApiResponse.Failure((response.body() as BasePomeResponse<*>).message, (response.body() as BasePomeResponse<*>).errorCode ?: "400"))
                 } else {
                     response.errorBody()?.let { error ->
                         error.close()
                         val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code.toString()))
                     }
                 }
             } else {
@@ -51,12 +53,12 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
                     response.errorBody()?.let { error ->
                         error.close()
                         val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code.toString()))
                     }
                 }
             }
         } catch (e: Exception) {
-            emit(ApiResponse.Failure(e.message ?: e.toString(), 400))
+            emit(ApiResponse.Failure(e.message ?: e.toString(), "400"))
         }
-    } ?: emit(ApiResponse.Failure("Timeout! Please try again.", 408))
+    } ?: emit(ApiResponse.Failure("Timeout! Please try again.", "408"))
 }.flowOn(Dispatchers.IO)

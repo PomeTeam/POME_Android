@@ -94,7 +94,7 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
-                    if(it.code != 400) {
+                    if(it.code != "400") {
                         Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                         Log.e("findFriend", "findFriendFailure by ${it.errorMessage}")
                     }
