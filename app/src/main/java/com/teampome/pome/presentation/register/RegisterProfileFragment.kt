@@ -43,7 +43,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     // signup coroutine handler
     inner class SignUpCoroutineErrorHandler : CoroutineErrorHandler {
         override fun onError(message: String) {
-            Toast.makeText(requireContext(), "회원가입 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
     
@@ -102,7 +102,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     }
                 }
                 is ApiResponse.Failure -> {
-                    Log.d("test", "failure data : ${it.errorMessage}")
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
                 is ApiResponse.Loading -> {
@@ -332,7 +332,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 // 이미지 url 요청
                 viewModel.getPresignedImageUrl(object : CoroutineErrorHandler {
                     override fun onError(message: String) {
-                        Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                         Log.d("test", "error : $message")
                     }
                 })
@@ -366,6 +366,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
                 binding.registerProfilePlusAiv.visibility = View.INVISIBLE
                 pomeBottomSheetDialog.dismiss()
+            } else {
+                hideLoading()
             }
         }
 

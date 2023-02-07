@@ -15,6 +15,7 @@ import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.model.RemindTestItem
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
@@ -49,7 +50,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // RecyclerView adapter 설정
         binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
             setOnItemClickListener(object : OnCategoryItemClickListener {
-                override fun onCategoryItemClick(item: GoalCategoryResponse, position: Int) {
+                override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                     viewModel.settingRemindPosition(position)
                 }
             })
