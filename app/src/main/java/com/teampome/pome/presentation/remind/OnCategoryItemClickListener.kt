@@ -1,7 +1,7 @@
 package com.teampome.pome.presentation.remind
 
-import com.teampome.pome.model.goal.GoalCategoryResponse
+import com.teampome.pome.model.goal.GoalCategory
 
 interface OnCategoryItemClickListener {
-    fun onCategoryItemClick(item: GoalCategoryResponse, position: Int)
+    fun onCategoryItemClick(item: GoalCategory, position: Int)
 }

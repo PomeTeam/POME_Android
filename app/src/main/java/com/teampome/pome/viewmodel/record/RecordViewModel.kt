@@ -9,6 +9,7 @@ import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.AllGoalData
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.repository.goal.GoalRepository
@@ -47,13 +48,18 @@ class RecordViewModel @Inject constructor(
     private val _deleteGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
     val deleteGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteGoalResponse
 
-    val goalCategory: LiveData<List<GoalCategoryResponse>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalCategory: LiveData<List<GoalCategory>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
                     allGoalData.content?.let { goalData ->
                         goalData.map { data ->
-                            data.goalCategoryResponse
+                            GoalCategory(
+                                data.goalCategoryResponse.id,
+                                data.goalCategoryResponse.name,
+                                false,
+                                data.id
+                            )
                         }
                     } ?: run { null }
                 } ?: run { null }

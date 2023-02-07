@@ -12,7 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentConsumeEmotionBinding
-import com.teampome.pome.model.goal.GoalCategoryResponse
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
@@ -31,7 +31,7 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
     private var isWhatSelected = false
     private var isSadSelected = false
     
-    private lateinit var category: GoalCategoryResponse
+    private lateinit var category: GoalCategory
     private lateinit var consumeDate: String
     private var consumePrice: Long = 0
     private lateinit var consumeRecord: String
@@ -41,32 +41,6 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         consumeDate = navArgs.consumeRecord.date
         consumePrice = navArgs.consumeRecord.price
         consumeRecord = navArgs.consumeRecord.record
-
-        showLoading()
-
-        // 초기에 goalCategoryId를 통해 GoalId를 가져옴
-        viewModel.getGoalIdByGoalCategoryId(category.id, object : CoroutineErrorHandler {
-            override fun onError(message: String) {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                hideLoading()
-                findNavController().popBackStack()
-            }
-        })
-
-        viewModel.getGoalIdByGoalCategoryIdResponse.observe(viewLifecycleOwner) {
-            when(it) {
-                is ApiResponse.Success -> {
-                    viewModel.setGoalId(it.data.data?.content?.get(0)?.id)
-                    hideLoading()
-                }
-                is ApiResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-                    hideLoading()
-                    findNavController().popBackStack()
-                }
-                is ApiResponse.Loading -> {}
-            }
-        }
         
         super.onViewCreated(view, savedInstanceState)
 
@@ -128,24 +102,19 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         binding.consumeEmotionCheckButtonAcb.setOnClickListener {
             showLoading()
 
-            viewModel.goalId.value?.let {
-                viewModel.writeConsumeRecord(
-                    CommonUtil.emotionToNum(viewModel.selectedEmotion.value ?: Emotion.HAPPY_EMOTION),
-                    it,
-                    consumeRecord,
-                    consumeDate,
-                    consumePrice,
-                    object : CoroutineErrorHandler {
-                        override fun onError(message: String) {
-                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                            hideLoading()
-                        }
+            viewModel.writeConsumeRecord(
+                CommonUtil.emotionToNum(viewModel.selectedEmotion.value ?: Emotion.HAPPY_EMOTION),
+                category.goalId,
+                consumeRecord,
+                consumeDate,
+                consumePrice,
+                object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        hideLoading()
                     }
-                )
-            } ?: run {
-                Toast.makeText(requireContext(), "잠시후 다시 시도해주세요", Toast.LENGTH_SHORT).show()
-                hideLoading()
-            }
+                }
+            )
         }
         
         viewModel.writeConsumeRecordResponse.observe(viewLifecycleOwner) {

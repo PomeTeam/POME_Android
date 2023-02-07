@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordCategoryChipBinding
-import com.teampome.pome.model.RemindCategoryData
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 
-class RecordCategoryAdapter : ListAdapter<GoalCategoryResponse, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
+class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
     lateinit var bind: ItemRecordCategoryChipBinding
 
     // category click 관리 변수
@@ -36,8 +36,8 @@ class RecordCategoryAdapter : ListAdapter<GoalCategoryResponse, RecordCategoryAd
 
             // onCreateViewHolder가 여러번 불리기 때문에 init{}은 넣지 말아야함.
 
-            fun bind(item: GoalCategoryResponse) {
-                binding.goalCategoryResponse = item
+            fun bind(item: GoalCategory) {
+                binding.goalCategory = item
 
                 currentList[adapterPosition].isSelected = selectedPosition == adapterPosition
                 submitList(currentList)
@@ -57,17 +57,17 @@ class RecordCategoryAdapter : ListAdapter<GoalCategoryResponse, RecordCategoryAd
         }
 }
 
-class RecordCategoryDiffCallback : DiffUtil.ItemCallback<GoalCategoryResponse>() {
+class RecordCategoryDiffCallback : DiffUtil.ItemCallback<GoalCategory>() {
     override fun areItemsTheSame(
-        oldItem: GoalCategoryResponse,
-        newItem: GoalCategoryResponse
+        oldItem: GoalCategory,
+        newItem: GoalCategory
     ): Boolean {
-        return oldItem == newItem
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(
-        oldItem: GoalCategoryResponse,
-        newItem: GoalCategoryResponse
+        oldItem: GoalCategory,
+        newItem: GoalCategory
     ): Boolean {
         return oldItem == newItem
     }

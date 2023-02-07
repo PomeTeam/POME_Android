@@ -21,6 +21,7 @@ import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordWeekItem
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
@@ -90,7 +91,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
-                    override fun onCategoryItemClick(item: GoalCategoryResponse, position: Int) {
+                    override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
 
@@ -462,7 +463,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToConsume() {
         val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment(
-            goalCategoryResponse = viewModel.goalDetails.value?.get(currentCategoryPosition)?.goalCategoryResponse ?: GoalCategoryResponse(id = 0, name = ""),
+            goalCategory = viewModel.goalCategory.value?.get(currentCategoryPosition) ?: GoalCategory(id = 0, name = "", goalId = 0),
             listGoal = viewModel.goalCategory.value?.toTypedArray() ?: arrayOf()
         )
 

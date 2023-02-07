@@ -15,6 +15,7 @@ import com.teampome.pome.databinding.FragmentConsumeRecordBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
 import com.teampome.pome.model.consume.ConsumeRecord
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.record.OnGoalCategoryClickListener
 import com.teampome.pome.presentation.record.TextListAdapter
@@ -45,8 +46,8 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
     private var selectedDate: Date? = null
     private var selectedDateStr: String = ""
 
-    private lateinit var currentGoal: GoalCategoryResponse
-    private lateinit var goalList: List<GoalCategoryResponse>
+    private lateinit var currentGoal: GoalCategory
+    private lateinit var goalList: List<GoalCategory>
 
     // for price
     // price value
@@ -57,7 +58,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
     private var hasFractionalPart: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        currentGoal = navArgs.goalCategoryResponse
+        currentGoal = navArgs.goalCategory
         goalList = navArgs.listGoal.toList()
 
         super.onViewCreated(view, savedInstanceState)
