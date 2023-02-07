@@ -28,7 +28,7 @@ interface RecordService {
     /**
      *  기록 페이징 조회
      */
-    @GET("api/v1/record/goal/{goalId}")
+    @GET("api/v1/records/goal/{goalId}")
     suspend fun getRecordByGoalId(
         @Path("goalId") goalId: Int
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
