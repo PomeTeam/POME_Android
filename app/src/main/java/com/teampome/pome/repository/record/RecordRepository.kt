@@ -52,4 +52,6 @@ class RecordRepository @Inject constructor(
             usePrice
         )
     )
+
+    fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
 }

@@ -107,4 +107,14 @@ class RecordViewModel @Inject constructor(
     ) {
         goalRepository.deleteGoal(goalId)
     }
+
+    private val _getRecordByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
+    val getRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getRecordByGoalIdResponse
+
+    fun getRecordByGoalId(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getRecordByGoalIdResponse,
+        coroutineErrorHandler
+    ) {
+        recordRepository.getRecordByGoalId(goalId)
+    }
 }

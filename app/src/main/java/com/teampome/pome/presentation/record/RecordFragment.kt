@@ -123,8 +123,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
                     binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
                     binding.executePendingBindings()
-                    
-                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
@@ -136,7 +134,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // goal Details Observe 등록
         viewModel.goalDetails.observe(viewLifecycleOwner) {
-            Log.d("goalDetails", "goalDetails : $it")
         }
 
         // category listener - category를 주입
@@ -147,10 +144,33 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategoryPosition = 0
 
                 // 0번 기반의 사용자 기록 확인
+                Log.d("test", "it $it")
+
+                viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        hideLoading()
+                    }
+                })
 
                 (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
                     it
                 )
+            }
+        }
+
+        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("recordData", "success RecordData : $it")
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    Log.d("recordData", "failure RecordData : $it")
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {}
             }
         }
 
