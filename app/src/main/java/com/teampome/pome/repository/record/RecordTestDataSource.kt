@@ -145,7 +145,7 @@ class RecordTestDataSource @Inject constructor(
         service.writeConsumeRecord(consumeRecordDataBody)
     }
 
-    override fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = apiRequestFlow {
+    override fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> = apiRequestFlow {
         service.getRecordByGoalId(goalId)
     }
 }

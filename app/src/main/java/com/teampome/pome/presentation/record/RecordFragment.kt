@@ -148,6 +148,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
                 viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
+                        Log.e("record", "record error $message")
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                         hideLoading()
                     }
@@ -163,6 +164,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("recordData", "success RecordData : $it")
+
+                    // recordData submitList 처리
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
@@ -174,38 +177,38 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        // for test
-        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
-            recordTestData?.let {
-
-                it.recordGoalData?.let { recordGoalItemList ->
-                    // categoryList 데이터 주입
-                    categoryList = recordGoalItemList.map { recordGoalItem ->
-                        recordGoalItem.category
-                    }
-
-                    // 초기 값은 0번
-                    binding.recordGoalItem = recordGoalItemList[0]
-                }
-
-                // content card data 주입
-                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                    it.recordWeekData?.recordWeekItem
-                )
-
-                // content card more 버튼 클릭 리스너 등록
-                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
-                    override fun onMoreIconClick(item: RecordWeekItem) {
-                        recordWeekItem = item
-
-                        recordDialog.show()
-                    }
-                })
-
-                binding.recordWeekData = it.recordWeekData
-                binding.executePendingBindings()
-            }
-        }
+//        // for test
+//        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
+//            recordTestData?.let {
+//
+//                it.recordGoalData?.let { recordGoalItemList ->
+//                    // categoryList 데이터 주입
+//                    categoryList = recordGoalItemList.map { recordGoalItem ->
+//                        recordGoalItem.category
+//                    }
+//
+//                    // 초기 값은 0번
+//                    binding.recordGoalItem = recordGoalItemList[0]
+//                }
+//
+//                // content card data 주입
+//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+//                    it.recordWeekData?.recordWeekItem
+//                )
+//
+//                // content card more 버튼 클릭 리스너 등록
+//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
+//                    override fun onMoreIconClick(item: RecordWeekItem) {
+//                        recordWeekItem = item
+//
+//                        recordDialog.show()
+//                    }
+//                })
+//
+//                binding.recordWeekData = it.recordWeekData
+//                binding.executePendingBindings()
+//            }
+//        }
 
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
