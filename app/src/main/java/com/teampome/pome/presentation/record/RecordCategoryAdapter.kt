@@ -34,6 +34,8 @@ class RecordCategoryAdapter : ListAdapter<GoalCategoryResponse, RecordCategoryAd
     inner class RecordCategoryViewHolder(
         val binding: ItemRecordCategoryChipBinding) : RecyclerView.ViewHolder(binding.root) {
 
+            // onCreateViewHolder가 여러번 불리기 때문에 init{}은 넣지 말아야함.
+
             fun bind(item: GoalCategoryResponse) {
                 binding.goalCategoryResponse = item
 

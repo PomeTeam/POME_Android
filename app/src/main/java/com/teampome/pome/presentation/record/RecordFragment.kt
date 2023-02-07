@@ -69,30 +69,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // for Test
-        viewModel.recordDataByUserId(object : CoroutineErrorHandler {
-            override fun onError(message: String) {
-                Log.e("record", "record error by $message")
-            }
-        })
-
-        viewModel.recordDataByUserIdResponse.observe(viewLifecycleOwner) {
-            when(it) {
-                is ApiResponse.Loading -> {
-
-                }
-                is ApiResponse.Failure -> {
-                    Log.e("record", "error by ${it.errorMessage}")
-                }
-                is ApiResponse.Success -> {
-                    Log.d("record", "success by ${it.data}")
-                }
-            }
-        }
-
+        // 초기 목표 데이터 요청
+        showLoading()
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
-                Log.e("test", "findAllGoalByUser Error by $message")
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                hideLoading()
             }
         })
     }
@@ -130,9 +112,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 }
             })
         }
-
-        // 일단 임시로 계속 호출
-        finishGoalAlertDialog.show()
     }
 
     override fun initListener() {
@@ -143,9 +122,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
                     binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
                     binding.executePendingBindings()
+                    
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
-                    Log.e("test", "findAllGoalById by $it")
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> {}
             }
@@ -159,9 +141,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         // category listener - category를 주입
         viewModel.goalCategory.observe(viewLifecycleOwner) {
             it?.let {
+                // 초기에 category를 받으면 0번을 기반으로 데이터 초기화
                 currentCategory = it[0].name
+                currentCategoryPosition = 0
 
-                Log.d("category", "category item $it")
+                // 0번 기반의 사용자 기록 확인
 
                 (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
                     it
