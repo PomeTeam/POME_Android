@@ -4,4 +4,5 @@ package com.teampome.pome.network.friend
 interface FriendsService {
 
     //git test
+    //
 }
