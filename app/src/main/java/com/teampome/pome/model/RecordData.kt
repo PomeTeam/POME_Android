@@ -6,14 +6,14 @@ data class RecordData(
     val id: Int,
     val nickname: String,
     val oneLineMind: String,
-    val userComment: String,
+    val useComment: String,
     val useDate: String,
     val usePrice: Int
 )
 
 data class EmotionResponse(
     val firstEmotion: Int,
-    val friendEmotions: List<FriendEmotion?>,
+    val friendEmotions: List<FriendEmotion>?,
     val myEmotion: Int,
     val secondEmotion: Int
 )
