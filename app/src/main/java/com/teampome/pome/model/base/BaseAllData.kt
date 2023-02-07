@@ -1,10 +1,7 @@
-package com.teampome.pome.model.goal
+package com.teampome.pome.model.base
 
-import com.teampome.pome.model.base.Pageable
-import com.teampome.pome.model.base.Sort
-
-data class AllGoalData(
-    val content: List<GoalData>?,
+data class BaseAllData<T>(
+    val content: List<T>?,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,

@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BasePomeResponse
-import com.teampome.pome.model.goal.AllGoalData
-import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
