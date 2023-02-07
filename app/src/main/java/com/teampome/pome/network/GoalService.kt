@@ -42,4 +42,12 @@ interface GoalService {
     suspend fun deleteGoal(
         @Path("goalId") goalId: Int
     ) : Response<BasePomeResponse<Any>>
+
+    /**
+     *  목표 카테고리로 목표 조회
+     */
+    @GET("api/v1/goals/category/{goalCategoryId}")
+    suspend fun getGoalIdByGoalCategoryId(
+        @Path("goalCategoryId") goalCategoryId: Int
+    ) : Response<BasePomeResponse<AllGoalData>>
 }
