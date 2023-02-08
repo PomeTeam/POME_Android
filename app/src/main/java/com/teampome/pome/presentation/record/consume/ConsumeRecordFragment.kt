@@ -109,12 +109,12 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                p0?.let {
+                if(!p0.isNullOrEmpty()) {
                     binding.consumeRecordPriceAet.removeTextChangedListener(this)
 
                     val iniLen = binding.consumeRecordPriceAet.text?.length ?: 0
 
-                    val s = it.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
+                    val s = p0.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
                     val n = df.parse(s)
 
                     val cp = binding.consumeRecordPriceAet.selectionStart
@@ -138,7 +138,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
                     binding.consumeRecordPriceAet.addTextChangedListener(this)
 
-                    viewModel.setPrice(it.toString().replace(",", "").toLong())
+                    viewModel.setPrice(p0.toString().replace(",", "").toLong())
                 }
             }
         })

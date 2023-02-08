@@ -7,4 +7,5 @@ object Constants {
     const val HAPPY_EMOTION = "행복해요"
     const val WHAT_EMOTION = "모르겠어요"
     const val SAD_EMOTION = "후회해요"
+    const val EMPTY_EMOTION = "감정을 남겨주세요"
 }

@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.repository.record.RecordRepository
+import com.teampome.pome.util.Emotion
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.Emotion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

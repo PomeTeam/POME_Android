@@ -31,9 +31,7 @@ import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
-import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.*
-import java.io.InputStream
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*

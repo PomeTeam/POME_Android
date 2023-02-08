@@ -3,7 +3,6 @@ package com.teampome.pome.util
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -12,7 +11,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.teampome.pome.R
 import com.teampome.pome.util.customview.PomeBigGoalCardView
 import com.teampome.pome.util.customview.PomeSmallGoalCardView
-import com.teampome.pome.viewmodel.Emotion
 import jp.wasabeef.glide.transformations.MaskTransformation
 
 // attrs와 정의하려고 하였지만 둘다 정의해야 에러가 안남...
@@ -63,12 +61,6 @@ fun bindingPomeImage44(imageView: ImageView, src: String?){
 fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
     emotion?.let {
         when(emotion) {
-            Emotion.FIRST_EMOTION -> {
-                textView.text = Constants.FIRST_EMOTION
-            }
-            Emotion.LAST_EMOTION -> {
-                textView.text = Constants.LAST_EMOTION
-            }
             Emotion.HAPPY_EMOTION -> {
                 textView.text = Constants.HAPPY_EMOTION
             }
@@ -77,6 +69,9 @@ fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
             }
             Emotion.SAD_EMOTION -> {
                 textView.text = Constants.SAD_EMOTION
+            }
+            Emotion.EMPTY_EMOTION -> {
+                textView.text = Constants.EMPTY_EMOTION
             }
         }
     }

@@ -9,7 +9,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeLoadingDialogBinding
 
 class PomeLoadingDialog constructor(context: Context) : Dialog(context){
-    lateinit var binding: PomeLoadingDialogBinding
+    var binding: PomeLoadingDialogBinding
 
     init {
         // dialog no title

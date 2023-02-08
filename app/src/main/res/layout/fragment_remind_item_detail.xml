@@ -10,13 +10,13 @@
             name="contentCardItem"
             type="com.teampome.pome.model.ContentCardItem" />
 
-        <variable
-            name="firstEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="firstEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
-        <variable
-            name="lastEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="lastEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
     </data>
 
     <ScrollView
@@ -59,8 +59,8 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindFirstEmotionDrawable="@{firstEmotion}"
                     tools:src="@drawable/emoji_mint_fiter_sad" />
+<!--                bind:remindFirstEmotionDrawable="@{firstEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_detail_first_emotion_tv"
@@ -68,12 +68,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{contentCardItem.firstThink}"
                     android:textColor="@color/grey_7"
                     app:layout_constraintBottom_toBottomOf="@id/remind_contents_detail_first_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/remind_contents_detail_first_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/remind_contents_detail_first_emotion_aiv"
                     tools:text="후회해요" />
+<!--                android:text="@{contentCardItem.firstThink}"-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -105,8 +105,8 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindLastEmotionDrawable="@{lastEmotion}"
                     tools:src="@drawable/emoji_pink_fiter_happy" />
+<!--                bind:remindLastEmotionDrawable="@{lastEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_detail_last_emotion_tv"

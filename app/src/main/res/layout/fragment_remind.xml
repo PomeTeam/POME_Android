@@ -11,17 +11,17 @@
             name="remindTestItem"
             type="com.teampome.pome.model.RemindTestItem" />
 
-        <variable
-            name="firstEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="firstEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
-        <variable
-            name="lastEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="lastEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
         <import type="android.view.View" />
 
-        <import type="com.teampome.pome.viewmodel.Emotion" />
+        <import type="com.teampome.pome.util.Emotion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -116,24 +116,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:background="@{firstEmotion == Emotion.FIRST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv">
+<!--            android:background="@{firstEmotion == Emotion.FIRST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/remind_review_first_emotion_atv"
                 style="@style/Pome.SemiBold.14"
-                bind:remindEmotionText="@{firstEmotion}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
                 android:text="@string/remind_review_first_emotion_text"
-                android:textColor="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+<!--            bind:remindEmotionText="@{firstEmotion}"-->
+<!--            android:textColor="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -141,11 +141,11 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="11dp"
                 android:src="@drawable/ic_arrow"
-                android:tint="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_atv"
                 app:layout_constraintTop_toTopOf="parent" />
+<!--            android:tint="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -155,24 +155,24 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="10dp"
-            android:background="@{lastEmotion == Emotion.LAST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"
             app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_cl"
             app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv">
+<!--            android:background="@{lastEmotion == Emotion.LAST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/remind_review_last_emotion_atv"
                 style="@style/Pome.SemiBold.14"
-                bind:remindEmotionText="@{lastEmotion}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingVertical="6dp"
                 android:paddingStart="8dp"
                 android:paddingEnd="0dp"
                 android:text="@string/remind_review_last_emotion_text"
-                android:textColor="@{lastEmotion == Emotion.LAST_EMOTION ? @color/grey_5 : @color/pink_100}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+<!--            bind:remindEmotionText="@{lastEmotion}"-->
+<!--            android:textColor="@{lastEmotion == Emotion.LAST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
@@ -180,11 +180,11 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="11dp"
                 android:src="@drawable/ic_arrow"
-                android:tint="@{lastEmotion == Emotion.LAST_EMOTION ? @color/grey_5 : @color/pink_100}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/remind_review_last_emotion_atv"
                 app:layout_constraintTop_toTopOf="parent" />
+<!--            android:tint="@{lastEmotion == Emotion.LAST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

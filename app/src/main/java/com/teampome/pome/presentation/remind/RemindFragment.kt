@@ -14,12 +14,10 @@ import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.model.RemindCategoryData
-import com.teampome.pome.model.RemindTestItem
 import com.teampome.pome.model.goal.GoalCategory
-import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
-import com.teampome.pome.viewmodel.Emotion
+import com.teampome.pome.util.Emotion
 import com.teampome.pome.viewmodel.RemindViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -100,16 +98,16 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         }
 
         // viewModel 처음 감정 관찰
-        viewModel.firstEmotion.observe(viewLifecycleOwner) {
-            binding.firstEmotion = it
-            binding.executePendingBindings()
-        }
+//        viewModel.firstEmotion.observe(viewLifecycleOwner) {
+//            binding.firstEmotion = it
+//            binding.executePendingBindings()
+//        }
 
         // viewModel 후 감정 관찰
-        viewModel.lastEmotion.observe(viewLifecycleOwner) {
-            binding.lastEmotion = it
-            binding.executePendingBindings()
-        }
+//        viewModel.lastEmotion.observe(viewLifecycleOwner) {
+//            binding.lastEmotion = it
+//            binding.executePendingBindings()
+//        }
 
         // 처음 감정 선택
         binding.remindReviewFirstEmotionCl.setOnClickListener {
@@ -139,9 +137,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Happy
         pomeRemindBottomSheetDialogBinding.remindDialogHappyContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                viewModel.settingFirstEmotion(Emotion.HAPPY_EMOTION)
+//                viewModel.settingFirstEmotion(Emotion.HAPPY_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                viewModel.settingLastEmotion(Emotion.HAPPY_EMOTION)
+//                viewModel.settingLastEmotion(Emotion.HAPPY_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -152,9 +150,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // What
         pomeRemindBottomSheetDialogBinding.remindDialogWhatContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                viewModel.settingFirstEmotion(Emotion.WHAT_EMOTION)
+//                viewModel.settingFirstEmotion(Emotion.WHAT_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                viewModel.settingLastEmotion(Emotion.WHAT_EMOTION)
+//                viewModel.settingLastEmotion(Emotion.WHAT_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -165,9 +163,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Sad
         pomeRemindBottomSheetDialogBinding.remindDialogSadContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-                viewModel.settingFirstEmotion(Emotion.SAD_EMOTION)
+//                viewModel.settingFirstEmotion(Emotion.SAD_EMOTION)
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-                viewModel.settingLastEmotion(Emotion.SAD_EMOTION)
+//                viewModel.settingLastEmotion(Emotion.SAD_EMOTION)
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -182,8 +180,8 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // 초기화 버튼 클릭시
         binding.remindReviewResetContainterCl.setOnClickListener {
-            viewModel.settingFirstEmotion(Emotion.FIRST_EMOTION)
-            viewModel.settingLastEmotion(Emotion.LAST_EMOTION)
+//            viewModel.settingFirstEmotion(Emotion.FIRST_EMOTION)
+//            viewModel.settingLastEmotion(Emotion.LAST_EMOTION)
         }
     }
 

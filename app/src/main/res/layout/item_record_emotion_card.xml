@@ -7,16 +7,18 @@
     <data>
 
         <variable
-            name="recordWeekItem"
-            type="com.teampome.pome.model.RecordWeekItem" />
+            name="recordData"
+            type="com.teampome.pome.model.RecordData" />
 
-        <variable
-            name="firstEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="firstEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
-        <variable
-            name="lastEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="lastEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
+
+        <import type="com.teampome.pome.util.CommonUtil" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -51,7 +53,7 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindFirstEmotionDrawable="@{firstEmotion}"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion)}"
                     tools:src="@drawable/emoji_mint_fiter_sad" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -60,12 +62,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{recordWeekItem.firstThink}"
                     android:textColor="@color/grey_7"
                     app:layout_constraintBottom_toBottomOf="@id/record_contents_card_first_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/record_contents_card_first_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/record_contents_card_first_emotion_aiv"
                     tools:text="후회해요" />
+<!--                android:text="@{recordWeekItem.firstThink}"-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -97,7 +99,7 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindLastEmotionDrawable="@{lastEmotion}"
+                    bind:remindLastEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion)}"
                     tools:src="@drawable/emoji_mono_16" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -106,12 +108,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{recordWeekItem.lastThink == null ? `아직 감정을 남기지 않았어요` : recordWeekItem.lastThink}"
-                    android:textColor="@{recordWeekItem.lastThink == null ? @color/grey_5 : @color/grey_7}"
                     app:layout_constraintBottom_toBottomOf="@id/record_contents_card_last_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/record_contents_card_last_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/record_contents_card_last_emotion_aiv"
                     tools:text="아직 감정을 남기지 않았어요" />
+<!--                android:text="@{recordWeekItem.lastThink == null ? `아직 감정을 남기지 않았어요` : recordWeekItem.lastThink}"-->
+<!--                android:textColor="@{recordWeekItem.lastThink == null ? @color/grey_5 : @color/grey_7}"-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -123,11 +125,11 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="3sp"
                 android:maxLines="1"
-                android:text="@{recordWeekItem.title}"
                 android:textColor="@color/grey_8"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_first_emotion_container_cl"
                 tools:text="16,000원" />
+<!--            android:text="@{recordWeekItem.title}"-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/record_contents_card_subtitle_atv"
@@ -137,12 +139,12 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="6sp"
                 android:maxLines="2"
-                android:text="@{recordWeekItem.subTitle}"
                 android:textColor="@color/grey_7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_title_atv"
                 tools:text="아휴 힘빠져 이젠 진짜 포기다 포기 도대체 뭐가 문제일까 현실을 되돌아볼 필요를 느낀다ㅠ 이정도 노력했으면 된거 아닌가 진짜 개 힘빠지네 그래서 오늘은 물 대신 라떼 한잔을 마셨습니다 ㅋ 라뗴 존맛탱~~ 다들 나흐바 시그니쳐 커피를 마셔주세요 설탕 솔솔 뿌려서 개맛있음" />
+<!--            android:text="@{recordWeekItem.subTitle}"-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/record_contents_card_date_atv"
@@ -150,11 +152,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="@{recordWeekItem.date}"
                 android:textColor="@color/grey_5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_subtitle_atv"
                 tools:text="6월 24일" />
+<!--            android:text="@{recordWeekItem.date}"-->
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/record_contents_card_more_aiv"
