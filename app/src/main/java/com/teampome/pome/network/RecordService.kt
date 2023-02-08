@@ -32,4 +32,12 @@ interface RecordService {
     suspend fun getRecordByGoalId(
         @Path("goalId") goalId: Int
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
+
+    /**
+     *  일주일이 지난 기록 조회
+     */
+    @GET("api/v1/records/one-week/goal/{goalId}")
+    suspend fun getOneWeekGoalByGoalId(
+        @Path("goalId") goalId: Int
+    ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
 }

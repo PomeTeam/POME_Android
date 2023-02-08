@@ -25,16 +25,6 @@ class RecordViewModel @Inject constructor(
     private val recordRepository: RecordRepository,
     private val goalRepository: GoalRepository
 ) : BaseViewModel() {
-
-    private val _recordTestData = MutableLiveData<RecordTestData?>()
-    val recordTestData : LiveData<RecordTestData?> = _recordTestData
-
-    init {
-        viewModelScope.launch {
-            _recordTestData.value = recordRepository.getRecordTestData()
-        }
-    }
-
     private val _recordDataByUserIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<List<RecordData>>>>()
     val recordDataByUserIdResponse: LiveData<ApiResponse<BasePomeResponse<List<RecordData>>>> = _recordDataByUserIdResponse
 
@@ -116,5 +106,15 @@ class RecordViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         recordRepository.getRecordByGoalId(goalId)
+    }
+
+    private val _getOneWeekRecordByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
+    val getOneWeekRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getOneWeekRecordByGoalIdResponse
+
+    fun getOneWeekRecordByGoalId(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getOneWeekRecordByGoalIdResponse,
+        coroutineErrorHandler
+    ) {
+        recordRepository.getOneWeekGoalByGoalId(goalId)
     }
 }

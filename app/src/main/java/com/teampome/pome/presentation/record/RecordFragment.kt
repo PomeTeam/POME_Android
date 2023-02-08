@@ -32,6 +32,7 @@ import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import okhttp3.internal.notify
 
 @AndroidEntryPoint
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
@@ -68,15 +69,17 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var currentCategory: String
     private var currentCategoryPosition: Int = 0
 
+    // 요청 완료 확인 boolean값
+    private var isCompletedGetRecords = false
+    private var isCompletedGetOneWeekRecords = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 초기 목표 데이터 요청
-        showLoading()
+        // 초기 목표 데이터 요청 (같이 요청을 하긴 하는데 showLoading은 언제까지?)
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                hideLoading()
             }
         })
     }
@@ -144,7 +147,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
-                is ApiResponse.Loading -> {}
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
@@ -159,14 +162,30 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategory = it[0].name
                 currentCategoryPosition = 0
 
-                // 0번 기반의 사용자 기록 확인
-                Log.d("test", "it $it")
-
+                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
+                isCompletedGetRecords = false
                 viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Log.e("record", "record error $message")
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        hideLoading()
+                        isCompletedGetRecords = true
+
+                        if(isCompletedGetOneWeekRecords) {
+                            hideLoading()
+                        }
+                    }
+                })
+
+                isCompletedGetOneWeekRecords = false
+                viewModel.getOneWeekRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.e("record", "record error $message")
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        isCompletedGetOneWeekRecords = true
+
+                        if(isCompletedGetRecords) {
+                            hideLoading()
+                        }
                     }
                 })
 
@@ -185,56 +204,63 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         binding.recordData = contents.content
                     }
 
-                    // recordData submitList 처리
-                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                        it.data.data?.content
-                    )
-
                     binding.executePendingBindings()
 
-                    hideLoading()
+                    // recordData submitList 처리
+                    // submit list하는 list는 다른 값인데, 이전 값이 currentList임...
+                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+                        it.data.data?.content?.toList()
+                    )
+
+                    Log.d("currentList", "change : ${it.data.data?.content}")
+                    Log.d("currentList", "current : ${(binding.recordEmotionRv.adapter as RecordContentsCardAdapter).currentList}")
+
+                    isCompletedGetRecords = true
+
+                    if(isCompletedGetOneWeekRecords) {
+                        hideLoading()
+                    }
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("recordData", "failure RecordData : $it")
-                    hideLoading()
+                    isCompletedGetRecords = true
+
+                    if(isCompletedGetOneWeekRecords) {
+                        hideLoading()
+                    }
                 }
-                is ApiResponse.Loading -> {}
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
-//        // for test
-//        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
-//            recordTestData?.let {
-//
-//                it.recordGoalData?.let { recordGoalItemList ->
-//                    // categoryList 데이터 주입
-//                    categoryList = recordGoalItemList.map { recordGoalItem ->
-//                        recordGoalItem.category
-//                    }
-//
-//                    // 초기 값은 0번
-//                    binding.recordGoalItem = recordGoalItemList[0]
-//                }
-//
-//                // content card data 주입
-//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-//                    it.recordWeekData?.recordWeekItem
-//                )
-//
-//                // content card more 버튼 클릭 리스너 등록
-//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
-//                    override fun onMoreIconClick(item: RecordWeekItem) {
-//                        recordWeekItem = item
-//
-//                        recordDialog.show()
-//                    }
-//                })
-//
-//                binding.recordWeekData = it.recordWeekData
-//                binding.executePendingBindings()
-//            }
-//        }
+        viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("recordData", "success RecordOneWeekData : $it")
+
+                    binding.countOneWeekRecord = it.data.data?.content?.size ?: 0
+                    binding.executePendingBindings()
+
+                    isCompletedGetOneWeekRecords = true
+
+                    if(isCompletedGetRecords) {
+                        hideLoading()
+                    }
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    Log.d("recordData", "failure RecordData : $it")
+
+                    isCompletedGetOneWeekRecords = true
+
+                    if(isCompletedGetRecords) {
+                        hideLoading()
+                    }
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
 
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
@@ -251,20 +277,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     removeGoalDialog.dismiss()
                 }
                 is ApiResponse.Loading -> {
-                }
-            }
-        }
-
-        // floating button click
-        binding.recordWriteButtonCl.setOnClickListener {
-            viewModel.recordTestData.value?.let { recordTestData ->
-                // 목표가 없는데 기록카드 쓰기 버튼을 누른 경우
-                if(recordTestData.recordGoalData.isNullOrEmpty()) {
-                    alertWarningDialog(
-                        R.drawable.writing_warning_alert_3d_component,
-                        "지금은 씀씀이를 기록할 수 없어요",
-                        "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
-                    )
                 }
             }
         }
@@ -300,6 +312,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // float button 클릭
         binding.recordWriteButtonCl.setOnClickListener {
+//                    alertWarningDialog(
+//                        R.drawable.writing_warning_alert_3d_component,
+//                        "지금은 씀씀이를 기록할 수 없어요",
+//                        "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
+//                    )
+
             moveToConsume()
         }
 

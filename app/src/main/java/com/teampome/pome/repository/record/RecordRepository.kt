@@ -19,14 +19,6 @@ class RecordRepository @Inject constructor(
     private val recordDataSource: RecordDataSource,
     private val userManager: UserManager
 ) {
-    suspend fun getRecordTestData() : RecordTestData? {
-        return recordDataSource.getRecordTestData()
-    }
-
-    suspend fun getRecordAlarmsTestData() : List<TestAlarmsData> {
-        return recordDataSource.getRecordTestAlarmsData()
-    }
-
     fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> {
         val userId = runBlocking {
             userManager.getUserId().first()
@@ -54,4 +46,6 @@ class RecordRepository @Inject constructor(
     )
 
     fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
+
+    fun getOneWeekGoalByGoalId(goalId: Int) = recordDataSource.getOneWeekGoalByGoalId(goalId)
 }

@@ -10,9 +10,8 @@ import com.teampome.pome.util.base.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
 interface RecordDataSource {
-    suspend fun getRecordTestData(): RecordTestData?
-    suspend fun getRecordTestAlarmsData(): List<TestAlarmsData>
     fun getRecordDataByUserId(userId: String): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>>
     fun writeConsumeRecord(consumeRecordDataBody: ConsumeRecordDataBody): Flow<ApiResponse<BasePomeResponse<RecordData>>>
     fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
+    fun getOneWeekGoalByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
 }
