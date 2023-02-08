@@ -11,7 +11,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -20,7 +19,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
-import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -446,8 +444,8 @@ object CommonUtil {
         val diffHour = nowDate.substring(11,13).toInt() - diffDate.substring(11,13).toInt()
         val diffMin = nowDate.substring(14,16).toInt() - diffDate.substring(14,16).toInt()
 
-        Log.d("test", "now : $nowDate , diff : $diffDate")
-        Log.d("test", "y : $diffYear , M : $diffMonth, d : $diffDay , h : $diffHour, m : $diffMin")
+//        Log.d("test", "now : $nowDate , diff : $diffDate")
+//        Log.d("test", "y : $diffYear , M : $diffMonth, d : $diffDay , h : $diffHour, m : $diffMin")
 
         return if(diffYear != 0) {
             "$diffYear" + "년 전"
@@ -461,6 +459,24 @@ object CommonUtil {
             "${60 + diffMin}" + "분 전"
         } else {
             "$diffMin" + "분 전"
+        }
+    }
+
+    /**
+     *  년 월 일 변환
+     *  @param date : 23.02.08
+     */
+    fun changeStringDate(date: String) : String {
+        val sdf = SimpleDateFormat("yyyy")
+
+        val nowYear = sdf.format(Date(System.currentTimeMillis()))
+
+        val dateArr = date.split(".")
+
+        return if(nowYear == dateArr[0]) {
+            "${dateArr[1]}월 ${dateArr[2]}일"
+        } else {
+            "${dateArr[0]}년 ${dateArr[1]}월 ${dateArr[2]}일"
         }
     }
 }
