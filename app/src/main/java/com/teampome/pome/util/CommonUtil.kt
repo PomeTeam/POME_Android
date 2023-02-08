@@ -378,21 +378,23 @@ object CommonUtil {
     /**
      *  서버 상호작용을 위한 num -> Emotion 변경
      */
-    fun numToEmotion(num: Int): Emotion {
-        return when(num) {
-            0 -> {
-                Emotion.HAPPY_EMOTION
+    fun numToEmotion(num: Int?): Emotion {
+        return num?.let {
+            when(it) {
+                0 -> {
+                    Emotion.HAPPY_EMOTION
+                }
+                1 -> {
+                    Emotion.WHAT_EMOTION
+                }
+                2 -> {
+                    Emotion.SAD_EMOTION
+                }
+                else -> {
+                    Emotion.EMPTY_EMOTION
+                }
             }
-            1 -> {
-                Emotion.WHAT_EMOTION
-            }
-            2 -> {
-                Emotion.SAD_EMOTION
-            }
-            else -> {
-                Emotion.HAPPY_EMOTION
-            }
-        }
+        } ?: Emotion.EMPTY_EMOTION
     }
 
     /**
@@ -412,6 +414,53 @@ object CommonUtil {
             else -> {
                 0
             }
+        }
+    }
+
+    /**
+     *  오늘 기준으로 시간 표현을 위한 메소드
+     *  1시간 전 -> ~분 전
+     *  1시간 후 -> ~시간 전
+     *  다음날부터 -> ~일 전
+     *
+     *  @param createdAt : createdAt=2023-02-08T09:52:42.034674
+     */
+    fun changeAfterTime(createdAt: String) : String {
+        val date = Date(System.currentTimeMillis())
+        val sdf = SimpleDateFormat("yyyy.MM.dd_HH:mm")
+
+        val nowDate = sdf.format(date)
+        var diffDate = createdAt
+            .replace("-", ".")
+            .replace("T", "_")
+
+        val diffTmp = diffDate.lastIndexOf(":")
+
+        if(diffTmp > 0) {
+           diffDate = diffDate.substring(0, diffTmp)
+        }
+
+        val diffYear = nowDate.substring(0,4).toInt() - diffDate.substring(0,4).toInt()
+        val diffMonth = nowDate.substring(5,7).toInt() - diffDate.substring(5,7).toInt()
+        val diffDay = nowDate.substring(8,10).toInt() - diffDate.substring(8,10).toInt()
+        val diffHour = nowDate.substring(11,13).toInt() - diffDate.substring(11,13).toInt()
+        val diffMin = nowDate.substring(14,16).toInt() - diffDate.substring(14,16).toInt()
+
+        Log.d("test", "now : $nowDate , diff : $diffDate")
+        Log.d("test", "y : $diffYear , M : $diffMonth, d : $diffDay , h : $diffHour, m : $diffMin")
+
+        return if(diffYear != 0) {
+            "$diffYear" + "년 전"
+        } else if(diffMonth != 0) {
+            "$diffMonth" + "달 전"
+        } else if(diffDay != 0) {
+            "$diffDay" + "일 전"
+        } else if(diffHour >= 2 || ((diffHour == 1) && (diffMin > 0))) {
+            "$diffHour" + "시간 전"
+        } else if(diffMin < 0) {
+            "${60 + diffMin}" + "분 전"
+        } else {
+            "$diffMin" + "분 전"
         }
     }
 }
