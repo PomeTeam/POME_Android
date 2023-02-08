@@ -204,6 +204,9 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
                 setOnGoalCategoryClickListener(object : OnGoalCategoryClickListener {
                     override fun categoryClick(category: String) {
                         binding.consumeRecordGoalAet.setText(category)
+                        currentGoal = goalList.filter {
+                            it.name == category
+                        }[0]
 
                         goalBottomSheetDialog.dismiss()
                     }
