@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -345,12 +346,17 @@ object CommonUtil {
     /**
      *  make price style
      */
-    fun makePriceStyle(price: String) : String {
-        val df = DecimalFormat("#,###").apply {
-            isDecimalSeparatorAlwaysShown = false
-        }
+    fun makePriceStyle(price: String?) : String {
 
-        return df.format(df.parse(price))
+        return if(!price.isNullOrEmpty()) {
+            val df = DecimalFormat("#,###").apply {
+                isDecimalSeparatorAlwaysShown = false
+            }
+
+            df.format(df.parse(price))
+        } else {
+            ""
+        }
     }
 
     /**
@@ -467,16 +473,19 @@ object CommonUtil {
      *  @param date : 23.02.08
      */
     fun changeStringDate(date: String) : String {
-        val sdf = SimpleDateFormat("yyyy")
+        val sdf = SimpleDateFormat("yy")
 
         val nowYear = sdf.format(Date(System.currentTimeMillis()))
 
         val dateArr = date.split(".")
 
+        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
+
+        // 월과 일에 toInt처리를 해서 02 -> 2형식으로 변환
         return if(nowYear == dateArr[0]) {
-            "${dateArr[1]}월 ${dateArr[2]}일"
+            "${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
         } else {
-            "${dateArr[0]}년 ${dateArr[1]}월 ${dateArr[2]}일"
+            "${dateArr[0]}년 ${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
         }
     }
 }

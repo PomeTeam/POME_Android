@@ -20,6 +20,7 @@ import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
+import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordWeekItem
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalCategoryResponse
@@ -95,6 +96,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         currentCategory = item.name
                         currentCategoryPosition = position
 
+                        showLoading()
+                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Log.e("record", "record error $message")
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                hideLoading()
+                            }
+                        })
+
                         binding.goalDetails = viewModel.goalDetails.value?.get(position)
                         binding.currentGoalState = setGoalState(viewModel.goalDetails.value?.get(position))
                         binding.executePendingBindings()
@@ -110,6 +120,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         "아직은 감정을 기록할 수 없어요",
                         "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
                     )
+                }
+            })
+
+            setOnMoreItemClickListener(object : OnMoreItemClickListener {
+                override fun onMoreIconClick(item: RecordData) {
+
                 }
             })
         }
@@ -160,12 +176,22 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) {
+        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("recordData", "success RecordData : $it")
 
+                    it.data.data?.let { contents ->
+                        binding.recordData = contents.content
+                    }
+
                     // recordData submitList 처리
+                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+                        it.data.data?.content
+                    )
+
+                    binding.executePendingBindings()
+
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {

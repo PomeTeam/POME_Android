@@ -42,9 +42,7 @@ class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdap
         binding : ItemRecordEmotionCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecordData) {
-//            binding.recordWeekItem = item
-//            binding.firstEmotion = CommonUtil.getEmotionData(item.firstThink)
-//            binding.lastEmotion = item.lastThink?.let { CommonUtil.getEmotionData(it) }
+            binding.recordData = item
 
             binding.recordContentsCardMoreAiv.setOnClickListener {
                 moreItemClickListener?.onMoreIconClick(item)
