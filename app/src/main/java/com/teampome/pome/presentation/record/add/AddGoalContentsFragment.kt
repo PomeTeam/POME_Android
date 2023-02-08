@@ -146,12 +146,12 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
                 }
             }
             override fun afterTextChanged(p0: Editable?) {
-                p0?.let {
+                if(!p0.isNullOrEmpty()) {
                     binding.addGoalContentsAmountAet.removeTextChangedListener(this)
 
                     val iniLen = binding.addGoalContentsAmountAet.text?.length ?: 0
 
-                    val s = it.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
+                    val s = p0.toString().replace(df.decimalFormatSymbols.groupingSeparator.toString(), "")
                     val n = df.parse(s)
 
                     val cp = binding.addGoalContentsAmountAet.selectionStart
@@ -175,7 +175,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
 
                     binding.addGoalContentsAmountAet.addTextChangedListener(this)
 
-                    viewModel.setGoalPrice(it.toString().replace(",",""))
+                    viewModel.setGoalPrice(p0.toString().replace(",",""))
                 }
             }
         })
