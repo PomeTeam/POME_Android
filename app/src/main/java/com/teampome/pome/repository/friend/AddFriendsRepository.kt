@@ -7,4 +7,6 @@ class AddFriendsRepository @Inject constructor(
 ){
     fun findFriendsData(nickName: String) = dataSource.findFriendsData(nickName)
     fun addFriend(friendId: String) = dataSource.addFriend(friendId)
+
+    fun getFriend() = dataSource.getFriend()
 }

@@ -8,4 +8,7 @@ import kotlinx.coroutines.flow.Flow
 interface AddFriendsDataSource {
     fun findFriendsData(nickName: String) : Flow<ApiResponse<BasePomeResponse<List<FriendData>>>>
     fun addFriend(friendId: String) : Flow<ApiResponse<BasePomeResponse<Boolean>>>
+
+    //친구 목록 조회
+    fun getFriend() : Flow<ApiResponse<BasePomeResponse<List<GetFriends>>>>
 }

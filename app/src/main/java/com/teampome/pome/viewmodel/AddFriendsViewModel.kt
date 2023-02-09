@@ -27,6 +27,10 @@ class AddFriendsViewModel @Inject constructor(
     private val _friendsData = MutableLiveData<List<FriendData>?>()
     val friendsData: LiveData<List<FriendData>?> = _friendsData
 
+    //친구 목록 조회
+    private val _getFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<List<GetFriends>>>>()
+    val getFriendsResponse : LiveData<ApiResponse<BasePomeResponse<List<GetFriends>>>> = _getFriendResponse
+
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _findFriendsDataResponse,
         coroutineErrorHandler
@@ -39,6 +43,13 @@ class AddFriendsViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         repository.addFriend(friendId)
+    }
+
+    fun getFriend(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getFriendResponse,
+        coroutineErrorHandler
+    ){
+        repository.getFriend()
     }
 
     fun settingFriendsData(item: List<FriendData>?) {

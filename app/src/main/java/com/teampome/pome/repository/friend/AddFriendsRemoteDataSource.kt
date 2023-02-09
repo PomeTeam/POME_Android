@@ -18,4 +18,8 @@ class AddFriendsRemoteDataSource @Inject constructor(
     override fun addFriend(friendId: String): Flow<ApiResponse<BasePomeResponse<Boolean>>> = apiRequestFlow {
         service.addFriend(friendId)
     }
+
+    override fun getFriend(): Flow<ApiResponse<BasePomeResponse<List<GetFriends>>>> = apiRequestFlow{
+        service.getFriend()
+    }
 }

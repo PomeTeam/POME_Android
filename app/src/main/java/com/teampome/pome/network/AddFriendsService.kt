@@ -20,4 +20,9 @@ interface AddFriendsService {
     suspend fun addFriend(
         @Path("friendId") friendId: String
     ) : Response<BasePomeResponse<Boolean>>
+
+    //친구 목록 조회
+    @GET("api/v1/users/friends")
+    suspend fun getFriend()
+        : Response<BasePomeResponse<List<GetFriends>>>
 }
