@@ -7,16 +7,10 @@
     <data>
 
         <variable
-            name="recordWeekItem"
-            type="com.teampome.pome.model.RecordWeekItem" />
+            name="recordData"
+            type="com.teampome.pome.model.RecordData" />
 
-        <variable
-            name="firstEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
-
-        <variable
-            name="lastEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+        <import type="com.teampome.pome.util.CommonUtil" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -51,7 +45,7 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindFirstEmotionDrawable="@{firstEmotion}"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion)}"
                     tools:src="@drawable/emoji_mint_fiter_sad" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -60,8 +54,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{recordWeekItem.firstThink}"
                     android:textColor="@color/grey_7"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion).emotion}"
                     app:layout_constraintBottom_toBottomOf="@id/record_contents_card_first_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/record_contents_card_first_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/record_contents_card_first_emotion_aiv"
@@ -97,7 +91,7 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindLastEmotionDrawable="@{lastEmotion}"
+                    bind:remindLastEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion)}"
                     tools:src="@drawable/emoji_mono_16" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -106,8 +100,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{recordWeekItem.lastThink == null ? `아직 감정을 남기지 않았어요` : recordWeekItem.lastThink}"
-                    android:textColor="@{recordWeekItem.lastThink == null ? @color/grey_5 : @color/grey_7}"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion).emotion}"
+                    android:textColor="@{recordData.emotionResponse.secondEmotion == null ? @color/grey_5 : @color/grey_7}"
                     app:layout_constraintBottom_toBottomOf="@id/record_contents_card_last_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/record_contents_card_last_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/record_contents_card_last_emotion_aiv"
@@ -123,8 +117,8 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="3sp"
                 android:maxLines="1"
-                android:text="@{recordWeekItem.title}"
                 android:textColor="@color/grey_8"
+                android:text="@{@string/use_price_text(CommonUtil.INSTANCE.makePriceStyle(String.valueOf(recordData.usePrice)))}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_first_emotion_container_cl"
                 tools:text="16,000원" />
@@ -137,8 +131,8 @@
                 android:ellipsize="end"
                 android:lineSpacingExtra="6sp"
                 android:maxLines="2"
-                android:text="@{recordWeekItem.subTitle}"
                 android:textColor="@color/grey_7"
+                android:text="@{recordData.useComment}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_title_atv"
@@ -150,8 +144,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="@{recordWeekItem.date}"
                 android:textColor="@color/grey_5"
+                android:text="@{CommonUtil.INSTANCE.changeStringDate(recordData.useDate)}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/record_contents_card_subtitle_atv"
                 tools:text="6월 24일" />

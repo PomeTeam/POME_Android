@@ -2,7 +2,8 @@ package com.teampome.pome.util.base
 
 import android.util.Log
 import com.google.gson.Gson
-import com.teampome.pome.model.ErrorResponse
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.base.ErrorResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,19 +30,35 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
         Log.d("call", "call in $response")
 
         try {
-            if(response.isSuccessful) {
-                response.body()?.let { data ->
-                    emit(ApiResponse.Success(data))
+            if(response.body() is BasePomeResponse<*>) {
+                if(response.isSuccessful && (response.body() as BasePomeResponse<*>).success) {
+                    response.body()?.let { data ->
+                        emit(ApiResponse.Success(data))
+                    }
+                } else if (!(response.body() as BasePomeResponse<*>).success) {
+                    emit(ApiResponse.Failure((response.body() as BasePomeResponse<*>).message, (response.body() as BasePomeResponse<*>).errorCode ?: "400"))
+                } else {
+                    response.errorBody()?.let { error ->
+                        error.close()
+                        val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code.toString()))
+                    }
                 }
             } else {
-                response.errorBody()?.let { error ->
-                    error.close()
-                    val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
-                    emit(ApiResponse.Failure(parsedError.message[0], parsedError.code))
+                if(response.isSuccessful) {
+                    response.body()?.let { data ->
+                        emit(ApiResponse.Success(data))
+                    }
+                } else {
+                    response.errorBody()?.let { error ->
+                        error.close()
+                        val parsedError: ErrorResponse = Gson().fromJson(error.charStream(), ErrorResponse::class.java)
+                        emit(ApiResponse.Failure(parsedError.message[0], parsedError.code.toString()))
+                    }
                 }
             }
         } catch (e: Exception) {
-            emit(ApiResponse.Failure(e.message ?: e.toString(), 400))
+            emit(ApiResponse.Failure(e.message ?: e.toString(), "400"))
         }
-    } ?: emit(ApiResponse.Failure("Timeout! Please try again.", 408))
+    } ?: emit(ApiResponse.Failure("Timeout! Please try again.", "408"))
 }.flowOn(Dispatchers.IO)

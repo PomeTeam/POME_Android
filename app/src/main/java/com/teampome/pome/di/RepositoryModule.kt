@@ -4,6 +4,9 @@ import com.teampome.pome.network.*
 import com.teampome.pome.repository.friend.AddFriendsDataSource
 import com.teampome.pome.repository.friend.AddFriendsRemoteDataSource
 import com.teampome.pome.repository.friend.AddFriendsRepository
+import com.teampome.pome.repository.goal.GoalDataSource
+import com.teampome.pome.repository.goal.GoalRemoteDataSource
+import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.login.LoginDataSource
 import com.teampome.pome.repository.login.LoginRemoteDataSource
 import com.teampome.pome.repository.login.LoginRepository
@@ -107,5 +110,17 @@ object RepositoryModule {
     @Singleton
     fun provideLoginRepository(dataSource: LoginDataSource) : LoginRepository {
         return LoginRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoalDataSource(service: GoalService) : GoalDataSource {
+        return GoalRemoteDataSource(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGoalRepository(dataSource: GoalDataSource) : GoalRepository {
+        return GoalRepository(dataSource)
     }
 }

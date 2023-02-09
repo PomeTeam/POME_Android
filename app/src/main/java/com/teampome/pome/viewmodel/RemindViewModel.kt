@@ -6,17 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RemindTestData
 import com.teampome.pome.repository.remind.RemindRepository
+import com.teampome.pome.util.Constants
+import com.teampome.pome.util.Emotion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
-enum class Emotion {
-    FIRST_EMOTION,
-    LAST_EMOTION,
-    HAPPY_EMOTION,
-    WHAT_EMOTION,
-    SAD_EMOTION
-}
 
 @HiltViewModel
 class RemindViewModel @Inject constructor(
@@ -29,11 +23,11 @@ class RemindViewModel @Inject constructor(
     private val _remindPosition = MutableLiveData<Int>()
     val remindPosition: LiveData<Int> = _remindPosition
 
-    private val _firstEmotion = MutableLiveData(Emotion.FIRST_EMOTION)
-    val firstEmotion: LiveData<Emotion> = _firstEmotion
-
-    private val _lastEmotion = MutableLiveData(Emotion.LAST_EMOTION)
-    val lastEmotion: LiveData<Emotion> = _lastEmotion
+//    private val _firstEmotion = MutableLiveData(Emotion.FIRST_EMOTION)
+//    val firstEmotion: LiveData<Emotion> = _firstEmotion
+//
+//    private val _lastEmotion = MutableLiveData(Emotion.LAST_EMOTION)
+//    val lastEmotion: LiveData<Emotion> = _lastEmotion
 
     init {
         // test data 주입
@@ -50,11 +44,11 @@ class RemindViewModel @Inject constructor(
         _remindPosition.value = pos
     }
 
-    fun settingFirstEmotion(emotion: Emotion) {
-        _firstEmotion.value = emotion
-    }
-
-    fun settingLastEmotion(emotion: Emotion) {
-        _lastEmotion.value = emotion
-    }
+//    fun settingFirstEmotion(emotion: Emotion) {
+//        _firstEmotion.value = emotion
+//    }
+//
+//    fun settingLastEmotion(emotion: Emotion) {
+//        _lastEmotion.value = emotion
+//    }
 }

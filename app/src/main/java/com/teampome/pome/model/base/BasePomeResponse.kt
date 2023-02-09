@@ -1,13 +1,10 @@
-package com.teampome.pome.model
+package com.teampome.pome.model.base
 
-/**
- *  data가 array일 때, 사용
- */
-data class BasePomeListResponse<T>(
+data class BasePomeResponse<T>(
     val success: Boolean,
     val localDateTime: String,
     val httpStatus: String,
     val errorCode: String?,
     val message: String,
-    val data: List<T>?
+    val data: T?
 )

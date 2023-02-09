@@ -10,13 +10,13 @@
             name="contentCardItem"
             type="com.teampome.pome.model.ContentCardItem" />
 
-        <variable
-            name="firstEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="firstEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
-        <variable
-            name="lastEmotion"
-            type="com.teampome.pome.viewmodel.Emotion" />
+<!--        <variable-->
+<!--            name="lastEmotion"-->
+<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
 
         <variable
             name="clickListener"
@@ -59,8 +59,8 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindFirstEmotionDrawable="@{firstEmotion}"
                     tools:src="@drawable/emoji_mint_fiter_sad" />
+<!--                bind:remindFirstEmotionDrawable="@{firstEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_card_first_emotion_tv"
@@ -105,8 +105,8 @@
                     android:scaleType="fitXY"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:remindLastEmotionDrawable="@{lastEmotion}"
                     tools:src="@drawable/emoji_pink_fiter_happy" />
+<!--                bind:remindLastEmotionDrawable="@{lastEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_card_last_emotion_tv"

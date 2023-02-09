@@ -1,9 +1,9 @@
 package com.teampome.pome.network
 
-import com.teampome.pome.model.BasePomeResponse
+import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.PhoneDataBody
 import com.teampome.pome.model.SmsData
-import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.model.request.NicknameDataBody
 import com.teampome.pome.model.request.UserInfoDataBody
 import retrofit2.Response

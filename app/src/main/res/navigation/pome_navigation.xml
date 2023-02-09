@@ -240,6 +240,12 @@
             android:id="@+id/action_addGoalContentsFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/record_fragment"/>
+        <argument
+            android:name="start_date"
+            app:argType="string" />
+        <argument
+            android:name="end_date"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/addGoalCompleteFragment"
@@ -259,6 +265,12 @@
         <action
             android:id="@+id/action_consumeRecordFragment_to_consumeEmotionFragment"
             app:destination="@id/consumeEmotionFragment" />
+        <argument
+            android:name="goalCategory"
+            app:argType="com.teampome.pome.model.goal.GoalCategory" />
+        <argument
+            android:name="list_goal"
+            app:argType="com.teampome.pome.model.goal.GoalCategory[]" />
     </fragment>
     <fragment
         android:id="@+id/consumeEmotionFragment"
@@ -272,6 +284,9 @@
             android:id="@+id/action_consumeEmotionFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/record_fragment"/>
+        <argument
+            android:name="consumeRecord"
+            app:argType="com.teampome.pome.model.consume.ConsumeRecord" />
     </fragment>
     <fragment
         android:id="@+id/consumeCompleteFragment"

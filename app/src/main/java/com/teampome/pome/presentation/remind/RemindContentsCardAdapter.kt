@@ -7,9 +7,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRemindContentsCardBinding
 import com.teampome.pome.model.ContentCardItem
-import com.teampome.pome.util.CommonUtil.getEmotionData
-import com.teampome.pome.util.Constants
-import com.teampome.pome.viewmodel.Emotion
 
 class RemindContentsCardAdapter(
     private val remindItemClickListener: RemindItemClickListener? = null
@@ -37,8 +34,8 @@ class RemindContentsCardAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ContentCardItem) {
             binding.contentCardItem = item
-            binding.firstEmotion = getEmotionData(item.firstThink)
-            binding.lastEmotion = getEmotionData(item.lastThink)
+//            binding.firstEmotion = getEmotionData(item.firstThink)
+//            binding.lastEmotion = getEmotionData(item.lastThink)
             binding.clickListener = remindItemClickListener
             binding.executePendingBindings()
         }

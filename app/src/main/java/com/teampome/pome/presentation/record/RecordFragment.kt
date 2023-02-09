@@ -20,14 +20,17 @@ import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.databinding.TopImgNoticeDialogBinding
+import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.RecordWeekItem
-import com.teampome.pome.model.RemindCategoryData
+import com.teampome.pome.model.goal.GoalCategory
+import com.teampome.pome.model.goal.GoalCategoryResponse
+import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.RecordViewModel
+import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -68,26 +71,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // for Test
-        viewModel.recordDataByUserId(object : CoroutineErrorHandler {
+        // 초기 목표 데이터 요청
+        showLoading()
+        viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
-                Log.e("record", "record error by $message")
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                hideLoading()
             }
         })
-
-        viewModel.recordDataByUserIdResponse.observe(viewLifecycleOwner) {
-            when(it) {
-                is ApiResponse.Loading -> {
-
-                }
-                is ApiResponse.Failure -> {
-                    Log.e("record", "error by ${it.errorMessage}")
-                }
-                is ApiResponse.Success -> {
-                    Log.d("record", "success by ${it.data}")
-                }
-            }
-        }
     }
 
     override fun initView() {
@@ -101,12 +92,22 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
-                    override fun onCategoryItemClick(item: RemindCategoryData, position: Int) {
-                        binding.recordGoalItem = viewModel.recordTestData.value?.recordGoalData?.get(position)
-                        binding.executePendingBindings()
-
-                        currentCategory = item.category
+                    override fun onCategoryItemClick(item: GoalCategory, position: Int) {
+                        currentCategory = item.name
                         currentCategoryPosition = position
+
+                        showLoading()
+                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Log.e("record", "record error $message")
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                hideLoading()
+                            }
+                        })
+
+                        binding.goalDetails = viewModel.goalDetails.value?.get(position)
+                        binding.currentGoalState = setGoalState(viewModel.goalDetails.value?.get(position))
+                        binding.executePendingBindings()
                     }
                 })
             }
@@ -121,52 +122,136 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     )
                 }
             })
-        }
 
-        // 일단 임시로 계속 호출
-        finishGoalAlertDialog.show()
+            setOnMoreItemClickListener(object : OnMoreItemClickListener {
+                override fun onMoreIconClick(item: RecordData) {
+
+                }
+            })
+        }
     }
 
     override fun initListener() {
-        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
-            recordTestData?.let {
-
-                // category Adapter data 주입
-                it.recordGoalData?.let { recordGoalItemList ->
-                    (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
-                        recordGoalItemList.map { recordGoalItem ->
-                            RemindCategoryData(
-                                recordGoalItem.category
-                            )
-                        }
-                    )
-
-                    // categoryList 데이터 주입
-                    categoryList = recordGoalItemList.map { recordGoalItem ->
-                        recordGoalItem.category
-                    }
-                    currentCategory = recordGoalItemList[0].category
-
-                    // 초기 값은 0번
-                    binding.recordGoalItem = recordGoalItemList[0]
+        // 모든 목표 Response observe
+        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
+                    binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
+                    binding.executePendingBindings()
                 }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
 
-                // content card data 주입
-                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                    it.recordWeekData?.recordWeekItem
-                )
+        // goal Details Observe 등록
+        viewModel.goalDetails.observe(viewLifecycleOwner) {
+        }
 
-                // content card more 버튼 클릭 리스너 등록
-                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
-                    override fun onMoreIconClick(item: RecordWeekItem) {
-                        recordWeekItem = item
+        // category listener - category를 주입
+        viewModel.goalCategory.observe(viewLifecycleOwner) {
+            it?.let {
+                // 초기에 category를 받으면 0번을 기반으로 데이터 초기화
+                currentCategory = it[0].name
+                currentCategoryPosition = 0
 
-                        recordDialog.show()
+                // 0번 기반의 사용자 기록 확인
+                Log.d("test", "it $it")
+
+                viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.e("record", "record error $message")
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        hideLoading()
                     }
                 })
 
-                binding.recordWeekData = it.recordWeekData
-                binding.executePendingBindings()
+                (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
+                    it
+                )
+            }
+        }
+
+        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("recordData", "success RecordData : $it")
+
+                    it.data.data?.let { contents ->
+                        binding.recordData = contents.content
+                    }
+
+                    // recordData submitList 처리
+                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+                        it.data.data?.content
+                    )
+
+                    binding.executePendingBindings()
+
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    Log.d("recordData", "failure RecordData : $it")
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
+
+//        // for test
+//        viewModel.recordTestData.observe(viewLifecycleOwner) { recordTestData ->
+//            recordTestData?.let {
+//
+//                it.recordGoalData?.let { recordGoalItemList ->
+//                    // categoryList 데이터 주입
+//                    categoryList = recordGoalItemList.map { recordGoalItem ->
+//                        recordGoalItem.category
+//                    }
+//
+//                    // 초기 값은 0번
+//                    binding.recordGoalItem = recordGoalItemList[0]
+//                }
+//
+//                // content card data 주입
+//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+//                    it.recordWeekData?.recordWeekItem
+//                )
+//
+//                // content card more 버튼 클릭 리스너 등록
+//                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).setOnMoreItemClickListener(object : OnMoreItemClickListener {
+//                    override fun onMoreIconClick(item: RecordWeekItem) {
+//                        recordWeekItem = item
+//
+//                        recordDialog.show()
+//                    }
+//                })
+//
+//                binding.recordWeekData = it.recordWeekData
+//                binding.executePendingBindings()
+//            }
+//        }
+
+        // 삭제하기 response
+        viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Toast.makeText(requireContext(), "목표 삭제가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    refresh()
+                    removeGoalDialog.dismiss()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    removeGoalDialog.dismiss()
+                }
+                is ApiResponse.Loading -> {
+                }
             }
         }
 
@@ -256,15 +341,27 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "목표 삭제하기 Yes", Toast.LENGTH_SHORT).show()
 
-            removeGoalDialog.dismiss()
+            showLoading()
+
+            viewModel.goalDetails.value?.get(currentCategoryPosition)?.id?.let {
+                viewModel.deleteGoal(
+                    it,
+                    object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                )
+            } ?: run {
+                Toast.makeText(requireContext(), "목표 삭제 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                hideLoading()
+                removeGoalDialog.dismiss()
+            }
         }
 
         // 아니요 버튼 클릭
         removeGoalDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "목표 삭제하기 No", Toast.LENGTH_SHORT).show()
-
             removeGoalDialog.dismiss()
         }
     }
@@ -374,6 +471,23 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
     }
 
+    private fun setGoalState(goalData: GoalData?) : GoalState {
+        return goalData?.let {
+            if(it.isEnd) {
+                GoalState.End
+            } else {
+                GoalState.InProgress
+            }
+        } ?: GoalState.Empty
+    }
+
+    // record view refresh 작업 => 뷰 데이터 처리 반영 시 사용
+    private fun refresh() {
+        val id = findNavController().currentDestination?.id
+        findNavController().popBackStack(id!!, true)
+        findNavController().navigate(id)
+    }
+
     private fun moveToModifyRecordCard() {
         val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
             recordWeekItem,
@@ -397,7 +511,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToConsume() {
-        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment()
+        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment(
+            goalCategory = viewModel.goalCategory.value?.get(currentCategoryPosition) ?: GoalCategory(id = 0, name = "", goalId = 0),
+            listGoal = viewModel.goalCategory.value?.toTypedArray() ?: arrayOf()
+        )
 
         findNavController().navigate(action)
     }

@@ -1,7 +1,7 @@
 package com.teampome.pome.network
 
-import com.teampome.pome.model.BasePomeResponse
-import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.model.request.AuthDataBody
 import retrofit2.Response
 import retrofit2.http.Body

@@ -2,9 +2,8 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.teampome.pome.model.BasePomeResponse
-import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.repository.login.LoginRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel

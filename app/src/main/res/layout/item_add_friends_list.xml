@@ -8,7 +8,7 @@
 
         <variable
             name="friendData"
-            type="com.teampome.pome.model.FriendData"/>
+            type="com.teampome.pome.model.friend.FriendData"/>
 
         <import type="android.view.View" />
     </data>

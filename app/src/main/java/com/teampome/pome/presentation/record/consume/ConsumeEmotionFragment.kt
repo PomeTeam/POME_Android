@@ -7,18 +7,41 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentConsumeEmotionBinding
+import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.Emotion
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.viewmodel.record.ConsumeEmotionViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.layout.fragment_consume_emotion) {
+    private val viewModel: ConsumeEmotionViewModel by viewModels()
+    
+    private val navArgs: ConsumeEmotionFragmentArgs by navArgs()
+
     private var isHappySelected = false
     private var isWhatSelected = false
     private var isSadSelected = false
+    
+    private lateinit var category: GoalCategory
+    private lateinit var consumeDate: String
+    private var consumePrice: Long = 0
+    private lateinit var consumeRecord: String
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        category = navArgs.consumeRecord.category
+        consumeDate = navArgs.consumeRecord.date
+        consumePrice = navArgs.consumeRecord.price
+        consumeRecord = navArgs.consumeRecord.record
+        
         super.onViewCreated(view, savedInstanceState)
 
         settingBackPressedCallback(object : OnBackPressedCallback(true) {
@@ -77,7 +100,37 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         }
 
         binding.consumeEmotionCheckButtonAcb.setOnClickListener {
-            moveToConsumeComplete()
+            showLoading()
+
+            viewModel.writeConsumeRecord(
+                CommonUtil.emotionToNum(viewModel.selectedEmotion.value ?: Emotion.HAPPY_EMOTION),
+                category.goalId,
+                consumeRecord,
+                consumeDate,
+                consumePrice,
+                object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        hideLoading()
+                    }
+                }
+            )
+        }
+        
+        viewModel.writeConsumeRecordResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    hideLoading()
+                    
+                    moveToConsumeComplete()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                }
+            }
         }
     }
 
@@ -107,6 +160,8 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
                         changeUnSelectedEmotionView(consumeEmotionHappyBackgroundIv, consumeEmotionHappyTv)
                         isHappySelected = false
                     }
+                    
+                    viewModel.setEmotion(Emotion.HAPPY_EMOTION)
                 }
                 "what" -> {
                     if(!isWhatSelected) {
@@ -121,6 +176,8 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
                         changeUnSelectedEmotionView(consumeEmotionWhatBackgroundIv, consumeEmotionWhatTv)
                         isWhatSelected = false
                     }
+                    
+                    viewModel.setEmotion(Emotion.WHAT_EMOTION)
                 }
                 "sad" -> {
                     if(!isSadSelected) {
@@ -135,6 +192,8 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
                         changeUnSelectedEmotionView(consumeEmotionSadBackgroundIv, consumeEmotionSadTv)
                         isSadSelected = false
                     }
+                    
+                    viewModel.setEmotion(Emotion.SAD_EMOTION)
                 }
             }
         }

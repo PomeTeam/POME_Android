@@ -1,8 +1,8 @@
-package com.teampome.pome.viewmodel
+package com.teampome.pome.viewmodel.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.teampome.pome.model.BasePomeResponse
+import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.SmsData
 import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.util.base.ApiResponse

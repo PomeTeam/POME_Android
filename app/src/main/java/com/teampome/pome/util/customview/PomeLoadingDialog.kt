@@ -4,10 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.Window
+import com.bumptech.glide.Glide
+import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeLoadingDialogBinding
 
 class PomeLoadingDialog constructor(context: Context) : Dialog(context){
-    lateinit var binding: PomeLoadingDialogBinding
+    var binding: PomeLoadingDialogBinding
 
     init {
         // dialog no title
@@ -16,6 +18,6 @@ class PomeLoadingDialog constructor(context: Context) : Dialog(context){
         binding = PomeLoadingDialogBinding.inflate(LayoutInflater.from(context), null, false)
         setContentView(binding.root)
 
-        binding.pomeLoadingPb.animate()
+        Glide.with(context).load(R.drawable.loading).into(binding.pomeLoadingIv)
     }
 }

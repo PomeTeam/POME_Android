@@ -1,6 +1,6 @@
 package com.teampome.pome.network
 
-import com.teampome.pome.model.PresignedUrlImageData
+import com.teampome.pome.model.image.PresignedUrlImageData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

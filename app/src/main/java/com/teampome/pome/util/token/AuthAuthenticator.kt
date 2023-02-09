@@ -1,11 +1,10 @@
 package com.teampome.pome.util.token
 
 import android.util.Log
-import com.teampome.pome.di.BASE_URL
-import com.teampome.pome.model.BasePomeResponse
-import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.BuildConfig.BASE_URL
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.model.request.AuthDataBody
-import com.teampome.pome.model.request.PhoneNumberDataBody
 import com.teampome.pome.network.AuthService
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -13,7 +12,6 @@ import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Inject
 
 class AuthAuthenticator @Inject constructor(

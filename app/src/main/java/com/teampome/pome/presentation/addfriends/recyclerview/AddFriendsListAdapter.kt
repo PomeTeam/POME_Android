@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemAddFriendsListBinding
-import com.teampome.pome.model.FriendData
+import com.teampome.pome.model.friend.FriendData
 
 class AddFriendsListAdapter : ListAdapter<FriendData, AddFriendsListAdapter.AddFriendsListViewHolder>(AddFriendsTestDataDiffCallback()) {
 

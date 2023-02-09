@@ -5,8 +5,27 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewTreeObserver
 import com.teampome.pome.R
+import com.teampome.pome.util.CommonUtil
 
 class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : PomeSmallGoalCardView(context, attrs) {
+    var useAmount: String? = ""
+        set(value) {
+            field = value?.let { context.getString(R.string.use_price_text, CommonUtil.makePriceStyle(value)) } ?: value
+
+            field?.let {
+                binding.goalCardUsedAmountAtv.text = it
+            }
+        }
+
+    var goalAmount: String? = ""
+        set(value) {
+            field = value?.let { context.getString(R.string.goal_price_text, CommonUtil.makePriceStyle(value)) } ?: value
+
+            field?.let {
+                binding.goalCardAmountAtv.text = it
+            }
+        }
+
     var progress: Int = 0
         set(value) {
             field = value
@@ -28,24 +47,6 @@ class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: Att
                         binding.goalCardProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
                     }
                 })
-            }
-        }
-
-    var useAmount: String? = ""
-        set(value) {
-            field = value
-
-            field?.let {
-                binding.goalCardUsedAmountAtv.text = it
-            }
-        }
-
-    var goalAmount: String? = ""
-        set(value) {
-            field = value
-
-            field?.let {
-                binding.goalCardAmountAtv.text = it
             }
         }
 

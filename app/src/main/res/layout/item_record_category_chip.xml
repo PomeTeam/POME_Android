@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="remindCategoryData"
-            type="com.teampome.pome.model.RemindCategoryData" />
+            name="goalCategory"
+            type="com.teampome.pome.model.goal.GoalCategory" />
     </data>
 
 
@@ -32,11 +31,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:background="@{remindCategoryData.isSelected() ? @drawable/remind_chip_background : null}"
+            android:background="@{goalCategory.isSelected() ? @drawable/remind_chip_background : null}"
             android:paddingHorizontal="12dp"
             android:paddingVertical="5dp"
-            android:text="@{remindCategoryData.category}"
-            android:textColor="@{remindCategoryData.isSelected() ? @color/white : @color/grey_5, default=@color/grey_5}"
+            android:text="@{goalCategory.name}"
+            android:textColor="@{goalCategory.isSelected() ? @color/white : @color/grey_5, default=@color/grey_5}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

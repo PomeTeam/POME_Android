@@ -1,9 +1,7 @@
 package com.teampome.pome.network
 
-import com.teampome.pome.model.BasePomeResponse
-import com.teampome.pome.model.FriendData
-import com.teampome.pome.model.BasePomeListResponse
-import com.teampome.pome.model.response.GetFriends
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.friend.FriendData
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -16,7 +14,7 @@ interface AddFriendsService {
     @GET("api/v1/users/friend/{friendId}")
     suspend fun findFriendsData(
         @Path("friendId") friendId: String
-    ) : Response<BasePomeListResponse<FriendData>>
+    ) : Response<BasePomeResponse<List<FriendData>>>
 
     @POST("api/v1/users/friend/{friendId}")
     suspend fun addFriend(

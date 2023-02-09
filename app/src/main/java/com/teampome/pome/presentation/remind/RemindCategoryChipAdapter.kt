@@ -49,11 +49,11 @@ class RemindCategoryChipAdapter : ListAdapter<RemindCategoryData, RemindCategory
 
             onCategoryItemClickListener?.let { listener ->
                 binding.remindCategoryChipTv.setOnClickListener {
-                    listener.onCategoryItemClick(remindCategoryData, adapterPosition)
-                    if(selectedPosition != adapterPosition) {
-                        selectedPosition = adapterPosition
-                        notifyDataSetChanged()
-                    }
+//                    listener.onCategoryItemClick(remindCategoryData, adapterPosition)
+//                    if(selectedPosition != adapterPosition) {
+//                        selectedPosition = adapterPosition
+//                        notifyDataSetChanged()
+//                    }
                 }
             }
         }

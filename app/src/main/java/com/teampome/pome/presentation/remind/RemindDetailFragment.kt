@@ -16,8 +16,8 @@ class RemindDetailFragment :
 
     override fun initView() {
         binding.contentCardItem = args.remindContentsItem
-        binding.firstEmotion = CommonUtil.getEmotionData(args.remindContentsItem.firstThink)
-        binding.lastEmotion = CommonUtil.getEmotionData(args.remindContentsItem.lastThink)
+//        binding.firstEmotion = CommonUtil.getEmotionData(args.remindContentsItem.firstThink)
+//        binding.lastEmotion = CommonUtil.getEmotionData(args.remindContentsItem.lastThink)
         binding.executePendingBindings()
     }
 

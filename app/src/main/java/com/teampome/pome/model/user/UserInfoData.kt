@@ -1,4 +1,4 @@
-package com.teampome.pome.model
+package com.teampome.pome.model.user
 
 data class UserInfoData(
     val accessToken: String,

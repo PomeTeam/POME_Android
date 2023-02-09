@@ -6,11 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
-import com.teampome.pome.model.RecordWeekItem
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.model.RecordData
 import com.teampome.pome.util.OnItemClickListener
 
-class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
+class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
 ) {
     private lateinit var binding: ItemRecordEmotionCardBinding
@@ -42,10 +41,8 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
     inner class RecordContentsCardViewHolder(
         binding : ItemRecordEmotionCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: RecordWeekItem) {
-            binding.recordWeekItem = item
-            binding.firstEmotion = CommonUtil.getEmotionData(item.firstThink)
-            binding.lastEmotion = item.lastThink?.let { CommonUtil.getEmotionData(it) }
+        fun bind(item: RecordData) {
+            binding.recordData = item
 
             binding.recordContentsCardMoreAiv.setOnClickListener {
                 moreItemClickListener?.onMoreIconClick(item)
@@ -60,12 +57,12 @@ class RecordContentsCardAdapter : ListAdapter<RecordWeekItem, RecordContentsCard
     }
 }
 
-class RecordContentsCardDiffCallback : DiffUtil.ItemCallback<RecordWeekItem>() {
-    override fun areItemsTheSame(oldItem: RecordWeekItem, newItem: RecordWeekItem): Boolean {
-        return oldItem == newItem
+class RecordContentsCardDiffCallback : DiffUtil.ItemCallback<RecordData>() {
+    override fun areItemsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: RecordWeekItem, newItem: RecordWeekItem): Boolean {
+    override fun areContentsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
         return oldItem == newItem
     }
 }

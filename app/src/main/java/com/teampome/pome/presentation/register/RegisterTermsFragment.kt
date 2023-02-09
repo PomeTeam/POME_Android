@@ -1,6 +1,5 @@
 package com.teampome.pome.presentation.register
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,13 +9,8 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterTermsBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.util.token.UserManager
-import com.teampome.pome.viewmodel.RegisterTermsViewModel
+import com.teampome.pome.viewmodel.register.RegisterTermsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layout.fragment_register_terms) {

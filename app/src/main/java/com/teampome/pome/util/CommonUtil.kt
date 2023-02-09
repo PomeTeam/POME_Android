@@ -11,6 +11,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -19,7 +20,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
-import androidx.core.content.getSystemService
 import androidx.core.content.res.ResourcesCompat
 import com.bumptech.glide.Glide
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -30,9 +30,8 @@ import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
-import com.teampome.pome.viewmodel.Emotion
 import org.threeten.bp.*
-import java.io.InputStream
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
@@ -199,7 +198,7 @@ object CommonUtil {
             isDynamicHeightEnabled = true
 
             setOnDateChangedListener { _, date, _ ->
-                val sdf = SimpleDateFormat("yy.MM.dd")
+                val sdf = SimpleDateFormat("yyyy.MM.dd")
                 val realDate = DateTimeUtils.toDate(date.date.atStartOfDay(ZoneId.systemDefault()).toInstant())
 
                 val dateStr = sdf.format(realDate)
@@ -342,5 +341,151 @@ object CommonUtil {
     @SuppressLint("Recycle")
     fun getImageByteArray(context: Context, uri: Uri) : ByteArray? {
         return context.contentResolver.openInputStream(uri)?.buffered()?.use { it.readBytes() }
+    }
+
+    /**
+     *  make price style
+     */
+    fun makePriceStyle(price: String?) : String {
+
+        return if(!price.isNullOrEmpty()) {
+            val df = DecimalFormat("#,###").apply {
+                isDecimalSeparatorAlwaysShown = false
+            }
+
+            df.format(df.parse(price))
+        } else {
+            ""
+        }
+    }
+
+    /**
+     *  시간 차이 구하는 메소드
+     *  end date - current date
+     */
+    fun calDiffDate(endDate: String?) : Int {
+        endDate?.let {
+            val sdf = SimpleDateFormat("yyyy.MM.dd")
+            val ed = sdf.parse(endDate)
+            val today = Calendar.getInstance()
+
+            val challengeDay = (ed.time - today.time.time) / (60 * 60 * 24 * 1000)
+
+            return if(challengeDay >= 0) {
+                challengeDay.toInt()
+            } else {
+                0
+            }
+        } ?: return 0
+    }
+
+    /**
+     *  서버 상호작용을 위한 num -> Emotion 변경
+     */
+    fun numToEmotion(num: Int?): Emotion {
+        return num?.let {
+            when(it) {
+                0 -> {
+                    Emotion.HAPPY_EMOTION
+                }
+                1 -> {
+                    Emotion.WHAT_EMOTION
+                }
+                2 -> {
+                    Emotion.SAD_EMOTION
+                }
+                else -> {
+                    Emotion.EMPTY_EMOTION
+                }
+            }
+        } ?: Emotion.EMPTY_EMOTION
+    }
+
+    /**
+     *  서버 상호작용을 위한 Emotion -> Num 변경
+     */
+    fun emotionToNum(emotion: Emotion): Int {
+        return when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                0
+            }
+            Emotion.WHAT_EMOTION -> {
+                1
+            }
+            Emotion.SAD_EMOTION -> {
+                2
+            }
+            else -> {
+                0
+            }
+        }
+    }
+
+    /**
+     *  오늘 기준으로 시간 표현을 위한 메소드
+     *  1시간 전 -> ~분 전
+     *  1시간 후 -> ~시간 전
+     *  다음날부터 -> ~일 전
+     *
+     *  @param createdAt : createdAt=2023-02-08T09:52:42.034674
+     */
+    fun changeAfterTime(createdAt: String) : String {
+        val date = Date(System.currentTimeMillis())
+        val sdf = SimpleDateFormat("yyyy.MM.dd_HH:mm")
+
+        val nowDate = sdf.format(date)
+        var diffDate = createdAt
+            .replace("-", ".")
+            .replace("T", "_")
+
+        val diffTmp = diffDate.lastIndexOf(":")
+
+        if(diffTmp > 0) {
+           diffDate = diffDate.substring(0, diffTmp)
+        }
+
+        val diffYear = nowDate.substring(0,4).toInt() - diffDate.substring(0,4).toInt()
+        val diffMonth = nowDate.substring(5,7).toInt() - diffDate.substring(5,7).toInt()
+        val diffDay = nowDate.substring(8,10).toInt() - diffDate.substring(8,10).toInt()
+        val diffHour = nowDate.substring(11,13).toInt() - diffDate.substring(11,13).toInt()
+        val diffMin = nowDate.substring(14,16).toInt() - diffDate.substring(14,16).toInt()
+
+//        Log.d("test", "now : $nowDate , diff : $diffDate")
+//        Log.d("test", "y : $diffYear , M : $diffMonth, d : $diffDay , h : $diffHour, m : $diffMin")
+
+        return if(diffYear != 0) {
+            "$diffYear" + "년 전"
+        } else if(diffMonth != 0) {
+            "$diffMonth" + "달 전"
+        } else if(diffDay != 0) {
+            "$diffDay" + "일 전"
+        } else if(diffHour >= 2 || ((diffHour == 1) && (diffMin > 0))) {
+            "$diffHour" + "시간 전"
+        } else if(diffMin < 0) {
+            "${60 + diffMin}" + "분 전"
+        } else {
+            "$diffMin" + "분 전"
+        }
+    }
+
+    /**
+     *  년 월 일 변환
+     *  @param date : 23.02.08
+     */
+    fun changeStringDate(date: String) : String {
+        val sdf = SimpleDateFormat("yy")
+
+        val nowYear = sdf.format(Date(System.currentTimeMillis()))
+
+        val dateArr = date.split(".")
+
+        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
+
+        // 월과 일에 toInt처리를 해서 02 -> 2형식으로 변환
+        return if(nowYear == dateArr[0]) {
+            "${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
+        } else {
+            "${dateArr[0]}년 ${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
+        }
     }
 }

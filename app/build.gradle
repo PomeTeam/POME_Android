@@ -25,10 +25,14 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"http://13.125.237.136:8085/\""
+            buildConfigField "String", "IMAGE_BASE_URL", "\"http://image-main-server.ap-northeast-2.elasticbeanstalk.com/\""
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "BASE_URL", "\"http://52.79.89.129/\""
+            buildConfigField "String", "IMAGE_BASE_URL", "\"http://image-main-server.ap-northeast-2.elasticbeanstalk.com/\""
         }
     }
     compileOptions {

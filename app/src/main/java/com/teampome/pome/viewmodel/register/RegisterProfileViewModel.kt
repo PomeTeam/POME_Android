@@ -1,10 +1,10 @@
-package com.teampome.pome.viewmodel
+package com.teampome.pome.viewmodel.register
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.teampome.pome.model.BasePomeResponse
-import com.teampome.pome.model.PresignedUrlImageData
-import com.teampome.pome.model.UserInfoData
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.image.PresignedUrlImageData
+import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.repository.register.PresignedUrlRepository
 import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.repository.register.SendPreSignedImageRepository
