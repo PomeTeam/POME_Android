@@ -2,6 +2,7 @@ package com.teampome.pome.repository.friend
 
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.network.AddFriendsService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow

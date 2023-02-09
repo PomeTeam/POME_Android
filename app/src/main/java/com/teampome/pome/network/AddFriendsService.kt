@@ -2,6 +2,7 @@ package com.teampome.pome.network
 
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.response.GetFriends
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.POST
