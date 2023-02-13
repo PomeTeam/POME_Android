@@ -117,11 +117,26 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         currentCategoryPosition = position
 
                         showLoading()
+                        isCompletedGetRecords = false
                         viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
+                                isCompletedGetRecords = true
                                 Log.e("record", "record error $message")
                                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                                 hideLoading()
+                            }
+                        })
+
+                        isCompletedGetOneWeekRecords = false
+                        viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Log.e("record", "record error $message")
+                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                isCompletedGetOneWeekRecords = true
+
+                                if(isCompletedGetRecords) {
+                                    hideLoading()
+                                }
                             }
                         })
 
