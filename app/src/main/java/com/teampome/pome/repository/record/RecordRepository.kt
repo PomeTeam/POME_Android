@@ -45,6 +45,23 @@ class RecordRepository @Inject constructor(
         )
     )
 
+    fun updateRecord(
+        recordId: Int,
+        goalId: Int,
+        useComment: String,
+        useDate: String,
+        usePrice: Long
+    ) = recordDataSource.updateRecord(
+        recordId,
+        ConsumeRecordDataBody(
+            emotionId = null,
+            goalId = goalId,
+            useComment = useComment,
+            useDate = useDate,
+            usePrice = usePrice
+        )
+    )
+
     fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
 
     fun getOneWeekGoalByGoalId(goalId: Int) = recordDataSource.getOneWeekGoalByGoalId(goalId)

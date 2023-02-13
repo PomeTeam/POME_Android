@@ -5,10 +5,7 @@ import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface RecordService {
 
@@ -23,6 +20,15 @@ interface RecordService {
     @POST("api/v1/records")
     suspend fun writeConsumeRecord(
         @Body consumeRecordDataBody: ConsumeRecordDataBody
+    ) : Response<BasePomeResponse<RecordData>>
+
+    /**
+     *  소비 기록 수정
+     */
+    @PUT("api/v1/records/{recordId}")
+    suspend fun updateRecord(
+        @Path("recordId") recordId: Int,
+        @Body recordDataBody: ConsumeRecordDataBody
     ) : Response<BasePomeResponse<RecordData>>
 
     /**

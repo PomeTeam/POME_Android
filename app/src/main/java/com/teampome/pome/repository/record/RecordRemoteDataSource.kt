@@ -21,6 +21,13 @@ class RecordRemoteDataSource @Inject constructor(
         service.writeConsumeRecord(consumeRecordDataBody)
     }
 
+    override fun updateRecord(
+        recordId: Int,
+        recordDataBody: ConsumeRecordDataBody
+    ): Flow<ApiResponse<BasePomeResponse<RecordData>>> = apiRequestFlow {
+        service.updateRecord(recordId, recordDataBody)
+    }
+
     override fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = apiRequestFlow {
         service.getRecordByGoalId(goalId)
     }

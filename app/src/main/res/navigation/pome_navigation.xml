@@ -208,8 +208,8 @@
             android:name="record_data"
             app:argType="com.teampome.pome.model.RecordData" />
         <argument
-            android:name="category_list"
-            app:argType="com.teampome.pome.model.goal.GoalCategory[]" />
+            android:name="goal_id"
+            app:argType="integer" />
         <argument
             android:name="current_category"
             app:argType="string"/>

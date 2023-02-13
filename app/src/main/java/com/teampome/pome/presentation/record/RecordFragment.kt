@@ -522,7 +522,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private fun moveToModifyRecordCard(recordData: RecordData) {
         val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
             recordData,
-            viewModel.goalCategory.value?.toTypedArray() ?: arrayOf(),
+            viewModel.goalCategory.value?.get(currentCategoryPosition)?.goalId ?: -1,
             currentCategory
         )
 
