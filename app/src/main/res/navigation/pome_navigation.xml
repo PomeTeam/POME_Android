@@ -205,11 +205,11 @@
         android:label="ModifyRecordCardFragment"
         tools:layout="@layout/fragment_modify_record_card">
         <argument
-            android:name="record_week_item"
-            app:argType="com.teampome.pome.model.RecordWeekItem" />
+            android:name="record_data"
+            app:argType="com.teampome.pome.model.RecordData" />
         <argument
             android:name="category_list"
-            app:argType="string[]" />
+            app:argType="com.teampome.pome.model.goal.GoalCategory[]" />
         <argument
             android:name="current_category"
             app:argType="string"/>

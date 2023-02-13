@@ -31,6 +31,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import org.threeten.bp.*
+import org.threeten.bp.format.DateTimeFormatter
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -487,5 +488,13 @@ object CommonUtil {
         } else {
             "${dateArr[0]}년 ${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
         }
+    }
+
+    /**
+     *  String to LocalDate
+     *  String 형태 -> yy.mm.dd(ex. 23.02.08)
+     */
+    fun stringToLocalDate(date: String) : LocalDate {
+        return LocalDate.parse("20${date.replace(".", "-")}", DateTimeFormatter.ISO_DATE)
     }
 }

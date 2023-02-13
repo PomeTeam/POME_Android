@@ -2,42 +2,24 @@ package com.teampome.pome.presentation.record
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.prolificinteractive.materialcalendarview.*
-import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter
-import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter
-import com.prolificinteractive.materialcalendarview.format.TitleFormatter
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentModifyRecordCardBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
-import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
-import org.threeten.bp.DateTimeUtils
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.Instant
-import org.threeten.bp.ZoneId
-import java.text.SimpleDateFormat
 import java.util.Date
 
 class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R.layout.fragment_modify_record_card) {
 
     private val args: ModifyRecordCardFragmentArgs by navArgs()
-
-    // goal bottom sheet
-    private lateinit var goalBottomSheetDialog: BottomSheetDialog
-    private lateinit var goalBottomSheetDialogBinding: PomeTextListBottomSheetDialogBinding
 
     // calendar bottom sheet
     private lateinit var calendarBottomSheetDialog: BottomSheetDialog
@@ -54,18 +36,15 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
 
     override fun initView() {
         binding.modifyRecordGoalAet.setText(args.currentCategory)
+        binding.modifyRecordDateAet.setText(args.recordData.useDate)
+        binding.modifyRecordPriceAet.setText(args.recordData.usePrice.toString())
+        binding.modifyRecordContentAet.setText(args.recordData.useComment)
 
-        // 일단 현재 시간으로...
-        val now = System.currentTimeMillis()
-        val date = Date(now)
-        val sdf = SimpleDateFormat("yy.MM.dd")
+        binding.content = args.recordData.useComment
+        binding.price = args.recordData.usePrice.toString()
 
-        dateData = sdf.format(date)
-        curDate = date
+        binding.executePendingBindings()
 
-        binding.modifyRecordDateAet.setText(sdf.format(date))
-
-        makeGoalBottomSheetDialog()
         makeCalendarBottomSheetDialog()
     }
 
@@ -76,11 +55,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         }
 
         binding.modifyRecordLeftArrowAiv.setOnClickListener {
-            findNavController().navigateUp()
-        }
-
-        binding.modifyRecordDownArrowAiv.setOnClickListener {
-            goalBottomSheetDialog.show()
+            findNavController().popBackStack()
         }
 
         binding.modifyRecordCalenderAiv.setOnClickListener {
@@ -89,32 +64,14 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
 
         // 수정했어요 클릭
         binding.modifyRecordCheckAcb.setOnClickListener {
-            findNavController().navigateUp()
+//            findNavController().popBackStack()
         }
-    }
-
-    private fun makeGoalBottomSheetDialog() {
-        goalBottomSheetDialog = BottomSheetDialog(requireContext())
-        goalBottomSheetDialogBinding = PomeTextListBottomSheetDialogBinding.inflate(layoutInflater, null, false)
-
-        goalBottomSheetDialog.setContentView(goalBottomSheetDialogBinding.root)
-
-        goalBottomSheetDialogBinding.title = "목표"
-        goalBottomSheetDialogBinding.textListRv.adapter = TextListAdapter().apply {
-            submitList(args.categoryList.asList())
-            setOnGoalCategoryClickListener(object : OnGoalCategoryClickListener {
-                override fun categoryClick(category: String) {
-                    binding.modifyRecordGoalAet.setText(category)
-
-                    goalBottomSheetDialog.dismiss()
-                }
-            })
-        }
-        goalBottomSheetDialogBinding.executePendingBindings()
     }
 
     private fun makeCalendarBottomSheetDialog() {
-        calendarBottomSheetDialog = BottomSheetDialog(requireContext())
+        calendarBottomSheetDialog = BottomSheetDialog(requireContext()).apply {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         calendarBottomSheetDialogBinding = PomeCalendarBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
         calendarBottomSheetDialog.setContentView(calendarBottomSheetDialogBinding.root)
@@ -123,7 +80,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
             requireContext(),
             calendarBottomSheetDialogBinding.calendarMcv,
             calendarBottomSheetDialogBinding.calendarSelectAtb,
-            curDate?.let{Instant.ofEpochMilli(it.time).atZone(ZoneId.systemDefault()).toLocalDate()},
+            CommonUtil.stringToLocalDate(args.recordData.useDate),
             { date, str ->
                 curDate = date
                 dateData = str

@@ -47,7 +47,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var removeGoalDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeGoalDialog: Dialog
 
-    // 목표 삭제 클릭 다이얼로그
+    // 기록 삭제 클릭 다이얼로그
     private lateinit var removeCardDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeCardDialog: Dialog
 
@@ -64,8 +64,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var finishGoalAlertDialog: Dialog
 
     // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
-    private lateinit var recordWeekItem: RecordWeekItem
-    private lateinit var categoryList: List<String>
+    private lateinit var recordData: RecordData
     private lateinit var currentCategory: String
     private var currentCategoryPosition: Int = 0
 
@@ -86,7 +85,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private val moreItemClickListener = object : OnMoreItemClickListener {
         override fun onMoreIconClick(item: RecordData) {
-
+            recordData = item
+            recordDialog.show()
         }
     }
 
@@ -410,7 +410,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         recordDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
             recordDialog.dismiss()
 
-            moveToModifyRecordCard()
+            moveToModifyRecordCard(recordData)
         }
 
         // 삭제 클릭
@@ -519,10 +519,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         findNavController().navigate(id)
     }
 
-    private fun moveToModifyRecordCard() {
+    private fun moveToModifyRecordCard(recordData: RecordData) {
         val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
-            recordWeekItem,
-            categoryList.toTypedArray(),
+            recordData,
+            viewModel.goalCategory.value?.toTypedArray() ?: arrayOf(),
             currentCategory
         )
 

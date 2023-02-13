@@ -1,5 +1,9 @@
 package com.teampome.pome.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class RecordData(
     val createdAt: String,
     val emotionResponse: EmotionResponse,
@@ -9,16 +13,18 @@ data class RecordData(
     val useComment: String,
     val useDate: String,
     val usePrice: Long
-)
+) : Parcelable
 
+@Parcelize
 data class EmotionResponse(
     val firstEmotion: Int?,
     val friendEmotions: List<FriendEmotion?>?,
     val myEmotion: Int?,
     val secondEmotion: Int?
-)
+) : Parcelable
 
+@Parcelize
 data class FriendEmotion(
     val emotionId: Int?,
     val nickname: String?
-)
+) : Parcelable

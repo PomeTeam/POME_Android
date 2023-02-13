@@ -3,9 +3,7 @@ package com.teampome.pome.presentation.record.consume
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -16,7 +14,6 @@ import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeTextListBottomSheetDialogBinding
 import com.teampome.pome.model.consume.ConsumeRecord
 import com.teampome.pome.model.goal.GoalCategory
-import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.record.OnGoalCategoryClickListener
 import com.teampome.pome.presentation.record.TextListAdapter
 import com.teampome.pome.util.CommonUtil
@@ -25,7 +22,6 @@ import com.teampome.pome.util.CommonUtil.getCurrentDate
 import com.teampome.pome.util.CommonUtil.getCurrentDateString
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.record.ConsumeRecordViewModel
-import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.DecimalFormat
 import java.util.Date
