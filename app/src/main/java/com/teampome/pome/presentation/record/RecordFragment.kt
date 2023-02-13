@@ -574,8 +574,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private fun moveToRecordLeaveEmotion() {
         viewModel.goalDetails.value?.get(currentCategoryPosition)?.let {
             val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment(
-                it,
-                viewModel.oneWeekRecords.value?.toTypedArray() ?: arrayOf()
+                it
             )
 
             findNavController().navigate(action)
