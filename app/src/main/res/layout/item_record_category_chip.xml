@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -35,7 +36,8 @@
             android:paddingHorizontal="12dp"
             android:paddingVertical="5dp"
             android:text="@{goalCategory.name}"
-            android:textColor="@{goalCategory.isSelected() ? @color/white : @color/grey_5, default=@color/grey_5}"
+            bind:isSelected="@{goalCategory.isSelected()}"
+            bind:isEnd="@{goalCategory.isEnd()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

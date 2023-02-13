@@ -167,3 +167,19 @@ fun bindingRecordAlarmsIcon(imageView: ImageView, data: String?) {
             .into(imageView)
     }
 }
+
+/**
+ *  category list state관련 textColor setting
+ */
+@BindingAdapter("isSelected", "isEnd")
+fun bindingCategoryColor(textView: TextView, isSelected: Boolean?, isEnd: Boolean?) {
+    if(isSelected == true) {
+        textView.setTextColor(textView.context.resources.getColor(R.color.white, null))
+    } else {
+        if(isEnd == true) {
+            textView.setTextColor(textView.context.resources.getColor(R.color.grey_3, null))
+        } else {
+            textView.setTextColor(textView.context.resources.getColor(R.color.grey_5, null))
+        }
+    }
+}

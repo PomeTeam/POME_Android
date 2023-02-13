@@ -8,5 +8,6 @@ data class GoalCategory(
     val id: Int,
     val name: String,
     var isSelected: Boolean? = false,
-    val goalId: Int
+    val goalId: Int,
+    var isEnd: Boolean? = false,
 ) : Parcelable

@@ -13,6 +13,7 @@ import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.record.RecordRepository
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -47,7 +48,8 @@ class RecordViewModel @Inject constructor(
                                 data.goalCategoryResponse.id,
                                 data.goalCategoryResponse.name,
                                 false,
-                                data.id
+                                data.id,
+                                CommonUtil.calDiffDate(data.endDate) == 0
                             )
                         }
                     } ?: run { null }
