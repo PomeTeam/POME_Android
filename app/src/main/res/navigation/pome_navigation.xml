@@ -311,6 +311,9 @@
         <argument
             android:name="record_list"
             app:argType="com.teampome.pome.model.RecordData[]" />
+        <action
+            android:id="@+id/action_recordLeaveEmotionFragment_to_leaveEmotionFragment"
+            app:destination="@id/leaveEmotionFragment" />
     </fragment>
     <fragment
         android:id="@+id/recordGoalFinishFragment"
@@ -339,5 +342,14 @@
             android:id="@+id/action_recordGoalFinishCompleteFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaveEmotionFragment"
+        android:name="com.teampome.pome.presentation.record.leave.LeaveEmotionFragment"
+        android:label="LeaveEmotionFragment"
+        tools:layout="@layout/fragment_leave_emotion">
+        <argument
+            android:name="recordId"
+            app:argType="integer" />
     </fragment>
 </navigation>

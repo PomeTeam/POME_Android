@@ -231,4 +231,5 @@
     <string name="goal_price_text">· %s원</string>
     <string name="use_price_text">%s원</string>
     <string name="end_day_text">END</string>
+    <string name="total_count_text">전체 %s건</string>
 </resources>

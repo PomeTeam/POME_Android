@@ -73,8 +73,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private var isCompletedGetOneWeekRecords = false
 
     // 임시 클릭 리스너
-    private val itemClickListener = object: OnItemClickListener {
-        override fun itemClick() {
+    private val itemClickListener = object: OnRecordItemClickListener {
+        override fun onRecordItemClick(item: RecordData) {
             alertWarningDialog(
                 R.drawable.pen_pink,
                 "아직은 감정을 기록할 수 없어요",
