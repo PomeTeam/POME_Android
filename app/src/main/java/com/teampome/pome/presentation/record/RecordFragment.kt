@@ -73,6 +73,23 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private var isCompletedGetRecords = false
     private var isCompletedGetOneWeekRecords = false
 
+    // 임시 클릭 리스너
+    private val itemClickListener = object: OnItemClickListener {
+        override fun itemClick() {
+            alertWarningDialog(
+                R.drawable.pen_pink,
+                "아직은 감정을 기록할 수 없어요",
+                "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
+            )
+        }
+    }
+
+    private val moreItemClickListener = object : OnMoreItemClickListener {
+        override fun onMoreIconClick(item: RecordData) {
+
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,21 +133,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
 
         binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
-            setOnBodyClickListener(object : OnItemClickListener {
-                override fun itemClick() {
-                    alertWarningDialog(
-                        R.drawable.pen_pink,
-                        "아직은 감정을 기록할 수 없어요",
-                        "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
-                    )
-                }
-            })
-
-            setOnMoreItemClickListener(object : OnMoreItemClickListener {
-                override fun onMoreIconClick(item: RecordData) {
-
-                }
-            })
+            setOnBodyClickListener(itemClickListener)
+            setOnMoreItemClickListener(moreItemClickListener)
         }
     }
 
@@ -206,11 +210,20 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
                     binding.executePendingBindings()
 
-                    // recordData submitList 처리
-                    // submit list하는 list는 다른 값인데, 이전 값이 currentList임...
-                    // submitList의 list는 정상, 계속 카테고리를 변경하다보면 list값이 아예 섞임..
-                    // debuging시에는 정상? 그러면 충분한 업데이트 시간이 없어서?
-                    // 1 - 2 - 1 - 3 정상, 3 - 2 - 3 비정상 => null을 받을 때, submitList가 이상하게 동작?
+//                    recordData submitList 처리
+//                    submit list하는 list는 다른 값인데, 이전 값이 currentList임...
+//                    submitList의 list는 정상, 계속 카테고리를 변경하다보면 list값이 아예 섞임..
+//                    debuging시에는 정상? 그러면 충분한 업데이트 시간이 없어서?
+//                    1 - 2 - 1 - 3 정상, 3 - 2 - 3 비정상 => null을 받을 때, submitList가 이상하게 동작?
+//                    notifyDataSetChanged, invalidateAll, executePendingBinding 다 동작 x
+//                    currentList는 정상..
+
+                    // 임시 처리 : 데이터 변경 시 새로운 어댑터 객체 생성
+                    binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
+                        setOnBodyClickListener(itemClickListener)
+                        setOnMoreItemClickListener(moreItemClickListener)
+                    }
+
                     (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
                         it.data.data?.content?.toMutableList() ?: mutableListOf()
                     )
