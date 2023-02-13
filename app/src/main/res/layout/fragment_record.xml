@@ -360,12 +360,11 @@
                     android:layout_marginTop="12dp"
                     android:paddingHorizontal="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginBottom="74dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
-                    app:layout_constraintVertical_bias="0.0"
                     tools:listitem="@layout/item_record_emotion_card" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
