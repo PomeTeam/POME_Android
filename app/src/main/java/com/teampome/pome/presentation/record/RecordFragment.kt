@@ -273,6 +273,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
+        // UI용으로 짜여진 oneWeekRecords observe
+        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
+        }
+
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
             when(it) {
@@ -335,7 +339,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         binding.recordWriteEmotionContainerCl.setOnClickListener {
-            moveToRecordLeaveEmotion()
+            moveToRecordLeaveEmotion(
+
+            )
         }
 
         binding.recordGoalCompleteCl.setOnClickListener {
@@ -551,9 +557,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToRecordLeaveEmotion() {
-        val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment()
+        viewModel.goalDetails.value?.get(currentCategoryPosition)?.let {
+            val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment(
+                it,
+                viewModel.oneWeekRecords.value?.toTypedArray() ?: arrayOf()
+            )
 
-        findNavController().navigate(action)
+            findNavController().navigate(action)
+        }
     }
 
     private fun moveToRecordGoalFinish() {

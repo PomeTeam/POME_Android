@@ -480,7 +480,7 @@ object CommonUtil {
 
         val dateArr = date.split(".")
 
-        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
+//        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
 
         // 월과 일에 toInt처리를 해서 02 -> 2형식으로 변환
         return if(nowYear == dateArr[0]) {

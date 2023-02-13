@@ -41,7 +41,7 @@ class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: Att
                         val thumbBounds = thumb.bounds
                         val progressTextWidth = binding.goalCardProgressTextTv.width
 
-                        Log.d("progress", "thumbBounds center : ${thumbBounds.exactCenterX()}, progressTextWidth : $progressTextWidth")
+//                        Log.d("progress", "thumbBounds center : ${thumbBounds.exactCenterX()}, progressTextWidth : $progressTextWidth")
 
                         // thumb의 중간 - (progressTv 길이 / 2) -1f => 1f는 살짝 왼쪽으로 조정하는 값
                         binding.goalCardProgressTextTv.x = thumbBounds.exactCenterX() - (progressTextWidth.toFloat() / 2f) - 1f
