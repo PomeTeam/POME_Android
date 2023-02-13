@@ -292,16 +292,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        // category plus button click
-        binding.recordCategoryPlusTv.setOnClickListener {
-            // Todo: 조건은 목표가 10개 이상일 때, Alert지만 임시로 클릭시 바로 alert발생
-            alertWarningDialog(
-                R.drawable.number_10,
-                "목표는 10개를 넘을 수 없어요",
-                "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
-            )
-        }
-
         binding.recordNoticeBellAiv.setOnClickListener {
             moveToRecordAlarms()
         }
@@ -313,7 +303,19 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 목표 + 클릭
         binding.recordCategoryPlusTv.setOnClickListener {
-            moveToAddGoal()
+            viewModel.goalCategory.value?.let {
+                if(it.size > 10) {
+                    alertWarningDialog(
+                        R.drawable.number_10,
+                        "목표는 10개를 넘을 수 없어요",
+                        "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
+                    )
+                } else {
+                    moveToAddGoal()
+                }
+            } ?: run {
+                moveToAddGoal()
+            }
         }
 
         // 목표 없을 때 목표 만들기 클릭
