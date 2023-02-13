@@ -525,10 +525,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun setGoalState(goalData: GoalData?) : GoalState {
         return goalData?.let {
-            if(it.isEnd) {
-                GoalState.End
-            } else {
+            if(CommonUtil.calDiffDate(it.endDate) > 0) {
                 GoalState.InProgress
+            } else {
+                GoalState.End
             }
         } ?: GoalState.Empty
     }
