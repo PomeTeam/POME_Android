@@ -80,7 +80,7 @@ class AddGoalContentsFragment : BaseFragment<FragmentAddGoalContentsBinding>(R.l
         }
 
         binding.addGoalContentsBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         binding.addGoalContentsPrivateSwitchSc.setOnCheckedChangeListener { _, b ->

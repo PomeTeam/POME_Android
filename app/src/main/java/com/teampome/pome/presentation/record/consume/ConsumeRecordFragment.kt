@@ -164,7 +164,7 @@ class ConsumeRecordFragment : BaseFragment<FragmentConsumeRecordBinding>(R.layou
 
         // 뒤로가기 버튼 클릭
         binding.consumeRecordBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         // 목표 아래 화살표 클릭

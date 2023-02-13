@@ -29,7 +29,7 @@ class RecordAlarmsFragment : BaseFragment<FragmentRecordAlarmsBinding>(R.layout.
 
         // 뒤로가기 버튼 클릭
         binding.recordAlarmsBackButtonAiv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 }

@@ -156,7 +156,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
 
         // 뒤로가기 버튼
         binding.registerBackAiv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 

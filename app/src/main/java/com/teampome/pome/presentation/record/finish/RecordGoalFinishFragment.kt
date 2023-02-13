@@ -129,7 +129,7 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
         }
 
         binding.recordGoalFinishBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 
