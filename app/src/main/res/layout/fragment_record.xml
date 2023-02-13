@@ -39,6 +39,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/bell"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,6 +50,7 @@
             android:layout_marginTop="-1dp"
             android:layout_marginEnd="-3.5dp"
             android:src="@drawable/green_alarm"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/record_notice_bell_aiv"
             app:layout_constraintTop_toTopOf="@id/record_notice_bell_aiv" />
 
