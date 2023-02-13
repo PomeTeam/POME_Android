@@ -4,6 +4,7 @@ import com.teampome.pome.model.*
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
+import com.teampome.pome.model.request.EmotionDataBody
 import com.teampome.pome.network.RecordService
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow
@@ -19,6 +20,13 @@ class RecordRemoteDataSource @Inject constructor(
 
     override fun writeConsumeRecord(consumeRecordDataBody: ConsumeRecordDataBody): Flow<ApiResponse<BasePomeResponse<RecordData>>> = apiRequestFlow {
         service.writeConsumeRecord(consumeRecordDataBody)
+    }
+
+    override fun writeSecondEmotion(
+        recordId: Int,
+        emotionDataBody: EmotionDataBody
+    ): Flow<ApiResponse<BasePomeResponse<RecordData>>> = apiRequestFlow {
+        service.writeSecondEmotion(recordId, emotionDataBody)
     }
 
     override fun updateRecord(

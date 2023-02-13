@@ -24,7 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.layout.fragment_consume_emotion) {
     private val viewModel: ConsumeEmotionViewModel by viewModels()
-    
     private val navArgs: ConsumeEmotionFragmentArgs by navArgs()
 
     private var isHappySelected = false
@@ -100,8 +99,6 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
         }
 
         binding.consumeEmotionCheckButtonAcb.setOnClickListener {
-            showLoading()
-
             viewModel.writeConsumeRecord(
                 CommonUtil.emotionToNum(viewModel.selectedEmotion.value ?: Emotion.HAPPY_EMOTION),
                 category.goalId,
@@ -128,8 +125,7 @@ class ConsumeEmotionFragment : BaseFragment<FragmentConsumeEmotionBinding>(R.lay
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
-                is ApiResponse.Loading -> {
-                }
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
     }

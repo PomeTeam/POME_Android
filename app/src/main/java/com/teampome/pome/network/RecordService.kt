@@ -4,11 +4,15 @@ import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
+import com.teampome.pome.model.request.EmotionDataBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface RecordService {
 
+    /**
+     *  userId를 통해 기록들 가져오기
+     */
     @GET("api/v1/records/users/{userId}")
     suspend fun getRecordDataByUserId(
         @Path("userId") userId: String
@@ -20,6 +24,15 @@ interface RecordService {
     @POST("api/v1/records")
     suspend fun writeConsumeRecord(
         @Body consumeRecordDataBody: ConsumeRecordDataBody
+    ) : Response<BasePomeResponse<RecordData>>
+
+    /**
+     *  두번째 감정 기록 작성
+     */
+    @POST("api/v1/records/{recordId}/second-emotion")
+    suspend fun writeSecondEmotion(
+        @Path("recordId") recordId: Int,
+        @Body emotionDataBody: EmotionDataBody
     ) : Response<BasePomeResponse<RecordData>>
 
     /**

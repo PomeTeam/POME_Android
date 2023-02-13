@@ -12,7 +12,9 @@
         <variable
             name="recordsCount"
             type="Integer" />
+
         <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,6 +37,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/record_leave_emotion_back_button_iv">
 
@@ -106,28 +109,36 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:paddingVertical="100dp"
+                    android:foregroundGravity="center"
+                    android:visibility="@{recordsCount == 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_leave_emotion_count_tv">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/record_leave_emotion_no_write_emotion_aiv"
-                        android:layout_width="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/more_circle"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginBottom="30dp"
-                        android:text="@string/record_no_write_emotion_text"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@id/record_leave_emotion_no_write_emotion_aiv"
-                        app:layout_constraintStart_toStartOf="@id/record_leave_emotion_no_write_emotion_aiv"
-                        app:layout_constraintTop_toBottomOf="@id/record_leave_emotion_no_write_emotion_aiv" />
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/record_no_write_emotion_aiv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/more_circle"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/record_no_write_emotion_text"
+                            app:layout_constraintEnd_toEndOf="@id/record_no_write_emotion_aiv"
+                            app:layout_constraintStart_toStartOf="@id/record_no_write_emotion_aiv"
+                            app:layout_constraintTop_toBottomOf="@id/record_no_write_emotion_aiv" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView

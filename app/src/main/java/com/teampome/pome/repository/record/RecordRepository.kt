@@ -8,6 +8,7 @@ import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.TestAlarmsData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
+import com.teampome.pome.model.request.EmotionDataBody
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.token.UserManager
 import kotlinx.coroutines.flow.Flow
@@ -23,8 +24,6 @@ class RecordRepository @Inject constructor(
         val userId = runBlocking {
             userManager.getUserId().first()
         }
-
-        Log.d("userId", "userId is $userId")
 
         return recordDataSource.getRecordDataByUserId(userId!!)
     }
@@ -42,6 +41,16 @@ class RecordRepository @Inject constructor(
             useComment,
             useDate,
             usePrice
+        )
+    )
+
+    fun writeSecondEmotion(
+        recordId: Int,
+        emotionId: Int
+    ) = recordDataSource.writeSecondEmotion(
+        recordId,
+        EmotionDataBody(
+            emotionId
         )
     )
 
