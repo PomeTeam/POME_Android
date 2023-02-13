@@ -83,6 +83,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv">
 
@@ -322,9 +323,10 @@
                     android:id="@+id/record_no_write_emotion_container_cl"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="116dp"
                     android:visibility="@{recordData == null || recordData.size == 0 ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl">
+                    android:foregroundGravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
