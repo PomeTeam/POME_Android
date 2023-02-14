@@ -21,9 +21,10 @@ import dagger.hilt.android.AndroidEntryPoint
 class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_friend) {
 
     private val viewModel: AddFriendsViewModel by viewModels()
-
     private lateinit var friendGetAdapter: FriendGetAdapter
+
     override fun initView() {
+        setUpRecyclerView()
 
         //친구 조회
         viewModel.getFriend(object : CoroutineErrorHandler{
@@ -33,47 +34,37 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 hideLoading()
             }
         })
-        setUpRecyclerView()
-
-        viewModel.getFriendsResponse.observe(viewLifecycleOwner) {
-            when(it) {
-                is ApiResponse.Success -> {
-                    it.data.data?.let {
-                        friendGetAdapter.submitList(
-                            it
-                        ){
-                            Log.d("dd",(binding.friendListRv.adapter as FriendGetAdapter).currentList.toString())
-                        }
-                    }
-                    hideLoading()
-                }
-                is ApiResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-                    hideLoading()
-                }
-                is ApiResponse.Loading -> {
-                    showLoading()
-                }
-            }
-        }
-
     }
 
     override fun initListener() {
+        viewModel.getFriendsResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    it.data.data?.let { list ->
+                        (binding.friendListRv.adapter as FriendGetAdapter).submitList(
+                            list
+                        )
+                    }
+                }
+                is ApiResponse.Failure -> {
 
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
     }
 
     private fun setUpRecyclerView(){
         friendGetAdapter = FriendGetAdapter()
-        binding.friendListRv.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            adapter = friendGetAdapter
+        binding.friendListRv.adapter = FriendGetAdapter().apply {
+            setOnItemClickListener {
+                Toast.makeText(requireContext(), "${it.friendNickName}", Toast.LENGTH_SHORT).show()
+            }
         }
 
-        // 클릭 리스너
-        friendGetAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(), "${it.friendNickName}", Toast.LENGTH_SHORT).show()
+        binding.friendListRv.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
 }
