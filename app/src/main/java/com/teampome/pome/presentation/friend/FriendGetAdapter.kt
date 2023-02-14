@@ -18,10 +18,10 @@ class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewH
     }
 
     override fun onBindViewHolder(holder: FriendGetViewHolder, position: Int) {
-        val foodResult = currentList[position]
-        holder.bind(foodResult)
+        val friends = currentList[position]
+        holder.bind(friends)
         holder.itemView.setOnClickListener {
-            onItemClickListener?.let{ it(foodResult) }
+            onItemClickListener?.let{ it(friends) }
         }
     }
 
