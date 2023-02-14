@@ -36,8 +36,6 @@ class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewH
 
         fun bind(getFriends: GetFriends){
             binding.getFriends = getFriends
-
-            submitList(currentList)
         }
 
     }

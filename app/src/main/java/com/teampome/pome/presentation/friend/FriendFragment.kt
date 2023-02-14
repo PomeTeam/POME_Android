@@ -1,5 +1,6 @@
 package com.teampome.pome.presentation.friend
 
+import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -32,14 +33,17 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 hideLoading()
             }
         })
+        setUpRecyclerView()
 
         viewModel.getFriendsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     it.data.data?.let {
-                        (binding.friendListRv.adapter as FriendGetAdapter).submitList(
+                        friendGetAdapter.submitList(
                             it
-                        )
+                        ){
+                            Log.d("dd",(binding.friendListRv.adapter as FriendGetAdapter).currentList.toString())
+                        }
                     }
                     hideLoading()
                 }
@@ -53,7 +57,6 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
             }
         }
 
-        setUpRecyclerView()
     }
 
     override fun initListener() {

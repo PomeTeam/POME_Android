@@ -116,7 +116,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         currentCategory = item.name
                         currentCategoryPosition = position
 
-                        showLoading()
+//                        showLoading()
                         isCompletedGetRecords = false
                         viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
@@ -166,7 +166,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
-                is ApiResponse.Loading -> { showLoading() }
+                is ApiResponse.Loading -> { }
             }
         }
 
@@ -256,7 +256,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         hideLoading()
                     }
                 }
-                is ApiResponse.Loading -> { showLoading() }
+                is ApiResponse.Loading -> { }
             }
         }
 
@@ -284,7 +284,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         hideLoading()
                     }
                 }
-                is ApiResponse.Loading -> { showLoading() }
+                is ApiResponse.Loading -> { }
             }
         }
 
@@ -394,7 +394,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
 
-            showLoading()
+//            showLoading()
 
             viewModel.goalDetails.value?.get(currentCategoryPosition)?.id?.let {
                 viewModel.deleteGoal(
