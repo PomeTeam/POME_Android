@@ -18,7 +18,7 @@ class ConsumeCompleteFragment : BaseFragment<FragmentConsumeCompleteBinding>(R.l
 
     override fun initListener() {
         binding.consumeCompleteBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         binding.consumeCompleteCheckButtonAcb.setOnClickListener {

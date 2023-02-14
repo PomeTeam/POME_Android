@@ -65,4 +65,8 @@ class PomeEditText @JvmOverloads constructor(context: Context, attrs: AttributeS
     fun removeTextWatcher(textWatcher: TextWatcher) {
         binding.pomeContentAet.removeTextChangedListener(textWatcher)
     }
+
+    fun setText(useComment: String) {
+        binding.pomeContentAet.setText(useComment)
+    }
 }

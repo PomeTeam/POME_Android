@@ -1,5 +1,9 @@
 package com.teampome.pome.model.goal
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class GoalData(
     val endDate: String,
     val goalCategoryResponse: GoalCategoryResponse,
@@ -12,4 +16,4 @@ data class GoalData(
     val startDate: String,
     val usePrice: Long,
     val oneLineComment: String?
-)
+) : Parcelable

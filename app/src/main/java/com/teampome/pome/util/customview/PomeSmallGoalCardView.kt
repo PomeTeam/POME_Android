@@ -28,7 +28,12 @@ open class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, att
     var remainDays: Int = 0
         set(value) {
             field = value
-            binding.goalCardDayChipTv.text = resources.getString(R.string.card_day_chip_text, value)
+
+            if(value <= 0) {
+                binding.goalCardDayChipTv.text = resources.getString(R.string.end_day_text)
+            } else {
+                binding.goalCardDayChipTv.text = resources.getString(R.string.card_day_chip_text, value)
+            }
         }
 
     init {

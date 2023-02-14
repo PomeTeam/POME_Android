@@ -12,7 +12,7 @@ import com.teampome.pome.repository.login.LoginRemoteDataSource
 import com.teampome.pome.repository.login.LoginRepository
 import com.teampome.pome.repository.record.RecordDataSource
 import com.teampome.pome.repository.record.RecordRepository
-import com.teampome.pome.repository.record.RecordTestDataSource
+import com.teampome.pome.repository.record.RecordRemoteDataSource
 import com.teampome.pome.repository.register.*
 import com.teampome.pome.repository.remind.RemindDataSource
 import com.teampome.pome.repository.remind.RemindRepository
@@ -55,7 +55,7 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideTestRecordDataSource(service: RecordService) : RecordDataSource {
-        return RecordTestDataSource(service)
+        return RecordRemoteDataSource(service)
     }
 
     @Provides
