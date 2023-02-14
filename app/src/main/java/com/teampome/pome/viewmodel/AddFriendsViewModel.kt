@@ -2,8 +2,10 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.repository.friend.AddFriendsRepository
 import com.teampome.pome.util.base.ApiResponse
