@@ -8,6 +8,7 @@ import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.TestAlarmsData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
+import com.teampome.pome.model.request.EmotionDataBody
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.token.UserManager
 import kotlinx.coroutines.flow.Flow
@@ -19,20 +20,10 @@ class RecordRepository @Inject constructor(
     private val recordDataSource: RecordDataSource,
     private val userManager: UserManager
 ) {
-    suspend fun getRecordTestData() : RecordTestData? {
-        return recordDataSource.getRecordTestData()
-    }
-
-    suspend fun getRecordAlarmsTestData() : List<TestAlarmsData> {
-        return recordDataSource.getRecordTestAlarmsData()
-    }
-
     fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> {
         val userId = runBlocking {
             userManager.getUserId().first()
         }
-
-        Log.d("userId", "userId is $userId")
 
         return recordDataSource.getRecordDataByUserId(userId!!)
     }
@@ -53,5 +44,34 @@ class RecordRepository @Inject constructor(
         )
     )
 
+    fun writeSecondEmotion(
+        recordId: Int,
+        emotionId: Int
+    ) = recordDataSource.writeSecondEmotion(
+        recordId,
+        EmotionDataBody(
+            emotionId
+        )
+    )
+
+    fun updateRecord(
+        recordId: Int,
+        goalId: Int,
+        useComment: String,
+        useDate: String,
+        usePrice: Long
+    ) = recordDataSource.updateRecord(
+        recordId,
+        ConsumeRecordDataBody(
+            emotionId = null,
+            goalId = goalId,
+            useComment = useComment,
+            useDate = useDate,
+            usePrice = usePrice
+        )
+    )
+
     fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
+
+    fun getOneWeekGoalByGoalId(goalId: Int) = recordDataSource.getOneWeekGoalByGoalId(goalId)
 }

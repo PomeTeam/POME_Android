@@ -19,7 +19,7 @@ class RecordAlarmsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _testAlarmsData.value = repository.getRecordAlarmsTestData()
+//            _testAlarmsData.value = repository.getRecordAlarmsTestData()
         }
     }
 }

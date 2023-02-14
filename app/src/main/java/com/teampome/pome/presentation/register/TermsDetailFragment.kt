@@ -28,6 +28,6 @@ class TermsDetailFragment : BaseFragment<FragmentTermsDetailBinding>(R.layout.fr
     }
 
     private fun moveToBack() {
-        findNavController().navigateUp()
+        findNavController().popBackStack()
     }
 }

@@ -17,6 +17,10 @@
             name="recordData"
             type="List&lt;com.teampome.pome.model.RecordData>" />
 
+        <variable
+            name="countOneWeekRecord"
+            type="Integer" />
+
         <import type="android.view.View" />
         <import type="java.util.List" />
         <import type="com.teampome.pome.presentation.record.GoalState" />
@@ -35,6 +39,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/bell"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,6 +50,7 @@
             android:layout_marginTop="-1dp"
             android:layout_marginEnd="-3.5dp"
             android:src="@drawable/green_alarm"
+            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@id/record_notice_bell_aiv"
             app:layout_constraintTop_toTopOf="@id/record_notice_bell_aiv" />
 
@@ -79,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"
+            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv">
 
@@ -308,7 +315,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="@{@string/record_write_emotion_subtitle_text(0)}"
+                        android:text="@{@string/record_write_emotion_subtitle_text(countOneWeekRecord)}"
                         app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
                         app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv"
                         tools:text="다시 돌아볼 씀씀이가 0건 있어요" />
@@ -318,9 +325,10 @@
                     android:id="@+id/record_no_write_emotion_container_cl"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginTop="116dp"
                     android:visibility="@{recordData == null || recordData.size == 0 ? View.VISIBLE : View.GONE}"
-                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl">
+                    android:foregroundGravity="center"
+                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -356,12 +364,11 @@
                     android:layout_marginTop="12dp"
                     android:paddingHorizontal="16dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginBottom="74dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
-                    app:layout_constraintVertical_bias="0.0"
                     tools:listitem="@layout/item_record_emotion_card" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

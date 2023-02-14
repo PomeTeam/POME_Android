@@ -24,7 +24,7 @@ class RemindDetailFragment :
     override fun initListener() {
         // 뒤로가기 버튼
         binding.remindContentsDetailLeftArrowAiv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
     }
 }

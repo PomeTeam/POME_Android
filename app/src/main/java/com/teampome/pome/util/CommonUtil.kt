@@ -31,6 +31,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.presentation.record.DayDecorator
 import org.threeten.bp.*
+import org.threeten.bp.format.DateTimeFormatter
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -479,7 +480,7 @@ object CommonUtil {
 
         val dateArr = date.split(".")
 
-        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
+//        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
 
         // 월과 일에 toInt처리를 해서 02 -> 2형식으로 변환
         return if(nowYear == dateArr[0]) {
@@ -487,5 +488,13 @@ object CommonUtil {
         } else {
             "${dateArr[0]}년 ${dateArr[1].toInt()}월 ${dateArr[2].toInt()}일"
         }
+    }
+
+    /**
+     *  String to LocalDate
+     *  String 형태 -> yy.mm.dd(ex. 23.02.08)
+     */
+    fun stringToLocalDate(date: String) : LocalDate {
+        return LocalDate.parse("20${date.replace(".", "-")}", DateTimeFormatter.ISO_DATE)
     }
 }

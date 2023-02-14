@@ -25,7 +25,7 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
         makeRemoveDialog()
 
         binding.finishCommentBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         binding.finishCommentYesButtonAcb.setOnClickListener {
@@ -61,7 +61,7 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
 
             removeDialog.dismiss()
 
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         // 이어서 쓸래요 클릭

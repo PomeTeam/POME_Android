@@ -7,6 +7,7 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalCalendarBinding
@@ -45,7 +46,7 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
                     "그만둘래요",
                     "이어서 쓸래요",
                     {
-                        findNavController().navigateUp()
+                        findNavController().popBackStack()
                     }
                 ) {
 
@@ -57,7 +58,7 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
     override fun initListener() {
         // 뒤로가기 버튼 클릭
         binding.addGoalBackButtonIv.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         // start 캘린더 클릭
@@ -75,38 +76,6 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
             moveToAddGoalContents()
         }
 
-        binding.addGoalStartDateAet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-//                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
-//                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
-//                } else {
-//                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
-//                }
-            }
-        })
-
-        binding.addGoalEndDateAet.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-//                if(startDate.isNotEmpty() && endDate.isNotEmpty()) {
-//                    CommonUtil.enabledPomeBtn(binding.addGoalCheckButtonAcb)
-//                } else {
-//                    CommonUtil.disabledPomeBtn(binding.addGoalCheckButtonAcb)
-//                }
-            }
-        })
-
         viewModel.startDate.observe(viewLifecycleOwner) {
             binding.startDate = it
             binding.executePendingBindings()
@@ -119,7 +88,9 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
     }
 
     private fun makeStartCalenderView() {
-        startCalendarDialog = BottomSheetDialog(requireContext())
+        startCalendarDialog = BottomSheetDialog(requireContext()).apply {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         startCalendarBinding = PomeCalendarBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
         startCalendarDialog.setContentView(startCalendarBinding.root)
@@ -137,7 +108,9 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
     }
 
     private fun makeEndCalendarView() {
-        endCalendarDialog = BottomSheetDialog(requireContext())
+        endCalendarDialog = BottomSheetDialog(requireContext()).apply {
+            behavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
         endCalendarBinding = PomeCalendarBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
         endCalendarDialog.setContentView(endCalendarBinding.root)

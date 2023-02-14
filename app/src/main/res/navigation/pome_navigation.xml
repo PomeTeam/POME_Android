@@ -205,11 +205,11 @@
         android:label="ModifyRecordCardFragment"
         tools:layout="@layout/fragment_modify_record_card">
         <argument
-            android:name="record_week_item"
-            app:argType="com.teampome.pome.model.RecordWeekItem" />
+            android:name="record_data"
+            app:argType="com.teampome.pome.model.RecordData" />
         <argument
-            android:name="category_list"
-            app:argType="string[]" />
+            android:name="goal_id"
+            app:argType="integer" />
         <argument
             android:name="current_category"
             app:argType="string"/>
@@ -303,7 +303,15 @@
         android:id="@+id/recordLeaveEmotionFragment"
         android:name="com.teampome.pome.presentation.record.leave.RecordLeaveEmotionFragment"
         android:label="RecordLeaveEmotionFragment"
-        tools:layout="@layout/fragment_record_leave_emotion"/>
+        tools:layout="@layout/fragment_record_leave_emotion">
+
+        <argument
+            android:name="goal_data"
+            app:argType="com.teampome.pome.model.goal.GoalData" />
+       <action
+            android:id="@+id/action_recordLeaveEmotionFragment_to_leaveEmotionFragment"
+            app:destination="@id/leaveEmotionFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recordGoalFinishFragment"
         android:name="com.teampome.pome.presentation.record.finish.RecordGoalFinishFragment"
@@ -331,5 +339,14 @@
             android:id="@+id/action_recordGoalFinishCompleteFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/record_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/leaveEmotionFragment"
+        android:name="com.teampome.pome.presentation.record.leave.LeaveEmotionFragment"
+        android:label="LeaveEmotionFragment"
+        tools:layout="@layout/fragment_leave_emotion">
+        <argument
+            android:name="recordId"
+            app:argType="integer" />
     </fragment>
 </navigation>

@@ -15,13 +15,13 @@ class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdap
     private lateinit var binding: ItemRecordEmotionCardBinding
     private var moreItemClickListener: OnMoreItemClickListener? = null
 
-    private var bodyClickListener: OnItemClickListener? = null
+    private var bodyClickListener: OnRecordItemClickListener? = null
 
     fun setOnMoreItemClickListener(listener: OnMoreItemClickListener) {
         moreItemClickListener = listener
     }
 
-    fun setOnBodyClickListener(listener: OnItemClickListener) {
+    fun setOnBodyClickListener(listener: OnRecordItemClickListener) {
         bodyClickListener = listener
     }
 
@@ -49,7 +49,7 @@ class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdap
             }
 
             binding.recordContentsCardContainerCv.setOnClickListener {
-                bodyClickListener?.itemClick()
+                bodyClickListener?.onRecordItemClick(item)
             }
 
             binding.executePendingBindings()
