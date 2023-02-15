@@ -163,7 +163,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     binding.executePendingBindings()
                 }
                 is ApiResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    if(it.code != "204") {
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
                     hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
