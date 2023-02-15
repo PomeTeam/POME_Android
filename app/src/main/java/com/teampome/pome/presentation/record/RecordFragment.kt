@@ -68,10 +68,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var currentCategory: String
     private var currentCategoryPosition: Int = 0
 
-    // 요청 완료 확인 boolean값
-    private var isCompletedGetRecords = false
-    private var isCompletedGetOneWeekRecords = false
-
     // 임시 클릭 리스너
     private val itemClickListener = object: OnRecordItemClickListener {
         override fun onRecordItemClick(item: RecordData) {
@@ -115,28 +111,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-
-                        showLoading()
-                        isCompletedGetRecords = false
                         viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
-                                isCompletedGetRecords = true
                                 Log.e("record", "record error $message")
-                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                                hideLoading()
                             }
                         })
 
-                        isCompletedGetOneWeekRecords = false
                         viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
                                 Log.e("record", "record error $message")
-                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                                isCompletedGetOneWeekRecords = true
-
-                                if(isCompletedGetRecords) {
-                                    hideLoading()
-                                }
                             }
                         })
 
@@ -161,6 +144,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
                     binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
                     binding.executePendingBindings()
+
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     if(it.code != "204") {
@@ -184,29 +169,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategoryPosition = 0
 
                 // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
-                isCompletedGetRecords = false
                 viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Log.e("record", "record error $message")
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        isCompletedGetRecords = true
-
-                        if(isCompletedGetOneWeekRecords) {
-                            hideLoading()
-                        }
                     }
                 })
 
-                isCompletedGetOneWeekRecords = false
                 viewModel.getOneWeekRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Log.e("record", "record error $message")
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        isCompletedGetOneWeekRecords = true
-
-                        if(isCompletedGetRecords) {
-                            hideLoading()
-                        }
                     }
                 })
 
@@ -243,20 +214,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         it.data.data?.content?.toMutableList() ?: mutableListOf()
                     )
 
-                    isCompletedGetRecords = true
-
-                    if(isCompletedGetOneWeekRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("recordData", "failure RecordData : $it")
-                    isCompletedGetRecords = true
 
-                    if(isCompletedGetOneWeekRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
             }
@@ -270,21 +234,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     binding.countOneWeekRecord = it.data.data?.content?.size ?: 0
                     binding.executePendingBindings()
 
-                    isCompletedGetOneWeekRecords = true
+                    hideLoading()
 
-                    if(isCompletedGetRecords) {
-                        hideLoading()
-                    }
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("recordData", "failure RecordData : $it")
 
-                    isCompletedGetOneWeekRecords = true
-
-                    if(isCompletedGetRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
             }
@@ -308,8 +265,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     hideLoading()
                     removeGoalDialog.dismiss()
                 }
-                is ApiResponse.Loading -> {
-                }
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
@@ -395,9 +351,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
-
-            showLoading()
-
             viewModel.goalDetails.value?.get(currentCategoryPosition)?.id?.let {
                 viewModel.deleteGoal(
                     it,
