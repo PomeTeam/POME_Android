@@ -2,7 +2,6 @@ package com.teampome.pome.util.base
 
 import android.util.Log
 import com.google.gson.Gson
-import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.base.ErrorResponse
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +16,9 @@ import retrofit2.Response
  *   Call을 통해 요청하면 Flow로 감싸 ApiResponse결과를 내어준다.
  *   ApiResponse.Success, ApiResponse.Failure, ApiResponse.Loading 3가지 상태로 리턴
  *   또한, 2초이상 요청이 길어질 경우 자동으로 TimeOut된다.
- *
- *   error code 204 : empty list로 떨어지는 경우
  */
 
+// Todo : Success지만 failure인 경우, BasePomeResponse의 success가 false인 경우도 failure처리 ... 고민..
 fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = flow {
     // 먼저, Loading 상태 표현
     emit(ApiResponse.Loading)
@@ -35,15 +33,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
             if(response.body() is BasePomeResponse<*>) {
                 if(response.isSuccessful && (response.body() as BasePomeResponse<*>).success) {
                     response.body()?.let { data ->
-                        if((data as BasePomeResponse<*>).data is BaseAllData<*>) {
-                            if(!((data as BasePomeResponse<*>).data as BaseAllData<*>).content.isNullOrEmpty()) {
-                                emit(ApiResponse.Success(data))
-                            } else {
-                                emit(ApiResponse.Failure("empty content", "204"))
-                            }
-                        } else {
-                            emit(ApiResponse.Success(data))
-                        }
+                        emit(ApiResponse.Success(data))
                     }
                 } else if (!(response.body() as BasePomeResponse<*>).success) {
                     emit(ApiResponse.Failure((response.body() as BasePomeResponse<*>).message, (response.body() as BasePomeResponse<*>).errorCode ?: "400"))
