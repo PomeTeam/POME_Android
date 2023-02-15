@@ -98,6 +98,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     override fun initView() {
+        // default binding
+        settingDefaultBinding()
+
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -302,13 +305,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // float button 클릭
         binding.recordWriteButtonCl.setOnClickListener {
-//                    alertWarningDialog(
-//                        R.drawable.writing_warning_alert_3d_component,
-//                        "지금은 씀씀이를 기록할 수 없어요",
-//                        "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
-//                    )
-
-            moveToConsume()
+            if(binding.currentGoalState is GoalState.Empty) {
+                alertWarningDialog(
+                    R.drawable.writing_warning_alert_3d_component,
+                    "지금은 씀씀이를 기록할 수 없어요",
+                    "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
+                )
+            } else {
+                moveToConsume()
+            }
         }
 
         binding.recordWriteEmotionContainerCl.setOnClickListener {
@@ -320,6 +325,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordGoalCompleteCl.setOnClickListener {
             moveToRecordGoalFinish()
         }
+    }
+
+    // 첫 기본 바인딩 설정
+    private fun settingDefaultBinding() {
+        binding.goalDetails = null
+        binding.currentGoalState = GoalState.Empty
+        binding.executePendingBindings()
     }
 
     // 목표 카드 더보기 클릭
