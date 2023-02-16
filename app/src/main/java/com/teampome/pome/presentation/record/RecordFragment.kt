@@ -2,6 +2,8 @@ package com.teampome.pome.presentation.record
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +13,12 @@ import androidx.annotation.RawRes
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -27,6 +35,7 @@ import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.GlideApp
 import com.teampome.pome.util.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -91,9 +100,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     override fun initView() {
-        // default binding
-//        settingDefaultBinding()
-
         // 초기 목표 데이터 요청 (같이 요청을 하긴 하는데 showLoading은 언제까지?)
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
@@ -148,6 +154,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             when(it) {
                 is ApiResponse.Success -> {
                     it.data.data?.content?.let { list ->
+                        if(list.isNotEmpty()) currentCategoryPosition = 0
                         currentCategoryPosition?.let { pos ->
                             binding.goalDetails = list[pos]
                             binding.currentGoalState = setGoalState(list[pos])
@@ -205,9 +212,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 is ApiResponse.Success -> {
                     it.data.data?.let { contents ->
                         binding.recordData = contents.content
-                    }
 
-                    binding.executePendingBindings()
+                        binding.executePendingBindings()
+                    }
 
 //                    submit list하는 list는 다른 값인데, 이전 값이 currentList임...
 //                    submitList의 list는 정상, 계속 카테고리를 변경하다보면 list값이 아예 섞임..
@@ -330,13 +337,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordGoalCompleteCl.setOnClickListener {
             moveToRecordGoalFinish()
         }
-    }
-
-    // 첫 기본 바인딩 설정
-    private fun settingDefaultBinding() {
-        binding.goalDetails = null
-        binding.currentGoalState = GoalState.Empty
-        binding.executePendingBindings()
     }
 
     // 목표 카드 더보기 클릭

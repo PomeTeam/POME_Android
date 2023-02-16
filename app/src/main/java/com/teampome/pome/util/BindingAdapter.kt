@@ -1,5 +1,6 @@
 package com.teampome.pome.util
 
+import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -40,19 +41,19 @@ fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: I
 @BindingAdapter("pomeImage44")
 fun bindingPomeImage44(imageView: ImageView, src: String?){
     src?.let {
-        Glide.with(imageView)
+        GlideApp.with(imageView)
             .load(src)
             .apply(
                 RequestOptions.bitmapTransform(
                     MultiTransformation(
                         CenterCrop(),
-                        MaskTransformation(R.drawable.mask_pome_44)
+                        MaskTransformation(R.drawable.user_profile_empty_150)
                     )
                 )
             ).into(imageView)
     } ?: run {
         Glide.with(imageView)
-            .load(R.drawable.mask_pome_44)
+            .load(R.drawable.user_profile_empty_150)
             .into(imageView)
     }
 }
