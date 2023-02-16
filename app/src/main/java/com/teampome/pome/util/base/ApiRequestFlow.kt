@@ -26,7 +26,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
     emit(ApiResponse.Loading)
 
     // 20초 TimeOut
-    withTimeoutOrNull(20000L) {
+    withTimeoutOrNull(30000L) {
         val response = call()
 
         Log.d("call", "call in $response")
@@ -60,6 +60,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
                 }
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             emit(ApiResponse.Failure(e.message ?: e.toString(), "400"))
         }
     } ?: emit(ApiResponse.Failure("Timeout! Please try again.", "408"))
