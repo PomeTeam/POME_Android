@@ -35,15 +35,7 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
             if(response.body() is BasePomeResponse<*>) {
                 if(response.isSuccessful && (response.body() as BasePomeResponse<*>).success) {
                     response.body()?.let { data ->
-                        if((data as BasePomeResponse<*>).data is BaseAllData<*>) {
-                            if(!((data as BasePomeResponse<*>).data as BaseAllData<*>).content.isNullOrEmpty()) {
-                                emit(ApiResponse.Success(data))
-                            } else {
-                                emit(ApiResponse.Failure("empty content", "204"))
-                            }
-                        } else {
-                            emit(ApiResponse.Success(data))
-                        }
+                        emit(ApiResponse.Success(data))
                     }
                 } else if (!(response.body() as BasePomeResponse<*>).success) {
                     emit(ApiResponse.Failure((response.body() as BasePomeResponse<*>).message, (response.body() as BasePomeResponse<*>).errorCode ?: "400"))
