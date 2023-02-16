@@ -323,6 +323,9 @@
         <action
             android:id="@+id/action_recordGoalFinishFragment_to_recordGoalFinishCommentFragment"
             app:destination="@id/recordGoalFinishCommentFragment" />
+        <argument
+            android:name="goal_data"
+            app:argType="com.teampome.pome.model.goal.GoalData" />
     </fragment>
     <fragment
         android:id="@+id/recordGoalFinishCommentFragment"

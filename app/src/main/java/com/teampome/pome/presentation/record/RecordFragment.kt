@@ -598,8 +598,14 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToRecordGoalFinish() {
-        val action = RecordFragmentDirections.actionRecordFragmentToRecordGoalFinishFragment()
+        viewModel.goalDetails.value?.let { list ->
+            currentCategoryPosition?.let { pos ->
+                list[pos]?.let { goalData ->
+                    val action = RecordFragmentDirections.actionRecordFragmentToRecordGoalFinishFragment(goalData)
 
-        findNavController().navigate(action)
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 }
