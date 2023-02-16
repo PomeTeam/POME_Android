@@ -55,11 +55,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         }
 
         binding.remindReviewRv.adapter = RemindContentsCardAdapter(
-            object : RemindItemClickListener { // detailView로 이동
-                override fun remindItemClick(item: ContentCardItem) {
-                    moveToRemindDetailView(item)
-                }
-            }
+
         )
     }
 
@@ -89,10 +85,10 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         viewModel.remindPosition.observe(viewLifecycleOwner) {
             binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
 
-            // position에 따라 Card Item 삽입
-            (binding.remindReviewRv.adapter as RemindContentsCardAdapter).submitList(
-                viewModel.testRemindList.value?.contentItems?.get(it)?.contentCardItem
-            )
+//            // position에 따라 Card Item 삽입
+//            (binding.remindReviewRv.adapter as RemindContentsCardAdapter).submitList(
+//                viewModel.testRemindList.value?.contentItems?.get(it)?.contentCardItem
+//            )
 
             binding.executePendingBindings()
         }

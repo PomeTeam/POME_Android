@@ -39,7 +39,7 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
             })
         }
 
-        binding.recordGoalEmotionCardListRv.adapter
+        binding.recordGoalEmotionCardListRv.adapter = RemindContentsCardAdapter()
     }
 
     override fun initListener() {
@@ -55,6 +55,12 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("success", "success $it")
+
+                    it.data.data?.let { allData ->
+                        (binding.recordGoalEmotionCardListRv.adapter as RemindContentsCardAdapter).submitList(
+                            allData.content
+                        )
+                    }
 
                     hideLoading()
                 }

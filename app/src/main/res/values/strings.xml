@@ -232,4 +232,6 @@
     <string name="use_price_text">%s원</string>
     <string name="end_day_text">END</string>
     <string name="total_count_text">전체 %s건</string>
+    <string name="connect_dot_text">%s · %s</string>
+    <string name="plus_text">+%s</string>
 </resources>
