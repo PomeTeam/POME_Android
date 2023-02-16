@@ -56,15 +56,16 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
     private fun setUpRecyclerView(){
         friendGetAdapter = FriendGetAdapter()
-        binding.friendListRv.adapter = FriendGetAdapter().apply {
-            setOnItemClickListener {
-                Toast.makeText(requireContext(), "${it.friendNickName}", Toast.LENGTH_SHORT).show()
-            }
+        binding.friendListRv.apply {
+//            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = friendGetAdapter
         }
 
-        binding.friendListRv.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        // 클릭 리스너
+        friendGetAdapter.setOnItemClickListener {
+            Toast.makeText(requireContext(), "${it.friendNickName}", Toast.LENGTH_SHORT).show()
         }
+
     }
 }
