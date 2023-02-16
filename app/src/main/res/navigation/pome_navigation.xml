@@ -132,6 +132,9 @@
         <action
             android:id="@+id/action_registerFragment_to_registerTermsFragment"
             app:destination="@id/registerTermsFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_record_fragment"
+            app:destination="@id/record_fragment" />
     </fragment>
     <fragment
         android:id="@+id/registerTermsFragment"

@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.SmsData
+import com.teampome.pome.model.user.UserInfoData
+import com.teampome.pome.repository.login.LoginRepository
 import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val repository: RegisterRepository
+    private val repository: RegisterRepository,
+    private val loginRepository: LoginRepository
 ) : BaseViewModel() {
     val registerPhone = MutableLiveData<String>()
     val registerCertNum = MutableLiveData<String>()
@@ -28,5 +31,15 @@ class RegisterViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         repository.sendSms(registerPhone.value ?: "")
+    }
+
+    private val _loginResponse = MutableLiveData<ApiResponse<BasePomeResponse<UserInfoData>>>()
+    val loginResponse: LiveData<ApiResponse<BasePomeResponse<UserInfoData>>> = _loginResponse
+
+    fun login(phoneNumber: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _loginResponse,
+        coroutineErrorHandler
+    ) {
+        loginRepository.login(phoneNumber)
     }
 }
