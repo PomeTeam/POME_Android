@@ -11,7 +11,9 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordGoalFinishBinding
 import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.presentation.remind.RemindContentsCardAdapter
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordGoalFinishViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -29,6 +31,31 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
     }
 
     override fun initView() {
+        viewModel.curGoalData.observe(viewLifecycleOwner) {
+
+            viewModel.getGoalRecords(it.id, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.e("error", "getGoalRecords error $message")
+                }
+            })
+        }
+
+        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    Log.d("success", "success $it")
+
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Log.d("failure", "failure $it")
+
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
+
         binding.recordGoalEmotionCardListRv.adapter
     }
 
