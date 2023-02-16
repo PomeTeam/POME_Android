@@ -32,15 +32,26 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
 
     override fun initView() {
         viewModel.curGoalData.observe(viewLifecycleOwner) {
-
-            viewModel.getGoalRecords(it.id, object : CoroutineErrorHandler {
+            viewModel.getRemindRecords(it.id, firstEmotion = null, secondEmotion = null, object : CoroutineErrorHandler {
                 override fun onError(message: String) {
-                    Log.e("error", "getGoalRecords error $message")
+                    Log.e("error", "getRemindRecords error $message")
                 }
             })
         }
 
-        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) {
+        binding.recordGoalEmotionCardListRv.adapter
+    }
+
+    override fun initListener() {
+        binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
+            moveToGoalFinishComment()
+        }
+
+        binding.recordGoalFinishBackButtonIv.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+        viewModel.getRemindRecordsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     Log.d("success", "success $it")
@@ -55,22 +66,12 @@ class RecordGoalFinishFragment : BaseFragment<FragmentRecordGoalFinishBinding>(R
                 is ApiResponse.Loading -> { showLoading() }
             }
         }
-
-        binding.recordGoalEmotionCardListRv.adapter
-    }
-
-    override fun initListener() {
-        binding.recordGoalFinishCheckButtonAcb.setOnClickListener {
-            moveToGoalFinishComment()
-        }
-
-        binding.recordGoalFinishBackButtonIv.setOnClickListener {
-            findNavController().popBackStack()
-        }
     }
 
     private fun moveToGoalFinishComment() {
-        val action = RecordGoalFinishFragmentDirections.actionRecordGoalFinishFragmentToRecordGoalFinishCommentFragment()
+        val action = RecordGoalFinishFragmentDirections.actionRecordGoalFinishFragmentToRecordGoalFinishCommentFragment(
+            navArgs.goalData
+        )
 
         findNavController().navigate(action)
     }

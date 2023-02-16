@@ -14,6 +14,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -195,5 +196,15 @@ object NetworkModule {
         return retrofit
             .build()
             .create(GoalService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRemindService(
+        @AuthRetrofit retrofit: Retrofit.Builder
+    ) : RemindService {
+        return retrofit
+            .build()
+            .create(RemindService::class.java)
     }
 }

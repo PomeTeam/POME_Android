@@ -42,8 +42,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTestRemindDataSource() : RemindDataSource {
-        return RemindTestDataSource()
+    fun provideTestRemindDataSource(service: RemindService) : RemindDataSource {
+        return RemindTestDataSource(service)
     }
 
     @Provides
@@ -123,4 +123,6 @@ object RepositoryModule {
     fun provideGoalRepository(dataSource: GoalDataSource) : GoalRepository {
         return GoalRepository(dataSource)
     }
+
+
 }

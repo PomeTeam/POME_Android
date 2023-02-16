@@ -9,4 +9,12 @@ class RemindRepository @Inject constructor(
     suspend fun getTestRemindData() : RemindTestData? {
         return dataSource.getTestRemindData()
     }
+
+    fun getRemindRecords(
+        goalId: Int,
+        firstEmotion: Int?,
+        secondEmotion: Int?
+    ) = dataSource.getRemindRecords(
+        goalId, firstEmotion, secondEmotion
+    )
 }
