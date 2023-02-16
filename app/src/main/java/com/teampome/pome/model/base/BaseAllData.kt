@@ -1,7 +1,7 @@
 package com.teampome.pome.model.base
 
 data class BaseAllData<T>(
-    val content: List<T>?,
+    val content: List<T?>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,

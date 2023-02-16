@@ -65,12 +65,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
     private lateinit var recordData: RecordData
-    private lateinit var currentCategory: String
-    private var currentCategoryPosition: Int = 0
-
-    // 요청 완료 확인 boolean값
-    private var isCompletedGetRecords = false
-    private var isCompletedGetOneWeekRecords = false
+    private var currentCategory: String? = null
+    private var currentCategoryPosition: Int? = null
 
     // 임시 클릭 리스너
     private val itemClickListener = object: OnRecordItemClickListener {
@@ -92,16 +88,20 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun initView() {
+        // default binding
+//        settingDefaultBinding()
 
         // 초기 목표 데이터 요청 (같이 요청을 하긴 하는데 showLoading은 언제까지?)
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
+                Log.e("error", "findAllGoalByUser error $message")
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         })
-    }
 
-    override fun initView() {
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -109,34 +109,22 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         makeWarningDialog()
         makeFinishGoalAlertDialog()
 
+        // 카테고리 어댑터 설정
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-
-                        showLoading()
-                        isCompletedGetRecords = false
                         viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
-                                isCompletedGetRecords = true
                                 Log.e("record", "record error $message")
-                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                                hideLoading()
                             }
                         })
 
-                        isCompletedGetOneWeekRecords = false
                         viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
                                 Log.e("record", "record error $message")
-                                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                                isCompletedGetOneWeekRecords = true
-
-                                if(isCompletedGetRecords) {
-                                    hideLoading()
-                                }
                             }
                         })
 
@@ -147,6 +135,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 })
             }
 
+        // Record Contents 어댑터 설정
         binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
             setOnBodyClickListener(itemClickListener)
             setOnMoreItemClickListener(moreItemClickListener)
@@ -158,12 +147,23 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    binding.goalDetails = it.data.data?.content?.get(currentCategoryPosition)
-                    binding.currentGoalState = setGoalState(it.data.data?.content?.get(currentCategoryPosition))
-                    binding.executePendingBindings()
+                    it.data.data?.content?.let { list ->
+                        currentCategoryPosition?.let { pos ->
+                            binding.goalDetails = list[pos]
+                            binding.currentGoalState = setGoalState(list[pos])
+                            binding.executePendingBindings()
+                        }
+                    } ?: run {
+                        binding.goalDetails = null
+                        binding.currentGoalState = GoalState.Empty
+                        binding.executePendingBindings()
+                    }
+
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+
                     hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
@@ -176,35 +176,21 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // category listener - category를 주입
         viewModel.goalCategory.observe(viewLifecycleOwner) {
-            it?.let {
+            if(!it.isNullOrEmpty()) {
                 // 초기에 category를 받으면 0번을 기반으로 데이터 초기화
-                currentCategory = it[0].name
+                currentCategory = it[0]!!.name
                 currentCategoryPosition = 0
 
                 // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
-                isCompletedGetRecords = false
-                viewModel.getRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
+                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Log.e("record", "record error $message")
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        isCompletedGetRecords = true
-
-                        if(isCompletedGetOneWeekRecords) {
-                            hideLoading()
-                        }
                     }
                 })
 
-                isCompletedGetOneWeekRecords = false
-                viewModel.getOneWeekRecordByGoalId(it[0].goalId, object : CoroutineErrorHandler {
+                viewModel.getOneWeekRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Log.e("record", "record error $message")
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        isCompletedGetOneWeekRecords = true
-
-                        if(isCompletedGetRecords) {
-                            hideLoading()
-                        }
                     }
                 })
 
@@ -217,8 +203,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
             when(it) {
                 is ApiResponse.Success -> {
-                    Log.d("recordData", "success RecordData : $it")
-
                     it.data.data?.let { contents ->
                         binding.recordData = contents.content
                     }
@@ -241,20 +225,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                         it.data.data?.content?.toMutableList() ?: mutableListOf()
                     )
 
-                    isCompletedGetRecords = true
-
-                    if(isCompletedGetOneWeekRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("recordData", "failure RecordData : $it")
-                    isCompletedGetRecords = true
 
-                    if(isCompletedGetOneWeekRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
             }
@@ -263,26 +240,16 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    Log.d("recordData", "success RecordOneWeekData : $it")
-
                     binding.countOneWeekRecord = it.data.data?.content?.size ?: 0
                     binding.executePendingBindings()
 
-                    isCompletedGetOneWeekRecords = true
-
-                    if(isCompletedGetRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     Log.d("recordData", "failure RecordData : $it")
 
-                    isCompletedGetOneWeekRecords = true
-
-                    if(isCompletedGetRecords) {
-                        hideLoading()
-                    }
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> { showLoading() }
             }
@@ -306,8 +273,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     hideLoading()
                     removeGoalDialog.dismiss()
                 }
-                is ApiResponse.Loading -> {
-                }
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
@@ -344,13 +310,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // float button 클릭
         binding.recordWriteButtonCl.setOnClickListener {
-//                    alertWarningDialog(
-//                        R.drawable.writing_warning_alert_3d_component,
-//                        "지금은 씀씀이를 기록할 수 없어요",
-//                        "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
-//                    )
-
-            moveToConsume()
+            if(binding.currentGoalState is GoalState.Empty) {
+                alertWarningDialog(
+                    R.drawable.writing_warning_alert_3d_component,
+                    "지금은 씀씀이를 기록할 수 없어요",
+                    "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
+                )
+            } else {
+                moveToConsume()
+            }
         }
 
         binding.recordWriteEmotionContainerCl.setOnClickListener {
@@ -362,6 +330,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         binding.recordGoalCompleteCl.setOnClickListener {
             moveToRecordGoalFinish()
         }
+    }
+
+    // 첫 기본 바인딩 설정
+    private fun settingDefaultBinding() {
+        binding.goalDetails = null
+        binding.currentGoalState = GoalState.Empty
+        binding.executePendingBindings()
     }
 
     // 목표 카드 더보기 클릭
@@ -393,18 +368,27 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
-
-            showLoading()
-
-            viewModel.goalDetails.value?.get(currentCategoryPosition)?.id?.let {
-                viewModel.deleteGoal(
-                    it,
-                    object : CoroutineErrorHandler {
-                        override fun onError(message: String) {
-                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        }
+            viewModel.goalDetails.value?.let { list ->
+                currentCategoryPosition?.let { pos ->
+                    list[pos]?.let { goalData ->
+                        viewModel.deleteGoal(
+                            goalData.id,
+                            object : CoroutineErrorHandler {
+                                override fun onError(message: String) {
+                                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        )
+                    } ?: run {
+                        Toast.makeText(requireContext(), "목표 삭제 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                        hideLoading()
+                        removeGoalDialog.dismiss()
                     }
-                )
+                } ?: run {
+                    Toast.makeText(requireContext(), "목표 삭제 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                    removeGoalDialog.dismiss()
+                }
             } ?: run {
                 Toast.makeText(requireContext(), "목표 삭제 중 에러가 발생했습니다.", Toast.LENGTH_SHORT).show()
                 hideLoading()
@@ -541,13 +525,21 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToModifyRecordCard(recordData: RecordData) {
-        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
-            recordData,
-            viewModel.goalCategory.value?.get(currentCategoryPosition)?.goalId ?: -1,
-            currentCategory
-        )
+        viewModel.goalCategory.value?.let { list ->
+            currentCategoryPosition?.let { pos ->
+                currentCategory?.let { category ->
+                    list[pos]?.let { goalCategory ->
+                        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
+                            recordData,
+                            goalCategory.goalId,
+                            category
+                        )
 
-        findNavController().navigate(action)
+                        findNavController().navigate(action)
+                    }
+                }
+            }
+        }
     }
 
     private fun moveToRecordAlarms() {
@@ -563,21 +555,45 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToConsume() {
-        val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment(
-            goalCategory = viewModel.goalCategory.value?.get(currentCategoryPosition) ?: GoalCategory(id = 0, name = "", goalId = 0),
-            listGoal = viewModel.goalCategory.value?.toTypedArray() ?: arrayOf()
-        )
+        viewModel.goalCategory.value?.let { list ->
+            currentCategoryPosition?.let { pos ->
+                list[pos]?.let { goalCategory ->
+                    val changeList : List<GoalCategory> = list.map {
+                        it?.let { gc ->
+                            GoalCategory(
+                                id = gc.goalId,
+                                name = gc.name,
+                                goalId = gc.goalId
+                            )
+                        } ?: GoalCategory(
+                            id = -1,
+                            name = "",
+                            goalId = -1
+                        )
+                    }
 
-        findNavController().navigate(action)
+                    val action = RecordFragmentDirections.actionRecordFragmentToConsumeRecordFragment(
+                        goalCategory = goalCategory,
+                        listGoal = changeList.toTypedArray()
+                    )
+
+                    findNavController().navigate(action)
+                }
+            }
+        }
     }
 
     private fun moveToRecordLeaveEmotion() {
-        viewModel.goalDetails.value?.get(currentCategoryPosition)?.let {
-            val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment(
-                it
-            )
+        viewModel.goalDetails.value?.let { list ->
+            currentCategoryPosition?.let { pos ->
+                list[pos]?.let { goalData ->
+                    val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment(
+                        goalData
+                    )
 
-            findNavController().navigate(action)
+                    findNavController().navigate(action)
+                }
+            }
         }
     }
 

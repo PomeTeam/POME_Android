@@ -291,34 +291,43 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/record_write_emotion_title_atv"
-                        style="@style/Pome.SemiBold.16"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/record_write_emotion_text_container_cl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="@string/record_write_emotion_title_text"
-                        android:textColor="@color/grey_8"
+                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_heart_aiv"
                         app:layout_constraintStart_toEndOf="@id/record_write_emotion_heart_aiv"
-                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_heart_aiv" />
+                        app:layout_constraintBottom_toBottomOf="@id/record_write_emotion_heart_aiv">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_write_emotion_title_atv"
+                            style="@style/Pome.SemiBold.16"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/record_write_emotion_title_text"
+                            android:textColor="@color/grey_8"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/record_write_emotion_subtitle_atv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@{countOneWeekRecord == null ? @string/record_write_emotion_subtitle_text(0) : @string/record_write_emotion_subtitle_text(countOneWeekRecord)}"
+                            app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
+                            app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv"
+                            tools:text="다시 돌아볼 씀씀이가 0건 있어요" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_arrow_right_big_24"
-                        app:layout_constraintBottom_toBottomOf="@id/record_write_emotion_title_atv"
+                        app:layout_constraintBottom_toBottomOf="@id/record_write_emotion_text_container_cl"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_title_atv" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/record_write_emotion_subtitle_atv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:text="@{@string/record_write_emotion_subtitle_text(countOneWeekRecord)}"
-                        app:layout_constraintStart_toStartOf="@id/record_write_emotion_title_atv"
-                        app:layout_constraintTop_toBottomOf="@id/record_write_emotion_title_atv"
-                        tools:text="다시 돌아볼 씀씀이가 0건 있어요" />
+                        app:layout_constraintTop_toTopOf="@id/record_write_emotion_text_container_cl" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
