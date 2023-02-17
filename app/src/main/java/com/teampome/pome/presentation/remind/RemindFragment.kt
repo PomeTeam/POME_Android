@@ -6,18 +6,14 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
-import com.teampome.pome.model.ContentCardItem
-import com.teampome.pome.model.RemindCategoryData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
-import com.teampome.pome.util.Emotion
 import com.teampome.pome.viewmodel.RemindViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -46,13 +42,13 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
 
         // RecyclerView adapter 설정
-        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
-            setOnItemClickListener(object : OnCategoryItemClickListener {
-                override fun onCategoryItemClick(item: GoalCategory, position: Int) {
-                    viewModel.settingRemindPosition(position)
-                }
-            })
-        }
+//        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
+//            setOnItemClickListener(object : OnCategoryItemClickListener {
+//                override fun onCategoryItemClick(item: GoalCategory, position: Int) {
+//                    viewModel.settingRemindPosition(position)
+//                }
+//            })
+//        }
 
         binding.remindReviewRv.adapter = RemindContentsCardAdapter(
 
@@ -62,28 +58,27 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     override fun initListener() {
 
         // test data livedata listener
-        viewModel.testRemindList.observe(viewLifecycleOwner) {
-            Log.d("test", "test data is $it")
+//        viewModel.testRemindList.observe(viewLifecycleOwner) {
+//            Log.d("test", "test data is $it")
 
-            // 자체로 필터링해서 데이터를 집어넣자
-            val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
-                remindTestData.contentItems.map { remindTestItem ->
-                    RemindCategoryData(
-                        remindTestItem.mainCategory
-                    )
-                }
-            } ?: listOf(RemindCategoryData("···"))) // null이면 ··· 으로 => category가 없는 경우
+//            // 자체로 필터링해서 데이터를 집어넣자
+//            val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
+//                remindTestData.contentItems.map { remindTestItem ->
+//                    RemindCategoryData(
+//                        remindTestItem.mainCategory
+//                    )
+//                }
+//            } ?: listOf(RemindCategoryData("···"))) // null이면 ··· 으로 => category가 없는 경우
 
-            Log.d("test", "filter test data is $testCategoryList")
-
-            (binding.remindCategoryChipRv.adapter as RemindCategoryChipAdapter).submitList(
-                testCategoryList
-            )
-        }
+//
+//            (binding.remindCategoryChipRv.adapter as RemindCategoryChipAdapter).submitList(
+//                testCategoryList
+//            )
+//        }
 
         // viewModel position 관찰
         viewModel.remindPosition.observe(viewLifecycleOwner) {
-            binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
+//            binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
 
 //            // position에 따라 Card Item 삽입
 //            (binding.remindReviewRv.adapter as RemindContentsCardAdapter).submitList(
@@ -181,13 +176,13 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         }
     }
 
-    private fun moveToRemindDetailView(item: ContentCardItem) {
-        val action = RemindFragmentDirections.actionRemindFragmentToRemindDetailFragment(
-            item
-        )
-
-        findNavController().navigate(action)
-    }
+//    private fun moveToRemindDetailView(item: ContentCardItem) {
+//        val action = RemindFragmentDirections.actionRemindFragmentToRemindDetailFragment(
+//            item
+//        )
+//
+//        findNavController().navigate(action)
+//    }
 
     // 직관성을 높이기 위해 두 가지 메소드로 구현
     private fun isFirstEmotion() : Boolean = pomeRemindBottomSheetDialogBinding.remindDialogTitleTv.text == FIRST_EMOTION

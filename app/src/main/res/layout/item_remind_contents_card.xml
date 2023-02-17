@@ -5,11 +5,6 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="contentCardItem"
-            type="com.teampome.pome.model.ContentCardItem" />
-
         <variable
             name="recordData"
             type="com.teampome.pome.model.RecordData" />

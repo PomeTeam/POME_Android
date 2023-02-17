@@ -3,13 +3,11 @@ package com.teampome.pome.presentation.record.finish
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordGoalFinishBinding
-import com.teampome.pome.model.ContentCardItem
 import com.teampome.pome.presentation.remind.RemindContentsCardAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment

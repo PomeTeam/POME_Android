@@ -1,12 +1,9 @@
 package com.teampome.pome.viewmodel.record
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalCategory

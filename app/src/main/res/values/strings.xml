@@ -234,4 +234,7 @@
     <string name="total_count_text">전체 %s건</string>
     <string name="connect_dot_text">%s · %s</string>
     <string name="plus_text">+%s</string>
+    <string name="remind_no_chip_text">···</string>
+    <string name="remind_no_goal_title_text">목표가 있어야 씀씀이를\n기록하고 돌아볼 수 있어요</string>
+    <string name="remind_no_goal_subtitle_text">목표 만들기</string>
 </resources>

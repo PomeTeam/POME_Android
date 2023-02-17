@@ -165,9 +165,6 @@
         android:name="com.teampome.pome.presentation.remind.RemindDetailFragment"
         android:label="RemindDetailFragment"
         tools:layout="@layout/fragment_remind_item_detail">
-        <argument
-            android:name="remind_contents_item"
-            app:argType="com.teampome.pome.model.ContentCardItem" />
     </fragment>
     <fragment
         android:id="@+id/friendDetailFragment"
