@@ -11,9 +11,13 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
+import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
+import com.teampome.pome.presentation.record.RecordCategoryAdapter
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.RemindViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,15 +35,40 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     // viewModel
     private val viewModel: RemindViewModel by viewModels()
 
+    private lateinit var recordData: RecordData
+    private var currentCategory: String? = null
+    private var currentCategoryPosition: Int? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun initView() {
-        pomeRemindBottomSheetDialog = BottomSheetDialog(requireContext())
-        pomeRemindBottomSheetDialogBinding = PomeRemindBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        makePomeBottomSheetDialog()
 
-        pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
+        viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
+            override fun onError(message: String) {
+                Log.e("error", "findAllGoalByUser error $message")
+            }
+        })
+
+        // 카테고리 어댑터 설정
+        binding.remindCategoryChipRv.adapter =
+            RecordCategoryAdapter().apply {
+                setOnItemClickListener(object : OnCategoryItemClickListener {
+                    override fun onCategoryItemClick(item: GoalCategory, position: Int) {
+                        currentCategory = item.name
+                        currentCategoryPosition = position
+                        viewModel.getRemindRecords(item.goalId, firstEmotion = null, secondEmotion = null, object : CoroutineErrorHandler {
+                            override fun onError(message: String) {
+                                Log.e("record", "record error $message")
+                            }
+                        })
+                    }
+                })
+            }
+
+//        viewModel.remindPosition
 
         // RecyclerView adapter 설정
 //        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
@@ -49,56 +78,63 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 //                }
 //            })
 //        }
-
-        binding.remindReviewRv.adapter = RemindContentsCardAdapter(
-
-        )
     }
 
     override fun initListener() {
+        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
 
-        // test data livedata listener
-//        viewModel.testRemindList.observe(viewLifecycleOwner) {
-//            Log.d("test", "test data is $it")
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
 
-//            // 자체로 필터링해서 데이터를 집어넣자
-//            val testCategoryList: List<RemindCategoryData> = (it?.let { remindTestData ->
-//                remindTestData.contentItems.map { remindTestItem ->
-//                    RemindCategoryData(
-//                        remindTestItem.mainCategory
-//                    )
-//                }
-//            } ?: listOf(RemindCategoryData("···"))) // null이면 ··· 으로 => category가 없는 경우
-
-//
-//            (binding.remindCategoryChipRv.adapter as RemindCategoryChipAdapter).submitList(
-//                testCategoryList
-//            )
-//        }
-
-        // viewModel position 관찰
-        viewModel.remindPosition.observe(viewLifecycleOwner) {
-//            binding.remindTestItem = viewModel.testRemindList.value?.contentItems?.get(it)
-
-//            // position에 따라 Card Item 삽입
-//            (binding.remindReviewRv.adapter as RemindContentsCardAdapter).submitList(
-//                viewModel.testRemindList.value?.contentItems?.get(it)?.contentCardItem
-//            )
-
-            binding.executePendingBindings()
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
         }
 
-        // viewModel 처음 감정 관찰
-//        viewModel.firstEmotion.observe(viewLifecycleOwner) {
-//            binding.firstEmotion = it
-//            binding.executePendingBindings()
-//        }
+        viewModel.goalCategory.observe(viewLifecycleOwner) {
+            if(!it.isNullOrEmpty()) {
+                // 초기에 category를 받으면 0번을 기반으로 데이터 초기화
+                currentCategory = it[0]!!.name
+                currentCategoryPosition = 0
 
-        // viewModel 후 감정 관찰
-//        viewModel.lastEmotion.observe(viewLifecycleOwner) {
-//            binding.lastEmotion = it
-//            binding.executePendingBindings()
-//        }
+                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
+                viewModel.getRemindRecords(it[0]!!.goalId, null, null, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.e("record", "record error $message")
+                    }
+                })
+
+                (binding.remindCategoryChipRv.adapter as RecordCategoryAdapter).submitList(
+                    it
+                )
+
+                binding.goalCategoryList = it
+                binding.executePendingBindings()
+            }
+        }
+
+        viewModel.goalDetails.observe(viewLifecycleOwner) {
+
+        }
+
+        viewModel.getRemindRecordsResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
 
         // 처음 감정 선택
         binding.remindReviewFirstEmotionCl.setOnClickListener {
@@ -171,18 +207,16 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // 초기화 버튼 클릭시
         binding.remindReviewResetContainterCl.setOnClickListener {
-//            viewModel.settingFirstEmotion(Emotion.FIRST_EMOTION)
-//            viewModel.settingLastEmotion(Emotion.LAST_EMOTION)
+
         }
     }
 
-//    private fun moveToRemindDetailView(item: ContentCardItem) {
-//        val action = RemindFragmentDirections.actionRemindFragmentToRemindDetailFragment(
-//            item
-//        )
-//
-//        findNavController().navigate(action)
-//    }
+    private fun makePomeBottomSheetDialog() {
+        pomeRemindBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeRemindBottomSheetDialogBinding = PomeRemindBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+
+        pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
+    }
 
     // 직관성을 높이기 위해 두 가지 메소드로 구현
     private fun isFirstEmotion() : Boolean = pomeRemindBottomSheetDialogBinding.remindDialogTitleTv.text == FIRST_EMOTION

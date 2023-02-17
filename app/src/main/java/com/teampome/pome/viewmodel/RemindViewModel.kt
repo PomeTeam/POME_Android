@@ -1,42 +1,76 @@
 package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.Transformations
+import com.teampome.pome.model.RecordData
+import com.teampome.pome.model.base.BaseAllData
+import com.teampome.pome.model.base.BasePomeResponse
+import com.teampome.pome.model.goal.GoalCategory
+import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.remind.RemindRepository
+import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.SingleLiveEvent
+import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseViewModel
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RemindViewModel @Inject constructor(
-    private val repository: RemindRepository
-) : ViewModel() {
+    private val remindRepository: RemindRepository,
+    private val goalRepository: GoalRepository
+) : BaseViewModel() {
+    private val _getRemindRecordsResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
+    val getRemindRecordsResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getRemindRecordsResponse
 
-    private val _remindPosition = MutableLiveData<Int>()
-    val remindPosition: LiveData<Int> = _remindPosition
-
-//    private val _firstEmotion = MutableLiveData(Emotion.FIRST_EMOTION)
-//    val firstEmotion: LiveData<Emotion> = _firstEmotion
-//
-//    private val _lastEmotion = MutableLiveData(Emotion.LAST_EMOTION)
-//    val lastEmotion: LiveData<Emotion> = _lastEmotion
-
-    init {
-        // 초기값
-        _remindPosition.value = 0
+    fun getRemindRecords(goalId: Int, firstEmotion: Int?, secondEmotion: Int?, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getRemindRecordsResponse,
+        coroutineErrorHandler
+    ) {
+        remindRepository.getRemindRecords(goalId, firstEmotion, secondEmotion)
     }
 
-    fun settingRemindPosition(pos: Int) {
-        _remindPosition.value = pos
+    private val _findAllGoalByUserResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>()
+    val findAllGoalByUserResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>> = _findAllGoalByUserResponse
+
+    val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
+        when(it) {
+            is ApiResponse.Success -> {
+                it.data.data?.let { allGoalData ->
+                    allGoalData.content.map { data ->
+                        data?.let { gd ->
+                            GoalCategory(
+                                gd.goalCategoryResponse.id,
+                                gd.goalCategoryResponse.name,
+                                false,
+                                gd.id,
+                                CommonUtil.calDiffDate(gd.endDate) == 0
+                            )
+                        } ?: run { null }
+                    }
+                } ?: run { null }
+            }
+            is ApiResponse.Loading -> { null }
+            is ApiResponse.Failure -> { null }
+        }
     }
 
-//    fun settingFirstEmotion(emotion: Emotion) {
-//        _firstEmotion.value = emotion
-//    }
-//
-//    fun settingLastEmotion(emotion: Emotion) {
-//        _lastEmotion.value = emotion
-//    }
+    val goalDetails: LiveData<List<GoalData?>> = Transformations.map(_findAllGoalByUserResponse) {
+        when(it) {
+            is ApiResponse.Success -> {
+                it.data.data?.content ?: run { null }
+            }
+            is ApiResponse.Loading -> { null }
+            is ApiResponse.Failure -> { null }
+        }
+    }
+
+    fun findAllGoalByUser(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _findAllGoalByUserResponse,
+        coroutineErrorHandler
+    ) {
+        goalRepository.findAllGoalByUser()
+    }
 }

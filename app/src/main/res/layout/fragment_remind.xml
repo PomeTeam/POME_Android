@@ -6,8 +6,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="goalCategoryList"
+            type="List&lt;com.teampome.pome.model.goal.GoalCategory>" />
 
         <import type="android.view.View" />
+        <import type="java.util.List" />
         <import type="com.teampome.pome.util.Emotion" />
     </data>
 
@@ -47,6 +51,7 @@
             android:paddingHorizontal="12dp"
             android:paddingVertical="5dp"
             android:background="@drawable/remind_chip_background"
+            android:visibility="@{goalCategoryList == null || goalCategoryList.size() == 0 ? View.VISIBLE : View.INVISIBLE}"
             android:layout_marginStart="16dp"
             android:layout_marginTop="22dp"
             app:layout_constraintTop_toBottomOf="@id/remind_notice_bell_aiv"

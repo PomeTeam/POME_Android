@@ -9,7 +9,7 @@ import com.teampome.pome.util.base.apiRequestFlow
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class RemindTestDataSource @Inject constructor(
+class RemindRemoteDataSource @Inject constructor(
     private val remindService: RemindService
 ) : RemindDataSource {
 
