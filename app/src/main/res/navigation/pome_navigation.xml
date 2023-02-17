@@ -338,6 +338,10 @@
         <argument
             android:name="goal_data"
             app:argType="com.teampome.pome.model.goal.GoalData" />
+        <action
+            android:id="@+id/action_recordGoalFinishCommentFragment_to_record_fragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/record_fragment" />
     </fragment>
     <fragment
         android:id="@+id/recordGoalFinishCompleteFragment"

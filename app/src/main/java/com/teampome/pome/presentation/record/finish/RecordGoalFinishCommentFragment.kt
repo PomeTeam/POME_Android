@@ -1,21 +1,31 @@
 package com.teampome.pome.presentation.record.finish
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordGoalFinishCommentBinding
 import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.viewmodel.record.RecordGoalFinishCommentViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCommentBinding>(R.layout.fragment_record_goal_finish_comment) {
     private lateinit var removeDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeDialog: Dialog
+
+    private val args: RecordGoalFinishFragmentArgs by navArgs()
+    private val viewModel : RecordGoalFinishCommentViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -38,7 +48,21 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
     }
 
     override fun initListener() {
+        viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    moveToRecord()
 
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
     }
 
     private fun makeRemoveDialog() {
@@ -57,23 +81,29 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
 
         // 그만둘래요 클릭
         removeDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "삭제할래요", Toast.LENGTH_SHORT).show()
+            viewModel.deleteGoal(args.goalData.id, object: CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.e("error", "deleteGoal error $message")
+                }
+            })
 
             removeDialog.dismiss()
-
-            findNavController().popBackStack()
         }
 
         // 이어서 쓸래요 클릭
         removeDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "아니요", Toast.LENGTH_SHORT).show()
-
             removeDialog.dismiss()
         }
     }
 
     private fun moveToGoalFinishComplete() {
         val action = RecordGoalFinishCommentFragmentDirections.actionRecordGoalFinishCommentFragmentToRecordGoalFinishCompleteFragment()
+
+        findNavController().navigate(action)
+    }
+
+    private fun moveToRecord() {
+        val action = RecordGoalFinishCommentFragmentDirections.actionRecordGoalFinishCommentFragmentToRecordFragment()
 
         findNavController().navigate(action)
     }
