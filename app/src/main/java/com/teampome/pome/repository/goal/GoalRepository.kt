@@ -2,6 +2,7 @@ package com.teampome.pome.repository.goal
 
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.model.request.CommentDataBody
 import com.teampome.pome.model.request.GoalDataBody
 import com.teampome.pome.util.base.ApiResponse
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +29,9 @@ class GoalRepository @Inject constructor(
     }
 
     fun deleteGoal(goalId: Int) = dataSource.deleteGoal(goalId)
-
     fun getGoalIdByGoalCategoryId(goalCategoryId: Int) = dataSource.getGoalIdByGoalCategoryId(goalCategoryId)
+    fun finishGoal(
+        goalId: Int,
+        oneLineComment: String
+    ) = dataSource.finishGoal(goalId, CommentDataBody(oneLineComment))
 }

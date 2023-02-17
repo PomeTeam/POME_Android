@@ -3,13 +3,10 @@ package com.teampome.pome.network
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.model.request.CommentDataBody
 import com.teampome.pome.model.request.GoalDataBody
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.DELETE
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface GoalService {
 
@@ -50,4 +47,13 @@ interface GoalService {
     suspend fun getGoalIdByGoalCategoryId(
         @Path("goalCategoryId") goalCategoryId: Int
     ) : Response<BasePomeResponse<BaseAllData<GoalData>>>
+
+    /**
+     *  목표 종료하기
+     */
+    @PUT("/api/v1/goals/end/{goalId}")
+    suspend fun finishGoal(
+        @Path("goalId") goalId: Int,
+        @Body commentDataBody: CommentDataBody
+    ) : Response<BasePomeResponse<GoalData>>
 }

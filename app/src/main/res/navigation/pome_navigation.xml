@@ -334,6 +334,7 @@
         tools:layout="@layout/fragment_record_goal_finish_comment">
         <action
             android:id="@+id/action_recordGoalFinishCommentFragment_to_recordGoalFinishCompleteFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/recordGoalFinishCompleteFragment" />
         <argument
             android:name="goal_data"

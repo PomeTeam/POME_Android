@@ -2,6 +2,8 @@ package com.teampome.pome.presentation.record.finish
 
 import android.app.Dialog
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -32,14 +34,12 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
     }
 
     override fun initView() {
+        CommonUtil.disabledPomeBtn(binding.finishCommentYesButtonAcb)
+
         makeRemoveDialog()
 
         binding.finishCommentBackButtonIv.setOnClickListener {
             findNavController().popBackStack()
-        }
-
-        binding.finishCommentYesButtonAcb.setOnClickListener {
-            moveToGoalFinishComplete()
         }
 
         binding.finishCommentNoButtonAcb.setOnClickListener {
@@ -48,10 +48,60 @@ class RecordGoalFinishCommentFragment : BaseFragment<FragmentRecordGoalFinishCom
     }
 
     override fun initListener() {
+        binding.finishCommentContentAet.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+            override fun afterTextChanged(s: Editable?) {
+                s?.let {
+                    viewModel.setOneLineComment(it.toString())
+                }
+
+                if(s.isNullOrEmpty()) {
+                    CommonUtil.disabledPomeBtn(binding.finishCommentYesButtonAcb)
+                } else {
+                    CommonUtil.enabledPomeBtn(binding.finishCommentYesButtonAcb)
+                }
+            }
+        })
+
+        binding.finishCommentYesButtonAcb.setOnClickListener {
+            viewModel.oneLineComment.value?.let { comment ->
+                viewModel.finishGoal(
+                    args.goalData.id,
+                    comment,
+                    object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Log.e("error", "finishGoal error $message")
+                        }
+                    }
+                )
+            }
+        }
+
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     moveToRecord()
+
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
+
+        viewModel.oneLineComment.observe(viewLifecycleOwner) {}
+
+        viewModel.finishGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    moveToGoalFinishComplete()
 
                     hideLoading()
                 }
