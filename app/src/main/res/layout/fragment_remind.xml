@@ -10,8 +10,13 @@
             name="goalCategoryList"
             type="List&lt;com.teampome.pome.model.goal.GoalCategory>" />
 
+        <variable
+            name="goalData"
+            type="com.teampome.pome.model.goal.GoalData" />
+
         <import type="android.view.View" />
         <import type="java.util.List" />
+        <import type="com.teampome.pome.util.CommonUtil" />
         <import type="com.teampome.pome.util.Emotion" />
     </data>
 
@@ -96,19 +101,20 @@
                         android:id="@+id/remind_goal_card_cv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="@{goalData == null ? View.GONE : View.VISIBLE}"
+                        pome:setGoalText="@{goalData.oneLineMind}"
+                        pome:setPrivate="@{!goalData.public}"
+                        pome:setRemainDays="@{Integer.toString(CommonUtil.INSTANCE.calDiffDate(goalData.endDate))}"
                         app:layout_constraintTop_toBottomOf="@id/remind_category_chip_rv" />
-                    <!--        pome:setGoalText="@{remindTestItem.goalCardItem.goal}"-->
-                    <!--        pome:setPrivate="@{remindTestItem.goalCardItem.categories[0] == `공개` ? false : true}"-->
-                    <!--        pome:setRemainDays="@{remindTestItem.goalCardItem.categories[1]}"-->
-
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/remind_no_goal_cl"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="@{goalData == null ? View.VISIBLE : View.GONE}"
                         android:paddingHorizontal="20dp"
                         android:paddingVertical="33.5dp">
-                        <!--                android:visibility="@{currentGoalState instanceof GoalState.End ? View.VISIBLE : View.GONE}"-->
+
                         <ImageView
                             android:id="@+id/remind_no_goal_flag_iv"
                             android:layout_width="wrap_content"

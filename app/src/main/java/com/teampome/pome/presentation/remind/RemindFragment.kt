@@ -13,6 +13,7 @@ import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
+import com.teampome.pome.presentation.record.GoalState
 import com.teampome.pome.presentation.record.RecordCategoryAdapter
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
@@ -64,26 +65,28 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
                                 Log.e("record", "record error $message")
                             }
                         })
+
+                        binding.goalData = viewModel.goalDetails.value?.get(position)
+                        binding.executePendingBindings()
                     }
                 })
             }
-
-//        viewModel.remindPosition
-
-        // RecyclerView adapter 설정
-//        binding.remindCategoryChipRv.adapter = RemindCategoryChipAdapter().apply {
-//            setOnItemClickListener(object : OnCategoryItemClickListener {
-//                override fun onCategoryItemClick(item: GoalCategory, position: Int) {
-//                    viewModel.settingRemindPosition(position)
-//                }
-//            })
-//        }
     }
 
     override fun initListener() {
         viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
+                    it.data.data?.content?.let { list ->
+                        if(list.isNotEmpty()) currentCategoryPosition = 0
+                        currentCategoryPosition?.let { pos ->
+                            binding.goalData = list[pos]
+                            binding.executePendingBindings()
+                        }
+                    } ?: run {
+                        binding.goalData = null
+                        binding.executePendingBindings()
+                    }
 
                     hideLoading()
                 }
