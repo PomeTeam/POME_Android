@@ -128,6 +128,15 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         viewModel.getRemindRecordsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
+                    it.data.data?.let { recordData ->
+                        binding.remindReviewRv.adapter = RemindContentsCardAdapter().apply {
+                            submitList(recordData.content)
+                        }
+
+                        binding.recordList = recordData.content
+                        binding.executePendingBindings()
+                    }
+
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
@@ -167,9 +176,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Happy
         pomeRemindBottomSheetDialogBinding.remindDialogHappyContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-//                viewModel.settingFirstEmotion(Emotion.HAPPY_EMOTION)
+
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-//                viewModel.settingLastEmotion(Emotion.HAPPY_EMOTION)
+
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -180,9 +189,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // What
         pomeRemindBottomSheetDialogBinding.remindDialogWhatContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-//                viewModel.settingFirstEmotion(Emotion.WHAT_EMOTION)
+
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-//                viewModel.settingLastEmotion(Emotion.WHAT_EMOTION)
+
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
@@ -193,9 +202,9 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Sad
         pomeRemindBottomSheetDialogBinding.remindDialogSadContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-//                viewModel.settingFirstEmotion(Emotion.SAD_EMOTION)
+
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-//                viewModel.settingLastEmotion(Emotion.SAD_EMOTION)
+
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }

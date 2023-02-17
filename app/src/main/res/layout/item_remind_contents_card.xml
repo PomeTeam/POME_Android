@@ -13,8 +13,6 @@
         <import type="android.view.View" />
     </data>
 
-    <!-- Todo : 그림자 처리 -->
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -165,10 +163,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:visibility="gone"
+                android:visibility="@{recordData.emotionResponse.friendEmotions == null || recordData.emotionResponse.friendEmotions.size() == 0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="@id/remind_contents_card_name_and_time_tv"
                 app:layout_constraintTop_toBottomOf="@id/remind_contents_card_name_and_time_tv">
-<!--                android:visibility="@{recordData.emotionResponse.friendEmotions == null || recordData.emotionResponse.friendEmotions.size() == 0 ? View.INVISIBLE : View.VISIBLE}"-->
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/remind_contents_card_first_friend_emotion_aiv"

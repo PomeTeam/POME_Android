@@ -14,6 +14,10 @@
             name="goalData"
             type="com.teampome.pome.model.goal.GoalData" />
 
+        <variable
+            name="recordList"
+            type="List&lt;com.teampome.pome.model.RecordData>" />
+
         <import type="android.view.View" />
         <import type="java.util.List" />
         <import type="com.teampome.pome.util.CommonUtil" />
@@ -291,9 +295,9 @@
                     android:layout_height="0dp"
                     android:gravity="center"
                     android:orientation="vertical"
+                    android:visibility="@{recordList == null || recordList.size() == 0 ? View.VISIBLE : View.GONE}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/remind_review_first_emotion_cl">
-                    <!--            android:visibility="@{remindTestItem.contentCardItem == null ? View.VISIBLE : View.GONE}"-->
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/remind_no_review_aiv"
@@ -323,7 +327,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/remind_review_first_emotion_cl"
                     tools:listitem="@layout/item_remind_contents_card" />
-                <!--        android:visibility="@{remindTestItem.contentCardItem == null ? View.GONE : View.VISIBLE}"-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
