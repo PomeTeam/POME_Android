@@ -178,8 +178,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         // goal Details Observe 등록
-        viewModel.goalDetails.observe(viewLifecycleOwner) {
-        }
+        viewModel.goalDetails.observe(viewLifecycleOwner) {}
+
+        // recordData 등록
+        viewModel.recordData.observe(viewLifecycleOwner) {}
 
         // category listener - category를 주입
         viewModel.goalCategory.observe(viewLifecycleOwner) {
@@ -212,6 +214,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 is ApiResponse.Success -> {
                     it.data.data?.let { contents ->
                         binding.recordData = contents.content
+                        viewModel.setRecordData(contents.content)
 
                         binding.executePendingBindings()
                     }
@@ -263,8 +266,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         // UI용으로 짜여진 oneWeekRecords observe
-        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
-        }
+        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {}
 
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
@@ -335,7 +337,15 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         binding.recordGoalCompleteCl.setOnClickListener {
-            moveToRecordGoalFinish()
+            viewModel.recordData.value?.let {
+                if(it.isEmpty()) {
+                    moveToRecordGoalFinish()
+                } else {
+                    finishGoalAlertDialog.show()
+                }
+            } ?: run {
+                finishGoalAlertDialog.show()
+            }
         }
     }
 

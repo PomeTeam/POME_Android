@@ -128,4 +128,11 @@ class RecordViewModel @Inject constructor(
     ) {
         recordRepository.getOneWeekGoalByGoalId(goalId)
     }
+
+    private val _recordData = MutableLiveData<List<RecordData?>>(listOf())
+    val recordData: LiveData<List<RecordData?>> = _recordData
+
+    fun setRecordData(list: List<RecordData?>) {
+        _recordData.value = list
+    }
 }
