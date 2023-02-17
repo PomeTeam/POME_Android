@@ -56,4 +56,10 @@ interface GoalService {
         @Path("goalId") goalId: Int,
         @Body commentDataBody: CommentDataBody
     ) : Response<BasePomeResponse<GoalData>>
+
+    /**
+     *  종료한 목표 검색하기
+     */
+    @GET("/api/v1/goals/users/end")
+    suspend fun findEndGoals() : Response<BasePomeResponse<BaseAllData<GoalData>>>
 }

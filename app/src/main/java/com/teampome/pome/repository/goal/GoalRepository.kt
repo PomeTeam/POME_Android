@@ -34,4 +34,5 @@ class GoalRepository @Inject constructor(
         goalId: Int,
         oneLineComment: String
     ) = dataSource.finishGoal(goalId, CommentDataBody(oneLineComment))
+    fun findEndGoals() = dataSource.findEndGoals()
 }

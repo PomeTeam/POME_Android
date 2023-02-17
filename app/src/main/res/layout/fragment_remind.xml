@@ -85,7 +85,7 @@
             android:layout_marginTop="30dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/remind_category_chip_rv">
+            app:layout_constraintTop_toBottomOf="@id/remind_no_chip_tv">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

@@ -15,4 +15,5 @@ interface GoalDataSource {
     fun deleteGoal(goalId: Int) : Flow<ApiResponse<BasePomeResponse<Any>>>
     fun getGoalIdByGoalCategoryId(goalCategoryId: Int) : Flow<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>
     fun finishGoal(goalId: Int, commentDataBody: CommentDataBody) : Flow<ApiResponse<BasePomeResponse<GoalData>>>
+    fun findEndGoals() : Flow<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>
 }

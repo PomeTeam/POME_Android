@@ -32,10 +32,10 @@ class RemindViewModel @Inject constructor(
         remindRepository.getRemindRecords(goalId, firstEmotion, secondEmotion)
     }
 
-    private val _findAllGoalByUserResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>()
-    val findAllGoalByUserResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>> = _findAllGoalByUserResponse
+    private val _findEndGoalsResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>()
+    val findEndGoalsResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>> = _findEndGoalsResponse
 
-    val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findEndGoalsResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
@@ -57,7 +57,7 @@ class RemindViewModel @Inject constructor(
         }
     }
 
-    val goalDetails: LiveData<List<GoalData?>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalDetails: LiveData<List<GoalData?>> = Transformations.map(_findEndGoalsResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.content ?: run { null }
@@ -67,10 +67,10 @@ class RemindViewModel @Inject constructor(
         }
     }
 
-    fun findAllGoalByUser(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
-        _findAllGoalByUserResponse,
+    fun findEndGoals(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _findEndGoalsResponse,
         coroutineErrorHandler
     ) {
-        goalRepository.findAllGoalByUser()
+        goalRepository.findEndGoals()
     }
 }

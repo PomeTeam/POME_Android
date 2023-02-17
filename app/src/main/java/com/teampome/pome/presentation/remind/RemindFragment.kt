@@ -47,7 +47,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     override fun initView() {
         makePomeBottomSheetDialog()
 
-        viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
+        viewModel.findEndGoals(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Log.e("error", "findAllGoalByUser error $message")
             }
@@ -74,7 +74,7 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     }
 
     override fun initListener() {
-        viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
+        viewModel.findEndGoalsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
                     it.data.data?.content?.let { list ->

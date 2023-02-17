@@ -40,4 +40,8 @@ class GoalRemoteDataSource @Inject constructor(
     ): Flow<ApiResponse<BasePomeResponse<GoalData>>> = apiRequestFlow {
         service.finishGoal(goalId, commentDataBody)
     }
+
+    override fun findEndGoals(): Flow<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>> = apiRequestFlow {
+        service.findEndGoals()
+    }
 }
