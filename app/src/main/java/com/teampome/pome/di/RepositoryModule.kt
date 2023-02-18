@@ -10,6 +10,9 @@ import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.login.LoginDataSource
 import com.teampome.pome.repository.login.LoginRemoteDataSource
 import com.teampome.pome.repository.login.LoginRepository
+import com.teampome.pome.repository.mypage.MyPageDataSource
+import com.teampome.pome.repository.mypage.MyPageRemoteDataSource
+import com.teampome.pome.repository.mypage.MyPageRepository
 import com.teampome.pome.repository.record.RecordDataSource
 import com.teampome.pome.repository.record.RecordRepository
 import com.teampome.pome.repository.record.RecordRemoteDataSource
@@ -122,6 +125,18 @@ object RepositoryModule {
     @Singleton
     fun provideGoalRepository(dataSource: GoalDataSource) : GoalRepository {
         return GoalRepository(dataSource)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyPageSource(service: MyTabService) : MyPageDataSource {
+        return MyPageRemoteDataSource(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMyPageRepository(dataSource: MyPageDataSource) : MyPageRepository {
+        return MyPageRepository(dataSource)
     }
 
 

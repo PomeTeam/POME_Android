@@ -14,7 +14,6 @@ import javax.inject.Inject
 class MyPageRemoteDataSource @Inject constructor(
     private val service: MyTabService
 ): MyPageDataSource{
-
     override fun getMarshmello(): Flow<ApiResponse<BasePomeResponse<MyTabMarshmello>>> = apiRequestFlow {
         service.getMarshmello()
     }

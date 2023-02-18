@@ -207,4 +207,14 @@ object NetworkModule {
             .build()
             .create(RemindService::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun provideMyTabService(
+        @AuthRetrofit retrofit: Retrofit.Builder
+    ) : MyTabService {
+        return retrofit
+            .build()
+            .create(MyTabService::class.java)
+    }
 }
