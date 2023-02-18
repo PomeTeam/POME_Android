@@ -1,5 +1,6 @@
 package com.teampome.pome.util
 
+import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -190,4 +191,5 @@ fun loadImage(imageView : ImageView, url : String){
         .error(R.drawable.mask_pome_44)
         .override(48, 48)
         .into(imageView)
+
 }
