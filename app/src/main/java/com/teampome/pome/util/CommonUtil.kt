@@ -423,6 +423,27 @@ object CommonUtil {
     }
 
     /**
+     *  서버 상호작용을 위한 Emotion -> Num 변경
+     *  Int? type 리턴
+     */
+    fun emotionToNum(emotion: Emotion?): Int? {
+        return when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                0
+            }
+            Emotion.WHAT_EMOTION -> {
+                1
+            }
+            Emotion.SAD_EMOTION -> {
+                2
+            }
+            else -> {
+                null
+            }
+        }
+    }
+
+    /**
      *  오늘 기준으로 시간 표현을 위한 메소드
      *  1시간 전 -> ~분 전
      *  1시간 후 -> ~시간 전

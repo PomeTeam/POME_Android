@@ -93,7 +93,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                         viewModel.sendPreSignedImage(byteArray, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
                                 hideLoading()
-                                Log.d("error", "error by $message")
+                                Log.d("error", "sendPreSignedImage by $message")
                             }
                         })
                     } ?: run {
@@ -105,8 +105,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }
-                is ApiResponse.Loading -> {
-                }
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
@@ -120,11 +119,12 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 }
                 is ApiResponse.Failure -> {
                     hideLoading()
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-                    Log.d("image", "upload failure by ${it.errorMessage}")
+                    if(it.code != "408") {
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                        Log.d("image", "upload failure by ${it.errorMessage}")
+                    }
                 }
-                is ApiResponse.Loading -> {
-                }
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
@@ -156,8 +156,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     disableName()
                     CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
                 }
-                is ApiResponse.Loading -> {
-
+                is ApiResponse.Loading -> { // 닉네임 중복 확인은 loading 안보이게 설정
                 }
             }
         }
@@ -190,6 +189,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     hideLoading()
                 }
                 is ApiResponse.Loading -> {
+                    showLoading()
                 }
             }
         }
@@ -244,9 +244,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // 확인 버튼
         binding.registerProfileCheckBtn.setOnClickListener {
-            // loading progressbar 보이게
-            showLoading()
-
             runBlocking {
                 val profileKey = userManger.getProfileKey().first() 
                 val nickName = userManger.getUserNickName().first()
@@ -272,8 +269,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 
         // dialog 수정 click
         pomeBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
-            showLoading()
-
             openGallery()
         }
 
@@ -333,7 +328,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 viewModel.getPresignedImageUrl(object : CoroutineErrorHandler {
                     override fun onError(message: String) {
                         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                        Log.d("test", "error : $message")
+                        Log.d("test", "getPresignedImageError : $message")
                     }
                 })
 

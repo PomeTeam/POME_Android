@@ -5,25 +5,13 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
-
         <variable
-            name="contentCardItem"
-            type="com.teampome.pome.model.ContentCardItem" />
+            name="recordData"
+            type="com.teampome.pome.model.RecordData" />
 
-<!--        <variable-->
-<!--            name="firstEmotion"-->
-<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
-
-<!--        <variable-->
-<!--            name="lastEmotion"-->
-<!--            type="com.teampome.pome.viewmodel.Emotion" />-->
-
-        <variable
-            name="clickListener"
-            type="com.teampome.pome.presentation.remind.RemindItemClickListener" />
+        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="android.view.View" />
     </data>
-
-    <!-- Todo : 그림자 처리 -->
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -37,8 +25,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> clickListener.remindItemClick(contentCardItem)}">
+            android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/remind_contents_card_first_emotion_container_cl"
@@ -57,10 +44,10 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/emoji_mint_fiter_sad" />
-<!--                bind:remindFirstEmotionDrawable="@{firstEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_card_first_emotion_tv"
@@ -68,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{contentCardItem.firstThink}"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion).emotion}"
                     android:textColor="@color/grey_7"
                     app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_first_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_emotion_aiv"
@@ -103,10 +90,10 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
+                    bind:remindLastEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion)}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:src="@drawable/emoji_pink_fiter_happy" />
-<!--                bind:remindLastEmotionDrawable="@{lastEmotion}"-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/remind_contents_card_last_emotion_tv"
@@ -114,8 +101,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="@{contentCardItem.lastThink}"
-                    android:textColor="@color/grey_7"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion).emotion}"
+                    android:textColor="@{recordData.emotionResponse.secondEmotion == null ? @color/grey_5 : @color/grey_7}"
                     app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_last_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/remind_contents_card_last_emotion_aiv"
                     app:layout_constraintTop_toTopOf="@id/remind_contents_card_last_emotion_aiv"
@@ -129,7 +116,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="@{contentCardItem.money}"
+                android:ellipsize="end"
+                android:lineSpacingExtra="3sp"
+                android:maxLines="1"
+                android:text="@{@string/use_price_text(CommonUtil.INSTANCE.makePriceStyle(String.valueOf(recordData.usePrice)))}"
                 android:textColor="@color/grey_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/remind_contents_card_first_emotion_container_cl"
@@ -142,13 +132,11 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:ellipsize="end"
                 android:letterSpacing="-0.03"
                 android:lineSpacingExtra="6sp"
-                android:maxLines="2"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
-                android:text="@{contentCardItem.contentText}"
+                android:text="@{recordData.useComment}"
                 android:textColor="@color/grey_7"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/remind_contents_card_title_tv"
@@ -161,7 +149,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="커피 대신 물을 마시자 · 44분 전"
+                android:paddingBottom="20dp"
+                bind:goalConnectTime="@{recordData}"
+                tools:text="커피 대신 물을 마시자 · 44분 전"
                 android:textColor="@color/grey_5"
                 app:layout_constraintStart_toStartOf="@id/remind_contents_card_content_tv"
                 app:layout_constraintTop_toBottomOf="@id/remind_contents_card_content_tv" />
@@ -171,6 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:visibility="@{recordData.emotionResponse.friendEmotions == null || recordData.emotionResponse.friendEmotions.size() == 0 ? View.GONE : View.VISIBLE}"
                 app:layout_constraintStart_toStartOf="@id/remind_contents_card_name_and_time_tv"
                 app:layout_constraintTop_toBottomOf="@id/remind_contents_card_name_and_time_tv">
 
@@ -179,9 +170,12 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/emoji_mint_fiter_what"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.friendEmotions[0].emotionId)}"
+                    tools:src="@drawable/emoji_mint_fiter_what"
+                    android:layout_marginBottom="16dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/remind_contents_card_last_friend_emotion_aiv"
@@ -190,7 +184,9 @@
                     android:layout_marginStart="-5dp"
                     android:elevation="-1dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/emoji_mint_fiter_what"
+                    android:visibility="@{recordData.emotionResponse.friendEmotions.size()-1 > 0 ? View.VISIBLE : View.GONE}"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.friendEmotions[0].emotionId)}"
+                    tools:src="@drawable/emoji_mint_fiter_what"
                     android:tint="#66292a2b"
                     app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_friend_emotion_aiv"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -200,7 +196,9 @@
                     style="@style/Pome.Medium.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+9"
+                    android:visibility="@{recordData.emotionResponse.friendEmotions.size()-2 > 0 ? View.VISIBLE : View.GONE}"
+                    android:text="@{@string/plus_text(recordData.emotionResponse.friendEmotions.size()-2)}"
+                    tools:text="+9"
                     android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_last_friend_emotion_aiv"
                     app:layout_constraintEnd_toEndOf="@id/remind_contents_card_last_friend_emotion_aiv"
@@ -213,12 +211,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="16dp"
                 android:padding="6dp"
                 android:src="@drawable/ic_more_24"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/remind_contents_card_name_and_time_tv" />
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

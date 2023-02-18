@@ -106,7 +106,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                 }
                 is ApiResponse.Failure -> {
                     // 서버에서 에러가 발생한 경우
-                    Toast.makeText(requireContext(), "로그인이 실패하였습니다", Toast.LENGTH_SHORT).show()
                     moveToLogin()
                 }
                 is ApiResponse.Loading -> {

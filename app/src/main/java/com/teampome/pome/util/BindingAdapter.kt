@@ -1,15 +1,16 @@
 package com.teampome.pome.util
 
-import android.graphics.drawable.BitmapDrawable
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.teampome.pome.R
+import com.teampome.pome.model.RecordData
 import com.teampome.pome.util.customview.PomeBigGoalCardView
 import com.teampome.pome.util.customview.PomeSmallGoalCardView
 import jp.wasabeef.glide.transformations.MaskTransformation
@@ -41,25 +42,25 @@ fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: I
 @BindingAdapter("pomeImage44")
 fun bindingPomeImage44(imageView: ImageView, src: String?){
     src?.let {
-        Glide.with(imageView)
+        GlideApp.with(imageView)
             .load(src)
             .apply(
                 RequestOptions.bitmapTransform(
                     MultiTransformation(
                         CenterCrop(),
-                        MaskTransformation(R.drawable.mask_pome_44)
+                        MaskTransformation(R.drawable.user_profile_empty_150)
                     )
                 )
             ).into(imageView)
     } ?: run {
         Glide.with(imageView)
-            .load(R.drawable.mask_pome_44)
+            .load(R.drawable.user_profile_empty_150)
             .into(imageView)
     }
 }
 
-@BindingAdapter("remindEmotionText")
-fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
+@BindingAdapter("remindLastEmotionText")
+fun bindingRemindLastEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
     emotion?.let {
         when(emotion) {
             Emotion.HAPPY_EMOTION -> {
@@ -75,6 +76,30 @@ fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
                 textView.text = Constants.EMPTY_EMOTION
             }
         }
+    } ?: run {
+        textView.text = textView.context.getString(R.string.remind_review_last_emotion_text)
+    }
+}
+
+@BindingAdapter("remindFirstEmotionText")
+fun bindingRemindFirstEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
+    emotion?.let {
+        when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                textView.text = Constants.HAPPY_EMOTION
+            }
+            Emotion.WHAT_EMOTION -> {
+                textView.text = Constants.WHAT_EMOTION
+            }
+            Emotion.SAD_EMOTION -> {
+                textView.text = Constants.SAD_EMOTION
+            }
+            Emotion.EMPTY_EMOTION -> {
+                textView.text = Constants.EMPTY_EMOTION
+            }
+        }
+    } ?: run {
+        textView.text = textView.context.getString(R.string.remind_review_first_emotion_text)
     }
 }
 
@@ -184,6 +209,17 @@ fun bindingCategoryColor(textView: TextView, isSelected: Boolean?, isEnd: Boolea
         }
     }
 }
+
+/**
+ *  remind item의 목표 + 시간 표시
+ */
+@BindingAdapter("goalConnectTime")
+fun bindingGoalConnectTime(textView: TextView, recordData: RecordData?) {
+    recordData?.let {
+        textView.text = textView.context.getString(R.string.connect_dot_text, recordData.oneLineMind, CommonUtil.changeAfterTime(recordData.createdAt))
+    }
+}
+
 
 @BindingAdapter("imageUrl")
 fun loadImage(imageView : ImageView, url : String){

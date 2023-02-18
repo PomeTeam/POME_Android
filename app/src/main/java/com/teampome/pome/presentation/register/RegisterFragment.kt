@@ -20,10 +20,12 @@ import com.teampome.pome.util.CommonUtil.getPixelToDp
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.register.RegisterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -36,6 +38,9 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
 
     @Inject
     lateinit var userManager: UserManager
+
+    @Inject
+    lateinit var tokenManager: TokenManager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,6 +78,51 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                 }
 
                 is ApiResponse.Loading -> {
+                }
+            }
+        }
+
+        viewModel.loginResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    it.data.data?.let { userInfo ->
+                        // signIn 정보를 토대로 토큰 저장
+                        runBlocking {
+                            if (tokenManager.getToken().first() != null) {
+                                tokenManager.deleteToken()
+                            }
+
+                            tokenManager.saveToken(userInfo.accessToken)
+
+                            if (userManager.getUserId().first() != null) {
+                                userManager.deleteUserId()
+                            }
+                            userManager.saveUserId(userInfo.userId)
+
+                            if (userManager.getUserNickName().first() != null) {
+                                userManager.deleteUserNickName()
+                            }
+                            userManager.saveUserNickName(userInfo.nickname)
+                        }
+
+                        moveToRecord()
+                    } ?: run {
+                        Toast.makeText(requireContext(), it.data.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    hideLoading()
+                }
+                is ApiResponse.Failure -> {
+                    // 서버에서 에러가 발생한 경우
+                    if(it.code == "U0003") { // 가입된 번호가 없는 경우
+                        moveToRegisterTerms()
+                    } else {
+                        Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                    showLoading()
                 }
             }
         }
@@ -148,7 +198,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                     }
                 }
 
-                moveToRegisterTerms()
+                checkNumber()
             } else {
                 Toast.makeText(requireContext(), "인증번호가 다릅니다.", Toast.LENGTH_SHORT).show()
             }
@@ -196,10 +246,36 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
     }
 
     /**
+     *  번호가 가입되어있는지 확인
+     *  가입된 번호 : 토큰 저장 -> 기록 뷰
+     *  비가입 번호 : 회원가입
+     */
+    private fun checkNumber() {
+        viewModel.registerPhone.value?.let { number ->
+            viewModel.login(number, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.e("error", "가입 에러 발생")
+                    Toast.makeText(requireContext(), "에러가 발생하여 번호인증을 재시도 부탁드립니다.", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } ?: run {
+            Toast.makeText(requireContext(), "에러가 발생하여 번호인증을 재시도 부탁드립니다.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    /**
      *  register Terms로 이동
      */
     private fun moveToRegisterTerms() {
         val registerToRegisterTermsAction = RegisterFragmentDirections.actionRegisterFragmentToRegisterTermsFragment()
         findNavController().navigate(registerToRegisterTermsAction)
+    }
+
+    /**
+     *  이미 가입된 번호라면 바로 기록뷰로 이동
+     */
+    private fun moveToRecord() {
+        val registerToRecordAction = RegisterFragmentDirections.actionRegisterFragmentToRecordFragment()
+        findNavController().navigate(registerToRecordAction)
     }
 }

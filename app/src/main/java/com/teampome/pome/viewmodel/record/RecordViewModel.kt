@@ -1,12 +1,9 @@
 package com.teampome.pome.viewmodel.record
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.model.RecordTestData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalCategory
@@ -39,21 +36,21 @@ class RecordViewModel @Inject constructor(
     private val _deleteGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
     val deleteGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteGoalResponse
 
-    val goalCategory: LiveData<List<GoalCategory>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
-                    allGoalData.content?.let { goalData ->
-                        goalData.map { data ->
+                    allGoalData.content.map { data ->
+                        data?.let { gd ->
                             GoalCategory(
-                                data.goalCategoryResponse.id,
-                                data.goalCategoryResponse.name,
+                                gd.goalCategoryResponse.id,
+                                gd.goalCategoryResponse.name,
                                 false,
-                                data.id,
-                                CommonUtil.calDiffDate(data.endDate) == 0
+                                gd.id,
+                                CommonUtil.calDiffDate(gd.endDate) == 0
                             )
-                        }
-                    } ?: run { null }
+                        } ?: run { null }
+                    }
                 } ?: run { null }
             }
             is ApiResponse.Loading -> { null }
@@ -61,12 +58,10 @@ class RecordViewModel @Inject constructor(
         }
     }
 
-    val goalDetails: LiveData<List<GoalData>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalDetails: LiveData<List<GoalData?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {
-                it.data.data?.let { allGoalData ->
-                    allGoalData.content ?: run { null }
-                } ?: run { null }
+                it.data.data?.content ?: run { null }
             }
             is ApiResponse.Loading -> { null }
             is ApiResponse.Failure -> { null }
@@ -114,12 +109,10 @@ class RecordViewModel @Inject constructor(
     private val _getOneWeekRecordByGoalIdResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
     val getOneWeekRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getOneWeekRecordByGoalIdResponse
 
-    val oneWeekRecords : LiveData<List<RecordData>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
+    val oneWeekRecords : LiveData<List<RecordData?>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
         when(it) {
             is ApiResponse.Success -> {
-                it.data.data?.let { allGoalData ->
-                    allGoalData.content ?: run { null }
-                } ?: run { null }
+                it.data.data?.content ?: run { null }
             }
             is ApiResponse.Loading -> { null }
             is ApiResponse.Failure -> { null }
@@ -131,5 +124,12 @@ class RecordViewModel @Inject constructor(
         coroutineErrorHandler
     ) {
         recordRepository.getOneWeekGoalByGoalId(goalId)
+    }
+
+    private val _recordData = MutableLiveData<List<RecordData?>>(listOf())
+    val recordData: LiveData<List<RecordData?>> = _recordData
+
+    fun setRecordData(list: List<RecordData?>) {
+        _recordData.value = list
     }
 }

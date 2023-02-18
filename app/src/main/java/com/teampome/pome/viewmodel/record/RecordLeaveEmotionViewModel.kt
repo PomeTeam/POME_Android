@@ -20,12 +20,10 @@ class RecordLeaveEmotionViewModel @Inject constructor(
     private val _getOneWeekRecordByGoalIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
     val getOneWeekRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getOneWeekRecordByGoalIdResponse
 
-    val oneWeekRecords : LiveData<List<RecordData>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
+    val oneWeekRecords : LiveData<List<RecordData?>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
         when(it) {
             is ApiResponse.Success -> {
-                it.data.data?.let { allGoalData ->
-                    allGoalData.content ?: run { null }
-                } ?: run { null }
+                it.data.data?.content ?: run { null }
             }
             is ApiResponse.Loading -> { null }
             is ApiResponse.Failure -> { null }

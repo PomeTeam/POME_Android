@@ -12,10 +12,10 @@ import com.teampome.pome.util.base.BaseFragment
 class RemindDetailFragment :
     BaseFragment<FragmentRemindItemDetailBinding>(R.layout.fragment_remind_item_detail) {
 
-    private val args: RemindDetailFragmentArgs by navArgs()
+//    private val args: RemindDetailFragmentArgs by navArgs()
 
     override fun initView() {
-        binding.contentCardItem = args.remindContentsItem
+//        binding.contentCardItem = args.remindContentsItem
 //        binding.firstEmotion = CommonUtil.getEmotionData(args.remindContentsItem.firstThink)
 //        binding.lastEmotion = CommonUtil.getEmotionData(args.remindContentsItem.lastThink)
         binding.executePendingBindings()

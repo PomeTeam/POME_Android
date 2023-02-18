@@ -16,7 +16,7 @@ import com.teampome.pome.repository.record.RecordRemoteDataSource
 import com.teampome.pome.repository.register.*
 import com.teampome.pome.repository.remind.RemindDataSource
 import com.teampome.pome.repository.remind.RemindRepository
-import com.teampome.pome.repository.remind.RemindTestDataSource
+import com.teampome.pome.repository.remind.RemindRemoteDataSource
 import com.teampome.pome.util.token.UserManager
 import dagger.Module
 import dagger.Provides
@@ -42,8 +42,8 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideTestRemindDataSource() : RemindDataSource {
-        return RemindTestDataSource()
+    fun provideTestRemindDataSource(service: RemindService) : RemindDataSource {
+        return RemindRemoteDataSource(service)
     }
 
     @Provides
@@ -123,4 +123,6 @@ object RepositoryModule {
     fun provideGoalRepository(dataSource: GoalDataSource) : GoalRepository {
         return GoalRepository(dataSource)
     }
+
+
 }

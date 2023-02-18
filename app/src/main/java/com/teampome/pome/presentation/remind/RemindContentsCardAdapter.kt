@@ -6,14 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRemindContentsCardBinding
-import com.teampome.pome.model.ContentCardItem
+import com.teampome.pome.model.RecordData
 
 class RemindContentsCardAdapter(
-    private val remindItemClickListener: RemindItemClickListener? = null
-) : ListAdapter<ContentCardItem, RemindContentsCardAdapter.RemindContentsCardViewHolder>(
+
+) : ListAdapter<RecordData, RemindContentsCardAdapter.RemindContentsCardViewHolder>(
     RemindContentsCardDiffCallback()
 ) {
-
     private lateinit var binding: ItemRemindContentsCardBinding
 
     override fun onCreateViewHolder(
@@ -32,22 +31,19 @@ class RemindContentsCardAdapter(
     inner class RemindContentsCardViewHolder(
         val binding: ItemRemindContentsCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ContentCardItem) {
-            binding.contentCardItem = item
-//            binding.firstEmotion = getEmotionData(item.firstThink)
-//            binding.lastEmotion = getEmotionData(item.lastThink)
-            binding.clickListener = remindItemClickListener
+        fun bind(item: RecordData) {
+            binding.recordData = item
             binding.executePendingBindings()
         }
     }
 }
 
-class RemindContentsCardDiffCallback: DiffUtil.ItemCallback<ContentCardItem>() {
-    override fun areItemsTheSame(oldItem: ContentCardItem, newItem: ContentCardItem): Boolean {
-        return oldItem == newItem
+class RemindContentsCardDiffCallback: DiffUtil.ItemCallback<RecordData>() {
+    override fun areItemsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
+        return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: ContentCardItem, newItem: ContentCardItem): Boolean {
+    override fun areContentsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
         return oldItem == newItem
     }
 }

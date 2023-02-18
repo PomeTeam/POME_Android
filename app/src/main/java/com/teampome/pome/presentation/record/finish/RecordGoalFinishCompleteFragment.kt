@@ -2,6 +2,7 @@ package com.teampome.pome.presentation.record.finish
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordGoalFinishCompleteBinding
@@ -13,7 +14,11 @@ class RecordGoalFinishCompleteFragment : BaseFragment<FragmentRecordGoalFinishCo
     }
 
     override fun initView() {
+        settingBackPressedCallback(object : OnBackPressedCallback(false) {
+            override fun handleOnBackPressed() {
 
+            }
+        })
     }
 
     override fun initListener() {
