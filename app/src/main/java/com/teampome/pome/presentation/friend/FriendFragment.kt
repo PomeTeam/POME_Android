@@ -1,10 +1,12 @@
 package com.teampome.pome.presentation.friend
 
+import android.icu.lang.UCharacter.VerticalOrientation
 import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.teampome.pome.R
@@ -21,15 +23,18 @@ import dagger.hilt.android.AndroidEntryPoint
 class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_friend) {
 
     private val viewModel: AddFriendsViewModel by viewModels()
+
     private lateinit var friendGetAdapter: FriendGetAdapter
+    private lateinit var friendRecordGetAdapter: FriendRecordGetAdapter
 
     override fun initView() {
         setUpRecyclerView()
+        friendRecordSetUpRecyclerView()
 
         //친구 조회
         viewModel.getFriend(object : CoroutineErrorHandler{
             override fun onError(message: String) {
-                Log.e("record", "record error $message")
+                Log.e("friendGetError", "friendGetError $message")
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 hideLoading()
             }
@@ -37,6 +42,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
     }
 
     override fun initListener() {
+        //친구 조회
         viewModel.getFriendsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
@@ -52,8 +58,26 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 is ApiResponse.Loading -> {}
             }
         }
+
+        //친구 기록 조회
+        viewModel.getFriendRecordResponse.observe(viewLifecycleOwner){
+            when(it) {
+                is ApiResponse.Success -> {
+                    it.data.data?.content?.let { list ->
+                        (binding.friendDetailRv.adapter as FriendRecordGetAdapter).submitList(
+                            list
+                        )
+                    }
+                }
+                is ApiResponse.Failure -> {
+
+                }
+                is ApiResponse.Loading -> {}
+            }
+        }
     }
 
+    //친구 목록 조회 RV
     private fun setUpRecyclerView(){
         friendGetAdapter = FriendGetAdapter()
         binding.friendListRv.apply {
@@ -64,8 +88,33 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
         // 클릭 리스너
         friendGetAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(), "${it.friendNickName}", Toast.LENGTH_SHORT).show()
+            viewModel.getRecordFriend(it.friendUserId, object : CoroutineErrorHandler{
+                override fun onError(message: String) {
+                    Log.e("friendGetRecordError", "friendGetRecordError $message")
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    hideLoading()
+                }
+            })
+        }
+    }
+
+    //친구 기록 조회 RV
+    private fun friendRecordSetUpRecyclerView(){
+        friendRecordGetAdapter = FriendRecordGetAdapter()
+        binding.friendDetailRv.apply {
+//            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = friendRecordGetAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(), DividerItemDecoration.VERTICAL
+                )
+            )
         }
 
+        // 클릭 리스너
+        friendRecordGetAdapter.setOnItemClickListener {
+            Toast.makeText(requireContext(), "${it.nickname}", Toast.LENGTH_SHORT).show()
+        }
     }
 }

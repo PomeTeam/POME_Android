@@ -19,7 +19,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="16dp"
-            imageUrl="@{getFriends.imageKey}"
+            android:src="@drawable/emoji_happy"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@{getFriends.friendNickName}"
             tools:text="@string/friend_profile_name"
-            android:textColor="@color/grey_8"
+            android:textColor="@color/grey_5"
             app:layout_constraintTop_toBottomOf="@+id/friend_list_profile_iv"
             app:layout_constraintLeft_toLeftOf="@+id/friend_list_profile_iv"
             app:layout_constraintRight_toRightOf="@+id/friend_list_profile_iv"

@@ -5,17 +5,20 @@
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="getFriendRecord"
+            type="com.teampome.pome.model.response.GetFriendRecord" />
 
+        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="android.view.View" />
     </data>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardPreventCornerOverlap="true"
-        app:cardElevation="2dp"
-        android:shadowDy="2"
-        android:layout_marginBottom="14dp">
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,7 +38,8 @@
 
             <TextView
                 android:id="@+id/friend_detail_name_tv"
-                android:text="@string/friend_profile_name"
+                android:text="@{getFriendRecord.nickname}"
+                tools:text="성식"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/grey_7"
@@ -70,6 +74,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(getFriendRecord.emotionResponse.firstEmotion)}"
                     tools:src="@drawable/emoji_mint_fiter_sad"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -81,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     tools:text="후회해요"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(getFriendRecord.emotionResponse.firstEmotion).emotion}"
                     android:textColor="@color/grey_7"
                     app:layout_constraintBottom_toBottomOf="@id/friend_detail_content_first_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/friend_detail_content_first_emotion_aiv"
@@ -114,6 +120,7 @@
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
+                    bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(getFriendRecord.emotionResponse.secondEmotion)}"
                     tools:src="@drawable/emoji_pink_fiter_happy"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -125,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     tools:text="행복해요"
+                    android:text="@{CommonUtil.INSTANCE.numToEmotion(getFriendRecord.emotionResponse.secondEmotion).emotion}"
                     android:textColor="@color/grey_7"
                     app:layout_constraintBottom_toBottomOf="@id/friend_detail_card_last_emotion_aiv"
                     app:layout_constraintStart_toEndOf="@id/friend_detail_card_last_emotion_aiv"
@@ -139,6 +147,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 tools:text="16,000원"
+                android:text="@{@string/use_price_text(CommonUtil.INSTANCE.makePriceStyle(String.valueOf(getFriendRecord.usePrice)))}"
                 android:textColor="@color/grey_8"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/friend_detail_content_first_emotion_cl"
@@ -157,6 +166,7 @@
                 android:maxLines="2"
                 android:paddingStart="0dp"
                 android:paddingEnd="16dp"
+                android:text="@{getFriendRecord.useComment}"
                 tools:text="아휴 힘빠져 이젠 진짜 포기다 포기 도대체 뭐가 문제일까 현실을 되돌아볼 필요를 느낀다ㅠ 이정도 노력했으면 된거 아닌가 진짜 개 힘빠지네 그래서 오늘은 물 대신 라떼 한잔을 마셨습니다 ㅋ 라뗴 존맛탱~~ 다들 나흐바 시그니쳐 커피를 마셔주세요 설탕 솔솔 뿌려서 개맛있음"
                 android:textColor="@color/grey_7"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -222,5 +232,5 @@
                 app:layout_constraintTop_toTopOf="@+id/friend_detail_friends_emotion_container_cl"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

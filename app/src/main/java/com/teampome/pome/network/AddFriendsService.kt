@@ -1,7 +1,9 @@
 package com.teampome.pome.network
 
+import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import retrofit2.Response
 import retrofit2.http.GET
@@ -26,4 +28,10 @@ interface AddFriendsService {
     @GET("api/v1/users/friends")
     suspend fun getFriend()
         : Response<BasePomeResponse<List<GetFriends>>>
+
+    //친구 기록 조회
+    @GET("api/v1/records/users/{userId}")
+    suspend fun getFriendRecord(
+        @Path("userId") userId: String
+    ) : Response<BasePomeResponse<BaseAllData<GetFriendRecord>>>
 }

@@ -9,4 +9,6 @@ class AddFriendsRepository @Inject constructor(
     fun addFriend(friendId: String) = dataSource.addFriend(friendId)
 
     fun getFriend() = dataSource.getFriend()
+
+    fun getFriendRecord(userId : String) = dataSource.getFriendRecord(userId)
 }
