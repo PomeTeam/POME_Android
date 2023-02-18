@@ -15,8 +15,10 @@ import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.presentation.record.GoalState
 import com.teampome.pome.presentation.record.RecordCategoryAdapter
+import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.Constants.FIRST_EMOTION
 import com.teampome.pome.util.Constants.LAST_EMOTION
+import com.teampome.pome.util.Emotion
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.RemindViewModel
@@ -28,6 +30,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
     /*
          데이터는 항상 일관성 있게! => View의 data는 항상 ViewModel의 data를 바라보게 (dummy data x, 일관성 하락)
      */
+
+    private val remindRecordsCoroutineErrorHandler: CoroutineErrorHandler = object : CoroutineErrorHandler {
+        override fun onError(message: String) {
+            Log.e("record", "getRemindRecords error $message")
+        }
+    }
 
     // bottomSheetDialog
     private lateinit var pomeRemindBottomSheetDialogBinding: PomeRemindBottomSheetDialogBinding
@@ -60,11 +68,8 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-                        viewModel.getRemindRecords(item.goalId, firstEmotion = null, secondEmotion = null, object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Log.e("record", "record error $message")
-                            }
-                        })
+
+                        viewModel.getRemindRecords(item.goalId, firstEmotion = null, secondEmotion = null, remindRecordsCoroutineErrorHandler)
 
                         binding.goalData = viewModel.goalDetails.value?.get(position)
                         binding.executePendingBindings()
@@ -176,11 +181,17 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Happy
         pomeRemindBottomSheetDialogBinding.remindDialogHappyContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-
+                binding.firstEmotion = Emotion.HAPPY_EMOTION
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-
+                binding.lastEmotion = Emotion.HAPPY_EMOTION
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
+
+            binding.executePendingBindings()
+
+            binding.firstEmotion?.let{
+                safeGetRemindRecordsCall(CommonUtil.emotionToNum(binding.firstEmotion), CommonUtil.emotionToNum(binding.lastEmotion))
             }
 
             pomeRemindBottomSheetDialog.dismiss()
@@ -189,12 +200,16 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // What
         pomeRemindBottomSheetDialogBinding.remindDialogWhatContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-
+                binding.firstEmotion = Emotion.WHAT_EMOTION
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-
+                binding.lastEmotion = Emotion.WHAT_EMOTION
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
+
+            binding.executePendingBindings()
+
+            safeGetRemindRecordsCall(CommonUtil.emotionToNum(binding.firstEmotion), CommonUtil.emotionToNum(binding.lastEmotion))
 
             pomeRemindBottomSheetDialog.dismiss()
         }
@@ -202,12 +217,16 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         // Sad
         pomeRemindBottomSheetDialogBinding.remindDialogSadContainerCl.setOnClickListener {
             if(isFirstEmotion()) { // 처음 감정인 경우
-
+                binding.firstEmotion = Emotion.SAD_EMOTION
             } else if(isLastEmotion()) { // 돌아본 감정인 경우
-
+                binding.lastEmotion = Emotion.SAD_EMOTION
             } else { // 어떠한 경우도 아닌 경우 토스트로 에러를 알림
                 Toast.makeText(requireContext(), "감정 선택 Error가 발생했습니다.", Toast.LENGTH_SHORT).show()
             }
+
+            binding.executePendingBindings()
+
+            safeGetRemindRecordsCall(CommonUtil.emotionToNum(binding.firstEmotion), CommonUtil.emotionToNum(binding.lastEmotion))
 
             pomeRemindBottomSheetDialog.dismiss()
         }
@@ -219,7 +238,12 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
 
         // 초기화 버튼 클릭시
         binding.remindReviewResetContainterCl.setOnClickListener {
+            binding.firstEmotion = null
+            binding.lastEmotion = null
 
+            safeGetRemindRecordsCall(null, null)
+
+            binding.executePendingBindings()
         }
     }
 
@@ -228,6 +252,16 @@ class RemindFragment : BaseFragment<FragmentRemindBinding>(R.layout.fragment_rem
         pomeRemindBottomSheetDialogBinding = PomeRemindBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
         pomeRemindBottomSheetDialog.setContentView(pomeRemindBottomSheetDialogBinding.root)
+    }
+
+    private fun safeGetRemindRecordsCall(firstEmotion: Int?, secondEmotion: Int?) {
+        currentCategoryPosition?.let { pos ->
+            viewModel.goalCategory.value?.let{ list ->
+                list[pos]?.let {
+                    viewModel.getRemindRecords(it.goalId, firstEmotion, secondEmotion, remindRecordsCoroutineErrorHandler)
+                }
+            }
+        }
     }
 
     // 직관성을 높이기 위해 두 가지 메소드로 구현

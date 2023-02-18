@@ -18,6 +18,14 @@
             name="recordList"
             type="List&lt;com.teampome.pome.model.RecordData>" />
 
+        <variable
+            name="firstEmotion"
+            type="com.teampome.pome.util.Emotion" />
+
+        <variable
+            name="lastEmotion"
+            type="com.teampome.pome.util.Emotion" />
+
         <import type="android.view.View" />
         <import type="java.util.List" />
         <import type="com.teampome.pome.util.CommonUtil" />
@@ -82,7 +90,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="18dp"
             android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/remind_no_chip_tv">
@@ -168,6 +176,7 @@
                             app:tint="@color/main" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.cardview.widget.CardView>
+
                 <TextView
                     android:id="@+id/remind_review_title_tv"
                     style="@style/Pome.Bold.18"
@@ -185,9 +194,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
+                    android:background="@{firstEmotion == null ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv">
-                    <!--            android:background="@{firstEmotion == Emotion.FIRST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"-->
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/remind_review_first_emotion_atv"
@@ -198,11 +207,11 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="0dp"
                         android:text="@string/remind_review_first_emotion_text"
+                        bind:remindFirstEmotionText="@{firstEmotion}"
+                        android:textColor="@{firstEmotion == null ? @color/grey_5 : @color/pink_100}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--            bind:remindEmotionText="@{firstEmotion}"-->
-                    <!--            android:textColor="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"
@@ -210,11 +219,11 @@
                         android:layout_marginStart="4dp"
                         android:layout_marginEnd="11dp"
                         android:src="@drawable/ic_arrow"
+                        android:tint="@{firstEmotion == null ? @color/grey_5 : @color/pink_100}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_atv"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--            android:tint="@{firstEmotion == Emotion.FIRST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -224,9 +233,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="10dp"
+                    android:background="@{lastEmotion == null ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"
                     app:layout_constraintStart_toEndOf="@id/remind_review_first_emotion_cl"
                     app:layout_constraintTop_toBottomOf="@id/remind_review_title_tv">
-                    <!--            android:background="@{lastEmotion == Emotion.LAST_EMOTION ? @drawable/no_emotion_spinner_background : @drawable/emotion_spinner_background}"-->
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/remind_review_last_emotion_atv"
@@ -237,11 +246,11 @@
                         android:paddingStart="8dp"
                         android:paddingEnd="0dp"
                         android:text="@string/remind_review_last_emotion_text"
+                        bind:remindLastEmotionText="@{lastEmotion}"
+                        android:textColor="@{lastEmotion == null ? @color/grey_5 : @color/pink_100}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
-                    <!--            bind:remindEmotionText="@{lastEmotion}"-->
-                    <!--            android:textColor="@{lastEmotion == Emotion.LAST_EMOTION ? @color/grey_5 : @color/pink_100}"-->
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="wrap_content"

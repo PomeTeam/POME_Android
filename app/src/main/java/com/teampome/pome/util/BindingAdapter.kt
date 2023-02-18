@@ -1,9 +1,9 @@
 package com.teampome.pome.util
 
-import android.net.Uri
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -59,8 +59,8 @@ fun bindingPomeImage44(imageView: ImageView, src: String?){
     }
 }
 
-@BindingAdapter("remindEmotionText")
-fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
+@BindingAdapter("remindLastEmotionText")
+fun bindingRemindLastEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
     emotion?.let {
         when(emotion) {
             Emotion.HAPPY_EMOTION -> {
@@ -76,6 +76,30 @@ fun bindingRemindEmotionText(textView: TextView, emotion: Emotion?) {
                 textView.text = Constants.EMPTY_EMOTION
             }
         }
+    } ?: run {
+        textView.text = textView.context.getString(R.string.remind_review_last_emotion_text)
+    }
+}
+
+@BindingAdapter("remindFirstEmotionText")
+fun bindingRemindFirstEmotionText(textView: AppCompatTextView, emotion: Emotion?) {
+    emotion?.let {
+        when(emotion) {
+            Emotion.HAPPY_EMOTION -> {
+                textView.text = Constants.HAPPY_EMOTION
+            }
+            Emotion.WHAT_EMOTION -> {
+                textView.text = Constants.WHAT_EMOTION
+            }
+            Emotion.SAD_EMOTION -> {
+                textView.text = Constants.SAD_EMOTION
+            }
+            Emotion.EMPTY_EMOTION -> {
+                textView.text = Constants.EMPTY_EMOTION
+            }
+        }
+    } ?: run {
+        textView.text = textView.context.getString(R.string.remind_review_first_emotion_text)
     }
 }
 
