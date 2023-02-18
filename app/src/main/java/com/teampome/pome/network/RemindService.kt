@@ -15,7 +15,7 @@ interface RemindService {
     @GET("/api/v1/records/goal/{goalId}/retrospection-tab")
     suspend fun getRemindRecords(
         @Path("goalId") goalId: Int,
-        @Query("firstEmotion") firstEmotion: Int?,
-        @Query("secondEmotion") secondEmotion: Int?
+        @Query("first_emotion") firstEmotion: Int?,
+        @Query("second_emotion") secondEmotion: Int?
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
 }
