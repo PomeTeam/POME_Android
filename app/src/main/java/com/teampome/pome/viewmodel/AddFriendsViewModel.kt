@@ -2,9 +2,12 @@ package com.teampome.pome.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.model.response.DeleteFriend
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.repository.friend.AddFriendsRepository
@@ -37,6 +40,11 @@ class AddFriendsViewModel @Inject constructor(
     //친구 기록 조회
     private val _getFriendRecordResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>()
     val getFriendRecordResponse : LiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = _getFriendRecordResponse
+
+    //친구 삭제
+    private val _deleteFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriend>>>()
+    val deleteFriendResponse : LiveData<ApiResponse<BasePomeResponse<DeleteFriend>>> = _deleteFriendResponse
+
 
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _findFriendsDataResponse,
@@ -71,4 +79,24 @@ class AddFriendsViewModel @Inject constructor(
     ){
         repository.getFriendRecord(userId)
     }
+
+    fun deleteFriend(friendId : String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _deleteFriendResponse,
+        coroutineErrorHandler
+    ){
+        repository.deleteFriend(friendId)
+    }
+
+    //친구 조회
+    val friendGet: LiveData<List<GetFriends?>> = Transformations.map(_getFriendResponse) {
+        when(it) {
+            is ApiResponse.Success -> {
+                it.data.data?:run{null}
+            }
+            is ApiResponse.Loading -> { null }
+            is ApiResponse.Failure -> { null }
+        }
+    }
+
+
 }

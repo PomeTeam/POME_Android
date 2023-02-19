@@ -3,6 +3,7 @@ package com.teampome.pome.repository.friend
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.response.DeleteFriend
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.network.AddFriendsService
@@ -28,5 +29,9 @@ class AddFriendsRemoteDataSource @Inject constructor(
 
     override fun getFriendRecord(userId : String): Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = apiRequestFlow{
         service.getFriendRecord(userId)
+    }
+
+    override fun deleteFriend(friendId: String): Flow<ApiResponse<BasePomeResponse<DeleteFriend>>> = apiRequestFlow{
+        service.deleteFriend(friendId)
     }
 }

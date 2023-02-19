@@ -3,6 +3,7 @@ package com.teampome.pome.repository.friend
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
+import com.teampome.pome.model.response.DeleteFriend
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.util.base.ApiResponse
@@ -19,4 +20,8 @@ interface AddFriendsDataSource {
     fun getFriendRecord(
         userId : String
     ) : Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>
+
+    fun deleteFriend(
+        friendId: String
+    ) : Flow<ApiResponse<BasePomeResponse<DeleteFriend>>>
 }
