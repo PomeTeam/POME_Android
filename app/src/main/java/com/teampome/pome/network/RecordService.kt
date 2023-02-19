@@ -15,7 +15,9 @@ interface RecordService {
      */
     @GET("api/v1/records/users/{userId}")
     suspend fun getRecordDataByUserId(
-        @Path("userId") userId: String
+        @Path("userId") userId: String,
+        @Query("page_number") pageNumber: Int?,
+        @Query("page_size") pageSize: Int?
     ) : Response<BasePomeResponse<List<RecordData>>>
 
     /**

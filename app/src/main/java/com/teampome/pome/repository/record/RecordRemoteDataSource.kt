@@ -15,7 +15,7 @@ class RecordRemoteDataSource @Inject constructor(
     private val service: RecordService
 ): RecordDataSource {
     override fun getRecordDataByUserId(userId: String): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> = apiRequestFlow {
-        service.getRecordDataByUserId(userId)
+        service.getRecordDataByUserId(userId, null, null)
     }
 
     override fun writeConsumeRecord(consumeRecordDataBody: ConsumeRecordDataBody): Flow<ApiResponse<BasePomeResponse<RecordData>>> = apiRequestFlow {
