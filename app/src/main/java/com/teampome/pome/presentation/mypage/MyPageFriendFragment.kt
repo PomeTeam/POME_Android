@@ -93,18 +93,6 @@ class MyPageFriendFragment : BaseFragment<FragmentMypageFriendBinding>(R.layout.
 
         CommonUtil.makePomeDialog(friendDeleteDialog)
 
-//        friendDeleteDialogBinding.friendDeleteOkayTv.setOnClickListener {
-//            viewModel.friendGet.value.let {list ->
-//                friendDeletePosition?.let{pos ->
-//                    list?.get(pos)?.let{ getFriend ->
-//                        viewModel.dele
-//                    }
-//                }
-//            }
-//
-//            Toast.makeText(requireContext(), "친구 삭제 완료", Toast.LENGTH_SHORT).show()
-//            friendDeleteDialog.dismiss()
-//        }
         friendDeleteDialogBinding.friendDeleteOkayTv.setOnClickListener {
             viewModel.deleteFriend(friendId, object : CoroutineErrorHandler{
                 override fun onError(message: String) {

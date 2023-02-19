@@ -122,6 +122,7 @@
     <string name="mypage_setting_open_source_text">오픈소스 라이센스</string>
     <string name="mypage_setting_version_text">버전 정보</string>
     <string name="mypage_setting_logout_text">로그아웃</string>
+    <string name="mypage_setting_withdraw_text">탈퇴하기</string>
 
     <!--  POME Mypage -> Setting -> Alarm -->
     <string name="mypage_alarm_title_text">알림 설정</string>

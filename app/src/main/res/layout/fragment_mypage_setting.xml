@@ -421,6 +421,31 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mypage_withdraw_setting_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_logout_setting_cl"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:paddingVertical="20dp"
+                    >
+
+                    <TextView
+                        android:id="@+id/mypage_withdraw_setting_tv"
+                        android:text="@string/mypage_setting_withdraw_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/Pome.Medium.16"
+                        android:textColor="@color/grey_5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="24dp"
+                        />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
