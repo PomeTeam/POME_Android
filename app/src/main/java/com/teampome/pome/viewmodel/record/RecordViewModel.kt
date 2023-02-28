@@ -1,5 +1,6 @@
 package com.teampome.pome.viewmodel.record
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -40,16 +41,20 @@ class RecordViewModel @Inject constructor(
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->
-                    allGoalData.content.map { data ->
+                    allGoalData.content.filter { data ->
+                        data?.let { gd -> // filter 내에서 testData 분리
+                            gd.endDate != "string"
+                        } ?: false
+                    }.map { data ->
                         data?.let { gd ->
                             GoalCategory(
-                                gd.goalCategoryResponse.id,
-                                gd.goalCategoryResponse.name,
+                                gd.id,
+                                gd.name,
                                 false,
                                 gd.id,
                                 CommonUtil.calDiffDate(gd.endDate) == 0
                             )
-                        } ?: run { null }
+                        }
                     }
                 } ?: run { null }
             }
@@ -57,6 +62,7 @@ class RecordViewModel @Inject constructor(
             is ApiResponse.Failure -> { null }
         }
     }
+
 
     val goalDetails: LiveData<List<GoalData?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {

@@ -6,7 +6,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GoalData(
     val endDate: String,
-    val goalCategoryResponse: GoalCategoryResponse,
+    val name: String,
     val id: Int,
     val isEnd: Boolean,
     val isPublic: Boolean,

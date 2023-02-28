@@ -42,8 +42,8 @@ class RemindViewModel @Inject constructor(
                     allGoalData.content.map { data ->
                         data?.let { gd ->
                             GoalCategory(
-                                gd.goalCategoryResponse.id,
-                                gd.goalCategoryResponse.name,
+                                gd.id,
+                                gd.name,
                                 false,
                                 gd.id,
                                 CommonUtil.calDiffDate(gd.endDate) == 0
