@@ -6,9 +6,7 @@ import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.base.ErrorResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withTimeoutOrNull
 import retrofit2.Response
 
@@ -38,6 +36,10 @@ fun<T> apiRequestFlow(call: suspend () -> Response<T>): Flow<ApiResponse<T>> = f
                         emit(ApiResponse.Success(data))
                     }
                 } else if (!(response.body() as BasePomeResponse<*>).success) {
+                    if((response.body() as BasePomeResponse<*>).errorCode == "T0001") { // TokenRefresh 해야하는 부분
+                        // 토큰을 변경하고 재시도하는 작업이 필요
+                    }
+
                     emit(ApiResponse.Failure((response.body() as BasePomeResponse<*>).message, (response.body() as BasePomeResponse<*>).errorCode ?: "400"))
                 } else {
                     response.errorBody()?.let { error ->
