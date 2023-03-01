@@ -24,6 +24,7 @@
         android:theme="@style/Theme.Pome"
         tools:targetApi="33"
         android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         android:name=".PomeApplication">
         <activity
             android:name=".MainActivity"
