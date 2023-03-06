@@ -16,7 +16,7 @@ class RecordPagingSource constructor(
         Log.d("test", "is in load?")
 
         return try {
-            val pageNumber = params.key ?: 0
+            val pageNumber = params.key ?: 1
             val pageSize = params.loadSize
             val response = service.getRecordByGoalId(goalId, pageNumber, pageSize)
 

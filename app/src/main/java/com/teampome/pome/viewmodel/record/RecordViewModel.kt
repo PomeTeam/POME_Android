@@ -158,10 +158,6 @@ class RecordViewModel @Inject constructor(
         viewModelScope.launch {
             recordRepository.getRecordPagingData(goalId).cachedIn(viewModelScope).collectLatest {
                 _records.value = it
-
-                it.map { it2 ->
-                    Log.d("test", "records_value? $it2")
-                }
             }
         }
     }

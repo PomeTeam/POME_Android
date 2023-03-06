@@ -104,17 +104,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         })
 
-        viewModel.getRecordPagingData(275)
-
-        viewModel.records.observe(viewLifecycleOwner) { pagingData ->
-            // Update the data in the RecyclerView adapter
-//            adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
-            pagingData.map { recordData ->
-                Log.d("PagingData", "recordData: $recordData")
+        viewModel.records.observe(viewLifecycleOwner) {
+            lifecycleScope.launch {
+                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitData(
+                    it
+                )
             }
         }
-
-
 
         makeBottomSheetDialog()
         makeRecordDialog()
@@ -162,6 +158,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 //                                )
 
                         }
+
+                        viewModel.getRecordPagingData(item.goalId)
 
                         viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
@@ -225,6 +223,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategory = it[0]!!.name
                 currentCategoryPosition = 0
 
+                viewModel.getRecordPagingData(it[0]!!.goalId)
 //                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
 //                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
 //                    override fun onError(message: String) {

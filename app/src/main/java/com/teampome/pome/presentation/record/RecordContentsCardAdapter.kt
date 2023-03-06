@@ -3,6 +3,7 @@ package com.teampome.pome.presentation.record
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +11,7 @@ import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.util.OnItemClickListener
 
-class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
+class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
 ) {
     private lateinit var binding: ItemRecordEmotionCardBinding
@@ -41,19 +42,15 @@ class RecordContentsCardAdapter : ListAdapter<RecordData, RecordContentsCardAdap
     }
 
     override fun onBindViewHolder(holder: RecordContentsCardViewHolder, position: Int) {
-        Log.d("lifecycle", " call onBindViewHolder, holder : $holder data : ${getItem(position)}")
-
-        holder.bind(getItem(position))
+        getItem(position)?.let {
+            Log.d("test", "data is $it")
+            holder.bind(it)
+        }
     }
 
     inner class RecordContentsCardViewHolder(
         binding : ItemRecordEmotionCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            Log.d("lifecycle", " init viewholder")
-        }
-
         fun bind(item: RecordData) {
             binding.recordData = item
 

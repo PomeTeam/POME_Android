@@ -67,11 +67,11 @@ class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBindin
             }
         }
 
-        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
-            (binding.recordLeaveEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                it
-            )
-        }
+//        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
+//            (binding.recordLeaveEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+//                it
+//            )
+//        }
     }
 
     override fun initListener() {
