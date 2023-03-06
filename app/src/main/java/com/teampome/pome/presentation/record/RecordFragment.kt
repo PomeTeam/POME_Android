@@ -9,7 +9,12 @@ import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.liveData
+import androidx.paging.map
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -24,11 +29,15 @@ import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
+import com.teampome.pome.repository.record.paging.RecordPagingSource
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
@@ -95,6 +104,18 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         })
 
+        viewModel.getRecordPagingData(275)
+
+        viewModel.records.observe(viewLifecycleOwner) { pagingData ->
+            // Update the data in the RecyclerView adapter
+//            adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
+            pagingData.map { recordData ->
+                Log.d("PagingData", "recordData: $recordData")
+            }
+        }
+
+
+
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -109,11 +130,38 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Log.e("record", "record error $message")
-                            }
-                        })
+//                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
+//                            override fun onError(message: String) {
+//                                Log.e("record", "record error $message")
+//                            }
+//                        })
+
+                        lifecycleScope.launch {
+//                            val pagingConfig = PagingConfig(
+//                                pageSize = 15,
+//                                enablePlaceholders = false
+//                            )
+//
+//                            val recordPagingSourceFactory = RecordPagingSource.provideFactory(recordPagingSourceFactory, item.goalId)
+//
+//                            val recordPager = Pager(
+//                                config = pagingConfig,
+//                                pagingSourceFactory = recordPagingSourceFactory).liveData
+//
+//                            Log.d("test", "pager : ${recordPager.value}")
+
+//                                pagingData.let { contents ->
+//                                    binding.recordData = contents.content
+//                                    viewModel.setRecordData(contents.content)
+//
+//                                    binding.executePendingBindings()
+//                                }
+//
+//                                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+//                                    it.data.data?.content?.toMutableList() ?: mutableListOf()
+//                                )
+
+                        }
 
                         viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
                             override fun onError(message: String) {
@@ -177,12 +225,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategory = it[0]!!.name
                 currentCategoryPosition = 0
 
-                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
-                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
-                    override fun onError(message: String) {
-                        Log.e("record", "record error $message")
-                    }
-                })
+//                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
+//                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
+//                    override fun onError(message: String) {
+//                        Log.e("record", "record error $message")
+//                    }
+//                })
 
                 viewModel.getOneWeekRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
@@ -196,43 +244,31 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
-            when(it) {
-                is ApiResponse.Success -> {
-                    it.data.data?.let { contents ->
-                        binding.recordData = contents.content
-                        viewModel.setRecordData(contents.content)
-
-                        binding.executePendingBindings()
-                    }
-
-//                    submit list하는 list는 다른 값인데, 이전 값이 currentList임...
-//                    submitList의 list는 정상, 계속 카테고리를 변경하다보면 list값이 아예 섞임..
-//                    debuging시에는 정상? 그러면 충분한 업데이트 시간이 없어서?
-//                    1 - 2 - 1 - 3 정상, 3 - 2 - 3 비정상 => null을 받을 때, submitList가 이상하게 동작?
-//                    notifyDataSetChanged, invalidateAll, executePendingBinding 다 동작 x
-//                    currentList는 정상..
-                    // 임시 처리 : 데이터 변경 시 새로운 어댑터 객체 생성
-                    binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
-                        setOnBodyClickListener(itemClickListener)
-                        setOnMoreItemClickListener(moreItemClickListener)
-                    }
-
-                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                        it.data.data?.content?.toMutableList() ?: mutableListOf()
-                    )
-
-                    hideLoading()
-                }
-                is ApiResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-                    Log.d("recordData", "failure RecordData : $it")
-
-                    hideLoading()
-                }
-                is ApiResponse.Loading -> { showLoading() }
-            }
-        }
+//        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
+//            when(it) {
+//                is ApiResponse.Success -> {
+//                    it.data.data?.let { contents ->
+//                        binding.recordData = contents.content
+//                        viewModel.setRecordData(contents.content)
+//
+//                        binding.executePendingBindings()
+//                    }
+//
+//                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+//                        it.data.data?.content?.toMutableList() ?: mutableListOf()
+//                    )
+//
+//                    hideLoading()
+//                }
+//                is ApiResponse.Failure -> {
+//                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
+//                    Log.d("recordData", "failure RecordData : $it")
+//
+//                    hideLoading()
+//                }
+//                is ApiResponse.Loading -> { showLoading() }
+//            }
+//        }
 
         viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
             when(it) {

@@ -1,19 +1,20 @@
 package com.teampome.pome.repository.record.paging
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.network.RecordService
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import retrofit2.HttpException
 import java.io.IOException
 
-class RecordPagingSource @AssistedInject constructor(
+class RecordPagingSource constructor(
     private val service: RecordService,
-    @Assisted("goalId") private val goalId: Int // Assisted는 Hilt를 통해 주입되지 않는다는 Annotation
+    private val goalId: Int
 ) : PagingSource<Int, RecordData>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RecordData> {
+        Log.d("test", "is in load?")
+
         return try {
             val pageNumber = params.key ?: 0
             val pageSize = params.loadSize
@@ -40,20 +41,6 @@ class RecordPagingSource @AssistedInject constructor(
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
             anchorPage?.prevKey?.plus(1) ?: anchorPage?.nextKey?.minus(1)
-        }
-    }
-
-    @com.squareup.inject.assisted.AssistedInject.Factory
-    interface Factory {
-        fun create(goalId: Int): RecordPagingSource
-    }
-
-    companion object {
-        fun provideFactory(
-            assistedFactory: Factory,
-            goalId: Int
-        ): () -> RecordPagingSource = {
-            assistedFactory.create(goalId)
         }
     }
 }

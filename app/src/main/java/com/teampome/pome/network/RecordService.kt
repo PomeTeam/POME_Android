@@ -15,9 +15,7 @@ interface RecordService {
      */
     @GET("api/v1/records/users/{userId}")
     suspend fun getRecordDataByUserId(
-        @Path("userId") userId: String,
-        @Query("page_number") pageNumber: Int?,
-        @Query("page_size") pageSize: Int?
+        @Path("userId") userId: String
     ) : Response<BasePomeResponse<List<RecordData>>>
 
     /**
@@ -51,7 +49,9 @@ interface RecordService {
      */
     @GET("api/v1/records/goal/{goalId}/record-tab")
     suspend fun getRecordByGoalId(
-        @Path("goalId") goalId: Int
+        @Path("goalId") goalId: Int,
+        @Query("page") pageNumber: Int?,
+        @Query("size") pageSize: Int?
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
 
     /**

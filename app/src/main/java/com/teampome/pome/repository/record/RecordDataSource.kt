@@ -1,5 +1,6 @@
 package com.teampome.pome.repository.record
 
+import androidx.paging.PagingData
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
@@ -15,4 +16,5 @@ interface RecordDataSource {
     fun updateRecord(recordId: Int, recordDataBody: ConsumeRecordDataBody): Flow<ApiResponse<BasePomeResponse<RecordData>>>
     fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
     fun getOneWeekGoalByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
+    fun getRecordPagingData(goalId: Int): Flow<PagingData<RecordData>>
 }

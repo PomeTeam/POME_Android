@@ -4,6 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
@@ -17,6 +21,9 @@ import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,6 +43,10 @@ class RecordViewModel @Inject constructor(
 
     private val _deleteGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
     val deleteGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteGoalResponse
+
+//    fun setPagingRecordByGoalId(goalId: Int): Flow<PagingData<RecordData>> {
+//        return recordRepository.getPagingRecordByGoalId(goalId).cachedIn(viewModelScope)
+//    }
 
     val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
@@ -137,5 +148,21 @@ class RecordViewModel @Inject constructor(
 
     fun setRecordData(list: List<RecordData?>) {
         _recordData.value = list
+    }
+
+    private val _records = MutableLiveData<PagingData<RecordData>>()
+    val records: LiveData<PagingData<RecordData>>
+        get() = _records
+
+    fun getRecordPagingData(goalId: Int) {
+        viewModelScope.launch {
+            recordRepository.getRecordPagingData(goalId).cachedIn(viewModelScope).collectLatest {
+                _records.value = it
+
+                it.map { it2 ->
+                    Log.d("test", "records_value? $it2")
+                }
+            }
+        }
     }
 }
