@@ -11,10 +11,6 @@ import androidx.annotation.RawRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.liveData
-import androidx.paging.map
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -29,15 +25,12 @@ import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
-import com.teampome.pome.repository.record.paging.RecordPagingSource
 import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
@@ -104,14 +97,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         })
 
-        viewModel.records.observe(viewLifecycleOwner) {
-            lifecycleScope.launch {
-                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitData(
-                    it
-                )
-            }
-        }
-
         makeBottomSheetDialog()
         makeRecordDialog()
         makeGoalRemoveDialog()
@@ -126,38 +111,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
                         currentCategory = item.name
                         currentCategoryPosition = position
-//                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
-//                            override fun onError(message: String) {
-//                                Log.e("record", "record error $message")
-//                            }
-//                        })
-
-                        lifecycleScope.launch {
-//                            val pagingConfig = PagingConfig(
-//                                pageSize = 15,
-//                                enablePlaceholders = false
-//                            )
-//
-//                            val recordPagingSourceFactory = RecordPagingSource.provideFactory(recordPagingSourceFactory, item.goalId)
-//
-//                            val recordPager = Pager(
-//                                config = pagingConfig,
-//                                pagingSourceFactory = recordPagingSourceFactory).liveData
-//
-//                            Log.d("test", "pager : ${recordPager.value}")
-
-//                                pagingData.let { contents ->
-//                                    binding.recordData = contents.content
-//                                    viewModel.setRecordData(contents.content)
-//
-//                                    binding.executePendingBindings()
-//                                }
-//
-//                                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-//                                    it.data.data?.content?.toMutableList() ?: mutableListOf()
-//                                )
-
-                        }
 
                         viewModel.getRecordPagingData(item.goalId)
 
@@ -213,9 +166,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         // goal Details Observe 등록
         viewModel.goalDetails.observe(viewLifecycleOwner) {}
 
-        // recordData 등록
-        viewModel.recordData.observe(viewLifecycleOwner) {}
-
         // category listener - category를 주입
         viewModel.goalCategory.observe(viewLifecycleOwner) {
             if(!it.isNullOrEmpty()) {
@@ -223,13 +173,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 currentCategory = it[0]!!.name
                 currentCategoryPosition = 0
 
+                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
                 viewModel.getRecordPagingData(it[0]!!.goalId)
-//                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
-//                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
-//                    override fun onError(message: String) {
-//                        Log.e("record", "record error $message")
-//                    }
-//                })
 
                 viewModel.getOneWeekRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
                     override fun onError(message: String) {
@@ -243,31 +188,17 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-//        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
-//            when(it) {
-//                is ApiResponse.Success -> {
-//                    it.data.data?.let { contents ->
-//                        binding.recordData = contents.content
-//                        viewModel.setRecordData(contents.content)
-//
-//                        binding.executePendingBindings()
-//                    }
-//
-//                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-//                        it.data.data?.content?.toMutableList() ?: mutableListOf()
-//                    )
-//
-//                    hideLoading()
-//                }
-//                is ApiResponse.Failure -> {
-//                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-//                    Log.d("recordData", "failure RecordData : $it")
-//
-//                    hideLoading()
-//                }
-//                is ApiResponse.Loading -> { showLoading() }
-//            }
-//        }
+        // 목표에 따른 recordPagingData 처리
+        viewModel.pagingRecordData.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
+                    submitData(pagingData)
+                    binding.recordData = snapshot().items
+
+                    binding.executePendingBindings()
+                }
+            }
+        }
 
         viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
             when(it) {
@@ -353,19 +284,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         binding.recordWriteEmotionContainerCl.setOnClickListener {
-            moveToRecordLeaveEmotion(
-
-            )
+            moveToRecordLeaveEmotion()
         }
 
         binding.recordGoalCompleteCl.setOnClickListener {
-            viewModel.recordData.value?.let {
-                if(it.isEmpty()) {
-                    moveToRecordGoalFinish()
-                } else {
-                    finishGoalAlertDialog.show()
-                }
-            } ?: run {
+            if((binding.recordEmotionRv.adapter as RecordContentsCardAdapter).snapshot().items.isEmpty()) {
+                moveToRecordGoalFinish()
+            } else {
                 finishGoalAlertDialog.show()
             }
         }

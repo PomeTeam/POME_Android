@@ -14,7 +14,6 @@ import com.teampome.pome.util.OnItemClickListener
 class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
 ) {
-    private lateinit var binding: ItemRecordEmotionCardBinding
     // 절대 Adapter 내부에 lateinit var을 넣지 말자.
     // bind를 lateinit하고 onCreateViewHolder에서 재사용하고 있어 메모리 누수가 발생됨
     // ex) RecyclerView에서 아이템이 추가될 때 마다 Binding 인스턴스가 할당되고 이전에 할당된 인스턴스가 GC로 회수되지 않을 가능성이 매우 큼
@@ -34,9 +33,7 @@ class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCa
         parent: ViewGroup,
         viewType: Int
     ): RecordContentsCardViewHolder {
-        binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-        Log.d("lifecycle", " call onCreateViewHolder")
+        val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return RecordContentsCardViewHolder(binding)
     }
@@ -49,7 +46,7 @@ class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCa
     }
 
     inner class RecordContentsCardViewHolder(
-        binding : ItemRecordEmotionCardBinding
+        private val binding : ItemRecordEmotionCardBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RecordData) {
             binding.recordData = item

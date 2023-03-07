@@ -1,6 +1,5 @@
 package com.teampome.pome.viewmodel.record
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -21,7 +20,6 @@ import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -113,15 +111,15 @@ class RecordViewModel @Inject constructor(
         goalRepository.deleteGoal(goalId)
     }
 
-    private val _getRecordByGoalIdResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
-    val getRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getRecordByGoalIdResponse
-
-    fun getRecordByGoalId(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
-        _getRecordByGoalIdResponse,
-        coroutineErrorHandler
-    ) {
-        recordRepository.getRecordByGoalId(goalId)
-    }
+//    private val _getRecordByGoalIdResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
+//    val getRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getRecordByGoalIdResponse
+//
+//    fun getRecordByGoalId(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+//        _getRecordByGoalIdResponse,
+//        coroutineErrorHandler
+//    ) {
+//        recordRepository.getRecordByGoalId(goalId)
+//    }
 
     private val _getOneWeekRecordByGoalIdResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
     val getOneWeekRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getOneWeekRecordByGoalIdResponse
@@ -143,21 +141,13 @@ class RecordViewModel @Inject constructor(
         recordRepository.getOneWeekGoalByGoalId(goalId)
     }
 
-    private val _recordData = MutableLiveData<List<RecordData?>>(listOf())
-    val recordData: LiveData<List<RecordData?>> = _recordData
-
-    fun setRecordData(list: List<RecordData?>) {
-        _recordData.value = list
-    }
-
-    private val _records = MutableLiveData<PagingData<RecordData>>()
-    val records: LiveData<PagingData<RecordData>>
-        get() = _records
+    private val _pagingRecordData = MutableLiveData<PagingData<RecordData>>()
+    val pagingRecordData: LiveData<PagingData<RecordData>> = _pagingRecordData
 
     fun getRecordPagingData(goalId: Int) {
         viewModelScope.launch {
-            recordRepository.getRecordPagingData(goalId).cachedIn(viewModelScope).collectLatest {
-                _records.value = it
+            recordRepository.getRecordPagingData(goalId).cachedIn(viewModelScope).collect {
+                _pagingRecordData.value = it
             }
         }
     }

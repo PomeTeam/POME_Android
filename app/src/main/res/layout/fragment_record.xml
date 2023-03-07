@@ -82,6 +82,7 @@
             tools:listitem="@layout/item_record_category_chip" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/record_contents_nsv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="18dp"
@@ -365,22 +366,22 @@
                             app:layout_constraintTop_toBottomOf="@id/record_no_write_emotion_aiv" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/record_emotion_rv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:paddingHorizontal="16dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_marginBottom="74dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/record_write_emotion_container_cl"
-                    tools:listitem="@layout/item_record_emotion_card" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/record_emotion_rv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingHorizontal="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_marginBottom="74dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/record_contents_nsv"
+            tools:listitem="@layout/item_record_emotion_card" />
 
         <!-- 그림자나 딱히 Floating Action Button을 사용할 필요성이 없어 이미지뷰로 구현 -->
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -5,6 +5,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.network.RecordService
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -16,7 +17,7 @@ class RecordPagingSource constructor(
         Log.d("test", "is in load?")
 
         return try {
-            val pageNumber = params.key ?: 1
+            val pageNumber = params.key ?: 0
             val pageSize = params.loadSize
             val response = service.getRecordByGoalId(goalId, pageNumber, pageSize)
 
@@ -25,6 +26,8 @@ class RecordPagingSource constructor(
                 val items = baseAllData?.content?.filterNotNull() ?: emptyList()
                 val prevKey = if (pageNumber == 0) null else pageNumber - 1
                 val nextKey = if (items.isEmpty() || response.body()?.data?.empty == true) null else pageNumber + 1
+
+                Log.d("key", "test key $prevKey -> $pageNumber -> $nextKey")
 
                 LoadResult.Page(items, prevKey, nextKey)
             } else {

@@ -52,7 +52,9 @@ class RecordRemoteDataSource @Inject constructor(
         return Pager(
             config = PagingConfig(
                 pageSize = 15,
-                initialLoadSize = 15
+                initialLoadSize = 15,
+                prefetchDistance = 10,
+                enablePlaceholders = false
             ),
             pagingSourceFactory = {
                 RecordPagingSource(service = service, goalId = goalId)
