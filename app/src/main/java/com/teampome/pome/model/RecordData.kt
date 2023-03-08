@@ -1,6 +1,8 @@
 package com.teampome.pome.model
 
 import android.os.Parcelable
+import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.presentation.record.GoalState
 import com.teampome.pome.presentation.record.RecordViewType
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
@@ -15,7 +17,10 @@ data class RecordData(
     val useComment: String?,
     val useDate: String?,
     val usePrice: Long?,
-    val viewType: @RawValue RecordViewType? = RecordViewType.Contents
+    var viewType: @RawValue RecordViewType? = RecordViewType.Contents,
+    var oneWeekCount: Int? = 0,
+    var goalDetail: GoalData?,
+    var goalState: @RawValue GoalState? = GoalState.Empty
 ) : Parcelable
 
 @Parcelize

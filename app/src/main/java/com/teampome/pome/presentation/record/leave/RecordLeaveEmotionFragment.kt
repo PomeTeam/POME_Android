@@ -12,7 +12,6 @@ import com.teampome.pome.databinding.FragmentRecordLeaveEmotionBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.presentation.record.OnRecordItemClickListener
 import com.teampome.pome.presentation.record.RecordContentsCardAdapter
-import com.teampome.pome.util.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -41,7 +40,7 @@ class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBindin
         binding.goalData = args.goalData
 
         binding.recordLeaveEmotionRv.adapter = RecordContentsCardAdapter().apply {
-            setOnBodyClickListener(object : OnRecordItemClickListener {
+            setOnRecordBodyClickListener(object : OnRecordItemClickListener {
                 override fun onRecordItemClick(item: RecordData) {
                     item.id?.let {itemId ->
                         moveToLeaveEmotion(itemId)

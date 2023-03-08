@@ -1,77 +1,136 @@
 package com.teampome.pome.presentation.record
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.teampome.pome.databinding.ItemGoalCardBinding
+import com.teampome.pome.databinding.ItemLeaveEmotionCardBinding
 import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.util.OnItemClickListener
 
-sealed class RecordViewType {
-    object OneWeek: RecordViewType()
-    object Contents: RecordViewType()
+sealed class RecordViewType(val type: Int) {
+    object Goal: RecordViewType(0)
+    object OneWeek: RecordViewType(1)
+    object Contents: RecordViewType(2)
+//    OneWeek(0), Contents(1)
 }
 
-class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
+class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecyclerView.ViewHolder>(
     RecordContentsCardDiffCallback()
 ) {
     // 절대 Adapter 내부에 lateinit var을 넣지 말자.
     // bind를 lateinit하고 onCreateViewHolder에서 재사용하고 있어 메모리 누수가 발생됨
     // ex) RecyclerView에서 아이템이 추가될 때 마다 Binding 인스턴스가 할당되고 이전에 할당된 인스턴스가 GC로 회수되지 않을 가능성이 매우 큼
-    private var moreItemClickListener: OnMoreItemClickListener? = null
+    private var moreRecordItemClickListener: OnMoreItemClickListener? = null
+    private var recordBodyClickListener: OnRecordItemClickListener? = null
+    private var leaveEmotionCardClickListener: OnItemClickListener? = null
+    private var moreGoalItemClickListener: OnItemClickListener? = null
+    private var noGoalCardClickListener: OnItemClickListener? = null
+    private var goalCompleteClickListener: OnItemClickListener? = null
 
-    private var bodyClickListener: OnRecordItemClickListener? = null
-
-    fun setOnMoreItemClickListener(listener: OnMoreItemClickListener) {
-        moreItemClickListener = listener
+    fun setOnMoreRecordItemClickListener(listener: OnMoreItemClickListener) {
+        moreRecordItemClickListener = listener
     }
 
-    fun setOnBodyClickListener(listener: OnRecordItemClickListener) {
-        bodyClickListener = listener
+    fun setOnRecordBodyClickListener(listener: OnRecordItemClickListener) {
+        recordBodyClickListener = listener
+    }
+
+    fun setOnLeaveEmotionCardClickListener(listener: OnItemClickListener) {
+        leaveEmotionCardClickListener = listener
+    }
+
+    fun setOnMoreGoalItemClickListener(listener: OnItemClickListener) {
+        moreGoalItemClickListener = listener
+    }
+
+    fun setOnNoGoalCardClickListener(listener: OnItemClickListener) {
+        noGoalCardClickListener = listener
+    }
+
+    fun setOnGoalCompleteClickListener(listener: OnItemClickListener) {
+        goalCompleteClickListener = listener
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val data = getItem(position)
+
+        data?.let { recordData ->
+            recordData.viewType?.let { viewType ->
+                return viewType.type
+            } ?: run {
+                return RecordViewType.Contents.type
+            }
+        } ?: run {
+            return RecordViewType.Contents.type
+        }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): RecordContentsCardViewHolder {
-        val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    ): RecyclerView.ViewHolder {
+        when(viewType) {
+            RecordViewType.Goal.type -> {
+                val binding = ItemGoalCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return RecordContentsCardViewHolder(binding)
-    }
+                return GoalCardViewHolder(binding, moreGoalItemClickListener, noGoalCardClickListener, goalCompleteClickListener)
+            }
 
-    override fun onBindViewHolder(holder: RecordContentsCardViewHolder, position: Int) {
-        getItem(position)?.let {
-            Log.d("test", "data is $it")
-            holder.bind(it)
+            RecordViewType.OneWeek.type -> {
+                val binding = ItemLeaveEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+                return LeaveEmotionCardViewHolder(binding, leaveEmotionCardClickListener)
+            }
+
+            RecordViewType.Contents.type -> {
+                val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+                return RecordCardViewHolder(binding, moreRecordItemClickListener, recordBodyClickListener)
+            }
+
+            else -> {
+                assert(false) // 여기로 떨어지면 안됨 -> 따로 처리 필요
+                val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+                return RecordCardViewHolder(binding, moreRecordItemClickListener, recordBodyClickListener)
+            }
         }
     }
 
-    inner class RecordContentsCardViewHolder(
-        private val binding : ItemRecordEmotionCardBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: RecordData) {
-            binding.recordData = item
-
-            binding.recordContentsCardMoreAiv.setOnClickListener {
-                moreItemClickListener?.onMoreIconClick(item)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder) {
+            is GoalCardViewHolder -> {
+                getItem(position)?.let {
+                    holder.bind(it.goalDetail, it.goalState)
+                }
             }
 
-            binding.recordContentsCardContainerCv.setOnClickListener {
-                bodyClickListener?.onRecordItemClick(item)
+            is LeaveEmotionCardViewHolder -> {
+                getItem(position)?.let {
+                    holder.bind(it.oneWeekCount ?: 0)
+                }
             }
 
-            binding.executePendingBindings()
+            is RecordCardViewHolder -> {
+                getItem(position)?.let {
+                    holder.bind(it)
+                }
+            }
         }
     }
 }
 
 class RecordContentsCardDiffCallback : DiffUtil.ItemCallback<RecordData>() {
     override fun areItemsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
-        return oldItem.id == newItem.id
+        return if(oldItem.id != null && newItem.id != null) {
+            oldItem.id == newItem.id
+        } else {
+            oldItem == newItem
+        }
     }
 
     override fun areContentsTheSame(oldItem: RecordData, newItem: RecordData): Boolean {
