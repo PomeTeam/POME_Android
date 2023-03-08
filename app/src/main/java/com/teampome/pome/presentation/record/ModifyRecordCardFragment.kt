@@ -46,19 +46,29 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
 
     override fun initView() {
         binding.modifyRecordGoalAet.setText(args.currentCategory)
-        binding.modifyRecordDateAet.setText(args.recordData.useDate)
-        viewModel.setDate(args.recordData.useDate)
-        binding.modifyRecordPriceAet.setText(args.recordData.usePrice.toString())
-        viewModel.setPrice(args.recordData.usePrice.toString())
-        binding.modifyRecordContentAet.setText(args.recordData.useComment)
-        viewModel.setUseComment(args.recordData.useComment)
+
+        args.recordData.useDate?.let { useDate ->
+            binding.modifyRecordDateAet.setText(useDate)
+            viewModel.setDate(useDate)
+
+            makeCalendarBottomSheetDialog(useDate)
+        }
+
+        args.recordData.usePrice?.let { usePrice ->
+            binding.modifyRecordPriceAet.setText(usePrice.toString())
+            viewModel.setPrice(usePrice.toString())
+        }
+
+        args.recordData.useComment?.let {useComment ->
+            binding.modifyRecordContentAet.setText(useComment)
+            viewModel.setUseComment(useComment)
+        }
+
 
         binding.content = args.recordData.useComment
         binding.price = args.recordData.usePrice.toString()
 
         binding.executePendingBindings()
-
-        makeCalendarBottomSheetDialog()
     }
 
     override fun initListener() {
@@ -78,19 +88,20 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         // 수정했어요 클릭
         binding.modifyRecordCheckAcb.setOnClickListener {
             Log.d("click", "click 수정")
-
-            viewModel.updateRecord(
-                args.recordData.id,
-                args.goalId,
-                viewModel.useComment.value ?: "",
-                viewModel.date.value ?: "23.01.01",
-                (viewModel.price.value?.toLong() ?: "0") as Long,
-                object : CoroutineErrorHandler {
-                    override fun onError(message: String) {
-                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            args.recordData.id?.let { recordId ->
+                viewModel.updateRecord(
+                    recordId,
+                    args.goalId,
+                    viewModel.useComment.value ?: "",
+                    viewModel.date.value ?: "23.01.01",
+                    (viewModel.price.value?.toLong() ?: "0") as Long,
+                    object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        }
                     }
-                }
-            )
+                )
+            }
         }
 
         // 금액 EditTextListener
@@ -149,7 +160,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
         }
     }
 
-    private fun makeCalendarBottomSheetDialog() {
+    private fun makeCalendarBottomSheetDialog(useDate: String) {
         calendarBottomSheetDialog = BottomSheetDialog(requireContext()).apply {
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
@@ -161,7 +172,7 @@ class ModifyRecordCardFragment : BaseFragment<FragmentModifyRecordCardBinding>(R
             requireContext(),
             calendarBottomSheetDialogBinding.calendarMcv,
             calendarBottomSheetDialogBinding.calendarSelectAtb,
-            CommonUtil.stringToLocalDate(args.recordData.useDate),
+            CommonUtil.stringToLocalDate(useDate),
             { date, str ->
                 curDate = date
                 viewModel.setDate(str)

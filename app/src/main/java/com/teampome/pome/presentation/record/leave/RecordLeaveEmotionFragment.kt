@@ -43,7 +43,9 @@ class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBindin
         binding.recordLeaveEmotionRv.adapter = RecordContentsCardAdapter().apply {
             setOnBodyClickListener(object : OnRecordItemClickListener {
                 override fun onRecordItemClick(item: RecordData) {
-                    moveToLeaveEmotion(item.id)
+                    item.id?.let {itemId ->
+                        moveToLeaveEmotion(itemId)
+                    }
                 }
             })
         }

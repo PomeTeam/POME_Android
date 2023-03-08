@@ -10,4 +10,5 @@ data class GoalCategory(
     var isSelected: Boolean? = false,
     val goalId: Int,
     var isEnd: Boolean? = false,
+    var pos: Int = 0
 ) : Parcelable

@@ -11,6 +11,11 @@ import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.util.OnItemClickListener
 
+sealed class RecordViewType {
+    object OneWeek: RecordViewType()
+    object Contents: RecordViewType()
+}
+
 class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecordContentsCardAdapter.RecordContentsCardViewHolder>(
     RecordContentsCardDiffCallback()
 ) {

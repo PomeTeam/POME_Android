@@ -6,7 +6,6 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
@@ -20,8 +19,6 @@ import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +27,14 @@ class RecordViewModel @Inject constructor(
     private val recordRepository: RecordRepository,
     private val goalRepository: GoalRepository
 ) : BaseViewModel() {
+    private val _curGoal = MutableLiveData<GoalCategory>()
+    val curGoal: LiveData<GoalCategory> = _curGoal
+
+    fun setCurrentGoal(goal: GoalCategory, pos: Int) {
+        goal.pos = pos
+        _curGoal.value = goal
+    }
+
     private val _recordDataByUserIdResponse = MutableLiveData<ApiResponse<BasePomeResponse<List<RecordData>>>>()
     val recordDataByUserIdResponse: LiveData<ApiResponse<BasePomeResponse<List<RecordData>>>> = _recordDataByUserIdResponse
 
@@ -46,7 +51,7 @@ class RecordViewModel @Inject constructor(
 //        return recordRepository.getPagingRecordByGoalId(goalId).cachedIn(viewModelScope)
 //    }
 
-    val goalCategory: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
+    val goalCategorys: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.let { allGoalData ->

@@ -1,18 +1,21 @@
 package com.teampome.pome.model
 
 import android.os.Parcelable
+import com.teampome.pome.presentation.record.RecordViewType
 import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 
 @Parcelize
 data class RecordData(
-    val createdAt: String,
-    val emotionResponse: EmotionResponse,
-    val id: Int,
-    val nickname: String,
-    val oneLineMind: String,
-    val useComment: String,
-    val useDate: String,
-    val usePrice: Long
+    val createdAt: String?,
+    val emotionResponse: EmotionResponse?,
+    val id: Int?,
+    val nickname: String?,
+    val oneLineMind: String?,
+    val useComment: String?,
+    val useDate: String?,
+    val usePrice: Long?,
+    val viewType: @RawValue RecordViewType? = RecordViewType.Contents
 ) : Parcelable
 
 @Parcelize

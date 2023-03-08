@@ -215,7 +215,9 @@ fun bindingCategoryColor(textView: TextView, isSelected: Boolean?, isEnd: Boolea
  */
 @BindingAdapter("goalConnectTime")
 fun bindingGoalConnectTime(textView: TextView, recordData: RecordData?) {
-    recordData?.let {
-        textView.text = textView.context.getString(R.string.connect_dot_text, recordData.oneLineMind, CommonUtil.changeAfterTime(recordData.createdAt))
+    recordData?.let {record ->
+        record.createdAt?.let { createdAt ->
+            textView.text = textView.context.getString(R.string.connect_dot_text, recordData.oneLineMind, CommonUtil.changeAfterTime(createdAt))
+        }
     }
 }
