@@ -14,14 +14,14 @@
             type="com.teampome.pome.presentation.record.GoalState" />
 
         <import type="android.view.View" />
-        <import type="java.util.List" />
         <import type="com.teampome.pome.presentation.record.GoalState" />
         <import type="com.teampome.pome.util.CommonUtil" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/record_goal_card_cv"

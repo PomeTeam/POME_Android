@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:pome="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="recordSize"
+            type="Integer" />
 
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:foregroundGravity="center"
+            android:visibility="@{recordSize == null || recordSize == 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toBottomOf="@id/record_category_chips_rv"
             app:layout_constraintBottom_toBottomOf="parent">
 
