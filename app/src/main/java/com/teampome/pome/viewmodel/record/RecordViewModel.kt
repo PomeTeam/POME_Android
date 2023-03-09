@@ -44,10 +44,6 @@ class RecordViewModel @Inject constructor(
     private val _deleteGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
     val deleteGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteGoalResponse
 
-//    fun setPagingRecordByGoalId(goalId: Int): Flow<PagingData<RecordData>> {
-//        return recordRepository.getPagingRecordByGoalId(goalId).cachedIn(viewModelScope)
-//    }
-
     val goalCategorys: LiveData<List<GoalCategory?>> = Transformations.map(_findAllGoalByUserResponse) {
         when(it) {
             is ApiResponse.Success -> {

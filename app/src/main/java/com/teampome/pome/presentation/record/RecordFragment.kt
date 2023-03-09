@@ -10,7 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.TerminalSeparatorType
+import androidx.paging.filter
 import androidx.paging.insertHeaderItem
+import androidx.paging.map
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -186,6 +189,13 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     }
                 }
             })
+
+            addOnPagesUpdatedListener {
+                if(binding.recordSize != itemCount - 2) {
+                    binding.recordSize = itemCount - 2
+                    binding.executePendingBindings()
+                }
+            }
         }
     }
 
