@@ -498,7 +498,11 @@ object CommonUtil {
 
         val nowYear = sdf.format(Date(System.currentTimeMillis()))
 
-        val dateArr = date.split(".")
+        val dateArr = date.split(".").toMutableList()
+        val useYearLen = dateArr[0].length
+        if(useYearLen > 2) {
+            dateArr[0] = dateArr[0].substring(useYearLen-2, useYearLen)
+        }
 
 //        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
 
