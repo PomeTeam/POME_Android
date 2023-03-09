@@ -13,7 +13,7 @@
             name="recordsCount"
             type="Integer" />
 
-        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
         <import type="android.view.View"/>
     </data>
 

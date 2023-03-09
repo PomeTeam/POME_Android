@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,12 @@ import com.teampome.pome.databinding.ItemGoalCardBinding
 import com.teampome.pome.databinding.ItemLeaveEmotionCardBinding
 import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.OnMoreItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.OnRecordItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.viewholder.GoalCardViewHolder
+import com.teampome.pome.presentation.record.recyclerview.viewholder.LeaveEmotionCardViewHolder
+import com.teampome.pome.presentation.record.recyclerview.viewholder.RecordCardViewHolder
+import com.teampome.pome.util.common.OnItemClickListener
 
 sealed class RecordViewType(val type: Int) {
     object Goal: RecordViewType(0)

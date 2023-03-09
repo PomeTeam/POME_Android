@@ -24,9 +24,14 @@ import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.presentation.record.recyclerview.*
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordCategoryAdapter
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordContentsCardAdapter
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordViewType
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
-import com.teampome.pome.util.CommonUtil
-import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.GoalState
+import com.teampome.pome.util.common.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordViewModel

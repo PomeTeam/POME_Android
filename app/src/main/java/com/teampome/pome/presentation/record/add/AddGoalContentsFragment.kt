@@ -13,15 +13,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalContentsBinding
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.record.AddGoalContentsViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 import javax.inject.Inject
 

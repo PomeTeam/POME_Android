@@ -1,4 +1,4 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -11,7 +11,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager

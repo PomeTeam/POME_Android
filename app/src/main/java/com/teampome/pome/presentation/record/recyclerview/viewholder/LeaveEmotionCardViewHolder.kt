@@ -1,8 +1,8 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemLeaveEmotionCardBinding
-import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.util.common.OnItemClickListener
 
 class LeaveEmotionCardViewHolder(
     private val binding: ItemLeaveEmotionCardBinding,

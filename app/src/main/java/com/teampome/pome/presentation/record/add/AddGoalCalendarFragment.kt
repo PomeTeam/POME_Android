@@ -1,8 +1,6 @@
 package com.teampome.pome.presentation.record.add
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -12,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddGoalCalendarBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.record.AddGoalCalendarViewModel
 import dagger.hilt.android.AndroidEntryPoint

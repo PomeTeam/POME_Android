@@ -1,6 +1,5 @@
 package com.teampome.pome.util
 
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
@@ -11,6 +10,9 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.request.RequestOptions
 import com.teampome.pome.R
 import com.teampome.pome.model.RecordData
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.Constants
+import com.teampome.pome.util.common.Emotion
 import com.teampome.pome.util.customview.PomeBigGoalCardView
 import com.teampome.pome.util.customview.PomeSmallGoalCardView
 import jp.wasabeef.glide.transformations.MaskTransformation

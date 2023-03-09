@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemTextListBinding
+import com.teampome.pome.presentation.record.recyclerview.OnGoalCategoryClickListener
 
 class TextListAdapter : ListAdapter<String, TextListAdapter.TextListViewHolder>(
     TextListDiffCallback()

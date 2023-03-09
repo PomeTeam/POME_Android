@@ -10,8 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordLeaveEmotionBinding
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.presentation.record.OnRecordItemClickListener
-import com.teampome.pome.presentation.record.RecordContentsCardAdapter
+import com.teampome.pome.presentation.record.recyclerview.OnRecordItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordContentsCardAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler

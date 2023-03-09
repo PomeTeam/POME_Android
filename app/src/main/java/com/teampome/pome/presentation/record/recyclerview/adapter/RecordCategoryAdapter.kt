@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,9 @@ import com.teampome.pome.databinding.ItemRecordCategoryChipBinding
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 
-class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
+class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.RecordCategoryViewHolder>(
+    RecordCategoryDiffCallback()
+) {
     // category click 관리 변수
     private var onCategoryItemClickListener: OnCategoryItemClickListener? = null
     private var selectedPosition = 0

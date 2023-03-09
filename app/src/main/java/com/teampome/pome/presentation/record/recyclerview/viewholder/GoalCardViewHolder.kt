@@ -1,9 +1,10 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemGoalCardBinding
 import com.teampome.pome.model.goal.GoalData
-import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.util.common.GoalState
+import com.teampome.pome.util.common.OnItemClickListener
 
 class GoalCardViewHolder(
     private val binding: ItemGoalCardBinding,

@@ -2,8 +2,8 @@ package com.teampome.pome.model
 
 import android.os.Parcelable
 import com.teampome.pome.model.goal.GoalData
-import com.teampome.pome.presentation.record.GoalState
-import com.teampome.pome.presentation.record.RecordViewType
+import com.teampome.pome.util.common.GoalState
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordViewType
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 

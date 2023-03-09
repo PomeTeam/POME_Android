@@ -18,7 +18,7 @@ import com.prolificinteractive.materialcalendarview.*
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentModifyRecordCardBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler

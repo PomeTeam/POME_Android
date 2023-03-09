@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewTreeObserver
 import com.teampome.pome.R
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 
 class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : PomeSmallGoalCardView(context, attrs) {
     var useAmount: String? = ""

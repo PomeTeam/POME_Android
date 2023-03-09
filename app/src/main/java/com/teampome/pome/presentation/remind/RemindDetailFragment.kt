@@ -1,12 +1,8 @@
 package com.teampome.pome.presentation.remind
 
-import android.os.Bundle
-import android.view.View
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRemindItemDetailBinding
-import com.teampome.pome.util.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 
 class RemindDetailFragment :

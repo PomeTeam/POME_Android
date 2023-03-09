@@ -11,11 +11,11 @@
 
         <variable
             name="currentGoalState"
-            type="com.teampome.pome.presentation.record.GoalState" />
+            type="com.teampome.pome.util.common.GoalState" />
 
         <import type="android.view.View" />
-        <import type="com.teampome.pome.presentation.record.GoalState" />
-        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="com.teampome.pome.util.common.GoalState" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

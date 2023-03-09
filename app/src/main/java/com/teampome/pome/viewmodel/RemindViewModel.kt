@@ -9,8 +9,8 @@ import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.repository.goal.GoalRepository
 import com.teampome.pome.repository.remind.RemindRepository
-import com.teampome.pome.util.CommonUtil
-import com.teampome.pome.util.SingleLiveEvent
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.SingleLiveEvent
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler

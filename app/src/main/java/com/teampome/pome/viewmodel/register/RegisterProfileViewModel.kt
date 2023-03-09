@@ -8,7 +8,7 @@ import com.teampome.pome.model.user.UserInfoData
 import com.teampome.pome.repository.register.PresignedUrlRepository
 import com.teampome.pome.repository.register.RegisterRepository
 import com.teampome.pome.repository.register.SendPreSignedImageRepository
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
 import com.teampome.pome.util.base.CoroutineErrorHandler

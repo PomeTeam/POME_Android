@@ -1,4 +1,4 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

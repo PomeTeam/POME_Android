@@ -16,7 +16,7 @@
             name="price"
             type="String" />
 
-        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

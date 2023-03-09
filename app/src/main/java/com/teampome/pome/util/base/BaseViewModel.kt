@@ -3,7 +3,7 @@ package com.teampome.pome.util.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.teampome.pome.util.Event
+import com.teampome.pome.util.common.Event
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 

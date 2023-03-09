@@ -1,4 +1,4 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
 
 import android.util.Log
 import androidx.annotation.MainThread
