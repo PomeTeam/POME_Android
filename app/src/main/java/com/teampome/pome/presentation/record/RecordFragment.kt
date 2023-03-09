@@ -229,13 +229,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.pagingRecordData.observe(viewLifecycleOwner) { pagingData ->
             lifecycleScope.launch {
                 (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
-
                     var item = pagingData.insertHeaderItem(
                         terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
                         RecordData(
                             null, null, null, null, null, null, null, null,
                             viewType = RecordViewType.OneWeek,
-                            oneWeekCount = viewModel.oneWeekRecords.value?.size,
+                            oneWeekCount = viewModel.oneWeekCount.value,
                             null,
                             null
                         )
@@ -253,8 +252,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                     )
 
                     submitData(item)
-
-                    binding.executePendingBindings()
                 }
             }
         }
@@ -262,8 +259,10 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-//                    binding.countOneWeekRecord = it.data.data?.content?.size ?: 0
-                    binding.executePendingBindings()
+
+                    Log.d("test", "data is ${it.data.data}")
+                    viewModel.setOneWeekCount(it.data.data?.content?.size ?: 0)
+//                    binding.executePendingBindings()
 
                     hideLoading()
 
@@ -283,7 +282,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         // UI용으로 짜여진 oneWeekRecords observe
-        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {}
+        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
+            Log.d("data", "data is $it")
+        }
 
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {

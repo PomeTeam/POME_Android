@@ -3,6 +3,7 @@ package com.teampome.pome.util.base
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.teampome.pome.util.Event
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 
@@ -27,6 +28,21 @@ open class BaseViewModel : ViewModel() {
             request().collect {
                 withContext(Dispatchers.Main) {
                     liveData.value = it
+                }
+            }
+        }
+    }
+
+    protected fun <T> baseEventRequest(liveData: MutableLiveData<Event<T>>, errorHandler: CoroutineErrorHandler, request: () -> Flow<T>) {
+        job = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler {_, error ->
+            viewModelScope.launch(Dispatchers.Main) {
+                error.printStackTrace()
+                errorHandler.onError(error.message ?: "API Request 도중 Error 발생 $error")
+            }
+        }) {
+            request().collect {
+                withContext(Dispatchers.Main) {
+                    liveData.value = Event(it)
                 }
             }
         }

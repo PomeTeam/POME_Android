@@ -1,9 +1,6 @@
 package com.teampome.pome.viewmodel.record
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.teampome.pome.model.RecordData
@@ -129,7 +126,7 @@ class RecordViewModel @Inject constructor(
     private val _getOneWeekRecordByGoalIdResponse = SingleLiveEvent<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>()
     val getOneWeekRecordByGoalIdResponse: LiveData<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = _getOneWeekRecordByGoalIdResponse
 
-    val oneWeekRecords : LiveData<List<RecordData?>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
+    val oneWeekRecords: LiveData<List<RecordData?>> = Transformations.map(_getOneWeekRecordByGoalIdResponse) {
         when(it) {
             is ApiResponse.Success -> {
                 it.data.data?.content ?: run { null }
@@ -139,6 +136,13 @@ class RecordViewModel @Inject constructor(
         }
     }
 
+    private val _oneWeekCount = MutableLiveData<Int>()
+    val oneWeekCount: LiveData<Int> = _oneWeekCount
+
+    fun setOneWeekCount(count: Int) {
+        _oneWeekCount.value = count
+    }
+
     fun getOneWeekRecordByGoalId(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _getOneWeekRecordByGoalIdResponse,
         coroutineErrorHandler
@@ -146,7 +150,7 @@ class RecordViewModel @Inject constructor(
         recordRepository.getOneWeekGoalByGoalId(goalId)
     }
 
-    private val _pagingRecordData = MutableLiveData<PagingData<RecordData>>()
+    private val _pagingRecordData = SingleLiveEvent<PagingData<RecordData>>()
     val pagingRecordData: LiveData<PagingData<RecordData>> = _pagingRecordData
 
     fun getRecordPagingData(goalId: Int) {
