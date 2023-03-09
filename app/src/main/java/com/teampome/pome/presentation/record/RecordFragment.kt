@@ -182,7 +182,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             // 목표 완료 시 클릭
             setOnGoalCompleteClickListener(object : OnItemClickListener {
                 override fun itemClick() {
-                    if((binding.recordEmotionRv.adapter as RecordContentsCardAdapter).snapshot().items.isEmpty()) {
+                    if((binding.recordEmotionRv.adapter as RecordContentsCardAdapter).itemCount-2 <= 0) {
                         moveToRecordGoalFinish()
                     } else {
                         finishGoalAlertDialog.show()
