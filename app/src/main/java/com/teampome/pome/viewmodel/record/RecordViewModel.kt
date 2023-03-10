@@ -1,6 +1,7 @@
 package com.teampome.pome.viewmodel.record
 
 import androidx.lifecycle.*
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.teampome.pome.model.RecordData
@@ -149,9 +150,16 @@ class RecordViewModel @Inject constructor(
     private val _pagingRecordData = SingleLiveEvent<PagingData<RecordData>>()
     val pagingRecordData: LiveData<PagingData<RecordData>> = _pagingRecordData
 
+    private val recordPagingConfig =
+        PagingConfig(
+            pageSize = 15,
+            initialLoadSize = 15,
+            prefetchDistance = 10,
+            enablePlaceholders = false
+        )
     fun getRecordPagingData(goalId: Int) {
         viewModelScope.launch {
-            recordRepository.getRecordPagingData(goalId).cachedIn(viewModelScope).collect {
+            recordRepository.getRecordPagingData(goalId, recordPagingConfig).cachedIn(viewModelScope).collect {
                 _pagingRecordData.value = it
             }
         }

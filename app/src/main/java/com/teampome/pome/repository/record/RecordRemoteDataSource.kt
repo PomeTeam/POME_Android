@@ -48,14 +48,9 @@ class RecordRemoteDataSource @Inject constructor(
         service.getOneWeekGoalByGoalId(goalId)
     }
 
-    override fun getRecordPagingData(goalId: Int): Flow<PagingData<RecordData>> {
+    override fun getRecordPagingData(goalId: Int, pagingConfig: PagingConfig): Flow<PagingData<RecordData>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 15,
-                initialLoadSize = 15,
-                prefetchDistance = 10,
-                enablePlaceholders = false
-            ),
+            config = pagingConfig,
             pagingSourceFactory = {
                 RecordPagingSource(service = service, goalId = goalId)
             }

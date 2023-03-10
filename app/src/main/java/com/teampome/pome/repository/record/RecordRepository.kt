@@ -1,5 +1,6 @@
 package com.teampome.pome.repository.record
 
+import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BasePomeResponse
@@ -17,8 +18,8 @@ class RecordRepository @Inject constructor(
     private val userManager: UserManager
 ) {
 
-    fun getRecordPagingData(goalId: Int): Flow<PagingData<RecordData>> {
-        return recordDataSource.getRecordPagingData(goalId)
+    fun getRecordPagingData(goalId: Int, pagingConfig: PagingConfig): Flow<PagingData<RecordData>> {
+        return recordDataSource.getRecordPagingData(goalId, pagingConfig)
     }
 
     fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> {
