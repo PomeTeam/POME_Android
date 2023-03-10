@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -520,5 +521,13 @@ object CommonUtil {
      */
     fun stringToLocalDate(date: String) : LocalDate {
         return LocalDate.parse("20${date.replace(".", "-")}", DateTimeFormatter.ISO_DATE)
+    }
+
+    /**
+     *  webPage 이동 메소드
+     */
+    fun goToWebPage(context: Context, page: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(page))
+        context.startActivity(intent)
     }
 }
