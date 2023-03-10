@@ -161,6 +161,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             override fun afterTextChanged(p0: Editable?) {
                 p0?.let {
                     viewModel.registerCertNum.value = it.toString()
+
+                    if(it.toString() == viewModel.smsValidate) {
+                        binding.registerCertNumCheckTv.visibility = View.GONE
+                    } else {
+                        binding.registerCertNumCheckTv.visibility = View.VISIBLE
+                    }
                 }
 
                 settingAgreeButton()
@@ -169,8 +175,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
 
         // 번호 인증 요청
         binding.registerCertPhoneAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "번호 인증 요청", Toast.LENGTH_SHORT).show()
-
             binding.registerCertPhoneAcb.text = "재요청"
 
             binding.registerCertPhoneAcb.setPadding(

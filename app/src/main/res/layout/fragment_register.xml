@@ -110,6 +110,19 @@
 
         <TextView
             style="@style/Pome.Medium.14"
+            android:id="@+id/register_cert_num_check_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_cert_num_check_fail_text"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:layout_marginTop="14dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="0dp"
+            app:layout_constraintTop_toBottomOf="@id/register_cert_num_aet"/>
+
+        <TextView
+            style="@style/Pome.Medium.14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="13dp"
