@@ -14,20 +14,23 @@ import com.teampome.pome.MainActivity
 
 abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId: Int): Fragment() {
     private var backPressedCallback: OnBackPressedCallback? = null
-    protected lateinit var binding: T
+
+    // dataBinding Memory Leak 개선
+    private var _binding: T? = null
+    protected val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        _binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.lifecycleOwner = this@BaseFragment
+        binding.lifecycleOwner = this@BaseFragment.viewLifecycleOwner // 생명주기는 View의 lifeCycleOwner로 적용
 
         initView()
         initListener()
@@ -46,6 +49,12 @@ abstract class BaseFragment<T: ViewDataBinding>(@LayoutRes private val layoutId:
     override fun onDetach() {
         super.onDetach()
         backPressedCallback?.remove()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+
+        _binding = null
     }
 
     // View 초기화 작업
