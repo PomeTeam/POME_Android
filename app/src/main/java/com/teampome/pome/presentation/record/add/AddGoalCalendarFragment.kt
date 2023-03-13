@@ -1,6 +1,7 @@
 package com.teampome.pome.presentation.record.add
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.viewModels
@@ -76,11 +77,29 @@ class AddGoalCalendarFragment: BaseFragment<FragmentAddGoalCalendarBinding>(R.la
 
         viewModel.startDate.observe(viewLifecycleOwner) {
             binding.startDate = it
+
+            if(CommonUtil.isDiffLowerThanOneMonth(viewModel.startDate.value, viewModel.endDate.value)) {
+                binding.addGoalDateCheckTv.visibility = View.GONE
+                binding.isLowerThanOneMonth = true
+            } else {
+                binding.addGoalDateCheckTv.visibility = View.VISIBLE
+                binding.isLowerThanOneMonth = false
+            }
+
             binding.executePendingBindings()
         }
 
         viewModel.endDate.observe(viewLifecycleOwner) {
             binding.endDate = it
+
+            if(CommonUtil.isDiffLowerThanOneMonth(viewModel.startDate.value, viewModel.endDate.value)) {
+                binding.addGoalDateCheckTv.visibility = View.GONE
+                binding.isLowerThanOneMonth = true
+            } else {
+                binding.addGoalDateCheckTv.visibility = View.VISIBLE
+                binding.isLowerThanOneMonth = false
+            }
+
             binding.executePendingBindings()
         }
     }

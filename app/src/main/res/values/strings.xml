@@ -238,4 +238,5 @@
     <string name="remind_no_goal_title_text">목표가 있어야 씀씀이를\n기록하고 돌아볼 수 있어요</string>
     <string name="remind_no_goal_subtitle_text">목표 만들기</string>
     <string name="register_cert_num_check_fail_text">인증번호가 일치하지 않아요</string>
+    <string name="add_goal_date_check_fail_text">목표 기간은 한 달 이내로 설정할 수 있어요!</string>
 </resources>

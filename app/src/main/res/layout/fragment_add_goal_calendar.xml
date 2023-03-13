@@ -11,6 +11,10 @@
         <variable
             name="endDate"
             type="String" />
+
+        <variable
+            name="isLowerThanOneMonth"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -127,6 +131,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/add_goal_end_date_title_tv" />
 
+        <TextView
+            style="@style/Pome.Medium.14"
+            android:id="@+id/add_goal_date_check_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginStart="20dp"
+            android:textColor="@color/red"
+            android:text="@string/add_goal_date_check_fail_text"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/add_goal_end_date_aet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <ImageView
             android:id="@+id/add_goal_end_calendar_iv"
             android:layout_width="wrap_content"
@@ -147,9 +165,9 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="14dp"
             tools:background="@drawable/register_profile_name_check_available_btn_background"
-            android:background="@{startDate == null || endDate == null ? @drawable/register_profile_name_check_disable_btn_background : @drawable/register_profile_name_check_available_btn_background }"
-            android:clickable="@{startDate == null || endDate == null ? false : true}"
-            android:enabled="@{startDate == null || endDate == null ? false : true}"
+            android:background="@{startDate == null || endDate == null || isLowerThanOneMonth != true ? @drawable/register_profile_name_check_disable_btn_background : @drawable/register_profile_name_check_available_btn_background }"
+            android:clickable="@{startDate == null || endDate == null || isLowerThanOneMonth != true ? false : true}"
+            android:enabled="@{startDate == null || endDate == null || isLowerThanOneMonth != true ? false : true}"
             android:stateListAnimator="@null"
             android:text="@string/add_goal_check_button_text"
             android:textColor="@color/white"

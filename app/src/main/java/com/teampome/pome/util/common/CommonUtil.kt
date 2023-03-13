@@ -368,9 +368,9 @@ object CommonUtil {
         endDate?.let {
             val sdf = SimpleDateFormat("yyyy.MM.dd")
             val ed = sdf.parse(endDate)
-            val today = Calendar.getInstance()
+            val today = Calendar.getInstance().time.time
 
-            val challengeDay = (ed.time - today.time.time) / (60 * 60 * 24 * 1000)
+            val challengeDay = (ed.time - today) / (60 * 60 * 24 * 1000)
 
             return if(challengeDay >= 0) {
                 challengeDay.toInt()
@@ -378,6 +378,33 @@ object CommonUtil {
                 0
             }
         } ?: return 0
+    }
+
+    /**
+     *  들어온 매개변수들이 한달 차이인지 확인하는 메소드
+     *
+     *  format = "yyyy.MM.dd"
+     */
+    fun isDiffLowerThanOneMonth(curDateStr: String?, endDateStr: String?): Boolean {
+        val sdf = SimpleDateFormat("yyyy.MM.dd")
+
+        curDateStr?.let {
+            endDateStr?.let {
+                val curDate = sdf.parse(curDateStr)
+                val endDate = sdf.parse(endDateStr)
+
+                val afterOneMonthDay = Calendar.getInstance()
+                afterOneMonthDay.time = curDate
+
+                afterOneMonthDay.add(Calendar.MONTH, 1)
+
+                return (afterOneMonthDay.time >= endDate && curDate <= endDate)
+            } ?: run {
+                return false
+            }
+        } ?: run {
+            return false
+        }
     }
 
     /**
