@@ -9,11 +9,7 @@ import androidx.annotation.RawRes
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.paging.TerminalSeparatorType
-import androidx.paging.filter
-import androidx.paging.insertHeaderItem
-import androidx.paging.map
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.*
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -205,6 +201,32 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             when(it) {
                 is ApiResponse.Success -> {
 
+                    if(it.data.data?.content.isNullOrEmpty()) {
+                        lifecycleScope.launch {
+                            (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
+                                val item = makeRecordPagingData(
+                                    null,
+                                    RecordData(
+                                        null, null, null, null, null, null, null, null,
+                                        viewType = RecordViewType.Goal,
+                                        oneWeekCount = null,
+                                        null,
+                                        null
+                                    ),
+                                    RecordData(
+                                        null, null, null, null, null, null, null, null,
+                                        viewType = RecordViewType.OneWeek,
+                                        null,
+                                        null,
+                                        null
+                                    )
+                                )
+
+                                submitData(item)
+                            }
+                        }
+                    }
+
                     hideLoading()
                 }
                 is ApiResponse.Failure -> {
@@ -244,25 +266,21 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         viewModel.pagingRecordData.observe(viewLifecycleOwner) { pagingData ->
             lifecycleScope.launch {
                 (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
-                    var item = pagingData.insertHeaderItem(
-                        terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
-                        RecordData(
-                            null, null, null, null, null, null, null, null,
-                            viewType = RecordViewType.OneWeek,
-                            oneWeekCount = viewModel.oneWeekCount.value,
-                            null,
-                            null
-                        )
-                    )
-
-                    item = item.insertHeaderItem(
-                        terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+                    val item = makeRecordPagingData(
+                        pagingData,
                         RecordData(
                             null, null, null, null, null, null, null, null,
                             viewType = RecordViewType.Goal,
                             null,
                             viewModel.goalDetails.value?.get(viewModel.curGoal.value?.pos ?: 0),
                             setGoalState(viewModel.goalDetails.value?.get(viewModel.curGoal.value?.pos ?: 0))
+                        ),
+                        RecordData(
+                            null, null, null, null, null, null, null, null,
+                            viewType = RecordViewType.OneWeek,
+                            oneWeekCount = viewModel.oneWeekCount.value,
+                            null,
+                            null
                         )
                     )
 
@@ -277,7 +295,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
                     Log.d("test", "data is ${it.data.data}")
                     viewModel.setOneWeekCount(it.data.data?.content?.size ?: 0)
-//                    binding.executePendingBindings()
 
                     hideLoading()
 
@@ -318,6 +335,25 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 is ApiResponse.Loading -> { showLoading() }
             }
         }
+    }
+
+    // RecordData용 pagingData 만드는 메소드
+    private suspend fun makeRecordPagingData(
+        pagingData: PagingData<RecordData>?,
+        goalCardHeader: RecordData,
+        oneWeekCardHeader: RecordData
+    ): PagingData<RecordData> {
+        val pageData = pagingData ?: PagingData.empty()
+
+        val item = pageData.insertHeaderItem(
+            terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+            oneWeekCardHeader
+        )
+
+        return item.insertHeaderItem(
+            terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+            goalCardHeader
+        )
     }
 
     // 목표 카드 더보기 클릭
