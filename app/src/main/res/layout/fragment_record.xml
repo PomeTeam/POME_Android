@@ -113,7 +113,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/record_category_chips_rv"
+            app:layout_constraintTop_toBottomOf="@id/record_category_plus_tv"
             tools:listitem="@layout/item_record_emotion_card" />
 
         <!-- 그림자나 딱히 Floating Action Button을 사용할 필요성이 없어 이미지뷰로 구현 -->
