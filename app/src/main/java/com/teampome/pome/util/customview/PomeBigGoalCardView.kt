@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.util.Log
 import android.view.ViewTreeObserver
+import androidx.appcompat.content.res.AppCompatResources
 import com.teampome.pome.R
 import com.teampome.pome.util.common.CommonUtil
 
@@ -30,8 +31,19 @@ class PomeBigGoalCardView @JvmOverloads constructor(context: Context, attrs: Att
         set(value) {
             field = value
 
-            binding.goalCardAmountProgressAsb.progress = value
-            binding.goalCardProgressTextTv.text = context.getString(R.string.record_progress_percent, value)
+            if(value > 100) {
+                binding.goalCardAmountProgressAsb.progress = 100
+                binding.goalCardProgressTextTv.text = context.getString(R.string.record_progress_over)
+
+                binding.goalCardAmountProgressAsb.progressDrawable = AppCompatResources.getDrawable(context, R.drawable.pome_seekbar_over_custom)
+                binding.goalCardAmountProgressAsb.thumb = AppCompatResources.getDrawable(context, R.drawable.pome_seekbar_custom_over_thumb)
+            } else {
+                binding.goalCardAmountProgressAsb.progress = value
+                binding.goalCardProgressTextTv.text = context.getString(R.string.record_progress_percent, value)
+
+                binding.goalCardAmountProgressAsb.progressDrawable = AppCompatResources.getDrawable(context, R.drawable.pome_seekbar_custom)
+                binding.goalCardAmountProgressAsb.thumb = AppCompatResources.getDrawable(context, R.drawable.pome_seekbar_custom_thumb)
+            }
 
             binding.goalCardAmountProgressAsb.apply {
                 isEnabled = false
