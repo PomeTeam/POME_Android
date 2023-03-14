@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemGoalCardBinding
 import com.teampome.pome.databinding.ItemLeaveEmotionCardBinding
-import com.teampome.pome.databinding.ItemRecordEmotionCardBinding
+import com.teampome.pome.databinding.ItemRecordContentsCardBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.presentation.record.recyclerview.OnMoreItemClickListener
 import com.teampome.pome.presentation.record.recyclerview.OnRecordItemClickListener
@@ -92,14 +92,14 @@ class RecordContentsCardAdapter : PagingDataAdapter<RecordData, RecyclerView.Vie
             }
 
             RecordViewType.Contents.type -> {
-                val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemRecordContentsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
                 return RecordCardViewHolder(binding, moreRecordItemClickListener, recordBodyClickListener)
             }
 
             else -> {
                 assert(false) // 여기로 떨어지면 안됨 -> 따로 처리 필요
-                val binding = ItemRecordEmotionCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                val binding = ItemRecordContentsCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
                 return RecordCardViewHolder(binding, moreRecordItemClickListener, recordBodyClickListener)
             }

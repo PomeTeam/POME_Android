@@ -24,12 +24,12 @@
         app:cardPreventCornerOverlap="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/remind_contents_container_cl"
+            android:id="@+id/record_contents_container_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/remind_contents_card_first_emotion_container_cl"
+                android:id="@+id/record_contents_card_first_emotion_container_cl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -41,7 +41,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/remind_contents_card_first_emotion_aiv"
+                    android:id="@+id/record_contents_card_first_emotion_aiv"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
@@ -51,43 +51,43 @@
                     tools:src="@drawable/emoji_mint_fiter_sad" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/remind_contents_card_first_emotion_tv"
+                    android:id="@+id/record_contents_card_first_emotion_tv"
                     style="@style/Pome.Medium.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.firstEmotion).emotion}"
                     android:textColor="@color/grey_7"
-                    app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_first_emotion_aiv"
-                    app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_emotion_aiv"
-                    app:layout_constraintTop_toTopOf="@id/remind_contents_card_first_emotion_aiv"
+                    app:layout_constraintBottom_toBottomOf="@id/record_contents_card_first_emotion_aiv"
+                    app:layout_constraintStart_toEndOf="@id/record_contents_card_first_emotion_aiv"
+                    app:layout_constraintTop_toTopOf="@id/record_contents_card_first_emotion_aiv"
                     tools:text="후회해요" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/remind_contents_card_next_arrow_aiv"
+                android:id="@+id/record_contents_card_next_arrow_aiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:src="@drawable/ic_arrow_right_12"
-                app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_first_emotion_container_cl"
-                app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_emotion_container_cl"
-                app:layout_constraintTop_toTopOf="@id/remind_contents_card_first_emotion_container_cl" />
+                app:layout_constraintBottom_toBottomOf="@id/record_contents_card_first_emotion_container_cl"
+                app:layout_constraintStart_toEndOf="@id/record_contents_card_first_emotion_container_cl"
+                app:layout_constraintTop_toTopOf="@id/record_contents_card_first_emotion_container_cl" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/remind_contents_card_last_emotion_container_cl"
+                android:id="@+id/record_contents_card_last_emotion_container_cl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/item_grey1_r4_background"
                 android:paddingHorizontal="8dp"
                 android:paddingVertical="6dp"
-                app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_first_emotion_container_cl"
-                app:layout_constraintStart_toEndOf="@id/remind_contents_card_next_arrow_aiv"
-                app:layout_constraintTop_toTopOf="@id/remind_contents_card_first_emotion_container_cl">
+                app:layout_constraintBottom_toBottomOf="@id/record_contents_card_first_emotion_container_cl"
+                app:layout_constraintStart_toEndOf="@id/record_contents_card_next_arrow_aiv"
+                app:layout_constraintTop_toTopOf="@id/record_contents_card_first_emotion_container_cl">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/remind_contents_card_last_emotion_aiv"
+                    android:id="@+id/record_contents_card_last_emotion_aiv"
                     android:layout_width="14dp"
                     android:layout_height="14dp"
                     android:scaleType="fitXY"
@@ -97,22 +97,22 @@
                     tools:src="@drawable/emoji_pink_fiter_happy" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/remind_contents_card_last_emotion_tv"
+                    android:id="@+id/record_contents_card_last_emotion_tv"
                     style="@style/Pome.Medium.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:text="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.secondEmotion).emotion}"
                     android:textColor="@{recordData.emotionResponse.secondEmotion == null ? @color/grey_5 : @color/grey_7}"
-                    app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_last_emotion_aiv"
-                    app:layout_constraintStart_toEndOf="@id/remind_contents_card_last_emotion_aiv"
-                    app:layout_constraintTop_toTopOf="@id/remind_contents_card_last_emotion_aiv"
+                    app:layout_constraintBottom_toBottomOf="@id/record_contents_card_last_emotion_aiv"
+                    app:layout_constraintStart_toEndOf="@id/record_contents_card_last_emotion_aiv"
+                    app:layout_constraintTop_toTopOf="@id/record_contents_card_last_emotion_aiv"
                     tools:text="행복해요" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/remind_contents_card_title_tv"
+                android:id="@+id/record_contents_card_title_tv"
                 style="@style/Pome.SemiBold.16"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -123,12 +123,12 @@
                 android:text="@{@string/use_price_text(CommonUtil.INSTANCE.makePriceStyle(String.valueOf(recordData.usePrice)))}"
                 android:textColor="@color/grey_8"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/remind_contents_card_first_emotion_container_cl"
-                app:layout_constraintTop_toBottomOf="@id/remind_contents_card_first_emotion_container_cl"
+                app:layout_constraintStart_toStartOf="@id/record_contents_card_first_emotion_container_cl"
+                app:layout_constraintTop_toBottomOf="@id/record_contents_card_first_emotion_container_cl"
                 tools:text="16,000원" />
 
             <TextView
-                android:id="@+id/remind_contents_card_content_tv"
+                android:id="@+id/record_contents_card_content_tv"
                 style="@style/Pome.Regular.14"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -140,12 +140,12 @@
                 android:text="@{recordData.useComment}"
                 android:textColor="@color/grey_7"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/remind_contents_card_title_tv"
-                app:layout_constraintTop_toBottomOf="@id/remind_contents_card_title_tv"
+                app:layout_constraintStart_toStartOf="@id/record_contents_card_title_tv"
+                app:layout_constraintTop_toBottomOf="@id/record_contents_card_title_tv"
                 tools:text="아휴 힘빠져 이젠 진짜 포기다 포기 도대체 뭐가 문제일까 현실을 되돌아볼 필요를 느낀다ㅠ 이정도 노력했으면 된거 아닌가 진짜 개 힘빠지네 그래서 오늘은 물 대신 라떼 한잔을 마셨습니다 ㅋ 라뗴 존맛탱~~ 다들 나흐바 시그니쳐 커피를 마셔주세요 설탕 솔솔 뿌려서 개맛있음" />
 
             <TextView
-                android:id="@+id/remind_contents_card_name_and_time_tv"
+                android:id="@+id/record_contents_card_name_and_time_tv"
                 style="@style/Pome.Medium.12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -154,20 +154,20 @@
                 bind:goalConnectTime="@{recordData}"
                 tools:text="커피 대신 물을 마시자 · 44분 전"
                 android:textColor="@color/grey_5"
-                app:layout_constraintStart_toStartOf="@id/remind_contents_card_content_tv"
-                app:layout_constraintTop_toBottomOf="@id/remind_contents_card_content_tv" />
+                app:layout_constraintStart_toStartOf="@id/record_contents_card_content_tv"
+                app:layout_constraintTop_toBottomOf="@id/record_contents_card_content_tv" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/remind_contents_card_friends_emotion_container_cl"
+                android:id="@+id/record_contents_card_friends_emotion_container_cl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:visibility="@{recordData.emotionResponse.friendEmotions == null || recordData.emotionResponse.friendEmotions.size() == 0 ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="@id/remind_contents_card_name_and_time_tv"
-                app:layout_constraintTop_toBottomOf="@id/remind_contents_card_name_and_time_tv">
+                app:layout_constraintStart_toStartOf="@id/record_contents_card_name_and_time_tv"
+                app:layout_constraintTop_toBottomOf="@id/record_contents_card_name_and_time_tv">
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/remind_contents_card_first_friend_emotion_aiv"
+                    android:id="@+id/record_contents_card_first_friend_emotion_aiv"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:scaleType="fitXY"
@@ -179,7 +179,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/remind_contents_card_last_friend_emotion_aiv"
+                    android:id="@+id/record_contents_card_last_friend_emotion_aiv"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:layout_marginStart="-5dp"
@@ -189,11 +189,11 @@
                     bind:remindFirstEmotionDrawable="@{CommonUtil.INSTANCE.numToEmotion(recordData.emotionResponse.friendEmotions[0].emotionId)}"
                     tools:src="@drawable/emoji_mint_fiter_what"
                     android:tint="#66292a2b"
-                    app:layout_constraintStart_toEndOf="@id/remind_contents_card_first_friend_emotion_aiv"
+                    app:layout_constraintStart_toEndOf="@id/record_contents_card_first_friend_emotion_aiv"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/remind_contents_card_last_friend_emotion_count_tv"
+                    android:id="@+id/record_contents_card_last_friend_emotion_count_tv"
                     style="@style/Pome.Medium.12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -201,14 +201,14 @@
                     android:text="@{@string/plus_text(recordData.emotionResponse.friendEmotions.size()-2)}"
                     tools:text="+9"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/remind_contents_card_last_friend_emotion_aiv"
-                    app:layout_constraintEnd_toEndOf="@id/remind_contents_card_last_friend_emotion_aiv"
-                    app:layout_constraintStart_toStartOf="@id/remind_contents_card_last_friend_emotion_aiv"
-                    app:layout_constraintTop_toTopOf="@id/remind_contents_card_last_friend_emotion_aiv" />
+                    app:layout_constraintBottom_toBottomOf="@id/record_contents_card_last_friend_emotion_aiv"
+                    app:layout_constraintEnd_toEndOf="@id/record_contents_card_last_friend_emotion_aiv"
+                    app:layout_constraintStart_toStartOf="@id/record_contents_card_last_friend_emotion_aiv"
+                    app:layout_constraintTop_toTopOf="@id/record_contents_card_last_friend_emotion_aiv" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/remind_contents_more_aiv"
+                android:id="@+id/record_contents_more_aiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
