@@ -61,4 +61,12 @@ interface RecordService {
     suspend fun getOneWeekGoalByGoalId(
         @Path("goalId") goalId: Int
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
+
+    /**
+     *  기록 삭제 api
+     */
+    @DELETE("api/v1/records/{recordId}")
+    suspend fun deleteRecordByRecordId(
+        @Path("recordId") recordId: Int
+    ) : Response<BasePomeResponse<Any>>
 }

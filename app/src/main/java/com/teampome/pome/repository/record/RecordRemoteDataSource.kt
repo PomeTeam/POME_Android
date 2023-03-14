@@ -56,4 +56,8 @@ class RecordRemoteDataSource @Inject constructor(
             }
         ).flow
     }
+
+    override fun deleteRecordByRecordId(recordId: Int): Flow<ApiResponse<BasePomeResponse<Any>>> = apiRequestFlow {
+        service.deleteRecordByRecordId(recordId)
+    }
 }

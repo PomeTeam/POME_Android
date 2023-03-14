@@ -18,4 +18,5 @@ interface RecordDataSource {
     fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
     fun getOneWeekGoalByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>>
     fun getRecordPagingData(goalId: Int, pagingConfig: PagingConfig): Flow<PagingData<RecordData>>
+    fun deleteRecordByRecordId(recordId: Int): Flow<ApiResponse<BasePomeResponse<Any>>>
 }

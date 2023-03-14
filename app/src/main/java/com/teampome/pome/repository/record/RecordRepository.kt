@@ -76,4 +76,6 @@ class RecordRepository @Inject constructor(
     fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
 
     fun getOneWeekGoalByGoalId(goalId: Int) = recordDataSource.getOneWeekGoalByGoalId(goalId)
+
+    fun deleteRecordByRecordId(recordId: Int) = recordDataSource.deleteRecordByRecordId(recordId)
 }

@@ -164,4 +164,14 @@ class RecordViewModel @Inject constructor(
             }
         }
     }
+
+    private val _deleteRecordResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
+    val deleteRecordResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteRecordResponse
+
+    fun deleteRecordByRecordId(recordId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _deleteRecordResponse,
+        coroutineErrorHandler
+    ) {
+        recordRepository.deleteRecordByRecordId(recordId)
+    }
 }

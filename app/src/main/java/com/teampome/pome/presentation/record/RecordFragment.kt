@@ -54,7 +54,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var removeCardDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeCardDialog: Dialog
 
-    // Todo : 공통 다이얼로그로 변경
+    // 수정 삭제하기 다이얼로그
     private lateinit var recordDialogBinding: PomeRegisterBottomSheetDialogBinding
     private lateinit var recordDialog: BottomSheetDialog
 
@@ -335,10 +335,23 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
                 is ApiResponse.Loading -> { showLoading() }
             }
         }
+
+        viewModel.deleteRecordResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    // refresh
+                    refresh()
+                }
+                is ApiResponse.Failure -> {
+                    Log.e("error", "deleteRecord failure by ${it.errorMessage}")
+                }
+                is ApiResponse.Loading -> { showLoading() }
+            }
+        }
     }
 
     // RecordData용 pagingData 만드는 메소드
-    private suspend fun makeRecordPagingData(
+    private fun makeRecordPagingData(
         pagingData: PagingData<RecordData>?,
         goalCardHeader: RecordData,
         oneWeekCardHeader: RecordData
@@ -437,8 +450,6 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제 클릭
         recordDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            Toast.makeText(requireContext(), "기록 카드 삭제하기", Toast.LENGTH_SHORT).show()
-
             recordDialog.dismiss()
 
             removeCardDialog.show()
@@ -459,15 +470,20 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeCardDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "카드 삭제 Yes", Toast.LENGTH_SHORT).show()
+            // 삭제 api
+            selectRecordData.id?.let { recordId ->
+                viewModel.deleteRecordByRecordId(recordId, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.d("error", "deleteRecord error by $message")
+                    }
+                })
+            }
 
             removeCardDialog.dismiss()
         }
 
         // 아니요 버튼 클릭
         removeCardDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "카드 삭제 No", Toast.LENGTH_SHORT).show()
-
             removeCardDialog.dismiss()
         }
     }
