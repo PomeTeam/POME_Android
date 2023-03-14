@@ -21,7 +21,19 @@ class RegisterProfileViewModel @Inject constructor(
     private val imageRepository : PresignedUrlRepository,
     private val sendImageRepository : SendPreSignedImageRepository
 ) : BaseViewModel() {
-    val userName = MutableLiveData<String>()
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> = _userName
+
+    private val _showFirstBottomSheet = MutableLiveData<Boolean>(true)
+    val showFirstBottomSheet: LiveData<Boolean> = _showFirstBottomSheet
+
+    fun setUserName(userName: String) {
+        _userName.value = userName
+    }
+
+    fun setShowFirstBottomSheet(isFirst: Boolean) {
+        _showFirstBottomSheet.value = isFirst
+    }
 
     private val _nicknameResponse = MutableLiveData<ApiResponse<BasePomeResponse<Boolean>>>()
     val nicknameResponse: LiveData<ApiResponse<BasePomeResponse<Boolean>>> = _nicknameResponse
