@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -173,6 +174,14 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             }
         })
 
+        // focus 감지
+        binding.registerPhoneAet.onFocusChangeListener =
+            OnFocusChangeListener { _, hasFocus ->
+                if(!hasFocus) {
+                    binding.registerCertPhoneAcb.performClick()
+                }
+            }
+
         // 번호 인증 요청
         binding.registerCertPhoneAcb.setOnClickListener {
             binding.registerCertPhoneAcb.text = "재요청"
@@ -189,6 +198,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                     Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
                 }
             })
+
+            binding.registerCertNumAet.requestFocus()
         }
 
         // 동의하고 시작하기 버튼

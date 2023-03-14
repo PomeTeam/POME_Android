@@ -52,6 +52,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/grey_5"
             android:textCursorDrawable="@drawable/register_profile_name_cursor"
+            android:nextFocusRight="@id/register_cert_phone_acb"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/register_phone_title_tv" />
