@@ -17,6 +17,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -97,8 +98,11 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             pomeBottomSheetDialogPencilAiv.visibility = View.INVISIBLE
             pomeBottomSheetDialogTrashAiv.visibility = View.INVISIBLE
 
-            pomeBottomSheetDialogPencilTv.text = "사진앨범"
-            pomeBottomSheetDialogTrashTv.text = "카메라"
+            pomeBottomSheetDialogPencilAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_camera_mono, null))
+            pomeBottomSheetDialogTrashAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_picture_mono, null))
+
+            pomeBottomSheetDialogPencilTv.text = "카메라"
+            pomeBottomSheetDialogTrashTv.text = "사진 앨범"
         }
 
         // pomeModifyBottomSheetDialog 뷰 인플레이션 과정
@@ -258,20 +262,13 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 editable?.let { name ->
                     binding.registerProfileNameCheckTv.visibility = View.VISIBLE
 
-//                    if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
-//                        binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
-//
-//                        disableName()
-//                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
-//                    } else {
-                        viewModel.setUserName(name.toString())
+                    viewModel.setUserName(name.toString())
 
-                        viewModel.checkNickname(object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-//                    }
+                    viewModel.checkNickname(object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 } ?: kotlin.run { // 만약 값이 비어있다면, 밑에 desc를 표기하면 안됨
                     // GONE이 아니고 INVISIBLE 처리 => 공간을 차지해야 constraintLayout 알맞게 동작
                     binding.registerProfileNameCheckTv.visibility = View.INVISIBLE
@@ -309,14 +306,14 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         }
 
         pomeNewBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
-            openGallery()
+            // 카메라 기능
+            showCamera()
 
             pomeNewBottomSheetDialog.dismiss()
         }
 
         pomeNewBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            // 카메라 기능
-            showCamera()
+            openGallery()
 
             pomeNewBottomSheetDialog.dismiss()
         }

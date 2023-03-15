@@ -9,6 +9,7 @@ import android.view.View
 import android.view.WindowManager
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -130,7 +131,7 @@ class MainActivity : AppCompatActivity() {
 
         removeGoalDialogBinding.removeDialogTitleAtv.text = "인터넷에 연결할 수 없어요"
         removeGoalDialogBinding.removeDialogSubtitleAtv.text = "다시 시도하거나 네트워크 설정을 확인해주세요"
-        removeGoalDialogBinding.removeTrashAiv.setImageResource(R.drawable.ic_exclamation_24)
+        removeGoalDialogBinding.removeTrashAiv.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_exclamation_24))
 
         CommonUtil.makePomeDialog(removeGoalDialog)
 
