@@ -95,9 +95,6 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         pomeNewBottomSheetDialog.setContentView(pomeNewBottomSheetDialogBinding.root)
 
         pomeNewBottomSheetDialogBinding.apply {
-            pomeBottomSheetDialogPencilAiv.visibility = View.INVISIBLE
-            pomeBottomSheetDialogTrashAiv.visibility = View.INVISIBLE
-
             pomeBottomSheetDialogPencilAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_camera_mono, null))
             pomeBottomSheetDialogTrashAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_picture_mono, null))
 
@@ -327,7 +324,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         // dialog 삭제 click
         pomeModifyBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
             binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_150, null))
-            binding.registerProfilePlusAiv.visibility = View.VISIBLE
+//            binding.registerProfilePlusAiv.visibility = View.VISIBLE
 
             runBlocking {
                 if(userManger.getUserProfileUrl().first() != null) {
@@ -413,8 +410,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     e.printStackTrace()
                 }
 
-                // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
-                binding.registerProfilePlusAiv.visibility = View.INVISIBLE
+//                // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
+//                binding.registerProfilePlusAiv.visibility = View.INVISIBLE
                 pomeModifyBottomSheetDialog.dismiss()
             } else {
                 hideLoading()
@@ -461,8 +458,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 e.printStackTrace()
             }
 
-            // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
-            binding.registerProfilePlusAiv.visibility = View.INVISIBLE
+//            // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
+//            binding.registerProfilePlusAiv.visibility = View.INVISIBLE
             pomeModifyBottomSheetDialog.dismiss()
         } else {
             hideLoading()

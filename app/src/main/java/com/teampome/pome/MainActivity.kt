@@ -28,8 +28,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var loadingDialog: PomeLoadingDialog
 
     // 목표 삭제 클릭 다이얼로그
-    private lateinit var removeGoalDialogBinding: PomeRemoveDialogBinding
-    private lateinit var removeGoalDialog: Dialog
+    private lateinit var networkErrorDialogBinding: PomeRemoveDialogBinding
+    private lateinit var networkErrorDialog: Dialog
 
     private val connectivityReceiver by lazy {
         PomeConnectivityReceiver()
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
         PomeConnectivityReceiver.ConnectivityUtils.getLiveConnectivityState().observe(this) {
             if(!it.isConnected) {
-                removeGoalDialog.show()
+                networkErrorDialog.show()
             }
         }
     }
@@ -123,33 +123,33 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeGoalRemoveDialog() {
-        removeGoalDialog = Dialog(this)
-        removeGoalDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
+        networkErrorDialog = Dialog(this)
+        networkErrorDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
 
-        removeGoalDialog.setContentView(removeGoalDialogBinding.root)
-        removeGoalDialog.setCancelable(false)
+        networkErrorDialog.setContentView(networkErrorDialogBinding.root)
+        networkErrorDialog.setCancelable(false)
 
-        removeGoalDialogBinding.removeDialogTitleAtv.text = "인터넷에 연결할 수 없어요"
-        removeGoalDialogBinding.removeDialogSubtitleAtv.text = "다시 시도하거나 네트워크 설정을 확인해주세요"
-        removeGoalDialogBinding.removeTrashAiv.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_exclamation_24))
+        networkErrorDialogBinding.removeDialogTitleAtv.text = "인터넷에 연결할 수 없어요"
+        networkErrorDialogBinding.removeDialogSubtitleAtv.text = "다시 시도하거나 네트워크 설정을 확인해주세요"
+        networkErrorDialogBinding.removeTrashAiv.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_exclamation_24))
 
-        CommonUtil.makePomeDialog(removeGoalDialog)
+        CommonUtil.makePomeDialog(networkErrorDialog)
 
         // 삭제하기 버튼 클릭
-        removeGoalDialogBinding.removeYesTextAtv.apply {
+        networkErrorDialogBinding.removeYesTextAtv.apply {
             text = "다시시도"
 
             setOnClickListener {
-                removeGoalDialog.dismiss()
+                networkErrorDialog.dismiss()
                 recreate()
             }
         }
         // 아니요 버튼 클릭
-        removeGoalDialogBinding.removeNoTextAtv.apply {
+        networkErrorDialogBinding.removeNoTextAtv.apply {
             text = "취소"
 
             setOnClickListener {
-                removeGoalDialog.dismiss()
+                networkErrorDialog.dismiss()
                 finish()
             }
         }
