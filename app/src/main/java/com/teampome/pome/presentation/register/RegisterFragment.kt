@@ -21,6 +21,7 @@ import com.teampome.pome.util.common.CommonUtil.getPixelToDp
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.setOnSingleClickListener
 import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.register.RegisterViewModel
@@ -183,7 +184,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             }
 
         // 번호 인증 요청
-        binding.registerCertPhoneAcb.setOnClickListener {
+        binding.registerCertPhoneAcb.setOnSingleClickListener {
             binding.registerCertPhoneAcb.text = "재요청"
 
             binding.registerCertPhoneAcb.setPadding(
