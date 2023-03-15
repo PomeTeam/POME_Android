@@ -258,12 +258,12 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 editable?.let { name ->
                     binding.registerProfileNameCheckTv.visibility = View.VISIBLE
 
-                    if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
-                        binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
-
-                        disableName()
-                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
-                    } else {
+//                    if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
+//                        binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
+//
+//                        disableName()
+//                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
+//                    } else {
                         viewModel.setUserName(name.toString())
 
                         viewModel.checkNickname(object : CoroutineErrorHandler {
@@ -271,7 +271,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                                 Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
                             }
                         })
-                    }
+//                    }
                 } ?: kotlin.run { // 만약 값이 비어있다면, 밑에 desc를 표기하면 안됨
                     // GONE이 아니고 INVISIBLE 처리 => 공간을 차지해야 constraintLayout 알맞게 동작
                     binding.registerProfileNameCheckTv.visibility = View.INVISIBLE
