@@ -31,5 +31,11 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
             val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
             findNavController().navigate(action)
         }
+
+        //탈퇴하기
+        binding.mypageWithdrawSettingCl.setOnClickListener {
+            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
+            findNavController().navigate(action)
+        }
     }
 }
