@@ -8,5 +8,5 @@ import com.teampome.pome.util.base.ApiResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MyPageDataSource {
-    fun getMarshmello() : Flow<ApiResponse<BasePomeResponse<MyTabMarshmello>>>
+    fun getMarshmello() : Flow<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>>
 }

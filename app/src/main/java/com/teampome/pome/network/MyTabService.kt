@@ -9,7 +9,7 @@ import retrofit2.http.GET
 interface MyTabService {
 
     //마시멜로우 조합
-    @GET("api/v1/marshmello")
-    suspend fun getMarshmello() : Response<BasePomeResponse<MyTabMarshmello>>
-
+    @GET("api/v1/marshmello/list")
+    suspend fun getMarshmello()
+        : Response<BasePomeResponse<List<MyTabMarshmello>>>
 }

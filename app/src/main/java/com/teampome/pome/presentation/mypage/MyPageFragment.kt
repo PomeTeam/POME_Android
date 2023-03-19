@@ -40,8 +40,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             when(it) {
                 is ApiResponse.Success -> {
                     it.data.data?.let {
-                        // TODO
-                        // 여기 지금 마시멜로우 카드가 한 번에 전달돼서 리사이클러뷰로 못함
+                        marshmelloAdapter.submitList(it)
                     }
                 }
                 is ApiResponse.Failure -> {

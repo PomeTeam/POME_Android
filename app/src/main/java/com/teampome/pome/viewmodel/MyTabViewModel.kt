@@ -24,8 +24,8 @@ class MyTabViewModel @Inject constructor(
     private val repository: MyPageRepository
 ): BaseViewModel() {
 
-    private val _getMarshmello = MutableLiveData<ApiResponse<BasePomeResponse<MyTabMarshmello>>>()
-    val getMarshmello: LiveData<ApiResponse<BasePomeResponse<MyTabMarshmello>>> = _getMarshmello
+    private val _getMarshmello = MutableLiveData<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>>()
+    val getMarshmello: LiveData<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>> = _getMarshmello
 
     fun getMarshmello(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _getMarshmello,
