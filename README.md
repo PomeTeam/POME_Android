@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-<img src="./img/pome_소개_이미지.png" width="80%" height="80%" >
+<img src="./img/pome_소개_이미지.png" width="25%" height="10%">
 </p>
 
 ## 목차
@@ -21,9 +21,9 @@
 
 ## Architecture
 
-<h3 align="center"> Pome App Architecture </h3>
+<h3 align="center">Pome Application Architecture</h3>
 
-<p  align="center">
+<p align="center">
 <img src="./img/pome_architecture.png">
 </p>
 
