@@ -1,4 +1,6 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
+
+import com.teampome.pome.util.common.Constants
 
 enum class Emotion(val emotion: String) {
     HAPPY_EMOTION(Constants.HAPPY_EMOTION),

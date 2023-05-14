@@ -10,7 +10,7 @@
             name="recordData"
             type="com.teampome.pome.model.RecordData" />
 
-        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
     </data>
 
     <androidx.cardview.widget.CardView

@@ -1,9 +1,10 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
 
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
@@ -11,7 +12,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
 import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -368,9 +368,9 @@ object CommonUtil {
         endDate?.let {
             val sdf = SimpleDateFormat("yyyy.MM.dd")
             val ed = sdf.parse(endDate)
-            val today = Calendar.getInstance()
+            val today = Calendar.getInstance().time.time
 
-            val challengeDay = (ed.time - today.time.time) / (60 * 60 * 24 * 1000)
+            val challengeDay = (ed.time - today) / (60 * 60 * 24 * 1000)
 
             return if(challengeDay >= 0) {
                 challengeDay.toInt()
@@ -378,6 +378,33 @@ object CommonUtil {
                 0
             }
         } ?: return 0
+    }
+
+    /**
+     *  들어온 매개변수들이 한달 차이인지 확인하는 메소드
+     *
+     *  format = "yyyy.MM.dd"
+     */
+    fun isDiffLowerThanOneMonth(curDateStr: String?, endDateStr: String?): Boolean {
+        val sdf = SimpleDateFormat("yyyy.MM.dd")
+
+        curDateStr?.let {
+            endDateStr?.let {
+                val curDate = sdf.parse(curDateStr)
+                val endDate = sdf.parse(endDateStr)
+
+                val afterOneMonthDay = Calendar.getInstance()
+                afterOneMonthDay.time = curDate
+
+                afterOneMonthDay.add(Calendar.MONTH, 1)
+
+                return (afterOneMonthDay.time >= endDate && curDate <= endDate)
+            } ?: run {
+                return false
+            }
+        } ?: run {
+            return false
+        }
     }
 
     /**
@@ -499,7 +526,11 @@ object CommonUtil {
 
         val nowYear = sdf.format(Date(System.currentTimeMillis()))
 
-        val dateArr = date.split(".")
+        val dateArr = date.split(".").toMutableList()
+        val useYearLen = dateArr[0].length
+        if(useYearLen > 2) {
+            dateArr[0] = dateArr[0].substring(useYearLen-2, useYearLen)
+        }
 
 //        Log.d("year", "now : $nowYear , date : ${dateArr[0]}")
 
@@ -517,5 +548,13 @@ object CommonUtil {
      */
     fun stringToLocalDate(date: String) : LocalDate {
         return LocalDate.parse("20${date.replace(".", "-")}", DateTimeFormatter.ISO_DATE)
+    }
+
+    /**
+     *  webPage 이동 메소드
+     */
+    fun goToWebPage(context: Context, page: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(page))
+        context.startActivity(intent)
     }
 }

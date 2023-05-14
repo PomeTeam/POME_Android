@@ -10,9 +10,9 @@ import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRecordLeaveEmotionBinding
 import com.teampome.pome.model.RecordData
-import com.teampome.pome.presentation.record.OnRecordItemClickListener
-import com.teampome.pome.presentation.record.RecordContentsCardAdapter
-import com.teampome.pome.util.OnItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.OnRecordItemClickListener
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordContentsCardAdapter
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordOneWeekAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -40,10 +40,12 @@ class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBindin
 
         binding.goalData = args.goalData
 
-        binding.recordLeaveEmotionRv.adapter = RecordContentsCardAdapter().apply {
-            setOnBodyClickListener(object : OnRecordItemClickListener {
+        binding.recordLeaveEmotionRv.adapter = RecordOneWeekAdapter().apply {
+            setOnRecordBodyClickListener(object : OnRecordItemClickListener {
                 override fun onRecordItemClick(item: RecordData) {
-                    moveToLeaveEmotion(item.id)
+                    item.id?.let {itemId ->
+                        moveToLeaveEmotion(itemId)
+                    }
                 }
             })
         }
@@ -68,7 +70,7 @@ class RecordLeaveEmotionFragment : BaseFragment<FragmentRecordLeaveEmotionBindin
         }
 
         viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
-            (binding.recordLeaveEmotionRv.adapter as RecordContentsCardAdapter).submitList(
+            (binding.recordLeaveEmotionRv.adapter as RecordOneWeekAdapter).submitList(
                 it
             )
         }

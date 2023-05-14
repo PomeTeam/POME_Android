@@ -2,14 +2,14 @@ package com.teampome.pome.presentation.record
 
 import android.annotation.SuppressLint
 import android.app.Dialog
-import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.annotation.RawRes
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.paging.*
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
@@ -23,12 +23,19 @@ import com.teampome.pome.databinding.TopImgNoticeDialogBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.presentation.record.recyclerview.*
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordCategoryAdapter
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordContentsCardAdapter
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordViewType
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.GoalState
+import com.teampome.pome.util.common.OnItemClickListener
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
@@ -47,7 +54,7 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var removeCardDialogBinding: PomeRemoveDialogBinding
     private lateinit var removeCardDialog: Dialog
 
-    // Todo : 공통 다이얼로그로 변경
+    // 수정 삭제하기 다이얼로그
     private lateinit var recordDialogBinding: PomeRegisterBottomSheetDialogBinding
     private lateinit var recordDialog: BottomSheetDialog
 
@@ -59,35 +66,12 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     private lateinit var finishGoalAlertDialogBinding: PomeAlertDialogBinding
     private lateinit var finishGoalAlertDialog: Dialog
 
-    // Todo: send item 저장, data를 여기에 저장하는 것이 맞나? -> 임시 데이터면 생명주기와 연관 x?
-    private lateinit var recordData: RecordData
-    private var currentCategory: String? = null
-    private var currentCategoryPosition: Int? = null
-
-    // 임시 클릭 리스너
-    private val itemClickListener = object: OnRecordItemClickListener {
-        override fun onRecordItemClick(item: RecordData) {
-            alertWarningDialog(
-                R.drawable.pen_pink,
-                "아직은 감정을 기록할 수 없어요",
-                "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
-            )
-        }
-    }
-
-    private val moreItemClickListener = object : OnMoreItemClickListener {
-        override fun onMoreIconClick(item: RecordData) {
-            recordData = item
-            recordDialog.show()
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+    // 선택한 RecordData
+    private lateinit var selectRecordData: RecordData
 
     override fun initView() {
         // 초기 목표 데이터 요청 (같이 요청을 하긴 하는데 showLoading은 언제까지?)
+        // 초기 목표 데이터 요청 -> 일주일 감정 조회 요청 -> 기록 뷰 요청
         viewModel.findAllGoalByUser(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Log.e("error", "findAllGoalByUser error $message")
@@ -102,55 +86,145 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         makeWarningDialog()
         makeFinishGoalAlertDialog()
 
+        setInitAdapter()
+    }
+
+    override fun initListener() {
+        setInitViewModelDataListener()
+
+        binding.recordNoticeBellAiv.setOnClickListener {
+            moveToRecordAlarms()
+        }
+
+        // 목표 + 클릭
+        binding.recordCategoryPlusTv.setOnClickListener {
+            viewModel.goalCategorys.value?.let {
+                if(it.size > 10) {
+                    alertWarningDialog(
+                        R.drawable.number_10,
+                        "목표는 10개를 넘을 수 없어요",
+                        "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
+                    )
+                } else {
+                    moveToAddGoal()
+                }
+            } ?: run {
+                moveToAddGoal()
+            }
+        }
+
+        // float button 클릭
+        binding.recordWriteButtonCl.setOnClickListener {
+            viewModel.goalDetails.value?.get(viewModel.curGoal.value?.pos ?: 0)?.let {
+                moveToConsume()
+            } ?: run {
+                alertWarningDialog(
+                    R.drawable.writing_warning_alert_3d_component,
+                    "지금은 씀씀이를 기록할 수 없어요",
+                    "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
+                )
+            }
+        }
+    }
+
+    private fun setInitAdapter() {
         // 카테고리 어댑터 설정
         binding.recordCategoryChipsRv.adapter =
             RecordCategoryAdapter().apply {
                 setOnItemClickListener(object : OnCategoryItemClickListener {
                     override fun onCategoryItemClick(item: GoalCategory, position: Int) {
-                        currentCategory = item.name
-                        currentCategoryPosition = position
-                        viewModel.getRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Log.e("record", "record error $message")
-                            }
-                        })
-
-                        viewModel.getOneWeekRecordByGoalId(item.goalId, object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Log.e("record", "record error $message")
-                            }
-                        })
-
-                        binding.goalDetails = viewModel.goalDetails.value?.get(position)
-                        binding.currentGoalState = setGoalState(viewModel.goalDetails.value?.get(position))
-                        binding.executePendingBindings()
+                        viewModel.setCurrentGoal(item, position)
                     }
                 })
             }
 
         // Record Contents 어댑터 설정
         binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
-            setOnBodyClickListener(itemClickListener)
-            setOnMoreItemClickListener(moreItemClickListener)
+            // 기록 클릭
+            setOnRecordBodyClickListener(object: OnRecordItemClickListener {
+                override fun onRecordItemClick(item: RecordData) {
+                    alertWarningDialog(
+                        R.drawable.pen_pink,
+                        "아직은 감정을 기록할 수 없어요",
+                        "일주일이 지나야 감정을 남길 수 있어요\n나중에 다시 봐요!"
+                    )
+                }
+            })
+            // 기록 더보기 클릭
+            setOnMoreRecordItemClickListener(object : OnMoreItemClickListener {
+                override fun onMoreIconClick(item: RecordData) {
+                    selectRecordData = item
+                    recordDialog.show()
+                }
+            })
+            // 감정 남기기 클릭
+            setOnLeaveEmotionCardClickListener(object : OnItemClickListener {
+                override fun itemClick() {
+                    moveToRecordLeaveEmotion()
+                }
+            })
+            // 목표 더보기 클릭
+            setOnMoreGoalItemClickListener(object : OnItemClickListener {
+                override fun itemClick() {
+                    goalMoreBottomSheetDialog.show()
+                }
+            })
+            // 목표 없을 때 클릭
+            setOnNoGoalCardClickListener(object : OnItemClickListener {
+                override fun itemClick() {
+                    moveToAddGoal()
+                }
+            })
+            // 목표 완료 시 클릭
+            setOnGoalCompleteClickListener(object : OnItemClickListener {
+                override fun itemClick() {
+                    if((binding.recordEmotionRv.adapter as RecordContentsCardAdapter).itemCount-2 <= 0) {
+                        moveToRecordGoalFinish()
+                    } else {
+                        finishGoalAlertDialog.show()
+                    }
+                }
+            })
+
+            addOnPagesUpdatedListener {
+                if(binding.recordSize != itemCount - 2) {
+                    binding.recordSize = itemCount - 2
+                    binding.executePendingBindings()
+                }
+            }
         }
     }
 
-    override fun initListener() {
+    private fun setInitViewModelDataListener() {
         // 모든 목표 Response observe
         viewModel.findAllGoalByUserResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    it.data.data?.content?.let { list ->
-                        if(list.isNotEmpty()) currentCategoryPosition = 0
-                        currentCategoryPosition?.let { pos ->
-                            binding.goalDetails = list[pos]
-                            binding.currentGoalState = setGoalState(list[pos])
-                            binding.executePendingBindings()
+
+                    if(it.data.data?.content.isNullOrEmpty()) {
+                        lifecycleScope.launch {
+                            (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
+                                val item = makeRecordPagingData(
+                                    null,
+                                    RecordData(
+                                        null, null, null, null, null, null, null, null,
+                                        viewType = RecordViewType.Goal,
+                                        oneWeekCount = null,
+                                        null,
+                                        null
+                                    ),
+                                    RecordData(
+                                        null, null, null, null, null, null, null, null,
+                                        viewType = RecordViewType.OneWeek,
+                                        null,
+                                        null,
+                                        null
+                                    )
+                                )
+
+                                submitData(item)
+                            }
                         }
-                    } ?: run {
-                        binding.goalDetails = null
-                        binding.currentGoalState = GoalState.Empty
-                        binding.executePendingBindings()
                     }
 
                     hideLoading()
@@ -164,31 +238,23 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
+        viewModel.curGoal.observe(viewLifecycleOwner) { category ->
+            // 현재 목표에 따라 일주일 감정 기록 확인
+            viewModel.getOneWeekRecordByGoalId(category.goalId, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Log.e("record", "record error $message")
+                }
+            })
+        }
+
         // goal Details Observe 등록
         viewModel.goalDetails.observe(viewLifecycleOwner) {}
 
-        // recordData 등록
-        viewModel.recordData.observe(viewLifecycleOwner) {}
-
         // category listener - category를 주입
-        viewModel.goalCategory.observe(viewLifecycleOwner) {
+        viewModel.goalCategorys.observe(viewLifecycleOwner) {
             if(!it.isNullOrEmpty()) {
                 // 초기에 category를 받으면 0번을 기반으로 데이터 초기화
-                currentCategory = it[0]!!.name
-                currentCategoryPosition = 0
-
-                // 카테고리 데이터 받은 후 목표 가져오는 작업 진행
-                viewModel.getRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
-                    override fun onError(message: String) {
-                        Log.e("record", "record error $message")
-                    }
-                })
-
-                viewModel.getOneWeekRecordByGoalId(it[0]!!.goalId, object : CoroutineErrorHandler {
-                    override fun onError(message: String) {
-                        Log.e("record", "record error $message")
-                    }
-                })
+                viewModel.setCurrentGoal(it[0]!!, 0)
 
                 (binding.recordCategoryChipsRv.adapter as RecordCategoryAdapter).submitList(
                     it
@@ -196,51 +262,46 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        viewModel.getRecordByGoalIdResponse.observe(viewLifecycleOwner) { it ->
-            when(it) {
-                is ApiResponse.Success -> {
-                    it.data.data?.let { contents ->
-                        binding.recordData = contents.content
-                        viewModel.setRecordData(contents.content)
-
-                        binding.executePendingBindings()
-                    }
-
-//                    submit list하는 list는 다른 값인데, 이전 값이 currentList임...
-//                    submitList의 list는 정상, 계속 카테고리를 변경하다보면 list값이 아예 섞임..
-//                    debuging시에는 정상? 그러면 충분한 업데이트 시간이 없어서?
-//                    1 - 2 - 1 - 3 정상, 3 - 2 - 3 비정상 => null을 받을 때, submitList가 이상하게 동작?
-//                    notifyDataSetChanged, invalidateAll, executePendingBinding 다 동작 x
-//                    currentList는 정상..
-                    // 임시 처리 : 데이터 변경 시 새로운 어댑터 객체 생성
-                    binding.recordEmotionRv.adapter = RecordContentsCardAdapter().apply {
-                        setOnBodyClickListener(itemClickListener)
-                        setOnMoreItemClickListener(moreItemClickListener)
-                    }
-
-                    (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).submitList(
-                        it.data.data?.content?.toMutableList() ?: mutableListOf()
+        // 목표에 따른 recordPagingData 처리
+        viewModel.pagingRecordData.observe(viewLifecycleOwner) { pagingData ->
+            lifecycleScope.launch {
+                (binding.recordEmotionRv.adapter as RecordContentsCardAdapter).apply {
+                    val item = makeRecordPagingData(
+                        pagingData,
+                        RecordData(
+                            null, null, null, null, null, null, null, null,
+                            viewType = RecordViewType.Goal,
+                            null,
+                            viewModel.goalDetails.value?.get(viewModel.curGoal.value?.pos ?: 0),
+                            setGoalState(viewModel.goalDetails.value?.get(viewModel.curGoal.value?.pos ?: 0))
+                        ),
+                        RecordData(
+                            null, null, null, null, null, null, null, null,
+                            viewType = RecordViewType.OneWeek,
+                            oneWeekCount = viewModel.oneWeekCount.value,
+                            null,
+                            null
+                        )
                     )
 
-                    hideLoading()
+                    submitData(item)
                 }
-                is ApiResponse.Failure -> {
-                    Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
-                    Log.d("recordData", "failure RecordData : $it")
-
-                    hideLoading()
-                }
-                is ApiResponse.Loading -> { showLoading() }
             }
         }
 
         viewModel.getOneWeekRecordByGoalIdResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    binding.countOneWeekRecord = it.data.data?.content?.size ?: 0
-                    binding.executePendingBindings()
+
+                    Log.d("test", "data is ${it.data.data}")
+                    viewModel.setOneWeekCount(it.data.data?.content?.size ?: 0)
 
                     hideLoading()
+
+                    // 기록 페이징 요청
+                    viewModel.curGoal.value?.let { category ->
+                        viewModel.getRecordPagingData(category.goalId)
+                    }
                 }
                 is ApiResponse.Failure -> {
                     Toast.makeText(requireContext(), it.errorMessage, Toast.LENGTH_SHORT).show()
@@ -253,7 +314,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         }
 
         // UI용으로 짜여진 oneWeekRecords observe
-        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {}
+        viewModel.oneWeekRecords.observe(viewLifecycleOwner) {
+            Log.d("data", "data is $it")
+        }
 
         // 삭제하기 response
         viewModel.deleteGoalResponse.observe(viewLifecycleOwner) {
@@ -273,67 +336,37 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
             }
         }
 
-        binding.recordNoticeBellAiv.setOnClickListener {
-            moveToRecordAlarms()
-        }
-
-        // 목표의 더보기 클릭
-        binding.recordGoalMoreAiv.setOnClickListener {
-            goalMoreBottomSheetDialog.show()
-        }
-
-        // 목표 + 클릭
-        binding.recordCategoryPlusTv.setOnClickListener {
-            viewModel.goalCategory.value?.let {
-                if(it.size > 10) {
-                    alertWarningDialog(
-                        R.drawable.number_10,
-                        "목표는 10개를 넘을 수 없어요",
-                        "포미는 사용자가 무리하지 않고 즐겁게 목표를 달성할 수 있도록 응원하고 있어요!"
-                    )
-                } else {
-                    moveToAddGoal()
+        viewModel.deleteRecordResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    // refresh
+                    refresh()
                 }
-            } ?: run {
-                moveToAddGoal()
-            }
-        }
-
-        // 목표 없을 때 목표 만들기 클릭
-        binding.recordNoGoalSubtitleContainerCl.setOnClickListener {
-            moveToAddGoal()
-        }
-
-        // float button 클릭
-        binding.recordWriteButtonCl.setOnClickListener {
-            if(binding.currentGoalState is GoalState.Empty) {
-                alertWarningDialog(
-                    R.drawable.writing_warning_alert_3d_component,
-                    "지금은 씀씀이를 기록할 수 없어요",
-                    "나만의 소비 목표를 설정하고\n기록을 시작해보세요!"
-                )
-            } else {
-                moveToConsume()
-            }
-        }
-
-        binding.recordWriteEmotionContainerCl.setOnClickListener {
-            moveToRecordLeaveEmotion(
-
-            )
-        }
-
-        binding.recordGoalCompleteCl.setOnClickListener {
-            viewModel.recordData.value?.let {
-                if(it.isEmpty()) {
-                    moveToRecordGoalFinish()
-                } else {
-                    finishGoalAlertDialog.show()
+                is ApiResponse.Failure -> {
+                    Log.e("error", "deleteRecord failure by ${it.errorMessage}")
                 }
-            } ?: run {
-                finishGoalAlertDialog.show()
+                is ApiResponse.Loading -> { showLoading() }
             }
         }
+    }
+
+    // RecordData용 pagingData 만드는 메소드
+    private fun makeRecordPagingData(
+        pagingData: PagingData<RecordData>?,
+        goalCardHeader: RecordData,
+        oneWeekCardHeader: RecordData
+    ): PagingData<RecordData> {
+        val pageData = pagingData ?: PagingData.empty()
+
+        val item = pageData.insertHeaderItem(
+            terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+            oneWeekCardHeader
+        )
+
+        return item.insertHeaderItem(
+            terminalSeparatorType = TerminalSeparatorType.FULLY_COMPLETE,
+            goalCardHeader
+        )
     }
 
     // 목표 카드 더보기 클릭
@@ -366,8 +399,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         // 삭제하기 버튼 클릭
         removeGoalDialogBinding.removeYesTextAtv.setOnClickListener {
             viewModel.goalDetails.value?.let { list ->
-                currentCategoryPosition?.let { pos ->
-                    list[pos]?.let { goalData ->
+                viewModel.curGoal.value?.let { goal ->
+                    list[goal.pos]?.let { goalData ->
                         viewModel.deleteGoal(
                             goalData.id,
                             object : CoroutineErrorHandler {
@@ -412,13 +445,11 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
         recordDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
             recordDialog.dismiss()
 
-            moveToModifyRecordCard(recordData)
+            moveToModifyRecordCard(selectRecordData)
         }
 
         // 삭제 클릭
         recordDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
-            Toast.makeText(requireContext(), "기록 카드 삭제하기", Toast.LENGTH_SHORT).show()
-
             recordDialog.dismiss()
 
             removeCardDialog.show()
@@ -439,15 +470,20 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         // 삭제하기 버튼 클릭
         removeCardDialogBinding.removeYesTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "카드 삭제 Yes", Toast.LENGTH_SHORT).show()
+            // 삭제 api
+            selectRecordData.id?.let { recordId ->
+                viewModel.deleteRecordByRecordId(recordId, object : CoroutineErrorHandler {
+                    override fun onError(message: String) {
+                        Log.d("error", "deleteRecord error by $message")
+                    }
+                })
+            }
 
             removeCardDialog.dismiss()
         }
 
         // 아니요 버튼 클릭
         removeCardDialogBinding.removeNoTextAtv.setOnClickListener {
-            Toast.makeText(requireContext(), "카드 삭제 No", Toast.LENGTH_SHORT).show()
-
             removeCardDialog.dismiss()
         }
     }
@@ -522,18 +558,16 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToModifyRecordCard(recordData: RecordData) {
-        viewModel.goalCategory.value?.let { list ->
-            currentCategoryPosition?.let { pos ->
-                currentCategory?.let { category ->
-                    list[pos]?.let { goalCategory ->
-                        val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
-                            recordData,
-                            goalCategory.goalId,
-                            category
-                        )
+        viewModel.goalCategorys.value?.let { list ->
+            viewModel.curGoal.value?.let { goal ->
+                list[goal.pos]?.let { goalCategory ->
+                    val action = RecordFragmentDirections.actionRecordFragmentToModifyRecordCardFragment(
+                        recordData,
+                        goalCategory.goalId,
+                        goal.name
+                    )
 
-                        findNavController().navigate(action)
-                    }
+                    findNavController().navigate(action)
                 }
             }
         }
@@ -552,9 +586,9 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
     }
 
     private fun moveToConsume() {
-        viewModel.goalCategory.value?.let { list ->
-            currentCategoryPosition?.let { pos ->
-                list[pos]?.let { goalCategory ->
+        viewModel.goalCategorys.value?.let { list ->
+            viewModel.curGoal.value?.let { goal ->
+                list[goal.pos]?.let { goalCategory ->
                     val changeList : List<GoalCategory> = list.map {
                         it?.let { gc ->
                             GoalCategory(
@@ -582,8 +616,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToRecordLeaveEmotion() {
         viewModel.goalDetails.value?.let { list ->
-            currentCategoryPosition?.let { pos ->
-                list[pos]?.let { goalData ->
+            viewModel.curGoal.value?.let { goal ->
+                list[goal.pos]?.let { goalData ->
                     val action = RecordFragmentDirections.actionRecordFragmentToRecordLeaveEmotionFragment(
                         goalData
                     )
@@ -596,8 +630,8 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     private fun moveToRecordGoalFinish() {
         viewModel.goalDetails.value?.let { list ->
-            currentCategoryPosition?.let { pos ->
-                list[pos]?.let { goalData ->
+            viewModel.curGoal.value?.let { goal ->
+                list[goal.pos]?.let { goalData ->
                     val action = RecordFragmentDirections.actionRecordFragmentToRecordGoalFinishFragment(goalData)
 
                     findNavController().navigate(action)

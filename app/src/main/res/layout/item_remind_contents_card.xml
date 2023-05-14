@@ -9,7 +9,7 @@
             name="recordData"
             type="com.teampome.pome.model.RecordData" />
 
-        <import type="com.teampome.pome.util.CommonUtil" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
         <import type="android.view.View" />
     </data>
 
@@ -24,6 +24,7 @@
         app:cardPreventCornerOverlap="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/remind_contents_container_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -207,6 +208,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/remind_contents_more_aiv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"

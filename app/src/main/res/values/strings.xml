@@ -42,7 +42,7 @@
 
     <!-- Pome Register -->
     <string name="register_title_text">나만의 프로필을\n만들어 볼까요?</string>
-    <string name="register_profile_name_hint_text">영어, 한국어 최소 6자, 최대 18자 이내 입력</string>
+    <string name="register_profile_name_hint_text">영어, 한국어 최대 10자 이내 입력</string>
     <string name="register_profile_name_button_text">만들었어요</string>
     <string name="register_profile_check_description_text">입력한 정보는 회원을 식별하고 친구간 커뮤니케이션을 위한 동의 목적으로만 사용되며 포미 이용기간 동안 보관돼요</string>
     <string name="pome_bottom_sheet_dialog_delete_text">삭제하기</string>
@@ -158,6 +158,7 @@
     <string name="mypage_logout_title_text">로그아웃 하시겠어요?</string>
 
     <string name="record_progress_percent">%d%%</string>
+    <string name="record_progress_over">초과</string>
     <string name="record_week_consume_title_text">일주일 씀씀이</string>
     <string name="record_write_emotion_title_text">감정을 남겨주세요</string>
     <string name="record_no_write_emotion_text">기록한 씀씀이가 없어요</string>
@@ -254,4 +255,6 @@
     <string name="remind_no_chip_text">···</string>
     <string name="remind_no_goal_title_text">목표가 있어야 씀씀이를\n기록하고 돌아볼 수 있어요</string>
     <string name="remind_no_goal_subtitle_text">목표 만들기</string>
+    <string name="register_cert_num_check_fail_text">인증번호가 일치하지 않아요</string>
+    <string name="add_goal_date_check_fail_text">목표 기간은 한 달 이내로 설정할 수 있어요!</string>
 </resources>

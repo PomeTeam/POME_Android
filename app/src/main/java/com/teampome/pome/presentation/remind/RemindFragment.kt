@@ -13,12 +13,11 @@ import com.teampome.pome.databinding.FragmentRemindBinding
 import com.teampome.pome.databinding.PomeRemindBottomSheetDialogBinding
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.goal.GoalCategory
-import com.teampome.pome.presentation.record.GoalState
-import com.teampome.pome.presentation.record.RecordCategoryAdapter
-import com.teampome.pome.util.CommonUtil
-import com.teampome.pome.util.Constants.FIRST_EMOTION
-import com.teampome.pome.util.Constants.LAST_EMOTION
-import com.teampome.pome.util.Emotion
+import com.teampome.pome.presentation.record.recyclerview.adapter.RecordCategoryAdapter
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.Constants.FIRST_EMOTION
+import com.teampome.pome.util.common.Constants.LAST_EMOTION
+import com.teampome.pome.util.common.Emotion
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.RemindViewModel

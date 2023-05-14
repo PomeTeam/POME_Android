@@ -13,8 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentConsumeEmotionBinding
 import com.teampome.pome.model.goal.GoalCategory
-import com.teampome.pome.util.CommonUtil
-import com.teampome.pome.util.Emotion
+import com.teampome.pome.util.common.CommonUtil
+import com.teampome.pome.util.common.Emotion
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler

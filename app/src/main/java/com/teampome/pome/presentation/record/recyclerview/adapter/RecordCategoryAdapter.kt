@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordCategoryChipBinding
 import com.teampome.pome.model.goal.GoalCategory
-import com.teampome.pome.model.goal.GoalCategoryResponse
 import com.teampome.pome.presentation.remind.OnCategoryItemClickListener
 
-class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.RecordCategoryViewHolder>(RecordCategoryDiffCallback()) {
-    lateinit var bind: ItemRecordCategoryChipBinding
-
+class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.RecordCategoryViewHolder>(
+    RecordCategoryDiffCallback()
+) {
     // category click 관리 변수
     private var onCategoryItemClickListener: OnCategoryItemClickListener? = null
     private var selectedPosition = 0
@@ -22,7 +21,7 @@ class RecordCategoryAdapter : ListAdapter<GoalCategory, RecordCategoryAdapter.Re
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordCategoryViewHolder {
-        bind = ItemRecordCategoryChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val bind = ItemRecordCategoryChipBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return RecordCategoryViewHolder(bind)
     }

@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.presentation.record.recyclerview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemRecordAlarmsBinding
 import com.teampome.pome.model.TestAlarmsData
 
-class RecordAlarmsAdapter : ListAdapter<TestAlarmsData, RecordAlarmsAdapter.RecordAlarmsViewHolder>(RecordAlarmsDiffCallback()) {
+class RecordAlarmsAdapter : ListAdapter<TestAlarmsData, RecordAlarmsAdapter.RecordAlarmsViewHolder>(
+    RecordAlarmsDiffCallback()
+) {
     private lateinit var binding: ItemRecordAlarmsBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordAlarmsViewHolder {

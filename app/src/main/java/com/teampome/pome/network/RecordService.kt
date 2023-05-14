@@ -49,7 +49,9 @@ interface RecordService {
      */
     @GET("api/v1/records/goal/{goalId}/record-tab")
     suspend fun getRecordByGoalId(
-        @Path("goalId") goalId: Int
+        @Path("goalId") goalId: Int,
+        @Query("page") pageNumber: Int?,
+        @Query("size") pageSize: Int?
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
 
     /**
@@ -59,4 +61,12 @@ interface RecordService {
     suspend fun getOneWeekGoalByGoalId(
         @Path("goalId") goalId: Int
     ) : Response<BasePomeResponse<BaseAllData<RecordData>>>
+
+    /**
+     *  기록 삭제 api
+     */
+    @DELETE("api/v1/records/{recordId}")
+    suspend fun deleteRecordByRecordId(
+        @Path("recordId") recordId: Int
+    ) : Response<BasePomeResponse<Any>>
 }

@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterTermsBinding
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.viewmodel.register.RegisterTermsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +22,6 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
 
     private val notCheckColor by lazy {
         resources.getColor(R.color.grey_3, null)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun initView() {
@@ -57,7 +53,7 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
 
         // 이용약관 동의 텍스트 클릭
         binding.registerAgreeUsingTermsAtv.setOnClickListener {
-            moveToTermsDetail()
+            CommonUtil.goToWebPage(requireContext(), "https://few-horse-2aa.notion.site/6a2e6f6241e94a479a3e2c2a3cdb909e")
         }
 
         // 개인정보 수집 동의 체크 클릭
@@ -67,7 +63,7 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
 
         // 개인정보 수집 동의 텍스트 클릭
         binding.registerAgreePrivacyAtv.setOnClickListener {
-            moveToTermsDetail()
+            CommonUtil.goToWebPage(requireContext(), "https://few-horse-2aa.notion.site/b396b02d8bd3460f945cf3f90935667b")
         }
 
         // 마케팅 정보 수집 동의 체크 클릭
@@ -77,7 +73,7 @@ class RegisterTermsFragment : BaseFragment<FragmentRegisterTermsBinding>(R.layou
 
         // 마케팅 정보 수집 동의 텍스트 클릭
         binding.registerAgreeMarketingAtv.setOnClickListener {
-            moveToTermsDetail()
+            CommonUtil.goToWebPage(requireContext(), "https://few-horse-2aa.notion.site/8cc486236d77473f84fa53a3b0ede726")
         }
 
         // 전체동의 체크시 뷰

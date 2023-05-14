@@ -1,4 +1,4 @@
-package com.teampome.pome.util
+package com.teampome.pome.util.common
 
 object Constants {
     const val FIRST_EMOTION = "처음 감정"

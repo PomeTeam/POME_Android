@@ -20,16 +20,16 @@
 
         <variable
             name="firstEmotion"
-            type="com.teampome.pome.util.Emotion" />
+            type="com.teampome.pome.util.common.Emotion" />
 
         <variable
             name="lastEmotion"
-            type="com.teampome.pome.util.Emotion" />
+            type="com.teampome.pome.util.common.Emotion" />
 
         <import type="android.view.View" />
         <import type="java.util.List" />
-        <import type="com.teampome.pome.util.CommonUtil" />
-        <import type="com.teampome.pome.util.Emotion" />
+        <import type="com.teampome.pome.util.common.CommonUtil" />
+        <import type="com.teampome.pome.util.common.Emotion" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

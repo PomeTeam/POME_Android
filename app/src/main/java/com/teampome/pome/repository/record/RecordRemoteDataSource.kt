@@ -1,11 +1,15 @@
 package com.teampome.pome.repository.record
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.teampome.pome.model.*
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
 import com.teampome.pome.model.request.EmotionDataBody
 import com.teampome.pome.network.RecordService
+import com.teampome.pome.repository.record.paging.RecordPagingSource
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.apiRequestFlow
 import kotlinx.coroutines.flow.Flow
@@ -37,10 +41,23 @@ class RecordRemoteDataSource @Inject constructor(
     }
 
     override fun getRecordByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = apiRequestFlow {
-        service.getRecordByGoalId(goalId)
+        service.getRecordByGoalId(goalId, null, null)
     }
 
     override fun getOneWeekGoalByGoalId(goalId: Int): Flow<ApiResponse<BasePomeResponse<BaseAllData<RecordData>>>> = apiRequestFlow {
         service.getOneWeekGoalByGoalId(goalId)
+    }
+
+    override fun getRecordPagingData(goalId: Int, pagingConfig: PagingConfig): Flow<PagingData<RecordData>> {
+        return Pager(
+            config = pagingConfig,
+            pagingSourceFactory = {
+                RecordPagingSource(service = service, goalId = goalId)
+            }
+        ).flow
+    }
+
+    override fun deleteRecordByRecordId(recordId: Int): Flow<ApiResponse<BasePomeResponse<Any>>> = apiRequestFlow {
+        service.deleteRecordByRecordId(recordId)
     }
 }

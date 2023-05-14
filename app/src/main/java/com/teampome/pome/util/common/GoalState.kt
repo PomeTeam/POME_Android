@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.record
+package com.teampome.pome.util.common
 
 sealed class GoalState {
     object Empty: GoalState()

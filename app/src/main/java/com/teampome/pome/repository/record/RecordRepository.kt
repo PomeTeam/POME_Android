@@ -1,5 +1,7 @@
 package com.teampome.pome.repository.record
 
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.teampome.pome.model.RecordData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.request.ConsumeRecordDataBody
@@ -15,6 +17,11 @@ class RecordRepository @Inject constructor(
     private val recordDataSource: RecordDataSource,
     private val userManager: UserManager
 ) {
+
+    fun getRecordPagingData(goalId: Int, pagingConfig: PagingConfig): Flow<PagingData<RecordData>> {
+        return recordDataSource.getRecordPagingData(goalId, pagingConfig)
+    }
+
     fun getRecordDataByUserId(): Flow<ApiResponse<BasePomeResponse<List<RecordData>>>> {
         val userId = runBlocking {
             userManager.getUserId().first()
@@ -69,4 +76,6 @@ class RecordRepository @Inject constructor(
     fun getRecordByGoalId(goalId: Int) = recordDataSource.getRecordByGoalId(goalId)
 
     fun getOneWeekGoalByGoalId(goalId: Int) = recordDataSource.getOneWeekGoalByGoalId(goalId)
+
+    fun deleteRecordByRecordId(recordId: Int) = recordDataSource.deleteRecordByRecordId(recordId)
 }

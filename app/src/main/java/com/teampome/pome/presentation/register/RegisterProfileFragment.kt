@@ -3,8 +3,12 @@ package com.teampome.pome.presentation.register
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,6 +16,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +31,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterProfileBinding
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.util.token.TokenManager
@@ -35,6 +42,11 @@ import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.glide.transformations.MaskTransformation
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -50,8 +62,12 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     private val viewModel: RegisterProfileViewModel by viewModels()
     private val tokenViewModel: TokenViewModel by activityViewModels()
 
-    private lateinit var pomeBottomSheetDialog: BottomSheetDialog
-    private lateinit var pomeBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
+    private lateinit var pomeNewBottomSheetDialog: BottomSheetDialog
+    private lateinit var pomeNewBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
+
+    // 수정하기 bottomsheet
+    private lateinit var pomeModifyBottomSheetDialog: BottomSheetDialog
+    private lateinit var pomeModifyBottomSheetDialogBinding: PomeRegisterBottomSheetDialogBinding
 
     @Inject
     lateinit var userManger: UserManager
@@ -59,16 +75,37 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
     @Inject
     lateinit var tokenManager: TokenManager
 
+    private val photoFile: File? by lazy {
+        try {
+            createImageFile()
+        } catch (ex: IOException) {
+            null
+        }
+    }
+
     @SuppressLint("InflateParams")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun initView() {
-        // pomeBottomSheetDialog 뷰 인플레이션 과정
-        pomeBottomSheetDialog = BottomSheetDialog(requireContext())
-        pomeBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
-        pomeBottomSheetDialog.setContentView(pomeBottomSheetDialogBinding.root)
+        // pomeNewBottomSheetDialog 뷰 인플레이션 과정
+        pomeNewBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeNewBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        pomeNewBottomSheetDialog.setContentView(pomeNewBottomSheetDialogBinding.root)
+
+        pomeNewBottomSheetDialogBinding.apply {
+            pomeBottomSheetDialogPencilAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_camera_mono, null))
+            pomeBottomSheetDialogTrashAiv.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.icon_picture_mono, null))
+
+            pomeBottomSheetDialogPencilTv.text = "카메라"
+            pomeBottomSheetDialogTrashTv.text = "사진 앨범"
+        }
+
+        // pomeModifyBottomSheetDialog 뷰 인플레이션 과정
+        pomeModifyBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeModifyBottomSheetDialogBinding = PomeRegisterBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+        pomeModifyBottomSheetDialog.setContentView(pomeModifyBottomSheetDialogBinding.root)
 
         CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
     }
@@ -201,7 +238,12 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
         }
 
         binding.registerProfileAiv.setOnClickListener {
-            pomeBottomSheetDialog.show()
+            // 사진이 등록되어 있지 않으면?
+            if(viewModel.showFirstBottomSheet.value == true) {
+                pomeNewBottomSheetDialog.show()
+            } else {
+                pomeModifyBottomSheetDialog.show()
+            }
         }
 
         // 닉네임 변경 글자 감지
@@ -217,20 +259,13 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 editable?.let { name ->
                     binding.registerProfileNameCheckTv.visibility = View.VISIBLE
 
-                    if(name.length < 6 || name.length > 18) { // 일단 테스트용으로 텍스트가 6이하일 때, 불가능 처리
-                        binding.registerProfileNameCheckTv.text = getString(R.string.register_profile_name_chek_hint_text)
+                    viewModel.setUserName(name.toString())
 
-                        disableName()
-                        CommonUtil.disabledPomeBtn(binding.registerProfileCheckBtn)
-                    } else {
-                        viewModel.userName.value = name.toString()
-
-                        viewModel.checkNickname(object : CoroutineErrorHandler {
-                            override fun onError(message: String) {
-                                Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
-                            }
-                        })
-                    }
+                    viewModel.checkNickname(object : CoroutineErrorHandler {
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 } ?: kotlin.run { // 만약 값이 비어있다면, 밑에 desc를 표기하면 안됨
                     // GONE이 아니고 INVISIBLE 처리 => 공간을 차지해야 constraintLayout 알맞게 동작
                     binding.registerProfileNameCheckTv.visibility = View.INVISIBLE
@@ -267,15 +302,29 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
             }
         }
 
+        pomeNewBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
+            // 카메라 기능
+            showCamera()
+
+            pomeNewBottomSheetDialog.dismiss()
+        }
+
+        pomeNewBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
+            openGallery()
+
+            pomeNewBottomSheetDialog.dismiss()
+        }
+
+        // Modify
         // dialog 수정 click
-        pomeBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
+        pomeModifyBottomSheetDialogBinding.pomeBottomSheetDialogPencilTv.setOnClickListener {
             openGallery()
         }
 
         // dialog 삭제 click
-        pomeBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
+        pomeModifyBottomSheetDialogBinding.pomeBottomSheetDialogTrashTv.setOnClickListener {
             binding.registerProfileAiv.setImageDrawable(resources.getDrawable(R.drawable.user_profile_empty_150, null))
-            binding.registerProfilePlusAiv.visibility = View.VISIBLE
+//            binding.registerProfilePlusAiv.visibility = View.VISIBLE
 
             runBlocking {
                 if(userManger.getUserProfileUrl().first() != null) {
@@ -285,7 +334,8 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                 userManger.saveUserProfileUrl("default")
             }
 
-            pomeBottomSheetDialog.dismiss()
+            viewModel.setShowFirstBottomSheet(true)
+            pomeModifyBottomSheetDialog.dismiss()
         }
 
         // close Button 처리
@@ -354,17 +404,105 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                                 ).into(binding.registerProfileAiv)
                         }
                     }
+
+                    viewModel.setShowFirstBottomSheet(false)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
 
-                // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
-                binding.registerProfilePlusAiv.visibility = View.INVISIBLE
-                pomeBottomSheetDialog.dismiss()
+//                // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
+//                binding.registerProfilePlusAiv.visibility = View.INVISIBLE
+                pomeModifyBottomSheetDialog.dismiss()
             } else {
                 hideLoading()
             }
         }
+
+    private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val imageUri = photoFile?.toUri()
+
+            // 이미지 url 요청
+            viewModel.getPresignedImageUrl(object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                    Log.d("test", "getPresignedImageError : $message")
+                }
+            })
+
+            // 이미지 byteArray 세팅
+            imageUri?.let {
+                viewModel.settingProfileImageByteArray(CommonUtil.getImageByteArray(requireContext(), it))
+            }
+
+            try {
+                if(Build.VERSION.SDK_INT < 28) {
+                    val bitmap = MediaStore.Images.Media.getBitmap(
+                        activity?.contentResolver,
+                        imageUri
+                    )
+                    binding.registerProfileAiv.setImageBitmap(bitmap)
+                } else {
+                    imageUri?.let {
+                        Glide.with(requireContext())
+                            .load(it)
+                            .apply(
+                                bitmapTransform(MultiTransformation(CenterCrop(),
+                                    MaskTransformation(R.drawable.user_profile_empty_150)))
+                            ).into(binding.registerProfileAiv)
+                    }
+                }
+
+                viewModel.setShowFirstBottomSheet(false)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+//            // 다 끝나면 바텀시트 닫고 플러스 버튼 가리기
+//            binding.registerProfilePlusAiv.visibility = View.INVISIBLE
+            pomeModifyBottomSheetDialog.dismiss()
+        } else {
+            hideLoading()
+        }
+    }
+
+    private fun showCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        photoFile?.let{
+            intent.apply {
+                val photoUri: Uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "com.teampome.pome.fileprovider",
+                    it
+                )
+
+                putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+            }
+
+            cameraLauncher.launch(intent)
+        }
+    }
+
+    private fun createImageFile(): File? {
+        // 이미지 파일 이름 생성
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "JPEG_${timeStamp}_"
+
+        // 이미지 파일이 저장될 폴더 경로 생성
+        val storageDir = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        if (storageDir?.exists() == false) storageDir.mkdirs()
+
+        // 이미지 파일 생성
+        val imageFile = File.createTempFile(
+            imageFileName, /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
+
+        // 생성된 이미지 파일 객체 반환
+        return imageFile
+    }
 
     private fun openGallery() {
         val intent = Intent()

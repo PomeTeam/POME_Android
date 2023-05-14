@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -14,12 +15,13 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentRegisterBinding
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.databinding.PomeRegisterBottomSheetDialogBinding
-import com.teampome.pome.util.CommonUtil.getPixelToDp
+import com.teampome.pome.util.common.CommonUtil.getPixelToDp
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.setOnSingleClickListener
 import com.teampome.pome.util.token.TokenManager
 import com.teampome.pome.util.token.UserManager
 import com.teampome.pome.viewmodel.register.RegisterViewModel
@@ -161,16 +163,28 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
             override fun afterTextChanged(p0: Editable?) {
                 p0?.let {
                     viewModel.registerCertNum.value = it.toString()
+
+                    if(it.toString() == viewModel.smsValidate) {
+                        binding.registerCertNumCheckTv.visibility = View.GONE
+                    } else {
+                        binding.registerCertNumCheckTv.visibility = View.VISIBLE
+                    }
                 }
 
                 settingAgreeButton()
             }
         })
 
-        // 번호 인증 요청
-        binding.registerCertPhoneAcb.setOnClickListener {
-            Toast.makeText(requireContext(), "번호 인증 요청", Toast.LENGTH_SHORT).show()
+        // focus 감지
+        binding.registerPhoneAet.onFocusChangeListener =
+            OnFocusChangeListener { _, hasFocus ->
+                if(!hasFocus) {
+                    binding.registerCertPhoneAcb.performClick()
+                }
+            }
 
+        // 번호 인증 요청
+        binding.registerCertPhoneAcb.setOnSingleClickListener {
             binding.registerCertPhoneAcb.text = "재요청"
 
             binding.registerCertPhoneAcb.setPadding(
@@ -185,6 +199,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                     Toast.makeText(requireContext(), "error : $message", Toast.LENGTH_SHORT).show()
                 }
             })
+
+            binding.registerCertNumAet.requestFocus()
         }
 
         // 동의하고 시작하기 버튼

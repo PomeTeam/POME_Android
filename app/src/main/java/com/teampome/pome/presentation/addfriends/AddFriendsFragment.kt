@@ -1,6 +1,5 @@
 package com.teampome.pome.presentation.addfriends
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,7 +14,7 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
 import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
 import com.teampome.pome.presentation.addfriends.recyclerview.OnAddFriendClickListener
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
