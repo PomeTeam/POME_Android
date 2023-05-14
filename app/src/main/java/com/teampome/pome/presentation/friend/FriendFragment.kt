@@ -1,22 +1,16 @@
 package com.teampome.pome.presentation.friend
 
-import android.icu.lang.UCharacter.VerticalOrientation
-import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.teampome.pome.R
-import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentFriendBinding
-import com.teampome.pome.presentation.record.RecordCategoryAdapter
 import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.AddFriendsViewModel
-import com.teampome.pome.viewmodel.record.RecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -63,6 +57,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         viewModel.getFriendRecordResponse.observe(viewLifecycleOwner){
             when(it) {
                 is ApiResponse.Success -> {
+                    hideLoading()
                     it.data.data?.content?.let { list ->
                         (binding.friendDetailRv.adapter as FriendRecordGetAdapter).submitList(
                             list
@@ -72,7 +67,9 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 is ApiResponse.Failure -> {
 
                 }
-                is ApiResponse.Loading -> {}
+                is ApiResponse.Loading -> {
+                    showLoading()
+                }
             }
         }
     }
@@ -90,7 +87,6 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         friendGetAdapter.setOnItemClickListener {
             viewModel.getRecordFriend(it.friendUserId, object : CoroutineErrorHandler{
                 override fun onError(message: String) {
-                    Log.e("friendGetRecordError", "friendGetRecordError $message")
                     Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                     hideLoading()
                 }

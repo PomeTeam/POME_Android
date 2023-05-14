@@ -8,14 +8,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentFriendDeleteDialogBinding
-import com.teampome.pome.databinding.FragmentMypageAlarmBinding
-import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.databinding.FragmentMypageBinding
 import com.teampome.pome.databinding.FragmentMypageFriendBinding
-import com.teampome.pome.databinding.FragmentMypageGoalBinding
-import com.teampome.pome.presentation.friend.FriendGetAdapter
-import com.teampome.pome.util.CommonUtil
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.AddFriendsViewModel
 import dagger.hilt.android.AndroidEntryPoint

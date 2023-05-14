@@ -28,7 +28,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         viewModel.getMarshmello(object  : CoroutineErrorHandler{
             override fun onError(message: String) {
-                Log.e("marshmelloError", "marshmelloError $message")
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 hideLoading()
             }
@@ -64,21 +63,17 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     private fun setUpRecyclerView(){
-        marshmelloAdapter = MarshmelloAdapter()
+        marshmelloAdapter = MarshmelloAdapter(requireContext())
         val manager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
 
         //첫 번째 나오는 Header size 를 꽉 차게 함
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int = when(position){
-                0 -> 2
-                else -> 1
-            }
+            override fun getSpanSize(position: Int): Int = 1
         }
         binding.recordEmotionRv.apply {
 //            setHasFixedSize(true)
             layoutManager = manager
             adapter = marshmelloAdapter
         }
-
     }
 }
