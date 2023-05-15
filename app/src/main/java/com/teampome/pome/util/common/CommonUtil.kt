@@ -557,4 +557,12 @@ object CommonUtil {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(page))
         context.startActivity(intent)
     }
+
+    /*
+     * dp To Px 메소드
+     */
+    fun dpToPx(context: Context, dp: Int): Int {
+        val density = context.resources.displayMetrics.density
+        return (dp * density + 0.5f).toInt()
+    }
 }
