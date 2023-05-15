@@ -74,6 +74,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 //            setHasFixedSize(true)
             layoutManager = manager
             adapter = marshmelloAdapter
+            addItemDecoration(GridSpaceItemDecoration(2))
         }
+
     }
 }
