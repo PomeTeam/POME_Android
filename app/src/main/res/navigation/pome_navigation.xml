@@ -192,6 +192,9 @@
         <action
             android:id="@+id/action_myPageSettingFragment_to_myPageFriendFragment"
             app:destination="@id/myPageFriendFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_myPageWithdrawFragment"
+            app:destination="@id/myPageWithdrawFragment" />
     </fragment>
     <fragment
         android:id="@+id/myPageFriendFragment"
@@ -360,4 +363,18 @@
             android:name="recordId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/myPageWithdrawFragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageWithdrawFragment"
+        android:label="MyPageWithdrawFragment"
+        tools:layout="@layout/fragment_mypage_withdraw">
+        <action
+            android:id="@+id/action_myPageWithdrawFragment_to_myPageWithdrawWarningFragment"
+            app:destination="@id/myPageWithdrawWarningFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myPageWithdrawWarningFragment"
+        android:name="com.teampome.pome.presentation.mypage.MyPageWithdrawWarningFragment"
+        android:label="MyPageWithdrawWarningFragment"
+        tools:layout="@layout/fragment_mypage_withdraw"/>
 </navigation>

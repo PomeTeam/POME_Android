@@ -223,3 +223,13 @@ fun bindingGoalConnectTime(textView: TextView, recordData: RecordData?) {
         }
     }
 }
+
+
+@BindingAdapter("imageUrl")
+fun loadImage(imageView : ImageView, url : String){
+    Glide.with(imageView.context).load(url)
+        .error(R.drawable.mask_pome_44)
+        .override(48, 48)
+        .into(imageView)
+
+}

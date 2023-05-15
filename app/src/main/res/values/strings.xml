@@ -122,6 +122,23 @@
     <string name="mypage_setting_open_source_text">오픈소스 라이센스</string>
     <string name="mypage_setting_version_text">버전 정보</string>
     <string name="mypage_setting_logout_text">로그아웃</string>
+    <string name="mypage_setting_withdraw_text">탈퇴하기</string>
+
+    <string name="mypage_withdraw_reason_text">계정을 삭제하려는 이유가 궁금해요</string>
+    <string name="mypage_withdraw_know_text">불편하셨던 점을 알려주시면\n더 나은 서비스를 위해 노력하겠습니다.</string>
+
+    <string name="mypage_withdraw_reason_1_text">기록이 귀찮아요</string>
+    <string name="mypage_withdraw_reason_2_text">알람이 너무 많이와요</string>
+    <string name="mypage_withdraw_reason_3_text">억울하게 이용이 제한됐어요</string>
+    <string name="mypage_withdraw_reason_4_text">새 계정을 만들고 싶어요</string>
+
+    <string name="mypage_withdraw_warning_text">%s님 잠깐만요!\n삭제하기 전에 읽어보세요.</string>
+
+    <string name="mypage_withdraw_warning_point_text">  · </string>
+    <string name="mypage_withdraw_warning_1_text">모든 게시글 및 채팅방이 삭제돼요</string>
+    <string name="mypage_withdraw_warning_2_text">계정이 삭제 된 후에는 계정을 다시 살릴 수 없어요</string>
+    <string name="mypage_withdraw_warning_3_text">회원 탈퇴 후 7일간 재가입할 수 없어요</string>
+    <string name="mypage_withdraw_warning_4_text">매너온도, 관심, 거래 후기 등 모든 활동 정보가 삭제되고, 2줄 이상 시 이렇게 적혀요</string>
 
     <!--  POME Mypage -> Setting -> Alarm -->
     <string name="mypage_alarm_title_text">알림 설정</string>
