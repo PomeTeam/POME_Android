@@ -1,8 +1,10 @@
 package com.teampome.pome.presentation.mypage
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -36,11 +38,67 @@ class MarshmelloAdapter(
             binding.myTabMarshmello = myTabMarshmello
             context?.let{
                 when(myTabMarshmello.marshmelloName) {
-                    "record" -> Glide.with(context).load(R.drawable.marshmallow_level_4_pink).into(binding.ivArticleImage)
-                    "emotion" -> Glide.with(context).load(R.drawable.marshmallow_level_2_yellow).into(binding.ivArticleImage)
-                    "growth" -> Glide.with(context).load(R.drawable.marshmallow_level_4_mint).into(binding.ivArticleImage)
-                    "honest" -> Glide.with(context).load(R.drawable.ic_mashmellow).into(binding.ivArticleImage)
-                    else -> Glide.with(context).load(R.drawable.ic_mashmellow).into(binding.ivArticleImage)
+                    "record" ->  binding.mypageCardRecordTv.text = "기록말랑"
+                    "emotion" -> binding.mypageCardRecordTv.text = "공감말랑"
+                    "growth" -> binding.mypageCardRecordTv.text = "발전말랑"
+                    "honest" -> binding.mypageCardRecordTv.text = "솔직말랑"
+                }
+
+                if(myTabMarshmello.marshmelloLv == 0) {
+                    Glide.with(context).load(R.drawable.ic_mashmellow).into(binding.ivArticleImage)
+                    binding.mypageCardLevelTv.text = "Lv.1"
+                    binding.mypageCardLevelTv.setTextColor(ContextCompat.getColor(context, R.color.grey_4))
+                    binding.mypageCardLevelCl.setBackgroundResource(R.drawable.item_gray_oval)
+                    binding.mypageCardRecordCl.setBackgroundResource(R.drawable.item_grey1_r8_background)
+                    binding.mypageCardRecordTv.setTextColor(ContextCompat.getColor(context, R.color.grey_5))
+                } else if(myTabMarshmello.marshmelloLv == 1) {
+                    binding.mypageCardLevelTv.text = "Lv.1"
+                    if(myTabMarshmello.marshmelloName == "record") {
+                        //기록
+                        Glide.with(context).load(R.drawable.marshmallow_level_1_pink).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "emotion") {
+                        //공감
+                        Glide.with(context).load(R.drawable.marshmallow_level_1_blue).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "growth") {
+                        //발전
+                        Glide.with(context).load(R.drawable.marshmallow_level_1_yellow).into(binding.ivArticleImage)
+                    } else {
+                        //솔직
+                        Glide.with(context).load(R.drawable.marshmallow_level_1_mint).into(binding.ivArticleImage)
+                    }
+                } else if(myTabMarshmello.marshmelloLv == 2) {
+                    binding.mypageCardLevelTv.text = "Lv.2"
+                    if(myTabMarshmello.marshmelloName == "record") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_2_pink).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "emotion") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_2_blue).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "growth") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_2_yellow).into(binding.ivArticleImage)
+                    } else {
+                        Glide.with(context).load(R.drawable.marshmallow_level_2_mint).into(binding.ivArticleImage)
+                    }
+                } else if(myTabMarshmello.marshmelloLv == 3) {
+                    binding.mypageCardLevelTv.text = "Lv.3"
+                    if(myTabMarshmello.marshmelloName == "record") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_3_pink).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "emotion") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_3_blue).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "growth") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_3_yellow).into(binding.ivArticleImage)
+                    } else {
+                        Glide.with(context).load(R.drawable.marshmallow_level_3_mint).into(binding.ivArticleImage)
+                    }
+                } else {
+                    binding.mypageCardLevelTv.text = "Lv.4"
+                    if(myTabMarshmello.marshmelloName == "record") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_4_pink).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "emotion") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_4_blue).into(binding.ivArticleImage)
+                    } else if(myTabMarshmello.marshmelloName == "growth") {
+                        Glide.with(context).load(R.drawable.marshmallow_level_4_yellow).into(binding.ivArticleImage)
+                    } else {
+                        Glide.with(context).load(R.drawable.marshmallow_level_4_mint).into(binding.ivArticleImage)
+                    }
                 }
             }
         }
