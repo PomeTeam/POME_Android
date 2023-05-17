@@ -1,6 +1,7 @@
 package com.teampome.pome.presentation.friend
 
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -42,9 +43,16 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
             when(it) {
                 is ApiResponse.Success -> {
                     it.data.data?.let { list ->
-                        (binding.friendListRv.adapter as FriendGetAdapter).submitList(
-                            list
-                        )
+                        if(list.isEmpty()) {
+                            binding.friendNotIv.visibility = View.VISIBLE
+                            binding.friendNotTv.visibility = View.VISIBLE
+                        } else {
+                            binding.friendNotIv.visibility = View.GONE
+                            binding.friendNotTv.visibility = View.GONE
+                            (binding.friendListRv.adapter as FriendGetAdapter).submitList(
+                                list
+                            )
+                        }
                     }
                 }
                 is ApiResponse.Failure -> {
@@ -125,11 +133,6 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 //            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = friendRecordGetAdapter
-            addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(), DividerItemDecoration.VERTICAL
-                )
-            )
         }
 
         // 클릭 리스너

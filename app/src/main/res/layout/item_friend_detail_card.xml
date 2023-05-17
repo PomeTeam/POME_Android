@@ -231,6 +231,15 @@
                 android:layout_marginRight="24dp"
                 app:layout_constraintTop_toTopOf="@+id/friend_detail_friends_emotion_container_cl"/>
 
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="23dp"
+                android:background="@color/grey_2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
