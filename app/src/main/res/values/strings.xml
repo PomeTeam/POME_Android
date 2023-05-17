@@ -257,4 +257,9 @@
     <string name="remind_no_goal_subtitle_text">목표 만들기</string>
     <string name="register_cert_num_check_fail_text">인증번호가 일치하지 않아요</string>
     <string name="add_goal_date_check_fail_text">목표 기간은 한 달 이내로 설정할 수 있어요!</string>
+    <string name="setting_page_icon_image_description">setting page로 넘어가는 icon image</string>
+    <string name="user_profile_image_description">기본 user profile image</string>
+    <string name="identifier_image_description">목표 보관함 identifier image</string>
+    <string name="mypage_arrow_description">목표 보관함 다음으로 넘어가는 화살표</string>
+    <string name="what_is_marshmallow_text">마시멜로란?</string>
 </resources>

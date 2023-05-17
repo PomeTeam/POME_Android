@@ -17,8 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/ic_setting"
+            tools:src="@drawable/ic_setting"
+            android:contentDescription="@string/setting_page_icon_image_description"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="37dp"
             android:src="@drawable/user_profile_example"
+            tools:src="@drawable/user_profile_example"
+            android:contentDescription="@string/user_profile_image_description"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mypage_setting_iv" />
@@ -39,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/friend_profile_name"
+            tools:text="@string/friend_profile_name"
             android:textColor="@color/grey_8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -58,8 +63,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="15dp"
-                android:paddingLeft="14dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="14dp"
                 android:src="@drawable/ic_mypage_main_logo"
+                tools:src="@drawable/ic_mypage_main_logo"
+                android:contentDescription="@string/identifier_image_description"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,8 +77,9 @@
                 style="@style/Pome.SemiBold.16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/mypage_main_goal_text"
+                tools:text="@string/mypage_main_goal_text"
                 android:textColor="@color/grey_8"
                 app:layout_constraintLeft_toRightOf="@id/mypage_main_logo_iv"
                 app:layout_constraintTop_toTopOf="@id/mypage_main_logo_iv" />
@@ -80,8 +89,9 @@
                 style="@style/Pome.Medium.14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/mypage_main_last_goal_text"
+                tools:text="@string/mypage_main_last_goal_text"
                 android:textColor="@color/grey_6"
                 app:layout_constraintBottom_toBottomOf="@id/mypage_main_logo_iv"
                 app:layout_constraintLeft_toRightOf="@id/mypage_main_logo_iv" />
@@ -90,8 +100,9 @@
                 android:id="@+id/mypage_ic_arrow_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
+                android:layout_marginEnd="15dp"
                 android:src="@drawable/ic_mypage_goal_arrow"
+                android:contentDescription="@string/mypage_arrow_description"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="@id/mypage_main_goal_tv" />
 
@@ -102,18 +113,34 @@
             style="@style/Pome.SemiBold.18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="21dp"
+            android:layout_marginStart="21dp"
             android:layout_marginTop="24dp"
             android:text="@string/mypage_marshmallow_text"
             android:textColor="@color/grey_9"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mypage_main_cl" />
 
+        <TextView
+            android:id="@+id/mypage_what_is_marshmallow_tv"
+            style="@style/Pome.SemiBold.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey1_r12_background"
+            android:textColor="@color/grey_5"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:text="@string/what_is_marshmallow_text"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/mypage_marshmallow_tv"
+            app:layout_constraintBottom_toBottomOf="@id/mypage_marshmallow_tv"
+            app:layout_constraintStart_toEndOf="@id/mypage_marshmallow_tv"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/record_emotion_rv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="2dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -44,7 +44,7 @@ class MarshmelloAdapter(
                 }
 
                 if(myTabMarshmello.marshmelloLv == 0) {
-                    Glide.with(context).load(R.drawable.ic_mashmellow).into(binding.ivArticleImage)
+                    Glide.with(context).load(R.drawable.marshmallow_lock).into(binding.ivArticleImage)
                     binding.mypageCardLevelTv.text = "Lv.1"
                     binding.mypageCardLevelTv.setTextColor(ContextCompat.getColor(context, R.color.grey_4))
                     binding.mypageCardLevelCl.setBackgroundResource(R.drawable.item_gray_oval)
