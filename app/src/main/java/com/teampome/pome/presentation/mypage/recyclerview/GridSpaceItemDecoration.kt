@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.recyclerview
 
 import android.graphics.Rect
 import android.view.View

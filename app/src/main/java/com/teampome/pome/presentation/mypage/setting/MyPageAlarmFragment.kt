@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.setting
 
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.findNavController

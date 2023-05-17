@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentFriendDeleteDialogBinding
 import com.teampome.pome.databinding.FragmentMypageFriendBinding
+import com.teampome.pome.presentation.mypage.recyclerview.FriendDeleteAdapter
+import com.teampome.pome.presentation.mypage.util.OnDeleteFriendClickListener
 import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
@@ -66,7 +68,7 @@ class MyPageFriendFragment : BaseFragment<FragmentMypageFriendBinding>(R.layout.
 
     private fun setUpRecyclerView(){
         friendDeleteAdapter = FriendDeleteAdapter().apply {
-            setOnDeleteFriendClickListener(object : OnDeleteFriendClickListener{
+            setOnDeleteFriendClickListener(object : OnDeleteFriendClickListener {
                 override fun onDeleteFriendClick(friendId: String, position: Int) {
                     friendDeleteDialog(friendId)
                     //친구 삭제 다이얼로그

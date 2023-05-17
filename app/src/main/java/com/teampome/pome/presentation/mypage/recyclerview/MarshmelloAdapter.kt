@@ -1,6 +1,5 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.recyclerview
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup

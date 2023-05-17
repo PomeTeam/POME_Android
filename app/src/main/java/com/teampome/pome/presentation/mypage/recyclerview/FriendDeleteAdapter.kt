@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemDeleteFriendsListBinding
 import com.teampome.pome.model.response.GetFriends
-import com.teampome.pome.presentation.addfriends.recyclerview.OnAddFriendClickListener
+import com.teampome.pome.presentation.mypage.util.OnDeleteFriendClickListener
 
 // 마이탭에서 친구 삭제 리스트 어댑터
 class FriendDeleteAdapter : ListAdapter<GetFriends, FriendDeleteAdapter.FriendDeleteViewHolder>(

@@ -1,4 +1,4 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.goal
 
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R

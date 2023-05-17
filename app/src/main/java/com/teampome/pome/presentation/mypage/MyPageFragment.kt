@@ -1,6 +1,5 @@
 package com.teampome.pome.presentation.mypage
 
-import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -9,10 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageBinding
-import com.teampome.pome.presentation.friend.FriendGetAdapter
+import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoration
+import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.AddFriendsViewModel
 import com.teampome.pome.viewmodel.MyTabViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
