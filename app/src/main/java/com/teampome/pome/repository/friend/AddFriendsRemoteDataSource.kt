@@ -34,4 +34,8 @@ class AddFriendsRemoteDataSource @Inject constructor(
     override fun deleteFriend(friendId: String): Flow<ApiResponse<BasePomeResponse<DeleteFriend>>> = apiRequestFlow{
         service.deleteFriend(friendId)
     }
+
+    override fun getAllFriendRecord(): Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = apiRequestFlow {
+        service.getAllFriendRecord()
+    }
 }

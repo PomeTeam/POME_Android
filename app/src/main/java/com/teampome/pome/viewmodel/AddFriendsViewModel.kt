@@ -45,6 +45,10 @@ class AddFriendsViewModel @Inject constructor(
     private val _deleteFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriend>>>()
     val deleteFriendResponse : LiveData<ApiResponse<BasePomeResponse<DeleteFriend>>> = _deleteFriendResponse
 
+    //모든 친구 기록 조회
+    private val _getAllFriendRecordResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>()
+    val getAllFriendRecordResponse : LiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = _getAllFriendRecordResponse
+
 
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _findFriendsDataResponse,
@@ -80,11 +84,19 @@ class AddFriendsViewModel @Inject constructor(
         repository.getFriendRecord(userId)
     }
 
+    //친구 삭제
     fun deleteFriend(friendId : String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _deleteFriendResponse,
         coroutineErrorHandler
     ){
         repository.deleteFriend(friendId)
+    }
+
+    fun getAllRecordFriend(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getAllFriendRecordResponse,
+        coroutineErrorHandler
+    ){
+        repository.getAllFriendRecord()
     }
 
     //친구 조회

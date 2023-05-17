@@ -21,7 +21,11 @@ interface AddFriendsDataSource {
         userId : String
     ) : Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>
 
+    //친구 삭제
     fun deleteFriend(
         friendId: String
     ) : Flow<ApiResponse<BasePomeResponse<DeleteFriend>>>
+
+    //모든 친구 기록 조회
+    fun getAllFriendRecord() : Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>
 }

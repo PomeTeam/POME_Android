@@ -37,8 +37,14 @@ interface AddFriendsService {
         @Path("userId") userId: String
     ) : Response<BasePomeResponse<BaseAllData<GetFriendRecord>>>
 
+    //친구 삭제
     @DELETE("api/v1/users/friend/{friendId}")
     suspend fun deleteFriend(
         @Path("friendId") friendId: String
     ) : Response<BasePomeResponse<DeleteFriend>>
+
+    //모든 친구 기록 조회
+    @GET("api/v1/records/friends")
+    suspend fun getAllFriendRecord() :
+            Response<BasePomeResponse<BaseAllData<GetFriendRecord>>>
 }

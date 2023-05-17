@@ -24,6 +24,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
     override fun initView() {
         setUpRecyclerView()
         friendRecordSetUpRecyclerView()
+        getAllFriendRecord()
 
         //친구 조회
         viewModel.getFriend(object : CoroutineErrorHandler{
@@ -65,12 +66,35 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                     }
                 }
                 is ApiResponse.Failure -> {
-
+                    hideLoading()
                 }
                 is ApiResponse.Loading -> {
                     showLoading()
                 }
             }
+        }
+
+        viewModel.getAllFriendRecordResponse.observe(viewLifecycleOwner){
+            when(it) {
+                is ApiResponse.Success -> {
+                    hideLoading()
+                    it.data.data?.content?.let { list ->
+                        (binding.friendDetailRv.adapter as FriendRecordGetAdapter).submitList(
+                            list
+                        )
+                    }
+                }
+                is ApiResponse.Failure -> {
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                    showLoading()
+                }
+            }
+        }
+
+        binding.friendAllIv.setOnClickListener {
+            getAllFriendRecord()
         }
     }
 
@@ -112,5 +136,14 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         friendRecordGetAdapter.setOnItemClickListener {
             Toast.makeText(requireContext(), "${it.nickname}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun getAllFriendRecord() {
+        viewModel.getAllRecordFriend(object : CoroutineErrorHandler{
+            override fun onError(message: String) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                hideLoading()
+            }
+        })
     }
 }
