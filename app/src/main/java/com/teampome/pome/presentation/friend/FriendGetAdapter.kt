@@ -35,7 +35,11 @@ class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewH
     ) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(getFriends: GetFriends){
-            binding.getFriends = getFriends
+            binding.friendAllTv.text = if (getFriends.friendNickName.length >= 3) {
+                "${getFriends.friendNickName.substring(0, 3)}..."
+            } else {
+                getFriends.friendNickName
+            }
         }
 
     }
