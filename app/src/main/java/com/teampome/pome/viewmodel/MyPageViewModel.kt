@@ -1,9 +1,8 @@
 package com.teampome.pome.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.mytab.MyTabMarshmello
 import com.teampome.pome.repository.mypage.MyPageRepository
@@ -17,17 +16,17 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
-class MyTabViewModel @Inject constructor(
+class MyPageViewModel @Inject constructor(
     private val repository: MyPageRepository,
     private val userManager: UserManager
 ): BaseViewModel() {
 
-    private val userName = runBlocking {
-        userManager.getUserNickName().first()
+    private val userProfileUrl = runBlocking {
+        userManager.getUserProfileUrl().first()
     }
 
     init {
-
+        Log.d("userUrl", "user Url? : $userProfileUrl")
     }
 
     private val _getMarshmello = MutableLiveData<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>>()

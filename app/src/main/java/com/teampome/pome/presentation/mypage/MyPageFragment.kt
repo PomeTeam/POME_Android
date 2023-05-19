@@ -12,14 +12,14 @@ import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoratio
 import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.MyTabViewModel
+import com.teampome.pome.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탭
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
 
-    private val viewModel: MyTabViewModel by viewModels()
+    private val viewModel: MyPageViewModel by viewModels()
 
     private lateinit var marshmelloAdapter: MarshmelloAdapter
     override fun initView() {

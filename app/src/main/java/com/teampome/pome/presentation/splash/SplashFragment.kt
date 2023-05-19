@@ -92,6 +92,11 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>(R.layout.fragment_spl
                                 userManager.deleteUserNickName()
                             }
                             userManager.saveUserNickName(userInfo.nickName)
+
+                            if(userManager.getUserProfileUrl().first() != null) {
+                                userManager.deleteUserProfileUrl()
+                            }
+                            userManager.saveUserProfileUrl(userInfo.imageURL)
                         }
 
                         moveToRecord()

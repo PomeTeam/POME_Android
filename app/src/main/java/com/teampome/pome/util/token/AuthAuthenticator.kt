@@ -45,7 +45,7 @@ class AuthAuthenticator @Inject constructor(
             newToken.body()?.let { basePomeResponse ->
                 basePomeResponse.data?.let {
                     userManager.saveUserId(it.userId)
-                    userManager.saveUserNickName(it.nickname)
+                    userManager.saveUserNickName(it.nickName)
                     tokenManager.saveToken(it.accessToken)
                     response.request.newBuilder()
                         .header("ACCESS-TOKEN", it.accessToken)

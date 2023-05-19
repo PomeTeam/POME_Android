@@ -105,6 +105,11 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                                 userManager.deleteUserNickName()
                             }
                             userManager.saveUserNickName(userInfo.nickName)
+
+                            if(userManager.getUserProfileUrl().first() != null) {
+                                userManager.deleteUserProfileUrl()
+                            }
+                            userManager.saveUserProfileUrl(userInfo.imageURL)
                         }
 
                         moveToRecord()
