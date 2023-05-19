@@ -25,7 +25,13 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     override fun initView() {
         setUpRecyclerView()
 
-        viewModel.getMarshmello(object  : CoroutineErrorHandler{
+        viewModel.getPastGoals(object : CoroutineErrorHandler {
+            override fun onError(message: String) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        viewModel.getMarshmello(object : CoroutineErrorHandler{
             override fun onError(message: String) {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
                 hideLoading()
@@ -34,6 +40,16 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     override fun initListener() {
+        viewModel.pastGoals.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {}
+                is ApiResponse.Failure -> {}
+                is ApiResponse.Loading -> {}
+            }
+        }
+
+        viewModel.pastGoalsCnt.observe(viewLifecycleOwner) {}
+
         viewModel.getMarshmello.observe(viewLifecycleOwner){
             when(it) {
                 is ApiResponse.Success -> {
