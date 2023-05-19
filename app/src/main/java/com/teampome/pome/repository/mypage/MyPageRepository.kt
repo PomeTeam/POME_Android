@@ -1,6 +1,5 @@
 package com.teampome.pome.repository.mypage
 
-import com.teampome.pome.model.request.PhoneNumberDataBody
 import javax.inject.Inject
 
 class MyPageRepository @Inject constructor(

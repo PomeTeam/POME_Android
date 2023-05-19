@@ -104,7 +104,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>(R.layout.fragment
                             if (userManager.getUserNickName().first() != null) {
                                 userManager.deleteUserNickName()
                             }
-                            userManager.saveUserNickName(userInfo.nickname)
+                            userManager.saveUserNickName(userInfo.nickName)
                         }
 
                         moveToRecord()

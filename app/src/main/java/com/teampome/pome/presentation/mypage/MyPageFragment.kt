@@ -75,6 +75,5 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             adapter = marshmelloAdapter
             addItemDecoration(GridSpaceItemDecoration(2))
         }
-
     }
 }

@@ -17,6 +17,8 @@ open class BaseViewModel : ViewModel() {
      *   정상적으로 data를 가져오는 경우, liveData에 값을 쓴다.
      *   error가 발생한 경우, errorHandler에 error결과를 콜백한다.
      *   뷰모델이 destroy되는 경우, 자동으로 job을 종료시킨다.
+     *
+     *   병렬 실행이 불가능해보이는데?... 개선 필요
      */
     protected fun <T> baseRequest(liveData: MutableLiveData<T>, errorHandler: CoroutineErrorHandler, request: () -> Flow<T>) {
         job = viewModelScope.launch(Dispatchers.IO + CoroutineExceptionHandler {_, error ->
