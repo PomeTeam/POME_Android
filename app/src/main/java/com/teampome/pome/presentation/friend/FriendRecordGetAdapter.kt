@@ -11,10 +11,13 @@ import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 
 //친구 기록 조회
-class FriendRecordGetAdapter : ListAdapter<GetFriendRecord, FriendRecordGetAdapter.FriendGetRecordViewHolder>(BookDiffCallback) {
+class FriendRecordGetAdapter(
+    private val clickListener: FriendDetailRecordClickListener
+) : ListAdapter<GetFriendRecord, FriendRecordGetAdapter.FriendGetRecordViewHolder>(BookDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendGetRecordViewHolder {
         return FriendGetRecordViewHolder(
+            clickListener,
             ItemFriendDetailCardBinding.inflate(LayoutInflater.from(parent.context), parent, false),
         )
     }
@@ -33,11 +36,18 @@ class FriendRecordGetAdapter : ListAdapter<GetFriendRecord, FriendRecordGetAdapt
     }
 
     inner class FriendGetRecordViewHolder(
+        private val friendDetailRecordClickListener: FriendDetailRecordClickListener,
         private val binding : ItemFriendDetailCardBinding,
     ) : RecyclerView.ViewHolder(binding.root){
 
         fun bind(getFriedRecord: GetFriendRecord){
-            binding.getFriendRecord = getFriedRecord
+            with(binding) {
+                getFriendRecord = getFriedRecord
+
+                friendDetailMoreSettingIv.setOnClickListener {
+                    friendDetailRecordClickListener.onFriendDetailMoreClick()
+                }
+            }
         }
 
     }

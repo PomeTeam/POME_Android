@@ -221,7 +221,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv"
+                android:id="@+id/friend_detail_more_setting_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="6dp"

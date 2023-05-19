@@ -6,8 +6,12 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentFriendBinding
+import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
+import com.teampome.pome.databinding.PomeFriendSettingBottomSheetDialogBinding
+import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -15,17 +19,21 @@ import com.teampome.pome.viewmodel.AddFriendsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_friend) {
+class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_friend), FriendDetailRecordClickListener {
 
     private val viewModel: AddFriendsViewModel by viewModels()
 
     private lateinit var friendGetAdapter: FriendGetAdapter
     private lateinit var friendRecordGetAdapter: FriendRecordGetAdapter
 
+    private lateinit var pomeFriendSettingBottomSheetDialogBinding : PomeFriendSettingBottomSheetDialogBinding
+    private lateinit var friendSettingBottomSheetDialog: BottomSheetDialog
+
     override fun initView() {
         setUpRecyclerView()
         friendRecordSetUpRecyclerView()
         getAllFriendRecord()
+        makeFriendSettingBottomDialog()
 
         //친구 조회
         viewModel.getFriend(object : CoroutineErrorHandler{
@@ -42,6 +50,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         viewModel.getFriendsResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
+                    hideLoading()
                     it.data.data?.let { list ->
                         if(list.isEmpty()) {
                             binding.friendNotIv.visibility = View.VISIBLE
@@ -56,9 +65,11 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                     }
                 }
                 is ApiResponse.Failure -> {
-
+                    hideLoading()
                 }
-                is ApiResponse.Loading -> {}
+                is ApiResponse.Loading -> {
+                    showLoading()
+                }
             }
         }
 
@@ -128,7 +139,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
     //친구 기록 조회 RV
     private fun friendRecordSetUpRecyclerView(){
-        friendRecordGetAdapter = FriendRecordGetAdapter()
+        friendRecordGetAdapter = FriendRecordGetAdapter(this)
         binding.friendDetailRv.apply {
 //            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -148,5 +159,28 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 hideLoading()
             }
         })
+    }
+
+    private fun makeFriendSettingBottomDialog() {
+        friendSettingBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeFriendSettingBottomSheetDialogBinding = PomeFriendSettingBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+
+        friendSettingBottomSheetDialog.setContentView(pomeFriendSettingBottomSheetDialogBinding.root)
+
+        pomeFriendSettingBottomSheetDialogBinding.apply{
+            //숨기기
+            pomeFriendBottomSheetDialogHideTv.setOnClickListener {
+                friendSettingBottomSheetDialog.dismiss()
+            }
+
+            //신고
+            pomeFriendBottomSheetDialogReportTv.setOnClickListener {
+                friendSettingBottomSheetDialog.dismiss()
+            }
+        }
+    }
+
+    override fun onFriendDetailMoreClick() {
+        friendSettingBottomSheetDialog.show()
     }
 }
