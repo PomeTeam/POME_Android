@@ -21,12 +21,16 @@ class MyPageViewModel @Inject constructor(
     private val userManager: UserManager
 ): BaseViewModel() {
 
-    private val userProfileUrl = runBlocking {
+    val userName = runBlocking {
+        userManager.getUserNickName().first()
+    }
+
+    val userProfileUrl = runBlocking {
         userManager.getUserProfileUrl().first()
     }
 
     init {
-        Log.d("userUrl", "user Url? : $userProfileUrl")
+        Log.d("userUrl", "user info? : $userName , $userProfileUrl")
     }
 
     private val _getMarshmello = MutableLiveData<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>>()
