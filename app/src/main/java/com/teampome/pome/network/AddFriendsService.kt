@@ -4,6 +4,7 @@ import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
 import com.teampome.pome.model.response.DeleteFriend
+import com.teampome.pome.model.response.DeleteFriendRecord
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import retrofit2.Response
@@ -47,4 +48,10 @@ interface AddFriendsService {
     @GET("api/v1/records/friends")
     suspend fun getAllFriendRecord() :
             Response<BasePomeResponse<BaseAllData<GetFriendRecord>>>
+
+    //기록 숨기기
+    @DELETE("api/v1/records/{recordId}")
+    suspend fun deleteFriendRecord(
+        @Path("recordId") recordId: Int
+    ) : Response<BasePomeResponse<DeleteFriendRecord>>
 }

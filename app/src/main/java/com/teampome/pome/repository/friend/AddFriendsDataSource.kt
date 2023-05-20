@@ -4,6 +4,7 @@ import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
 import com.teampome.pome.model.response.DeleteFriend
+import com.teampome.pome.model.response.DeleteFriendRecord
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.util.base.ApiResponse
@@ -28,4 +29,6 @@ interface AddFriendsDataSource {
 
     //모든 친구 기록 조회
     fun getAllFriendRecord() : Flow<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>
+
+    fun deleteFriendRecord(recordId : Int) : Flow<ApiResponse<BasePomeResponse<DeleteFriendRecord>>>
 }

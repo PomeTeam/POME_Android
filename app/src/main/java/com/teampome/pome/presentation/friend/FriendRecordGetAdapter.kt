@@ -45,7 +45,7 @@ class FriendRecordGetAdapter(
                 getFriendRecord = getFriedRecord
 
                 friendDetailMoreSettingIv.setOnClickListener {
-                    friendDetailRecordClickListener.onFriendDetailMoreClick()
+                    friendDetailRecordClickListener.onFriendDetailMoreClick(getFriedRecord.id)
                 }
             }
         }

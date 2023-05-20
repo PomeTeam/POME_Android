@@ -33,7 +33,6 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         setUpRecyclerView()
         friendRecordSetUpRecyclerView()
         getAllFriendRecord()
-        makeFriendSettingBottomDialog()
 
         //친구 조회
         viewModel.getFriend(object : CoroutineErrorHandler{
@@ -112,6 +111,21 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
             }
         }
 
+        viewModel.deleteFriendRecord.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Success -> {
+                    hideLoading()
+                    Toast.makeText(requireContext(), "해당 게시글을 숨겼어요", Toast.LENGTH_SHORT).show()
+                }
+                is ApiResponse.Failure -> {
+                    hideLoading()
+                }
+                is ApiResponse.Loading -> {
+                    showLoading()
+                }
+            }
+        }
+
         binding.friendAllIv.setOnClickListener {
             getAllFriendRecord()
         }
@@ -161,7 +175,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         })
     }
 
-    private fun makeFriendSettingBottomDialog() {
+    private fun makeFriendSettingBottomDialog(recordId: Int) {
         friendSettingBottomSheetDialog = BottomSheetDialog(requireContext())
         pomeFriendSettingBottomSheetDialogBinding = PomeFriendSettingBottomSheetDialogBinding.inflate(layoutInflater, null, false)
 
@@ -170,6 +184,12 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         pomeFriendSettingBottomSheetDialogBinding.apply{
             //숨기기
             pomeFriendBottomSheetDialogHideTv.setOnClickListener {
+                viewModel.deleteFriendRecord(recordId, object : CoroutineErrorHandler{
+                    override fun onError(message: String) {
+                        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                        hideLoading()
+                    }
+                })
                 friendSettingBottomSheetDialog.dismiss()
             }
 
@@ -180,7 +200,8 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         }
     }
 
-    override fun onFriendDetailMoreClick() {
+    override fun onFriendDetailMoreClick(recordId : Int) {
+        makeFriendSettingBottomDialog(recordId)
         friendSettingBottomSheetDialog.show()
     }
 }
