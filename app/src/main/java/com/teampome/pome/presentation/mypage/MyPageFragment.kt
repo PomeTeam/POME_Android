@@ -1,16 +1,18 @@
 package com.teampome.pome.presentation.mypage
 
+import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
-import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageBinding
 import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoration
 import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
 import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +24,14 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     private val viewModel: MyPageViewModel by viewModels()
 
     private lateinit var marshmelloAdapter: MarshmelloAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+    }
+
     override fun initView() {
         setUpRecyclerView()
 

@@ -97,7 +97,7 @@
 
     <!--  POME Mypage  -->
     <string name="mypage_main_goal_text">목표 보관함</string>
-    <string name="mypage_main_last_goal_text">다시 보고 싶은 지난 목표가 2건 있어요</string>
+    <string name="mypage_main_last_goal_text">다시 보고 싶은 지난 목표가 %d건 있어요</string>
     <string name="mypage_marshmallow_text">마시멜로 모으기</string>
 
     <!--  POME Mypage -> Goal Page  -->
