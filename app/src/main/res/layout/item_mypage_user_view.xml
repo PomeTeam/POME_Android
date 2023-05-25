@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.teampome.pome.viewmodel.MyPageViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/mypage_setting_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_setting"
+            tools:src="@drawable/ic_setting"
+            android:contentDescription="@string/setting_page_icon_image_description"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/mypage_profile_aiv"
+            android:layout_width="78dp"
+            android:layout_height="78dp"
+            android:layout_marginTop="37dp"
+            bind:pomeProfileImage="@{viewModel.userProfileUrl}"
+            tools:src="@drawable/user_profile_example"
+            android:scaleType="fitXY"
+            android:contentDescription="@string/user_profile_image_description"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mypage_setting_iv" />
+
+        <TextView
+            android:id="@+id/mypage_profile_name_tv"
+            style="@style/Pome.SemiBold.18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{viewModel.userName}"
+            tools:text="@string/friend_profile_name"
+            android:textColor="@color/grey_8"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mypage_profile_aiv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
