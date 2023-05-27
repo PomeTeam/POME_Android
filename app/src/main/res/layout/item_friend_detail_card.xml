@@ -238,7 +238,7 @@
                 android:background="@color/grey_2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv" />
+                app:layout_constraintTop_toBottomOf="@+id/friend_detail_more_setting_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
