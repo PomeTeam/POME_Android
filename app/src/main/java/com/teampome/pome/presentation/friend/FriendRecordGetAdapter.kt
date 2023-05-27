@@ -10,9 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.teampome.pome.R
 import com.teampome.pome.databinding.ItemFriendDetailCardBinding
-import com.teampome.pome.databinding.ItemFriendsListBinding
 import com.teampome.pome.model.response.GetFriendRecord
-import com.teampome.pome.model.response.GetFriends
 
 //친구 기록 조회
 class FriendRecordGetAdapter(
@@ -67,6 +65,14 @@ class FriendRecordGetAdapter(
                 if(getFriedRecord.emotionResponse.myEmotion == null) {
                     context?.let{ context ->
                         Glide.with(context).load(R.drawable.emoji_mint_28).into(friendDetailCardFirstFriendEmotionAiv)
+                    }
+                }
+
+                friendDetailCardFirstFriendEmotionAiv.setOnClickListener {
+                    if(friendEmojiRegisterCl.visibility == View.VISIBLE) {
+                        friendEmojiRegisterCl.visibility = View.GONE
+                    } else {
+                        friendEmojiRegisterCl.visibility = View.VISIBLE
                     }
                 }
             }
