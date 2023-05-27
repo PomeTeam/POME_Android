@@ -1,10 +1,14 @@
 package com.teampome.pome.presentation.friend
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.teampome.pome.R
 import com.teampome.pome.databinding.ItemFriendDetailCardBinding
 import com.teampome.pome.databinding.ItemFriendsListBinding
 import com.teampome.pome.model.response.GetFriendRecord
@@ -12,7 +16,8 @@ import com.teampome.pome.model.response.GetFriends
 
 //친구 기록 조회
 class FriendRecordGetAdapter(
-    private val clickListener: FriendDetailRecordClickListener
+    private val clickListener: FriendDetailRecordClickListener,
+    private val context : Context?
 ) : ListAdapter<GetFriendRecord, FriendRecordGetAdapter.FriendGetRecordViewHolder>(BookDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendGetRecordViewHolder {
@@ -46,6 +51,23 @@ class FriendRecordGetAdapter(
 
                 friendDetailMoreSettingIv.setOnClickListener {
                     friendDetailRecordClickListener.onFriendDetailMoreClick(getFriedRecord.id)
+                }
+
+                if(getFriedRecord.emotionResponse.friendEmotions.isEmpty()) {
+                    friendDetailCardLastFriendEmotionCountTv.visibility = View.INVISIBLE
+                } else {
+                    val count = getFriedRecord.emotionResponse.friendEmotions.size
+                    if(count >= 10) {
+                        friendDetailCardLastFriendEmotionCountTv.text = "9+"
+                    } else {
+                        friendDetailCardLastFriendEmotionCountTv.text = "+$count"
+                    }
+                }
+
+                if(getFriedRecord.emotionResponse.myEmotion == null) {
+                    context?.let{ context ->
+                        Glide.with(context).load(R.drawable.emoji_mint_28).into(friendDetailCardFirstFriendEmotionAiv)
+                    }
                 }
             }
         }

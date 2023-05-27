@@ -13,16 +13,30 @@ data class GetFriendRecord(
     val useComment: String,
     val oneLineMind: String,
     val createdAt: String,
-    val emotionResponse: FriendEmotion
+    val emotionResponse: EmotionResponse
 ) : Parcelable
 
 @Parcelize
-data class FriendEmotion(
+data class EmotionResponse(
     val firstEmotion : Int,
     val secondEmotion : Int,
-    val myEmotion : Int,
-    val friendEmotion : List<Int>
+    val myEmotion : Int?,
+    val friendEmotions : List<FriendEmotionResponse>
 ) : Parcelable
+
+@Parcelize
+data class FriendEmotionResponse(
+    val nickname : String,
+    val emotionId : Int,
+) : Parcelable
+
+//@Parcelize
+//data class FriendEmotion(
+//    val firstEmotion : Int,
+//    val secondEmotion : Int,
+//    val myEmotion : Int?,
+//    val friendEmotions : List<Int>?
+//) : Parcelable
 
 /*
 "id": 3,

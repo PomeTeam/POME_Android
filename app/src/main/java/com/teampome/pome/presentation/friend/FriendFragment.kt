@@ -153,7 +153,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
     //친구 기록 조회 RV
     private fun friendRecordSetUpRecyclerView(){
-        friendRecordGetAdapter = FriendRecordGetAdapter(this)
+        friendRecordGetAdapter = FriendRecordGetAdapter(this, context)
         binding.friendDetailRv.apply {
 //            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

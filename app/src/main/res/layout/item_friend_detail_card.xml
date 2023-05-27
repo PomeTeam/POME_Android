@@ -189,7 +189,7 @@
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:scaleType="fitXY"
-                    android:src="@drawable/emoji_mint_fiter_what"
+                    android:src="@drawable/emoji_mint_28"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
