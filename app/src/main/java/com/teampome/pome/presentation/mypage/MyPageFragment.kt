@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentMypageBinding
+import com.teampome.pome.model.mytab.MyPageView
+import com.teampome.pome.model.mytab.MyTabMarshmello
 import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoration
 import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
 import com.teampome.pome.util.base.ApiResponse
