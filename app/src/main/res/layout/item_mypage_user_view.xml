@@ -6,8 +6,11 @@
 
     <data>
         <variable
-            name="viewModel"
-            type="com.teampome.pome.viewmodel.MyPageViewModel" />
+            name="userProfileUrl"
+            type="String" />
+        <variable
+            name="userName"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,7 +34,7 @@
             android:layout_width="78dp"
             android:layout_height="78dp"
             android:layout_marginTop="37dp"
-            bind:pomeProfileImage="@{viewModel.userProfileUrl}"
+            bind:pomeProfileImage="@{userProfileUrl}"
             tools:src="@drawable/user_profile_example"
             android:scaleType="fitXY"
             android:contentDescription="@string/user_profile_image_description"
@@ -45,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{viewModel.userName}"
+            android:text="@{userName == null ? `UnKnown` : userName}"
             tools:text="@string/friend_profile_name"
             android:textColor="@color/grey_8"
             app:layout_constraintLeft_toLeftOf="parent"

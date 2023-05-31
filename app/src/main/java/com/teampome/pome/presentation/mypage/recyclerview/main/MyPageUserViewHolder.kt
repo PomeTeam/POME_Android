@@ -7,7 +7,10 @@ class MyPageUserViewHolder(
     private val binding: ItemMypageUserViewBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind() {
+    fun bind(userName: String, userProfileUrl: String) {
+        binding.userName = userName
+        binding.userProfileUrl = userProfileUrl
 
+        binding.executePendingBindings()
     }
 }

@@ -86,15 +86,14 @@ class MyPageViewModel @Inject constructor(
         _myPageViewDataList.value = listOf(
             MyPageView(
                 viewType = MyPageViewType.UserView,
-                marshmello = null
+                userName = userName,
+                userProfileUrl = userProfileUrl
             ),
             MyPageView(
                 viewType = MyPageViewType.GoalStoreView,
-                marshmello = null
             ),
             MyPageView(
                 viewType = MyPageViewType.MarshmallowTitleView,
-                marshmello = null
             ),
             MyPageView(
                 viewType = MyPageViewType.MarshmallowContentView,

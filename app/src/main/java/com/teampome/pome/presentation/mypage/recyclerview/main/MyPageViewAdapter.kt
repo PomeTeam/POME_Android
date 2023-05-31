@@ -58,9 +58,15 @@ class MyPageViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(holder) {
+            is MyPageUserViewHolder -> {
+                holder.bind(
+                    userName = pageData[position].userName ?: "",
+                    userProfileUrl = pageData[position].userProfileUrl ?: ""
+                )
+            }
             is MyPageMarshMallowContentViewHolder -> {
                 // 이떄 중첩 RecyclerView 적용
-                (holder as MyPageMarshMallowContentViewHolder).bind()
+                holder.bind()
             }
         }
     }
