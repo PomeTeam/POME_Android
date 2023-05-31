@@ -91,6 +91,7 @@ class MyPageViewModel @Inject constructor(
             ),
             MyPageView(
                 viewType = MyPageViewType.GoalStoreView,
+                goalCnt = pastGoalCnt.value ?: 0
             ),
             MyPageView(
                 viewType = MyPageViewType.MarshmallowTitleView,

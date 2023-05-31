@@ -7,7 +7,9 @@ class MyPageGoalStoreViewHolder(
     private val binding: ItemMypageGoalStoreViewBinding
 ): RecyclerView.ViewHolder(binding.root) {
 
-    fun bind() {
+    fun bind(goalCnt: Int) {
+        binding.goalCnt = goalCnt
 
+        binding.executePendingBindings()
     }
 }

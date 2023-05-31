@@ -64,6 +64,11 @@ class MyPageViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     userProfileUrl = pageData[position].userProfileUrl ?: ""
                 )
             }
+            is MyPageGoalStoreViewHolder -> {
+                holder.bind(
+                    goalCnt = pageData[position].goalCnt
+                )
+            }
             is MyPageMarshMallowContentViewHolder -> {
                 // 이떄 중첩 RecyclerView 적용
                 holder.bind()

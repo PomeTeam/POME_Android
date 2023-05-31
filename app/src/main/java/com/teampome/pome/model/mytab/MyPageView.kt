@@ -6,5 +6,6 @@ data class MyPageView(
     val viewType: MyPageViewType = MyPageViewType.GoalStoreView,
     val marshmello: List<MyTabMarshmello>? = null,
     val userName: String? = null,
-    val userProfileUrl: String? = null
+    val userProfileUrl: String? = null,
+    val goalCnt: Int = 0
 )
