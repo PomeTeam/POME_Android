@@ -13,6 +13,8 @@ import com.teampome.pome.model.mytab.MyPageView
 import com.teampome.pome.model.mytab.MyTabMarshmello
 import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoration
 import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
+import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewAdapter
+import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewType
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -27,6 +29,8 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private lateinit var marshmelloAdapter: MarshmelloAdapter
 
+    private lateinit var myPageViewAdapter: MyPageViewAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -36,25 +40,28 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     override fun initView() {
         setUpRecyclerView()
+        myPageViewAdapter = MyPageViewAdapter()
 
         viewModel.getPastGoals(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         })
-
-        viewModel.getMarshmello(object : CoroutineErrorHandler{
-            override fun onError(message: String) {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                hideLoading()
-            }
-        })
     }
 
     override fun initListener() {
+        // observe 하는 상황에서 모든 data들이 update된 후에 recyclerView setting
         viewModel.pastGoals.observe(viewLifecycleOwner) {
             when(it) {
-                is ApiResponse.Success -> {}
+                is ApiResponse.Success -> {
+                    // 확실하게 순서 보장, pastGoals 넣고 마지막에 marshmellow data가 담길 수 있게
+                    viewModel.getMarshmello(object : CoroutineErrorHandler{
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                            hideLoading()
+                        }
+                    })
+                }
                 is ApiResponse.Failure -> {}
                 is ApiResponse.Loading -> {}
             }
@@ -76,17 +83,25 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
             }
         }
 
-        //설정화면으로
-        binding.mypageSettingIv.setOnClickListener {
-            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
-            findNavController().navigate(action)
+        viewModel.myPageViewDataList.observe(viewLifecycleOwner) { dataList ->
+            myPageViewAdapter = MyPageViewAdapter().apply {
+                addPageDataList(dataList)
+            }
+
+            binding.mypageViewRv.adapter = myPageViewAdapter
         }
 
+        //설정화면으로
+//        binding.mypageSettingIv.setOnClickListener {
+//            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
+//            findNavController().navigate(action)
+//        }
+
         //목표설정화면으로
-        binding.mypageMainCl.setOnClickListener {
-            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
-            findNavController().navigate(action)
-        }
+//        binding.mypageMainCl.setOnClickListener {
+//            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
+//            findNavController().navigate(action)
+//        }
     }
 
     private fun setUpRecyclerView(){
@@ -97,11 +112,11 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int = 1
         }
-        binding.recordEmotionRv.apply {
-//            setHasFixedSize(true)
-            layoutManager = manager
-            adapter = marshmelloAdapter
-            addItemDecoration(GridSpaceItemDecoration(2))
-        }
+//        binding.recordEmotionRv.apply {
+////            setHasFixedSize(true)
+//            layoutManager = manager
+//            adapter = marshmelloAdapter
+//            addItemDecoration(GridSpaceItemDecoration(2))
+//        }
     }
 }

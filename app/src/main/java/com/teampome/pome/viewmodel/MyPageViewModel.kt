@@ -2,12 +2,15 @@ package com.teampome.pome.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.model.mytab.MyPageView
 import com.teampome.pome.model.mytab.MyTabMarshmello
+import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewType
 import com.teampome.pome.repository.mypage.MyPageRepository
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseViewModel
@@ -30,10 +33,6 @@ class MyPageViewModel @Inject constructor(
 
     val userProfileUrl = runBlocking {
         userManager.getUserProfileUrl().first()
-    }
-
-    init {
-        Log.d("userUrl", "user info? : $userName , $userProfileUrl")
     }
 
     private val _pastGoals = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>()
@@ -68,5 +67,39 @@ class MyPageViewModel @Inject constructor(
         coroutineErrorHandler
     ){
         repository.getMarshmello()
+    }
+
+    private val _myPageViewDataList = MediatorLiveData<List<MyPageView>>()
+    val myPageViewDataList: LiveData<List<MyPageView>> = _myPageViewDataList
+
+    init {
+        with(_myPageViewDataList) {
+            addSource(getMarshmello) { apiResponse ->
+                if(apiResponse is ApiResponse.Success) {
+                    checkMyPageViewRendering(pastGoalsCnt, apiResponse.data.data)
+                }
+            }
+        }
+    }
+
+    private fun checkMyPageViewRendering(pastGoalCnt: LiveData<Int>, marshmello: List<MyTabMarshmello>?) {
+        _myPageViewDataList.value = listOf(
+            MyPageView(
+                viewType = MyPageViewType.UserView,
+                marshmello = null
+            ),
+            MyPageView(
+                viewType = MyPageViewType.GoalStoreView,
+                marshmello = null
+            ),
+            MyPageView(
+                viewType = MyPageViewType.MarshmallowTitleView,
+                marshmello = null
+            ),
+            MyPageView(
+                viewType = MyPageViewType.MarshmallowContentView,
+                marshmello = marshmello
+            )
+        )
     }
 }
