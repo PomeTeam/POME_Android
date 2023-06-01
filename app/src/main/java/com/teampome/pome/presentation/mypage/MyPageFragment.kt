@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentMypageBinding
 import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewAdapter
@@ -31,8 +32,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     override fun initView() {
-        myPageViewAdapter = MyPageViewAdapter()
-
         viewModel.getPastGoals(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -63,7 +62,10 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
         viewModel.getMarshmello.observe(viewLifecycleOwner) {}
 
         viewModel.myPageViewDataList.observe(viewLifecycleOwner) { dataList ->
-            myPageViewAdapter = MyPageViewAdapter().apply {
+            myPageViewAdapter = MyPageViewAdapter(
+                ::moveToSettingView,
+                ::moveToGoalSettingView
+            ).apply {
                 addPageDataList(dataList)
             }
 
@@ -81,5 +83,15 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 //            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
 //            findNavController().navigate(action)
 //        }
+    }
+
+    private fun moveToSettingView() {
+        val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun moveToGoalSettingView() {
+        val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
+        findNavController().navigate(action)
     }
 }

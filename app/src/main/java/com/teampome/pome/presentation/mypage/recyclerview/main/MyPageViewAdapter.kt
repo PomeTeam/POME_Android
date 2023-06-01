@@ -14,7 +14,10 @@ import com.teampome.pome.model.mytab.MyPageView
  *  ListAdapter : RecyclerView의 Data를 background thread로 업데이트, diffCallback을 자동으로 달아줌
  *
  */
-class MyPageViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MyPageViewAdapter(
+    private val onSettingClick: () -> Unit,
+    private val onGoalSettingClick: () -> Unit
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var pageData = listOf<MyPageView>()
 
@@ -32,12 +35,12 @@ class MyPageViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             MyPageViewType.UserView -> {
                 val binding = ItemMypageUserViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-                MyPageUserViewHolder(binding)
+                MyPageUserViewHolder(binding, onSettingClick)
             }
             MyPageViewType.GoalStoreView -> {
                 val binding = ItemMypageGoalStoreViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-                MyPageGoalStoreViewHolder(binding)
+                MyPageGoalStoreViewHolder(binding, onGoalSettingClick)
             }
             MyPageViewType.MarshmallowTitleView -> {
                 val binding = ItemMypageMarshmallowTitleViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
