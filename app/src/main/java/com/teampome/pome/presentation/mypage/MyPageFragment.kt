@@ -71,18 +71,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
             binding.mypageViewRv.adapter = myPageViewAdapter
         }
-
-        //설정화면으로
-//        binding.mypageSettingIv.setOnClickListener {
-//            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
-//            findNavController().navigate(action)
-//        }
-
-        //목표설정화면으로
-//        binding.mypageMainCl.setOnClickListener {
-//            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
-//            findNavController().navigate(action)
-//        }
     }
 
     private fun moveToSettingView() {
