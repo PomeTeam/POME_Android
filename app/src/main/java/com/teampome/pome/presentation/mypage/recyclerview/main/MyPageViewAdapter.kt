@@ -71,7 +71,9 @@ class MyPageViewAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
             is MyPageMarshMallowContentViewHolder -> {
                 // 이떄 중첩 RecyclerView 적용
-                holder.bind()
+                holder.bind(
+                    marshMallowList = pageData[position].marshmello
+                )
             }
         }
     }

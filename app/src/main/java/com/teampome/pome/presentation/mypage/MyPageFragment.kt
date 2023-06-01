@@ -27,8 +27,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
     private val viewModel: MyPageViewModel by viewModels()
 
-    private lateinit var marshmelloAdapter: MarshmelloAdapter
-
     private lateinit var myPageViewAdapter: MyPageViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +37,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
     }
 
     override fun initView() {
-        setUpRecyclerView()
         myPageViewAdapter = MyPageViewAdapter()
 
         viewModel.getPastGoals(object : CoroutineErrorHandler {
@@ -69,19 +66,7 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 
         viewModel.pastGoalsCnt.observe(viewLifecycleOwner) {}
 
-        viewModel.getMarshmello.observe(viewLifecycleOwner){
-            when(it) {
-                is ApiResponse.Success -> {
-                    it.data.data?.let {
-                        marshmelloAdapter.submitList(it)
-                    }
-                }
-                is ApiResponse.Failure -> {
-
-                }
-                is ApiResponse.Loading -> {}
-            }
-        }
+        viewModel.getMarshmello.observe(viewLifecycleOwner) {}
 
         viewModel.myPageViewDataList.observe(viewLifecycleOwner) { dataList ->
             myPageViewAdapter = MyPageViewAdapter().apply {
@@ -101,22 +86,6 @@ class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_myp
 //        binding.mypageMainCl.setOnClickListener {
 //            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
 //            findNavController().navigate(action)
-//        }
-    }
-
-    private fun setUpRecyclerView(){
-        marshmelloAdapter = MarshmelloAdapter(requireContext())
-        val manager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
-
-        //첫 번째 나오는 Header size 를 꽉 차게 함
-        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int = 1
-        }
-//        binding.recordEmotionRv.apply {
-////            setHasFixedSize(true)
-//            layoutManager = manager
-//            adapter = marshmelloAdapter
-//            addItemDecoration(GridSpaceItemDecoration(2))
 //        }
     }
 }
