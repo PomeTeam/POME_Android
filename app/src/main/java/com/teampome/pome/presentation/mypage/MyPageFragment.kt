@@ -14,6 +14,9 @@ import com.teampome.pome.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탭
+/*
+    RecyclerView의 여러 ViewType에 중첩 RecyclerView 구조 (전체 스크롤 구현)
+ */
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
 
