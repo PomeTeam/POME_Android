@@ -1,10 +1,10 @@
 package com.teampome.pome.presentation.mypage.recyclerview.main
 
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.databinding.ItemMypageMarshmallowContentViewBinding
 import com.teampome.pome.model.mytab.MyTabMarshmello
+import com.teampome.pome.presentation.mypage.recyclerview.GridSpaceItemDecoration
 import com.teampome.pome.presentation.mypage.recyclerview.MarshmelloAdapter
 
 class MyPageMarshMallowContentViewHolder(
@@ -12,6 +12,8 @@ class MyPageMarshMallowContentViewHolder(
 ): RecyclerView.ViewHolder(binding.root) {
 
     fun bind(marshMallowList: List<MyTabMarshmello>?) {
+        binding.recordEmotionRv.addItemDecoration(GridSpaceItemDecoration(2))
+
         (binding.recordEmotionRv.layoutManager as GridLayoutManager).spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
             override fun getSpanSize(position: Int): Int = 1
         }
