@@ -1,12 +1,8 @@
-package com.teampome.pome.presentation.mypage
+package com.teampome.pome.presentation.mypage.setting
 
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
-import com.teampome.pome.databinding.FragmentMypageAlarmBinding
 import com.teampome.pome.util.base.BaseFragment
-import com.teampome.pome.databinding.FragmentMypageBinding
-import com.teampome.pome.databinding.FragmentMypageGoalBinding
-import com.teampome.pome.databinding.FragmentMypageSettingBinding
 import com.teampome.pome.databinding.FragmentMypageWithdrawBinding
 
 //마이페이지 탈퇴하기 뷰

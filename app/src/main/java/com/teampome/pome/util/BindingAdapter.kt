@@ -41,6 +41,21 @@ fun bindingSetPomeProgress(pomeBigGoalCardView: PomeBigGoalCardView, progress: I
     }
 }
 
+@BindingAdapter("pomeProfileImage")
+fun bindingPomeProfileImage(imageView: ImageView, src: String?) {
+    GlideApp.with(imageView)
+        .load(src)
+        .apply(
+            RequestOptions.bitmapTransform(
+                MultiTransformation(
+                    CenterCrop(),
+                    MaskTransformation(R.drawable.user_profile_example),
+                )
+            )
+        ).error(R.drawable.user_profile_empty_150)
+        .into(imageView)
+}
+
 @BindingAdapter("pomeImage44")
 fun bindingPomeImage44(imageView: ImageView, src: String?){
     src?.let {

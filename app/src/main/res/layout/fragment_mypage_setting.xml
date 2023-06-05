@@ -67,7 +67,7 @@
                     >
 
                     <ImageView
-                        android:id="@+id/mypage_profile_iv"
+                        android:id="@+id/mypage_profile_aiv"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:src="@drawable/user_profile_example"
@@ -85,9 +85,9 @@
                         android:layout_height="wrap_content"
                         style="@style/Pome.SemiBold.18"
                         android:textColor="@color/grey_8"
-                        app:layout_constraintTop_toTopOf="@id/mypage_profile_iv"
-                        app:layout_constraintBottom_toBottomOf="@id/mypage_profile_iv"
-                        app:layout_constraintLeft_toRightOf="@id/mypage_profile_iv"
+                        app:layout_constraintTop_toTopOf="@id/mypage_profile_aiv"
+                        app:layout_constraintBottom_toBottomOf="@id/mypage_profile_aiv"
+                        app:layout_constraintLeft_toRightOf="@id/mypage_profile_aiv"
                         android:layout_marginLeft="12dp"
                         />
 

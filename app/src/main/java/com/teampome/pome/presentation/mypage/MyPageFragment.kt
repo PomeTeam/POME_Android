@@ -1,81 +1,85 @@
 package com.teampome.pome.presentation.mypage
 
-import android.util.Log
+import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.teampome.pome.R
-import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageBinding
-import com.teampome.pome.presentation.friend.FriendGetAdapter
+import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewAdapter
 import com.teampome.pome.util.base.ApiResponse
+import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.AddFriendsViewModel
-import com.teampome.pome.viewmodel.MyTabViewModel
+import com.teampome.pome.viewmodel.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탭
+/*
+    RecyclerView의 여러 ViewType에 중첩 RecyclerView 구조 (전체 스크롤 구현)
+ */
 @AndroidEntryPoint
 class MyPageFragment : BaseFragment<FragmentMypageBinding>(R.layout.fragment_mypage) {
 
-    private val viewModel: MyTabViewModel by viewModels()
+    private val viewModel: MyPageViewModel by viewModels()
 
-    private lateinit var marshmelloAdapter: MarshmelloAdapter
+    private lateinit var myPageViewAdapter: MyPageViewAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.lifecycleOwner = viewLifecycleOwner
+    }
+
     override fun initView() {
-        setUpRecyclerView()
-
-        viewModel.getMarshmello(object  : CoroutineErrorHandler{
+        viewModel.getPastGoals(object : CoroutineErrorHandler {
             override fun onError(message: String) {
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                hideLoading()
             }
         })
     }
 
     override fun initListener() {
-        viewModel.getMarshmello.observe(viewLifecycleOwner){
+        // observe 하는 상황에서 모든 data들이 update된 후에 recyclerView setting
+        viewModel.pastGoals.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Success -> {
-                    it.data.data?.let {
-                        marshmelloAdapter.submitList(it)
-                    }
+                    // 확실하게 순서 보장, pastGoals 넣고 마지막에 marshmellow data가 담길 수 있게
+                    viewModel.getMarshmello(object : CoroutineErrorHandler{
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                            hideLoading()
+                        }
+                    })
                 }
-                is ApiResponse.Failure -> {
-
-                }
+                is ApiResponse.Failure -> {}
                 is ApiResponse.Loading -> {}
             }
         }
 
-        //설정화면으로
-        binding.mypageSettingIv.setOnClickListener {
-            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
-            findNavController().navigate(action)
-        }
+        viewModel.pastGoalsCnt.observe(viewLifecycleOwner) {}
 
-        //목표설정화면으로
-        binding.mypageMainCl.setOnClickListener {
-            val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
-            findNavController().navigate(action)
+        viewModel.getMarshmello.observe(viewLifecycleOwner) {}
+
+        viewModel.myPageViewDataList.observe(viewLifecycleOwner) { dataList ->
+            myPageViewAdapter = MyPageViewAdapter(
+                ::moveToSettingView,
+                ::moveToGoalSettingView
+            ).apply {
+                addPageDataList(dataList)
+            }
+
+            binding.mypageViewRv.adapter = myPageViewAdapter
         }
     }
 
-    private fun setUpRecyclerView(){
-        marshmelloAdapter = MarshmelloAdapter(requireContext())
-        val manager = GridLayoutManager(requireContext(), 2, LinearLayoutManager.VERTICAL, false)
+    private fun moveToSettingView() {
+        val action = MyPageFragmentDirections.actionMypageFragmentToMyPageSettingFragment()
+        findNavController().navigate(action)
+    }
 
-        //첫 번째 나오는 Header size 를 꽉 차게 함
-        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int = 1
-        }
-        binding.recordEmotionRv.apply {
-//            setHasFixedSize(true)
-            layoutManager = manager
-            adapter = marshmelloAdapter
-            addItemDecoration(GridSpaceItemDecoration(2))
-        }
-
+    private fun moveToGoalSettingView() {
+        val action = MyPageFragmentDirections.actionMypageFragmentToMyPageGoalFragment()
+        findNavController().navigate(action)
     }
 }

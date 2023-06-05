@@ -14,7 +14,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Qualifier
 import javax.inject.Singleton
 
@@ -212,9 +211,9 @@ object NetworkModule {
     @Provides
     fun provideMyTabService(
         @AuthRetrofit retrofit: Retrofit.Builder
-    ) : MyTabService {
+    ) : MyPageService {
         return retrofit
             .build()
-            .create(MyTabService::class.java)
+            .create(MyPageService::class.java)
     }
 }

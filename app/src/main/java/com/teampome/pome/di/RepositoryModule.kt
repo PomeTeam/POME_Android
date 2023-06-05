@@ -129,7 +129,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMyPageSource(service: MyTabService) : MyPageDataSource {
+    fun provideMyPageSource(service: MyPageService) : MyPageDataSource {
         return MyPageRemoteDataSource(service)
     }
 

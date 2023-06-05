@@ -3,8 +3,6 @@ package com.teampome.pome.presentation.register
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -46,7 +44,6 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -122,7 +119,7 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
                     // 이미지의 PresignedUrl 및 image key 저장
                     runBlocking {
                         userManger.saveProfileKey(it.data.id)
-                        userManger.saveUserProfileUrl(it.data.presignedUrl)
+                        userManger.saveUserPreProfileUrl(it.data.presignedUrl)
                     }
 
                     // 저장 이후 aws에 이미지 저장
@@ -327,11 +324,11 @@ class RegisterProfileFragment : BaseFragment<FragmentRegisterProfileBinding>(R.l
 //            binding.registerProfilePlusAiv.visibility = View.VISIBLE
 
             runBlocking {
-                if(userManger.getUserProfileUrl().first() != null) {
-                    userManger.deleteUserProfileUrl()
+                if(userManger.getUserPreProfileUrl().first() != null) {
+                    userManger.deletePreUserProfileUrl()
                 }
 
-                userManger.saveUserProfileUrl("default")
+                userManger.saveUserPreProfileUrl("default")
             }
 
             viewModel.setShowFirstBottomSheet(true)

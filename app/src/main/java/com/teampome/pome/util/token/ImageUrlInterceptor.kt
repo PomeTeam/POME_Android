@@ -16,7 +16,7 @@ class ImageUrlInterceptor @Inject constructor(
         val newRequest = chain.request().newBuilder()
 
         val preSignedUrl = runBlocking {
-            userManager.getUserProfileUrl().first()
+            userManager.getUserPreProfileUrl().first()
         }
 
         Log.d("presignedUrl", "check url : $preSignedUrl")

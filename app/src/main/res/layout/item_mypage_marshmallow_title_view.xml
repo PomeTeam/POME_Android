@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/mypage_marshmallow_tv"
+            style="@style/Pome.SemiBold.18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/mypage_marshmallow_text"
+            android:textColor="@color/grey_9"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/mypage_what_is_marshmallow_tv"
+            style="@style/Pome.SemiBold.12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/grey1_r12_background"
+            android:textColor="@color/grey_5"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="5dp"
+            android:text="@string/what_is_marshmallow_text"
+            android:layout_marginStart="8dp"
+            app:layout_constraintTop_toTopOf="@id/mypage_marshmallow_tv"
+            app:layout_constraintBottom_toBottomOf="@id/mypage_marshmallow_tv"
+            app:layout_constraintStart_toEndOf="@id/mypage_marshmallow_tv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

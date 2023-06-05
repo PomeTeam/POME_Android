@@ -173,17 +173,17 @@
         tools:layout="@layout/fragment_friend_detail"/>
     <fragment
         android:id="@+id/myPageGoalFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageGoalFragment"
+        android:name="com.teampome.pome.presentation.mypage.goal.MyPageGoalFragment"
         android:label="MyPageGoalFragment"
         tools:layout="@layout/fragment_mypage_goal"/>
     <fragment
         android:id="@+id/myPageAlarmFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageAlarmFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageAlarmFragment"
         android:label="MyPageAlarmFragment"
         tools:layout="@layout/fragment_mypage_alarm"/>
     <fragment
         android:id="@+id/myPageSettingFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageSettingFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageSettingFragment"
         android:label="MyPageSettingFragment"
         tools:layout="@layout/fragment_mypage_setting">
         <action
@@ -365,7 +365,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPageWithdrawFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageWithdrawFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageWithdrawFragment"
         android:label="MyPageWithdrawFragment"
         tools:layout="@layout/fragment_mypage_withdraw">
         <action
@@ -374,7 +374,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPageWithdrawWarningFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageWithdrawWarningFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageWithdrawWarningFragment"
         android:label="MyPageWithdrawWarningFragment"
         tools:layout="@layout/fragment_mypage_withdraw"/>
 </navigation>
