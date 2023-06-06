@@ -195,6 +195,9 @@
         <action
             android:id="@+id/action_myPageSettingFragment_to_myPageWithdrawFragment"
             app:destination="@id/myPageWithdrawFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_splashFramgnet"
+            app:destination="@id/splash_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/myPageFriendFragment"

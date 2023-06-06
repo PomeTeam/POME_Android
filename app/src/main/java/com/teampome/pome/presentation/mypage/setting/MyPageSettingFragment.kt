@@ -1,5 +1,6 @@
 package com.teampome.pome.presentation.mypage.setting
 
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -10,6 +11,8 @@ import com.teampome.pome.BuildConfig
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageSettingBinding
+import com.teampome.pome.databinding.PomeTitleYesNoDialogBinding
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.common.Constants
 import com.teampome.pome.viewmodel.mypage.MyPageSettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,8 +23,13 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     private val viewModel: MyPageSettingViewModel by viewModels()
 
+    private lateinit var logoutDialogBinding: PomeTitleYesNoDialogBinding
+    private lateinit var logoutDialog: Dialog
+
     override fun initView() {
         binding.viewModel = viewModel
+
+        makeLogoutDialog()
     }
 
     override fun initListener() {
@@ -68,7 +76,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 로그아웃
         binding.mypageLogoutSettingCl.setOnClickListener {
-
+            logoutDialog.show()
         }
 
         // 탈퇴 하기
@@ -105,6 +113,48 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     private fun moveToOpenSourceNotion() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_OPEN_SOURCE_NOTION_URL))
         startActivity(intent)
+    }
+
+    private fun moveToSplashView() {
+        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToSplashFramgnet()
+        findNavController().navigate(action)
+    }
+
+    // 유저 정보를 전부 초기화한 후, 스플래시로 이동하는 로직
+    private fun logout() {
+        viewModel.removeAllUserData()
+        moveToSplashView()
+    }
+
+    private fun makeLogoutDialog() {
+        logoutDialog = Dialog(requireContext())
+        logoutDialogBinding = PomeTitleYesNoDialogBinding.inflate(layoutInflater, null, false)
+
+        logoutDialog.setContentView(logoutDialogBinding.root)
+
+        logoutDialogBinding.apply {
+            pomeTitleTv.text = "로그아웃 하시겠어요?"
+            pomeYesTv.text = "네"
+            pomeNoTv.text = "아니요"
+        }
+
+        CommonUtil.makePomeDialog(logoutDialog)
+
+        // 네 클릭
+        logoutDialogBinding.pomeYesTv.setOnClickListener {
+            if(logoutDialog.isShowing) {
+                logoutDialog.dismiss()
+            }
+
+            logout()
+        }
+
+        // 아니요 클릭
+        logoutDialogBinding.pomeNoTv.setOnClickListener {
+            if(logoutDialog.isShowing) {
+                logoutDialog.dismiss()
+            }
+        }
     }
 
     private fun moveToMyPageWithdrawFragment() {
