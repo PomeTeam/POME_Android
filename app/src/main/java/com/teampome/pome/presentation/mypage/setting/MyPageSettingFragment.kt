@@ -1,6 +1,7 @@
 package com.teampome.pome.presentation.mypage.setting
 
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -15,7 +16,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     private val viewModel: MyPageSettingViewModel by viewModels()
 
     override fun initView() {
-
+        binding.viewModel = viewModel
     }
 
     override fun initListener() {
