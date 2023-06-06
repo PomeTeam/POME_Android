@@ -169,41 +169,41 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/mypage_alarm_setting_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:background="@color/white"
-                    android:paddingVertical="20dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mypage_question_setting_cl">
+<!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                    android:id="@+id/mypage_alarm_setting_cl"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="12dp"-->
+<!--                    android:background="@color/white"-->
+<!--                    android:paddingVertical="20dp"-->
+<!--                    app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                    app:layout_constraintRight_toRightOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/mypage_question_setting_cl">-->
 
-                    <TextView
-                        android:id="@+id/mypage_alarm_setting_tv"
-                        style="@style/Pome.Medium.16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:text="@string/mypage_setting_alarm_text"
-                        android:textColor="@color/grey_8"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <TextView-->
+<!--                        android:id="@+id/mypage_alarm_setting_tv"-->
+<!--                        style="@style/Pome.Medium.16"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="24dp"-->
+<!--                        android:text="@string/mypage_setting_alarm_text"-->
+<!--                        android:textColor="@color/grey_8"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
-                    <ImageView
-                        android:id="@+id/mypage_question_alarm_arrow_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="24dp"
-                        android:src="@drawable/ic_arrow_right_24"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:contentDescription="@string/mypage_alarm_setting_arrow_description" />
+<!--                    <ImageView-->
+<!--                        android:id="@+id/mypage_question_alarm_arrow_iv"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginEnd="24dp"-->
+<!--                        android:src="@drawable/ic_arrow_right_24"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintRight_toRightOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent"-->
+<!--                        android:contentDescription="@string/mypage_alarm_setting_arrow_description" />-->
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+<!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/mypage_report_setting_cl"
@@ -214,7 +214,7 @@
                     android:paddingVertical="20dp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mypage_alarm_setting_cl">
+                    app:layout_constraintTop_toBottomOf="@+id/mypage_question_setting_cl">
 
                     <TextView
                         android:id="@+id/mypage_report_setting_tv"

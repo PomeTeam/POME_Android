@@ -2,6 +2,7 @@ package com.teampome.pome.presentation.mypage.setting
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
@@ -38,10 +39,10 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
             moveToQuestionGoogleForm()
         }
 
-        // 알림 설정
-        binding.mypageAlarmSettingCl.setOnClickListener {
-            moveToMyPageAlarmFragment()
-        }
+        // 알림 설정 현재는 주석
+//        binding.mypageAlarmSettingCl.setOnClickListener {
+//            moveToMyPageAlarmFragment()
+//        }
 
         // 신고 하기
         binding.mypageReportSettingCl.setOnClickListener {
