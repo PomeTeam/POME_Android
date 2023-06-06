@@ -9,5 +9,6 @@ object Constants {
     const val SAD_EMOTION = "후회해요"
     const val EMPTY_EMOTION = "아직 감정을 남기지 않았어요"
 
-    const val MY_PAGE_QUESTION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeQ6X72c-STc6eDDyPs9K1mMISOMM8MorqmljKHr-OkD4ndEQ/viewform"
+    const val MY_PAGE_QUESTION_GOOGLE_FORM_URL = "https://forms.gle/SaFj5Mi9Gq1yLGff9"
+    const val MY_PAGE_REPORTING_GOOGLE_FORM_URL = "https://forms.gle/NhQ55kbYdkxnNseq7"
 }

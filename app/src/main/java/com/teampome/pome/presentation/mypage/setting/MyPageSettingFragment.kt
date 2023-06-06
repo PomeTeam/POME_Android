@@ -2,9 +2,7 @@ package com.teampome.pome.presentation.mypage.setting
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
@@ -46,7 +44,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 신고 하기
         binding.mypageReportSettingCl.setOnClickListener {
-
+            moveToReportingGoogleForm()
         }
 
         // 약관 및 정책
@@ -80,18 +78,23 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
         findNavController().navigate(action)
     }
 
-    private fun moveToMyPageAlarmFragment() {
-        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageAlarmFragment()
-        findNavController().navigate(action)
+//    private fun moveToMyPageAlarmFragment() {
+//        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageAlarmFragment()
+//        findNavController().navigate(action)
+//    }
+
+    private fun moveToQuestionGoogleForm() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_QUESTION_GOOGLE_FORM_URL))
+        startActivity(intent)
+    }
+
+    private fun moveToReportingGoogleForm() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_REPORTING_GOOGLE_FORM_URL))
+        startActivity(intent)
     }
 
     private fun moveToMyPageWithdrawFragment() {
         val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
         findNavController().navigate(action)
-    }
-
-    private fun moveToQuestionGoogleForm() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_QUESTION_URL))
-        startActivity(intent)
     }
 }
