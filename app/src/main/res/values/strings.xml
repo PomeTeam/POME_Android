@@ -262,4 +262,14 @@
     <string name="identifier_image_description">목표 보관함 identifier image</string>
     <string name="mypage_arrow_description">목표 보관함 다음으로 넘어가는 화살표</string>
     <string name="what_is_marshmallow_text">마시멜로란?</string>
+    <string name="mypage_setting_back_button_description">mypage setting back button</string>
+    <string name="mypage_profile_image_description">profile image</string>
+    <string name="friend_setting_arrow_description">friend setting enter</string>
+    <string name="mypage_question_setting_arrow_description">mypage question setting arrow</string>
+    <string name="mypage_alarm_setting_arrow_description">mypage alarm setting arrow</string>
+    <string name="mypage_report_arrow_description">mypage report arrow</string>
+    <string name="mypage_policy_arrow_description">mypage policy arrow</string>
+    <string name="mypage_open_source_setting_arrow_description">mypage open source setting arrow</string>
+    <string name="mypage_version_setting_arrow_description">mypage version setting arrow</string>
+    <string name="mypage_logout_setting_arrow_description">mypage logout setting arrow</string>
 </resources>
