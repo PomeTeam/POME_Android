@@ -1,11 +1,14 @@
 package com.teampome.pome.presentation.mypage.setting
 
+import android.content.Intent
+import android.net.Uri
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageSettingBinding
+import com.teampome.pome.util.common.Constants
 import com.teampome.pome.viewmodel.mypage.MyPageSettingViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -32,7 +35,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 문의 하기
         binding.mypageQuestionSettingCl.setOnClickListener {
-
+            moveToQuestionGoogleForm()
         }
 
         // 알림 설정
@@ -72,8 +75,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     }
 
     private fun moveToMyPageFriendFragment() {
-        val action =
-            MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
+        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
         findNavController().navigate(action)
     }
 
@@ -83,8 +85,12 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     }
 
     private fun moveToMyPageWithdrawFragment() {
-        val action =
-            MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
+        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
         findNavController().navigate(action)
+    }
+
+    private fun moveToQuestionGoogleForm() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_QUESTION_URL))
+        startActivity(intent)
     }
 }
