@@ -12,27 +12,71 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
     }
 
     override fun initListener() {
-        //뒤로가기
+        // 뒤로가기
         binding.mypageSettingArrowIv.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        //알림설정
-        binding.mypageAlarmSettingCl.setOnClickListener {
-            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageAlarmFragment()
-            findNavController().navigate(action)
-        }
-
-        //친구관리
+        // 친구 관리
         binding.mypageFriendSettingCl.setOnClickListener {
-            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
-            findNavController().navigate(action)
+            moveToMyPageFriendFragment()
         }
 
-        //탈퇴하기
-        binding.mypageWithdrawSettingCl.setOnClickListener {
-            val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
-            findNavController().navigate(action)
+        // 문의 하기
+        binding.mypageQuestionSettingCl.setOnClickListener {
+
         }
+
+        // 알림 설정
+        binding.mypageAlarmSettingCl.setOnClickListener {
+            moveToMyPageAlarmFragment()
+        }
+
+        // 신고 하기
+        binding.mypageReportSettingCl.setOnClickListener {
+
+        }
+
+        // 약관 및 정책
+        binding.mypagePolicySettingCl.setOnClickListener {
+
+        }
+
+        // 오픈소스 라이센스
+        binding.mypageOpenSourceSettingCl.setOnClickListener {
+
+        }
+
+        // 버전 정보
+        binding.mypageVersionSettingCl.setOnClickListener {
+
+        }
+
+        // 로그아웃
+        binding.mypageLogoutSettingCl.setOnClickListener {
+
+        }
+
+        // 탈퇴 하기
+        binding.mypageWithdrawSettingCl.setOnClickListener {
+            moveToMyPageWithdrawFragment()
+        }
+    }
+
+    private fun moveToMyPageFriendFragment() {
+        val action =
+            MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageFriendFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun moveToMyPageAlarmFragment() {
+        val action = MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageAlarmFragment()
+        findNavController().navigate(action)
+    }
+
+    private fun moveToMyPageWithdrawFragment() {
+        val action =
+            MyPageSettingFragmentDirections.actionMyPageSettingFragmentToMyPageWithdrawFragment()
+        findNavController().navigate(action)
     }
 }
