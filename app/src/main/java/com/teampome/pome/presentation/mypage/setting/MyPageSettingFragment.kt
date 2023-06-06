@@ -49,7 +49,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 약관 및 정책
         binding.mypagePolicySettingCl.setOnClickListener {
-
+            moveToPolicyNotion()
         }
 
         // 오픈소스 라이센스
@@ -90,6 +90,11 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     private fun moveToReportingGoogleForm() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_REPORTING_GOOGLE_FORM_URL))
+        startActivity(intent)
+    }
+
+    private fun moveToPolicyNotion() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_POLICY_NOTION_URL))
         startActivity(intent)
     }
 

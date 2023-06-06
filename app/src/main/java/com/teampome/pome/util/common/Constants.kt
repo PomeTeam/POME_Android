@@ -11,4 +11,6 @@ object Constants {
 
     const val MY_PAGE_QUESTION_GOOGLE_FORM_URL = "https://forms.gle/SaFj5Mi9Gq1yLGff9"
     const val MY_PAGE_REPORTING_GOOGLE_FORM_URL = "https://forms.gle/NhQ55kbYdkxnNseq7"
+    const val MY_PAGE_POLICY_NOTION_URL = "https://few-horse-2aa.notion.site/6a2e6f6241e94a479a3e2c2a3cdb909e"
+
 }
