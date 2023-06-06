@@ -54,7 +54,7 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 오픈소스 라이센스
         binding.mypageOpenSourceSettingCl.setOnClickListener {
-
+            moveToOpenSourceNotion()
         }
 
         // 버전 정보
@@ -95,6 +95,11 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
     private fun moveToPolicyNotion() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_POLICY_NOTION_URL))
+        startActivity(intent)
+    }
+
+    private fun moveToOpenSourceNotion() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(Constants.MY_PAGE_OPEN_SOURCE_NOTION_URL))
         startActivity(intent)
     }
 
