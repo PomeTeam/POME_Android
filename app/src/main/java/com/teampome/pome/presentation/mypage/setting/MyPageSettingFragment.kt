@@ -2,8 +2,11 @@ package com.teampome.pome.presentation.mypage.setting
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.teampome.pome.BuildConfig
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageSettingBinding
@@ -59,7 +62,8 @@ class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layou
 
         // 버전 정보
         binding.mypageVersionSettingCl.setOnClickListener {
-
+            // 토스트로 버전 정보 띄움
+            Toast.makeText(requireContext(), BuildConfig.VERSION_NAME, Toast.LENGTH_SHORT).show()
         }
 
         // 로그아웃
