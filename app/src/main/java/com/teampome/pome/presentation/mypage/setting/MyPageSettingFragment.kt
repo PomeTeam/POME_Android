@@ -1,12 +1,19 @@
 package com.teampome.pome.presentation.mypage.setting
 
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageSettingBinding
+import com.teampome.pome.viewmodel.mypage.MyPageSettingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-//마이페이지 설정 뷰
+// 마이페이지 설정 뷰
+@AndroidEntryPoint
 class MyPageSettingFragment : BaseFragment<FragmentMypageSettingBinding>(R.layout.fragment_mypage_setting) {
+
+    private val viewModel: MyPageSettingViewModel by viewModels()
+
     override fun initView() {
 
     }
