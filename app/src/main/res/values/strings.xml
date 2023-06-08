@@ -272,4 +272,5 @@
     <string name="mypage_open_source_setting_arrow_description">mypage open source setting arrow</string>
     <string name="mypage_version_setting_arrow_description">mypage version setting arrow</string>
     <string name="mypage_logout_setting_arrow_description">mypage logout setting arrow</string>
+    <string name="mypage_friend_arrow_description">mypage friend arrow description</string>
 </resources>

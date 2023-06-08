@@ -6,8 +6,6 @@ import androidx.lifecycle.Transformations
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
-import com.teampome.pome.model.goal.GoalData
-import com.teampome.pome.model.response.DeleteFriend
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.repository.friend.AddFriendsRepository
@@ -42,8 +40,8 @@ class AddFriendsViewModel @Inject constructor(
     val getFriendRecordResponse : LiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = _getFriendRecordResponse
 
     //친구 삭제
-    private val _deleteFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriend>>>()
-    val deleteFriendResponse : LiveData<ApiResponse<BasePomeResponse<DeleteFriend>>> = _deleteFriendResponse
+    private val _deleteFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<Boolean>>>()
+    val deleteFriendResponse : LiveData<ApiResponse<BasePomeResponse<Boolean>>> = _deleteFriendResponse
 
 
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(

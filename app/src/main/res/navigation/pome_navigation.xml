@@ -201,7 +201,7 @@
     </fragment>
     <fragment
         android:id="@+id/myPageFriendFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageFriendFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageFriendFragment"
         android:label="MyPageFriendFragment"
         tools:layout="@layout/fragment_mypage_friend"/>
 
