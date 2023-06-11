@@ -273,4 +273,6 @@
     <string name="mypage_version_setting_arrow_description">mypage version setting arrow</string>
     <string name="mypage_logout_setting_arrow_description">mypage logout setting arrow</string>
     <string name="mypage_friend_arrow_description">mypage friend arrow description</string>
+    <string name="mypage_goal_arrow_description">MyPage goal arrow description</string>
+    <string name="mypage_no_goal_image">Mypage no goal image</string>
 </resources>

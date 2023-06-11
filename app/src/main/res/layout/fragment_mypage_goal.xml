@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <ImageView
             android:id="@+id/mypage_goal_arrow_iv"
@@ -19,7 +20,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="12dp"/>
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/mypage_goal_arrow_description" />
 
         <TextView
             android:id="@+id/mypage_goal_tv"
@@ -30,21 +32,19 @@
             android:textColor="@color/grey_9"
             app:layout_constraintTop_toBottomOf="@+id/mypage_goal_arrow_iv"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp" />
 
         <ImageView
             android:id="@+id/mypage_not_goal_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_not_friend"
-            android:visibility="invisible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            android:contentDescription="@string/mypage_no_goal_image" />
 
         <TextView
             android:id="@+id/mypage_not_goal_tv"
@@ -52,15 +52,12 @@
             android:layout_height="wrap_content"
             android:text="@string/mypage_goal_not_text"
             style="@style/Pome.Medium.14"
-            android:visibility="invisible"
             android:textColor="@color/grey_5"
             app:layout_constraintLeft_toLeftOf="@id/mypage_not_goal_iv"
             app:layout_constraintRight_toRightOf="@id/mypage_not_goal_iv"
             app:layout_constraintTop_toBottomOf="@id/mypage_not_goal_iv"
-            android:layout_marginTop="16dp"
-            />
+            android:layout_marginTop="16dp" />
 
-        <!--   Todo 기록탭에서 완성된 progress bar 가져오기  -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/mypage_goal_rv"
             android:layout_width="match_parent"
@@ -71,8 +68,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             tools:listitem="@layout/item_mypage_record"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_marginTop="20dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
