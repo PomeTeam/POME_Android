@@ -56,7 +56,11 @@ class FriendRecordGetAdapter(
 
                 if(getFriedRecord.emotionResponse.friendEmotions.isEmpty()) {
                     friendDetailCardLastFriendEmotionCountTv.visibility = View.INVISIBLE
+                    friendDetailCardLastFriendEmotionAiv.visibility = View.INVISIBLE
                 } else {
+                    friendDetailCardLastFriendEmotionCountTv.visibility = View.VISIBLE
+                    friendDetailCardLastFriendEmotionAiv.visibility = View.VISIBLE
+
                     val count = getFriedRecord.emotionResponse.friendEmotions.size
 
                     if(count >= 10) {
