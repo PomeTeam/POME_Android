@@ -51,10 +51,14 @@ class FriendRecordGetAdapter(
                     friendDetailRecordClickListener.onFriendDetailMoreClick(getFriedRecord.id)
                 }
 
+                //Todo 시간 표시 필요
+                friendDetailContentNameTimeTv.text = " · ${getFriedRecord.oneLineMind}"
+
                 if(getFriedRecord.emotionResponse.friendEmotions.isEmpty()) {
                     friendDetailCardLastFriendEmotionCountTv.visibility = View.INVISIBLE
                 } else {
                     val count = getFriedRecord.emotionResponse.friendEmotions.size
+
                     if(count >= 10) {
                         friendDetailCardLastFriendEmotionCountTv.text = "9+"
                     } else {
@@ -69,11 +73,15 @@ class FriendRecordGetAdapter(
                 }
 
                 friendDetailCardFirstFriendEmotionAiv.setOnClickListener {
+                    val params = friendEmojiRegisterCl.layoutParams
                     if(friendEmojiRegisterCl.visibility == View.VISIBLE) {
                         friendEmojiRegisterCl.visibility = View.GONE
+                        params.height = 0
                     } else {
                         friendEmojiRegisterCl.visibility = View.VISIBLE
+                        params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                     }
+                    friendEmojiRegisterCl.layoutParams = params
                 }
             }
         }
