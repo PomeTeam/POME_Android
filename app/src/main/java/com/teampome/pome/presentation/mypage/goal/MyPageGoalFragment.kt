@@ -1,5 +1,6 @@
 package com.teampome.pome.presentation.mypage.goal
 
+import android.app.Dialog
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.viewModels
@@ -8,10 +9,12 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageBinding
 import com.teampome.pome.databinding.FragmentMypageGoalBinding
+import com.teampome.pome.databinding.PomeRemoveDialogBinding
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.presentation.mypage.recyclerview.goal.MyPageGoalAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
+import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.viewmodel.mypage.MyPageGoalViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,7 +25,13 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
 
     private val viewModel: MyPageGoalViewModel by viewModels()
 
+    // 삭제 다이얼로그
+    private lateinit var goalRemoveDialog: Dialog
+    private lateinit var goalRemoveDialogBinding: PomeRemoveDialogBinding
+
     override fun initView() {
+        makeGoalRemoveDialog()
+
         binding.viewModel = viewModel
 
         viewModel.findEndGoals(object: CoroutineErrorHandler {
@@ -53,7 +62,37 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
         }
     }
 
+    private fun makeGoalRemoveDialog() {
+        goalRemoveDialog = Dialog(requireContext())
+        goalRemoveDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
+
+        goalRemoveDialog.setContentView(goalRemoveDialogBinding.root)
+        goalRemoveDialog.setCancelable(false)
+
+        CommonUtil.makePomeDialog(goalRemoveDialog)
+
+        goalRemoveDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
+        goalRemoveDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
+
+        goalRemoveDialogBinding.removeYesTextAtv.apply {
+            text = "삭제할래요"
+
+            setOnClickListener {
+                goalRemoveDialog.dismiss()
+            }
+        }
+
+        goalRemoveDialogBinding.removeNoTextAtv.apply {
+            text = "아니요"
+
+            setOnClickListener {
+                goalRemoveDialog.dismiss()
+            }
+        }
+    }
+
     private fun showGoalRemoveDialog(goalData: GoalData) {
-        Toast.makeText(requireContext(), "$goalData", Toast.LENGTH_SHORT).show()
+
+        goalRemoveDialog.show()
     }
 }
