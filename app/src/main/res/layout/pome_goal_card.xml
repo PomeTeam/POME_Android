@@ -53,6 +53,17 @@
                 tools:text="END" />
 
             <ImageView
+                android:id="@+id/goal_card_more_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vertical_24"
+                android:visibility="gone"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:contentDescription="@string/goal_card_more_button_description" />
+
+            <ImageView
                 android:id="@+id/goal_card_empty_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

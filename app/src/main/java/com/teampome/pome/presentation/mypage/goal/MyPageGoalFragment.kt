@@ -8,6 +8,8 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageBinding
 import com.teampome.pome.databinding.FragmentMypageGoalBinding
+import com.teampome.pome.model.goal.GoalData
+import com.teampome.pome.presentation.mypage.recyclerview.goal.MyPageGoalAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.viewmodel.mypage.MyPageGoalViewModel
@@ -28,6 +30,8 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
                 Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         })
+
+        binding.mypageGoalRv.adapter = MyPageGoalAdapter(::showGoalRemoveDialog)
     }
 
     override fun initListener() {
@@ -37,6 +41,8 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
                 is ApiResponse.Failure -> {}
                 is ApiResponse.Success -> {
                     Log.d("test", "${it.data.data}")
+
+                    (binding.mypageGoalRv.adapter as MyPageGoalAdapter).submitList(it.data.data?.content)
                 }
             }
         }
@@ -45,5 +51,9 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
         binding.mypageGoalArrowIv.setOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    private fun showGoalRemoveDialog(goalData: GoalData) {
+        Toast.makeText(requireContext(), "$goalData", Toast.LENGTH_SHORT).show()
     }
 }
