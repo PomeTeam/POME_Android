@@ -12,4 +12,5 @@ import kotlinx.coroutines.flow.Flow
 interface MyPageDataSource {
     fun getPastGoals() : Flow<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>>
     fun getMarshmello() : Flow<ApiResponse<BasePomeResponse<List<MyTabMarshmello>>>>
+    fun deleteUser(reason: String) : Flow<ApiResponse<BasePomeResponse<Boolean>>>
 }

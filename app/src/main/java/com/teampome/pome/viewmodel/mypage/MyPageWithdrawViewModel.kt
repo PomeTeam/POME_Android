@@ -52,4 +52,18 @@ class MyPageWithdrawViewModel @Inject constructor() : BaseViewModel() {
         _reason2.value = false
         _reason3.value = false
     }
+
+    fun getReasonString() : String {
+        return if(reason1.value == true) {
+            return "기록이 귀찮아요"
+        } else if (reason2.value == true) {
+            return "알림이 너무 많아요"
+        } else if (reason3.value == true) {
+            return "억울하게 이용이 제한됐어요"
+        } else if (reason4.value == true) {
+            return "새 계정을 만들고 싶어요"
+        } else {
+            ""
+        }
+    }
 }

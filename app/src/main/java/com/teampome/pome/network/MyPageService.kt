@@ -5,7 +5,9 @@ import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.model.mytab.MyTabMarshmello
 import retrofit2.Response
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 //마이 탭 서비스
 interface MyPageService {
@@ -18,4 +20,8 @@ interface MyPageService {
     @GET("api/v1/marshmello/list")
     suspend fun getMarshmello()
         : Response<BasePomeResponse<List<MyTabMarshmello>>>
+
+    // 회원 탈퇴
+    @DELETE("api/v1/users/{reason}")
+    suspend fun deleteUser(@Path("reason") reason: String) : Response<BasePomeResponse<Boolean>>
 }

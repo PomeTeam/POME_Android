@@ -7,4 +7,5 @@ class MyPageRepository @Inject constructor(
 ) {
     fun getPastGoals() = myPageDataSource.getPastGoals()
     fun getMarshmello() = myPageDataSource.getMarshmello()
+    fun deleteUser(reason: String) = myPageDataSource.deleteUser(reason)
 }

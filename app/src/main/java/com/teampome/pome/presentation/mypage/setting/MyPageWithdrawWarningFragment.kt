@@ -2,12 +2,16 @@ package com.teampome.pome.presentation.mypage.setting
 
 import android.app.Dialog
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentMypageWithdrawWarningBinding
 import com.teampome.pome.databinding.PomeTitleYesNoDialogBinding
+import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
+import com.teampome.pome.util.base.CoroutineErrorHandler
 import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.viewmodel.mypage.MyPageWithdrawWarningViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -17,6 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MyPageWithdrawWarningFragment : BaseFragment<FragmentMypageWithdrawWarningBinding>(R.layout.fragment_mypage_withdraw_warning) {
 
     private val viewModel: MyPageWithdrawWarningViewModel by viewModels()
+
+    private val args: MyPageWithdrawWarningFragmentArgs by navArgs()
 
     // 탈퇴 완료 Dialog
     private lateinit var withdrawDialog: Dialog
@@ -29,6 +35,24 @@ class MyPageWithdrawWarningFragment : BaseFragment<FragmentMypageWithdrawWarning
     }
 
     override fun initListener() {
+
+        viewModel.deleteUserResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Loading -> { }
+                is ApiResponse.Failure -> { hideLoading() }
+                is ApiResponse.Success -> {
+                    hideLoading()
+
+                    if(it.data.data == true) {
+                        viewModel.removeAllUserData()
+                        withdrawDialog.show()
+                    } else {
+                        Toast.makeText(requireContext(), "회원 탈퇴에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         // 뒤로가기
         binding.mypageWithdrawWarningArrowIv.setOnClickListener {
             findNavController().popBackStack()
@@ -36,7 +60,13 @@ class MyPageWithdrawWarningFragment : BaseFragment<FragmentMypageWithdrawWarning
 
         // 탈퇴하기
         binding.withdrawOkayBtn.setOnClickListener {
-            withdrawDialog.show()
+            showLoading()
+
+            viewModel.deleteUser(args.withdrawReason, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                }
+            })
         }
     }
 
@@ -59,13 +89,14 @@ class MyPageWithdrawWarningFragment : BaseFragment<FragmentMypageWithdrawWarning
             setOnClickListener {
                 withdrawDialog.dismiss()
 
-                withdrawProcess()
+                moveToSplashView()
             }
         }
     }
 
-    private fun withdrawProcess() {
-//        viewModel.removeAllUserData()
-        // splashview 이동
+    private fun moveToSplashView() {
+        val action = MyPageWithdrawWarningFragmentDirections.actionMyPageWithdrawWarningFragmentToSplashFragment()
+
+        findNavController().navigate(action)
     }
 }

@@ -19,7 +19,7 @@ class MyPageWithdrawFragment : BaseFragment<FragmentMypageWithdrawBinding>(R.lay
     }
 
     override fun initListener() {
-        //뒤로가기
+        // 뒤로가기
         binding.mypageWithdrawArrowIv.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -41,7 +41,7 @@ class MyPageWithdrawFragment : BaseFragment<FragmentMypageWithdrawBinding>(R.lay
         }
 
         binding.withdrawOkayBtn.setOnClickListener {
-            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment()
+            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment(viewModel.getReasonString())
             findNavController().navigate(action)
         }
     }
