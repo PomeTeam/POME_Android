@@ -1,28 +1,43 @@
 package com.teampome.pome.presentation.mypage.setting
 
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageWithdrawBinding
+import com.teampome.pome.viewmodel.mypage.MyPageWithdrawViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탈퇴하기 뷰
+@AndroidEntryPoint
 class MyPageWithdrawFragment : BaseFragment<FragmentMypageWithdrawBinding>(R.layout.fragment_mypage_withdraw) {
 
-    //탈퇴 이유
-    private var withdrawReason1 = false
-    private var withdrawReason2 = false
-    private var withdrawReason3 = false
-    private var withdrawReason4 = false
+    private val viewModel: MyPageWithdrawViewModel by viewModels()
 
     override fun initView() {
-        //register_profile_name_check_disable_btn_background 버튼 비활성화
-
+        binding.viewModel = viewModel
     }
 
     override fun initListener() {
         //뒤로가기
         binding.mypageWithdrawArrowIv.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.withdrawReason1Cl.setOnClickListener {
+            viewModel.reason1Click()
+        }
+
+        binding.withdrawReason2Cl.setOnClickListener {
+            viewModel.reason2Click()
+        }
+
+        binding.withdrawReason3Cl.setOnClickListener {
+            viewModel.reason3Click()
+        }
+
+        binding.withdrawReason4Cl.setOnClickListener {
+            viewModel.reason4Click()
         }
 
         binding.withdrawOkayBtn.setOnClickListener {
