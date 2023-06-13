@@ -134,7 +134,7 @@
 
     <string name="mypage_withdraw_warning_text">%s님 잠깐만요!\n삭제하기 전에 읽어보세요.</string>
 
-    <string name="mypage_withdraw_warning_point_text">  · </string>
+    <string name="mypage_withdraw_warning_point_text">  ·  </string>
     <string name="mypage_withdraw_warning_1_text">모든 게시글 및 채팅방이 삭제돼요</string>
     <string name="mypage_withdraw_warning_2_text">계정이 삭제 된 후에는 계정을 다시 살릴 수 없어요</string>
     <string name="mypage_withdraw_warning_3_text">회원 탈퇴 후 7일간 재가입할 수 없어요</string>
@@ -280,4 +280,5 @@
     <string name="goal_card_more_button_description">goal card more button description</string>
 
     <string name="confirm_text">확인</string>
+    <string name="withdraw_okay_btn_text">탈퇴하기</string>
 </resources>

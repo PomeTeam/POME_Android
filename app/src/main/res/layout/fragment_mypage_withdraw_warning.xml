@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.teampome.pome.viewmodel.mypage.MyPageWithdrawWarningViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl"
@@ -27,7 +29,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginTop="16dp"
-            android:layout_marginLeft="12dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="16dp"/>
 
         <TextView
@@ -40,14 +42,13 @@
             app:layout_constraintTop_toTopOf="@+id/mypage_withdraw_warning_arrow_iv"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/mypage_withdraw_warning_arrow_iv"
-            />
+            app:layout_constraintBottom_toBottomOf="@+id/mypage_withdraw_warning_arrow_iv" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_tv"
-            android:text="@string/mypage_withdraw_warning_text"
+            android:text="@{@string/mypage_withdraw_warning_text(viewModel.userName)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Pome.SemiBold.20"
@@ -55,8 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/cl"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_1_point_tv"
@@ -68,8 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mypage_withdraw_warning_tv"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            />
+            android:layout_marginTop="20dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_1_tv"
@@ -80,8 +79,7 @@
             android:textColor="@color/grey_7"
             app:layout_constraintBottom_toBottomOf="@id/mypage_withdraw_warning_1_point_tv"
             app:layout_constraintLeft_toRightOf="@+id/mypage_withdraw_warning_1_point_tv"
-            android:layout_marginStart="2dp"
-            />
+            android:layout_marginStart="4dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_2_point_tv"
@@ -93,8 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mypage_withdraw_warning_1_point_tv"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_2_tv"
@@ -105,8 +102,7 @@
             android:textColor="@color/grey_7"
             app:layout_constraintBottom_toBottomOf="@id/mypage_withdraw_warning_2_point_tv"
             app:layout_constraintLeft_toRightOf="@+id/mypage_withdraw_warning_2_point_tv"
-            android:layout_marginStart="2dp"
-            />
+            android:layout_marginStart="4dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_3_point_tv"
@@ -118,8 +114,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mypage_withdraw_warning_2_point_tv"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_3_tv"
@@ -130,8 +125,7 @@
             android:textColor="@color/grey_7"
             app:layout_constraintBottom_toBottomOf="@id/mypage_withdraw_warning_3_point_tv"
             app:layout_constraintLeft_toRightOf="@+id/mypage_withdraw_warning_3_point_tv"
-            android:layout_marginStart="2dp"
-            />
+            android:layout_marginStart="4dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_4_point_tv"
@@ -143,8 +137,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mypage_withdraw_warning_3_point_tv"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            />
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/mypage_withdraw_warning_4_tv"
@@ -156,10 +149,10 @@
             android:textColor="@color/grey_7"
             app:layout_constraintTop_toTopOf="@+id/mypage_withdraw_warning_4_point_tv"
             app:layout_constraintLeft_toRightOf="@+id/mypage_withdraw_warning_4_point_tv"
-            android:layout_marginStart="2dp"
+            android:layout_marginStart="4dp"
             android:layout_marginTop="5dp"
             android:paddingEnd="40dp"
-            />
+            android:paddingStart="0dp"/>
 
 
         <androidx.appcompat.widget.AppCompatButton
@@ -171,13 +164,11 @@
             android:layout_marginBottom="14dp"
             android:background="@drawable/register_profile_name_check_available_btn_background"
             android:stateListAnimator="@null"
-            android:text="탈퇴하기"
+            android:text="@string/withdraw_okay_btn_text"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
