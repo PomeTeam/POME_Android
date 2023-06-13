@@ -132,7 +132,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         }
 
         binding.friendAddIv.setOnClickListener {
-            val action = FriendFragmentDirections.actionFriendFragmentToAddFriendsFragment()
+            val action = FriendFragmentDirections.actionFriendFragmentToAddFriendsFragment(true)
             findNavController().navigate(action)
         }
     }
