@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -128,6 +129,11 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
         binding.friendAllIv.setOnClickListener {
             getAllFriendRecord()
+        }
+
+        binding.friendAddIv.setOnClickListener {
+            val action = FriendFragmentDirections.actionFriendFragmentToAddFriendsFragment()
+            findNavController().navigate(action)
         }
     }
 
