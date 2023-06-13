@@ -38,4 +38,14 @@ class MyPageGoalViewModel @Inject constructor(
             }
         }
     }
+
+    private val _deleteEndGoalResponse = MutableLiveData<ApiResponse<BasePomeResponse<Any>>>()
+    val deleteEndGoalResponse: LiveData<ApiResponse<BasePomeResponse<Any>>> = _deleteEndGoalResponse
+
+    fun deleteEndGoal(goalId: Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _deleteEndGoalResponse,
+        coroutineErrorHandler
+    ) {
+        goalRepository.deleteGoal(goalId)
+    }
 }

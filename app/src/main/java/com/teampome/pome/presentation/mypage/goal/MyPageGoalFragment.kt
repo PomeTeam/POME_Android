@@ -30,15 +30,9 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
     private lateinit var goalRemoveDialogBinding: PomeRemoveDialogBinding
 
     override fun initView() {
-        makeGoalRemoveDialog()
-
         binding.viewModel = viewModel
 
-        viewModel.findEndGoals(object: CoroutineErrorHandler {
-            override fun onError(message: String) {
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-            }
-        })
+        callGetEndGoals()
 
         binding.mypageGoalRv.adapter = MyPageGoalAdapter(::showGoalRemoveDialog)
     }
@@ -47,11 +41,22 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
         viewModel.getEndGoalResponse.observe(viewLifecycleOwner) {
             when(it) {
                 is ApiResponse.Loading -> {}
-                is ApiResponse.Failure -> {}
+                is ApiResponse.Failure -> { hideLoading() }
                 is ApiResponse.Success -> {
-                    Log.d("test", "${it.data.data}")
-
                     (binding.mypageGoalRv.adapter as MyPageGoalAdapter).submitList(it.data.data?.content)
+
+                    hideLoading()
+                }
+            }
+        }
+
+        viewModel.deleteEndGoalResponse.observe(viewLifecycleOwner) {
+            when(it) {
+                is ApiResponse.Loading -> {  }
+                is ApiResponse.Failure -> { hideLoading() }
+                is ApiResponse.Success -> {
+                    callGetEndGoals()
+                    hideLoading()
                 }
             }
         }
@@ -62,7 +67,9 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
         }
     }
 
-    private fun makeGoalRemoveDialog() {
+    private fun makeGoalRemoveDialog(
+        onYesClick: () -> Unit
+    ) {
         goalRemoveDialog = Dialog(requireContext())
         goalRemoveDialogBinding = PomeRemoveDialogBinding.inflate(layoutInflater, null, false)
 
@@ -78,7 +85,7 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
             text = "삭제할래요"
 
             setOnClickListener {
-                goalRemoveDialog.dismiss()
+                onYesClick.invoke()
             }
         }
 
@@ -92,7 +99,30 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
     }
 
     private fun showGoalRemoveDialog(goalData: GoalData) {
+        makeGoalRemoveDialog {
+            showLoading()
+
+            viewModel.deleteEndGoal(goalData.id, object : CoroutineErrorHandler {
+                override fun onError(message: String) {
+                    hideLoading()
+                    Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                }
+            })
+
+            goalRemoveDialog.dismiss()
+        }
 
         goalRemoveDialog.show()
+    }
+
+    private fun callGetEndGoals() {
+        showLoading()
+
+        viewModel.findEndGoals(object: CoroutineErrorHandler {
+            override fun onError(message: String) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                hideLoading()
+            }
+        })
     }
 }
