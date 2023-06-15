@@ -1,6 +1,8 @@
 package com.teampome.pome.presentation.friend
 
 import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -15,6 +17,8 @@ class FriendGetAdapter(
     private val context : Context?
 ) : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewHolder>(BookDiffCallback) {
 
+    private var selectedPosition = -1
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendGetViewHolder {
         return FriendGetViewHolder(
             ItemFriendsListBinding.inflate(LayoutInflater.from(parent.context), parent, false),
@@ -24,9 +28,7 @@ class FriendGetAdapter(
     override fun onBindViewHolder(holder: FriendGetViewHolder, position: Int) {
         val friends = currentList[position]
         holder.bind(friends)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.let{ it(friends) }
-        }
+
     }
 
     private var onItemClickListener : ((GetFriends) -> Unit)? = null
@@ -44,13 +46,22 @@ class FriendGetAdapter(
             } else {
                 getFriends.friendNickName
             }
-            friendListProfileIv.clipToOutline = true
 
             context?.let { context ->
                 Glide.with(context)
                     .load(getFriends.imageKey)
                     .circleCrop()
                     .into(friendListProfileIv)
+            }
+
+            friendAllTv.setTextColor(
+                if (adapterPosition == selectedPosition) Color.BLACK else Color.GRAY
+            )
+
+            itemView.setOnClickListener {
+                selectedPosition = adapterPosition
+                notifyDataSetChanged()
+                onItemClickListener?.invoke(getFriends)
             }
         }
 
