@@ -28,14 +28,6 @@ class FriendRecordGetAdapter(
     override fun onBindViewHolder(holder: FriendGetRecordViewHolder, position: Int) {
         val friends = currentList[position]
         holder.bind(friends)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.let{ it(friends) }
-        }
-    }
-
-    private var onItemClickListener : ((GetFriendRecord) -> Unit)? = null
-    fun setOnItemClickListener(listener : (GetFriendRecord) -> Unit){
-        onItemClickListener = listener
     }
 
     inner class FriendGetRecordViewHolder(

@@ -165,11 +165,6 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             adapter = friendRecordGetAdapter
         }
-
-        // 클릭 리스너
-        friendRecordGetAdapter.setOnItemClickListener {
-            Toast.makeText(requireContext(), "${it.nickname}", Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun getAllFriendRecord() {
