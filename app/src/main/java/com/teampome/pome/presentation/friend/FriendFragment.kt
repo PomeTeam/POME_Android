@@ -139,7 +139,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
     //친구 목록 조회 RV
     private fun setUpRecyclerView(){
-        friendGetAdapter = FriendGetAdapter()
+        friendGetAdapter = FriendGetAdapter(context)
         binding.friendListRv.apply {
 //            setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
