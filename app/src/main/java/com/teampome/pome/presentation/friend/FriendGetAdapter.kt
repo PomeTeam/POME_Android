@@ -54,15 +54,15 @@ class FriendGetAdapter(
                     .into(friendListProfileIv)
             }
 
-            friendAllTv.setTextColor(
-                if (adapterPosition == selectedPosition) Color.BLACK else Color.GRAY
-            )
-
             itemView.setOnClickListener {
-                selectedPosition = adapterPosition
+                selectedPosition = bindingAdapterPosition
                 notifyDataSetChanged()
                 onItemClickListener?.invoke(getFriends)
             }
+
+            friendAllTv.setTextColor(
+                if (bindingAdapterPosition == selectedPosition) Color.BLACK else Color.GRAY
+            )
         }
 
     }
