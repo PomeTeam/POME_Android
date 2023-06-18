@@ -50,7 +50,7 @@ interface AddFriendsService {
             Response<BasePomeResponse<BaseAllData<GetFriendRecord>>>
 
     //기록 숨기기
-    @DELETE("api/v1/records/{recordId}")
+    @DELETE("api/v1/records/hide/{recordId}")
     suspend fun deleteFriendRecord(
         @Path("recordId") recordId: Int
     ) : Response<BasePomeResponse<DeleteFriendRecord>>

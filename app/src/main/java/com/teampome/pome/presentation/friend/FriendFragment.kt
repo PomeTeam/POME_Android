@@ -117,6 +117,12 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                 is ApiResponse.Success -> {
                     hideLoading()
                     Toast.makeText(requireContext(), "해당 게시글을 숨겼어요", Toast.LENGTH_SHORT).show()
+                    viewModel.getAllRecordFriend(object : CoroutineErrorHandler{
+                        override fun onError(message: String) {
+                            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+                            hideLoading()
+                        }
+                    })
                 }
                 is ApiResponse.Failure -> {
                     hideLoading()

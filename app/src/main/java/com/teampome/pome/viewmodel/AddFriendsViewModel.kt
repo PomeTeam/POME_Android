@@ -50,6 +50,7 @@ class AddFriendsViewModel @Inject constructor(
     private val _getAllFriendRecordResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>()
     val getAllFriendRecordResponse : LiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = _getAllFriendRecordResponse
 
+    //친구 기록 숨기기
     private val _deleteFriendRecord = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriendRecord>>>()
     val deleteFriendRecord : LiveData<ApiResponse<BasePomeResponse<DeleteFriendRecord>>> = _deleteFriendRecord
 
