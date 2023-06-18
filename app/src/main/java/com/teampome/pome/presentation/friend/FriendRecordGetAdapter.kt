@@ -17,7 +17,6 @@ import com.teampome.pome.model.response.GetFriends
 //친구 기록 조회
 class FriendRecordGetAdapter(
     private val clickListener: FriendDetailRecordClickListener,
-    private val context : Context?
 ) : ListAdapter<GetFriendRecord, FriendRecordGetAdapter.FriendGetRecordViewHolder>(BookDiffCallback) {
 
     private val friendsMap: HashMap<String, GetFriends> = HashMap()
@@ -73,7 +72,7 @@ class FriendRecordGetAdapter(
                 }
 
                 if(getFriedRecord.emotionResponse.myEmotion == null) {
-                    context?.let{ context ->
+                    itemView.context?.let{ context ->
                         Glide.with(context).load(R.drawable.emoji_mint_28).into(friendDetailCardFirstFriendEmotionAiv)
                     }
                 }
@@ -90,11 +89,11 @@ class FriendRecordGetAdapter(
                     friendEmojiRegisterCl.layoutParams = params
                 }
 
-                val friend = friendsMap[getFriedRecord.nickname]
+                val friends = friendsMap[getFriedRecord.nickname]
 
-                friend?.let {
+                friends?.let { friend ->
                     Glide.with(itemView.context)
-                        .load(it.imageKey)
+                        .load(friend.imageKey)
                         .circleCrop()
                         .into(friendDetailProfileIv)
                 }
