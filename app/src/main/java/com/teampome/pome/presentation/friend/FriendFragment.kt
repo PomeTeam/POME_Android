@@ -61,6 +61,7 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
                             (binding.friendListRv.adapter as FriendGetAdapter).submitList(
                                 list
                             )
+                            friendRecordGetAdapter.updateFriendsMap(list)
                         }
                     }
                 }

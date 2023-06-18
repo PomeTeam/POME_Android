@@ -120,6 +120,4 @@ class AddFriendsViewModel @Inject constructor(
             is ApiResponse.Failure -> { null }
         }
     }
-
-
 }

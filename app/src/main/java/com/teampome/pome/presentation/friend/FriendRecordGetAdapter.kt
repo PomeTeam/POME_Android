@@ -1,6 +1,7 @@
 package com.teampome.pome.presentation.friend
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,21 @@ import com.bumptech.glide.Glide
 import com.teampome.pome.R
 import com.teampome.pome.databinding.ItemFriendDetailCardBinding
 import com.teampome.pome.model.response.GetFriendRecord
+import com.teampome.pome.model.response.GetFriends
 
 //친구 기록 조회
 class FriendRecordGetAdapter(
     private val clickListener: FriendDetailRecordClickListener,
     private val context : Context?
 ) : ListAdapter<GetFriendRecord, FriendRecordGetAdapter.FriendGetRecordViewHolder>(BookDiffCallback) {
+
+    private val friendsMap: HashMap<String, GetFriends> = HashMap()
+
+    fun updateFriendsMap(friends: List<GetFriends>) {
+        for (friend in friends) {
+            friendsMap[friend.friendNickName] = friend
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendGetRecordViewHolder {
         return FriendGetRecordViewHolder(
@@ -78,6 +88,17 @@ class FriendRecordGetAdapter(
                         params.height = ViewGroup.LayoutParams.WRAP_CONTENT
                     }
                     friendEmojiRegisterCl.layoutParams = params
+                }
+
+                val friend = friendsMap[getFriedRecord.nickname]
+                Log.d("gg1234", getFriedRecord.id.toString())
+                Log.d("gg1234", friend?.imageKey.toString())
+
+                friend?.let {
+                    Glide.with(itemView.context)
+                        .load(it.imageKey)
+                        .circleCrop()
+                        .into(friendDetailProfileIv)
                 }
             }
         }
