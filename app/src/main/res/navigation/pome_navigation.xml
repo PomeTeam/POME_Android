@@ -78,6 +78,9 @@
         <action
             android:id="@+id/action_friend_fragment_to_friendDetailFragment"
             app:destination="@id/friendDetailFragment" />
+        <action
+            android:id="@+id/action_friend_fragment_to_addFriendsFragment"
+            app:destination="@id/addFriendsFragment" />
     </fragment>
 
     <fragment
@@ -123,6 +126,10 @@
             android:id="@+id/action_addFriendsFragment_to_record_fragment"
             app:destination="@id/record_fragment"
             app:popUpTo="@id/splash_fragment"/>
+        <argument
+            android:name="addFriendType"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"

@@ -8,6 +8,7 @@ import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
 import com.teampome.pome.model.goal.GoalData
 import com.teampome.pome.model.response.DeleteFriend
+import com.teampome.pome.model.response.DeleteFriendRecord
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import com.teampome.pome.repository.friend.AddFriendsRepository
@@ -45,6 +46,13 @@ class AddFriendsViewModel @Inject constructor(
     private val _deleteFriendResponse = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriend>>>()
     val deleteFriendResponse : LiveData<ApiResponse<BasePomeResponse<DeleteFriend>>> = _deleteFriendResponse
 
+    //모든 친구 기록 조회
+    private val _getAllFriendRecordResponse = MutableLiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>>()
+    val getAllFriendRecordResponse : LiveData<ApiResponse<BasePomeResponse<BaseAllData<GetFriendRecord>>>> = _getAllFriendRecordResponse
+
+    //친구 기록 숨기기
+    private val _deleteFriendRecord = MutableLiveData<ApiResponse<BasePomeResponse<DeleteFriendRecord>>>()
+    val deleteFriendRecord : LiveData<ApiResponse<BasePomeResponse<DeleteFriendRecord>>> = _deleteFriendRecord
 
     fun findFriendsData(nickName: String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _findFriendsDataResponse,
@@ -80,11 +88,26 @@ class AddFriendsViewModel @Inject constructor(
         repository.getFriendRecord(userId)
     }
 
+    //친구 삭제
     fun deleteFriend(friendId : String, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
         _deleteFriendResponse,
         coroutineErrorHandler
     ){
         repository.deleteFriend(friendId)
+    }
+
+    fun getAllRecordFriend(coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _getAllFriendRecordResponse,
+        coroutineErrorHandler
+    ){
+        repository.getAllFriendRecord()
+    }
+
+    fun deleteFriendRecord(recordId : Int, coroutineErrorHandler: CoroutineErrorHandler) = baseRequest(
+        _deleteFriendRecord,
+        coroutineErrorHandler
+    ){
+        repository.deleteFriendRecord(recordId)
     }
 
     //친구 조회
@@ -97,6 +120,4 @@ class AddFriendsViewModel @Inject constructor(
             is ApiResponse.Failure -> { null }
         }
     }
-
-
 }

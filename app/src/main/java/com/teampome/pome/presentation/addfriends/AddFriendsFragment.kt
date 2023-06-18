@@ -9,11 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavArgs
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentAddFriendsBinding
 import com.teampome.pome.presentation.addfriends.recyclerview.AddFriendsListAdapter
 import com.teampome.pome.presentation.addfriends.recyclerview.OnAddFriendClickListener
+import com.teampome.pome.presentation.record.add.AddGoalContentsFragmentArgs
 import com.teampome.pome.util.common.CommonUtil
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
@@ -23,6 +26,9 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.fragment_add_friends) {
+
+    private val args: AddFriendsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +48,12 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
     }
 
     override fun initView() {
+        if(args.addFriendType) {
+            binding.addFriendsBackIv.visibility = View.VISIBLE
+        } else {
+            binding.addFriendsBackIv.visibility = View.GONE
+        }
+
         binding.addFriendsListRv.adapter = AddFriendsListAdapter().apply {
             setOnAddFriendClickListener(object : OnAddFriendClickListener {
                 override fun onAddFriendClick(friendId: String, position: Int) {
@@ -169,6 +181,10 @@ class AddFriendsFragment : BaseFragment<FragmentAddFriendsBinding>(R.layout.frag
         // edittext x버튼 클릭
         binding.addFriendsFindDeleteAtv.setOnClickListener {
             binding.addFriendsNameEt.setText("")
+        }
+
+        binding.addFriendsBackIv.setOnClickListener {
+            findNavController().popBackStack()
         }
     }
 

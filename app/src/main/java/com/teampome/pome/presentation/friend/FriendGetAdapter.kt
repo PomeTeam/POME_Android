@@ -1,15 +1,23 @@
 package com.teampome.pome.presentation.friend
 
+import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.teampome.pome.databinding.ItemFriendsListBinding
 import com.teampome.pome.model.response.GetFriends
 
 // 친구 탭에서 친구 조회하는 친구 리스트 어댑터
-class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewHolder>(BookDiffCallback) {
+class FriendGetAdapter(
+    private val context : Context?
+) : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewHolder>(BookDiffCallback) {
+
+    private var selectedPosition = -1
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendGetViewHolder {
         return FriendGetViewHolder(
@@ -20,9 +28,7 @@ class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewH
     override fun onBindViewHolder(holder: FriendGetViewHolder, position: Int) {
         val friends = currentList[position]
         holder.bind(friends)
-        holder.itemView.setOnClickListener {
-            onItemClickListener?.let{ it(friends) }
-        }
+
     }
 
     private var onItemClickListener : ((GetFriends) -> Unit)? = null
@@ -34,12 +40,29 @@ class FriendGetAdapter : ListAdapter<GetFriends, FriendGetAdapter.FriendGetViewH
         private val binding : ItemFriendsListBinding,
     ) : RecyclerView.ViewHolder(binding.root){
 
-        fun bind(getFriends: GetFriends){
-            binding.friendAllTv.text = if (getFriends.friendNickName.length >= 3) {
+        fun bind(getFriends: GetFriends) = with(binding){
+            friendAllTv.text = if (getFriends.friendNickName.length >= 3) {
                 "${getFriends.friendNickName.substring(0, 3)}..."
             } else {
                 getFriends.friendNickName
             }
+
+            context?.let { context ->
+                Glide.with(context)
+                    .load(getFriends.imageKey)
+                    .circleCrop()
+                    .into(friendListProfileIv)
+            }
+
+            itemView.setOnClickListener {
+                selectedPosition = bindingAdapterPosition
+                notifyDataSetChanged()
+                onItemClickListener?.invoke(getFriends)
+            }
+
+            friendAllTv.setTextColor(
+                if (bindingAdapterPosition == selectedPosition) Color.BLACK else Color.GRAY
+            )
         }
 
     }
