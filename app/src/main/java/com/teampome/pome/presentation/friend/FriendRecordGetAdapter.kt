@@ -91,8 +91,6 @@ class FriendRecordGetAdapter(
                 }
 
                 val friend = friendsMap[getFriedRecord.nickname]
-                Log.d("gg1234", getFriedRecord.id.toString())
-                Log.d("gg1234", friend?.imageKey.toString())
 
                 friend?.let {
                     Glide.with(itemView.context)
