@@ -1,10 +1,12 @@
 package com.teampome.pome.presentation.friend
 
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +15,10 @@ import com.teampome.pome.R
 import com.teampome.pome.databinding.ItemFriendDetailCardBinding
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
+import java.time.Duration
+import java.time.Instant
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 //친구 기록 조회
 class FriendRecordGetAdapter(
@@ -34,6 +40,7 @@ class FriendRecordGetAdapter(
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: FriendGetRecordViewHolder, position: Int) {
         val friends = currentList[position]
         holder.bind(friends)
@@ -44,6 +51,7 @@ class FriendRecordGetAdapter(
         private val binding : ItemFriendDetailCardBinding,
     ) : RecyclerView.ViewHolder(binding.root){
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(getFriedRecord: GetFriendRecord){
             with(binding) {
                 getFriendRecord = getFriedRecord
@@ -52,8 +60,8 @@ class FriendRecordGetAdapter(
                     friendDetailRecordClickListener.onFriendDetailMoreClick(getFriedRecord.id)
                 }
 
-                //Todo 시간 표시 필요
-                friendDetailContentNameTimeTv.text = " · ${getFriedRecord.oneLineMind}"
+                val timeString = getTimeAgo(getFriedRecord.createdAt)
+                friendDetailContentNameTimeTv.text = " · ${getFriedRecord.oneLineMind} · $timeString"
 
                 if(getFriedRecord.emotionResponse.friendEmotions.isEmpty()) {
                     friendDetailCardLastFriendEmotionCountTv.visibility = View.INVISIBLE
@@ -100,7 +108,24 @@ class FriendRecordGetAdapter(
             }
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
+        private fun getTimeAgo(isoTime: String): String {
+            // 마이크로 초 부분을 잘라냅니다.
+            val modifiedIsoTime = isoTime.substring(0, isoTime.lastIndexOf(".") + 4) + "Z"
+            val time = Instant.parse(modifiedIsoTime)
+            val now = Instant.now()
+            val duration = Duration.between(time, now)
+
+            return when {
+                duration.toMinutes() < 1 -> "방금 전"
+                duration.toMinutes() < 60 -> "${duration.toMinutes()}분 전"
+                duration.toHours() < 24 -> "${duration.toHours()}시간 전"
+                duration.toDays() < 2 -> "어제"
+                else -> ZonedDateTime.parse(modifiedIsoTime).format(DateTimeFormatter.ofPattern("M월 d일"))
+            }
+        }
     }
+
     companion object{
         private val BookDiffCallback = object : DiffUtil.ItemCallback<GetFriendRecord>(){
             override fun areItemsTheSame(oldItem: GetFriendRecord, newItem: GetFriendRecord): Boolean {
