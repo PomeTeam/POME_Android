@@ -43,7 +43,7 @@ class MyPageWithdrawFragment : BaseFragment<FragmentMypageWithdrawBinding>(R.lay
         }
 
         binding.withdrawOkayBtn.setOnClickListener {
-            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment(viewModel.reason.value!!.getString())
+            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment(viewModel.reason.value!!.getString(requireContext()))
             findNavController().navigate(action)
         }
     }

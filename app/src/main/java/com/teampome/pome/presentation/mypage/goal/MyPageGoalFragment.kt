@@ -78,11 +78,11 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
 
         CommonUtil.makePomeDialog(goalRemoveDialog)
 
-        goalRemoveDialogBinding.removeDialogTitleAtv.text = "종료된 목표를 삭제하시겠어요?"
-        goalRemoveDialogBinding.removeDialogSubtitleAtv.text = "지금까지 작성한 기록들은 모두 사라져요"
+        goalRemoveDialogBinding.removeDialogTitleAtv.text = resources.getString(R.string.goal_trash_text)
+        goalRemoveDialogBinding.removeDialogSubtitleAtv.text = resources.getString(R.string.goal_trash_all_text)
 
         goalRemoveDialogBinding.removeYesTextAtv.apply {
-            text = "삭제할래요"
+            text = resources.getString(R.string.goal_trash_all_okay_text)
 
             setOnClickListener {
                 onYesClick.invoke()
@@ -90,7 +90,7 @@ class MyPageGoalFragment : BaseFragment<FragmentMypageGoalBinding>(R.layout.frag
         }
 
         goalRemoveDialogBinding.removeNoTextAtv.apply {
-            text = "아니요"
+            text = resources.getString(R.string.goal_trash_all_not_text)
 
             setOnClickListener {
                 goalRemoveDialog.dismiss()

@@ -281,4 +281,6 @@
 
     <string name="confirm_text">확인</string>
     <string name="withdraw_okay_btn_text">탈퇴하기</string>
+
+    <string name="empty_string"> </string>
 </resources>

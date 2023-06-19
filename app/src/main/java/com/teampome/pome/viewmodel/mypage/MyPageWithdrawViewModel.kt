@@ -1,7 +1,11 @@
 package com.teampome.pome.viewmodel.mypage
 
+import android.content.Context
+import android.content.res.Resources
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -30,22 +34,22 @@ sealed class Reason {
     object Empty: Reason()
 }
 
-fun Reason.getString(): String {
+fun Reason.getString(context: Context): String {
     return when(this) {
         is Reason.BotheringRecord -> {
-            "기록이 귀찮아요"
+            context.resources.getString(R.string.mypage_withdraw_reason_1_text)
         }
         is Reason.ManyAlarm -> {
-            "알림이 너무 많아요"
+            context.resources.getString(R.string.mypage_withdraw_reason_2_text)
         }
         is Reason.BlockAccount -> {
-            "억울하게 이용이 제한됐어요"
+            context.resources.getString(R.string.mypage_withdraw_reason_3_text)
         }
         is Reason.MakeNewOne -> {
-            "새 계정을 만들고 싶어요"
+            context.resources.getString(R.string.mypage_withdraw_reason_4_text)
         }
         is Reason.Empty -> {
-            ""
+            context.resources.getString(R.string.empty_string)
         }
     }
 }
