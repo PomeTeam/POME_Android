@@ -9,60 +9,42 @@ import javax.inject.Inject
 @HiltViewModel
 class MyPageWithdrawViewModel @Inject constructor() : BaseViewModel() {
 
-    private val _reason1 = MutableLiveData(false)
-    val reason1: LiveData<Boolean> = _reason1
+    private val _reason = MutableLiveData<Reason>(Reason.Empty)
+    val reason: LiveData<Reason> = _reason
 
-    private val _reason2 = MutableLiveData(false)
-    val reason2: LiveData<Boolean> = _reason2
-
-    private val _reason3 = MutableLiveData(false)
-    val reason3: LiveData<Boolean> = _reason3
-
-    private val _reason4 = MutableLiveData(false)
-    val reason4: LiveData<Boolean> = _reason4
-
-    fun reason1Click() {
-        _reason1.value = _reason1.value != true
-
-        _reason2.value = false
-        _reason3.value = false
-        _reason4.value = false
-    }
-
-    fun reason2Click() {
-        _reason2.value = _reason2.value != true
-
-        _reason1.value = false
-        _reason3.value = false
-        _reason4.value = false
-    }
-
-    fun reason3Click() {
-        _reason3.value = _reason3.value != true
-
-        _reason1.value = false
-        _reason2.value = false
-        _reason4.value = false
-    }
-
-    fun reason4Click() {
-        _reason4.value = _reason4.value != true
-
-        _reason1.value = false
-        _reason2.value = false
-        _reason3.value = false
-    }
-
-    fun getReasonString() : String {
-        return if(reason1.value == true) {
-            return "기록이 귀찮아요"
-        } else if (reason2.value == true) {
-            return "알림이 너무 많아요"
-        } else if (reason3.value == true) {
-            return "억울하게 이용이 제한됐어요"
-        } else if (reason4.value == true) {
-            return "새 계정을 만들고 싶어요"
+    fun reasonClick(reason: Reason) {
+        if(_reason.value == reason) {
+            _reason.value = Reason.Empty
         } else {
+            _reason.value = reason
+        }
+    }
+}
+
+// dataBinding에서 sealed class 접근하지 못함! -> BindingAdapter 이용
+sealed class Reason {
+    object BotheringRecord: Reason()
+    object ManyAlarm: Reason()
+    object BlockAccount: Reason()
+    object MakeNewOne: Reason()
+    object Empty: Reason()
+}
+
+fun Reason.getString(): String {
+    return when(this) {
+        is Reason.BotheringRecord -> {
+            "기록이 귀찮아요"
+        }
+        is Reason.ManyAlarm -> {
+            "알림이 너무 많아요"
+        }
+        is Reason.BlockAccount -> {
+            "억울하게 이용이 제한됐어요"
+        }
+        is Reason.MakeNewOne -> {
+            "새 계정을 만들고 싶어요"
+        }
+        is Reason.Empty -> {
             ""
         }
     }

@@ -1,8 +1,14 @@
 package com.teampome.pome.util
 
+import android.content.res.ColorStateList
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.ImageViewCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -15,6 +21,7 @@ import com.teampome.pome.util.common.Constants
 import com.teampome.pome.util.common.Emotion
 import com.teampome.pome.util.customview.PomeBigGoalCardView
 import com.teampome.pome.util.customview.PomeSmallGoalCardView
+import com.teampome.pome.viewmodel.mypage.Reason
 import jp.wasabeef.glide.transformations.MaskTransformation
 
 // attrs와 정의하려고 하였지만 둘다 정의해야 에러가 안남...
@@ -239,7 +246,6 @@ fun bindingGoalConnectTime(textView: TextView, recordData: RecordData?) {
     }
 }
 
-
 @BindingAdapter("imageUrl")
 fun loadImage(imageView : ImageView, url : String){
     Glide.with(imageView.context).load(url)
@@ -247,4 +253,66 @@ fun loadImage(imageView : ImageView, url : String){
         .override(48, 48)
         .into(imageView)
 
+}
+
+@BindingAdapter("clickReason1")
+fun clickReason1(imageView: AppCompatImageView, reason: Reason) {
+    when(reason) {
+        is Reason.BotheringRecord -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.main)))
+        }
+        else -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.grey_3)))
+        }
+    }
+}
+
+@BindingAdapter("clickReason2")
+fun clickReason2(imageView: AppCompatImageView, reason: Reason) {
+    when(reason) {
+        is Reason.ManyAlarm -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.main)))
+        }
+        else -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.grey_3)))
+        }
+    }
+}
+
+@BindingAdapter("clickReason3")
+fun clickReason3(imageView: AppCompatImageView, reason: Reason) {
+    when(reason) {
+        is Reason.BlockAccount -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.main)))
+        }
+        else -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.grey_3)))
+        }
+    }
+}
+
+@BindingAdapter("clickReason4")
+fun clickReason4(imageView: AppCompatImageView, reason: Reason) {
+    when(reason) {
+        is Reason.MakeNewOne -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.main)))
+        }
+        else -> {
+            ImageViewCompat.setImageTintList(imageView, ColorStateList.valueOf(ContextCompat.getColor(imageView.context, R.color.grey_3)))
+        }
+    }
+}
+
+@BindingAdapter("enabledWithdrawBtn")
+fun enabledWithdrawBtn(button: AppCompatButton, reason: Reason) {
+    when(reason) {
+        is Reason.Empty -> {
+            button.background = ResourcesCompat.getDrawable(button.resources, R.drawable.register_profile_name_check_disable_btn_background, null)
+            button.isEnabled = false
+        }
+        else -> {
+            button.background = ResourcesCompat.getDrawable(button.resources, R.drawable.register_profile_name_check_available_btn_background, null)
+            button.isEnabled = true
+        }
+    }
 }

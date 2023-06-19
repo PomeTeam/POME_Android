@@ -6,6 +6,8 @@ import com.teampome.pome.R
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.databinding.FragmentMypageWithdrawBinding
 import com.teampome.pome.viewmodel.mypage.MyPageWithdrawViewModel
+import com.teampome.pome.viewmodel.mypage.Reason
+import com.teampome.pome.viewmodel.mypage.getString
 import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탈퇴하기 뷰
@@ -25,23 +27,23 @@ class MyPageWithdrawFragment : BaseFragment<FragmentMypageWithdrawBinding>(R.lay
         }
 
         binding.withdrawReason1Cl.setOnClickListener {
-            viewModel.reason1Click()
+            viewModel.reasonClick(Reason.BotheringRecord)
         }
 
         binding.withdrawReason2Cl.setOnClickListener {
-            viewModel.reason2Click()
+            viewModel.reasonClick(Reason.ManyAlarm)
         }
 
         binding.withdrawReason3Cl.setOnClickListener {
-            viewModel.reason3Click()
+            viewModel.reasonClick(Reason.BlockAccount)
         }
 
         binding.withdrawReason4Cl.setOnClickListener {
-            viewModel.reason4Click()
+            viewModel.reasonClick(Reason.MakeNewOne)
         }
 
         binding.withdrawOkayBtn.setOnClickListener {
-            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment(viewModel.getReasonString())
+            val action = MyPageWithdrawFragmentDirections.actionMyPageWithdrawFragmentToMyPageWithdrawWarningFragment(viewModel.reason.value!!.getString())
             findNavController().navigate(action)
         }
     }
