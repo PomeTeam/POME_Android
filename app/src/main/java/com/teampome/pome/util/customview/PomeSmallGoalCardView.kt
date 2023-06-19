@@ -13,7 +13,7 @@ open class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, att
         set(value) {
             field = value
 
-            if(value.isNullOrEmpty()) {
+            if (value.isNullOrEmpty()) {
                 makeNoGoalView()
             } else {
                 binding.goalCardTextTv.text = value
@@ -23,16 +23,17 @@ open class PomeSmallGoalCardView @JvmOverloads constructor(context: Context, att
     var isPrivate: Boolean = false
         set(value) {
             field = value
-            binding.goalCardPublicChipTv.text = if(value) "공개" else "비공개"
+            binding.goalCardPublicChipTv.text = if (value) "공개" else "비공개"
         }
     var remainDays: Int = 0
         set(value) {
             field = value
 
-            if(value <= 0) {
+            if (value <= 0) {
                 binding.goalCardDayChipTv.text = resources.getString(R.string.end_day_text)
             } else {
-                binding.goalCardDayChipTv.text = resources.getString(R.string.card_day_chip_text, value)
+                binding.goalCardDayChipTv.text =
+                    resources.getString(R.string.card_day_chip_text, value)
             }
         }
 

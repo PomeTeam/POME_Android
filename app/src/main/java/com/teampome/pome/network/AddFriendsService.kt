@@ -3,7 +3,6 @@ package com.teampome.pome.network
 import com.teampome.pome.model.base.BaseAllData
 import com.teampome.pome.model.base.BasePomeResponse
 import com.teampome.pome.model.friend.FriendData
-import com.teampome.pome.model.response.DeleteFriend
 import com.teampome.pome.model.response.GetFriendRecord
 import com.teampome.pome.model.response.GetFriends
 import retrofit2.Response
@@ -40,5 +39,5 @@ interface AddFriendsService {
     @DELETE("api/v1/users/friend/{friendId}")
     suspend fun deleteFriend(
         @Path("friendId") friendId: String
-    ) : Response<BasePomeResponse<DeleteFriend>>
+    ) : Response<BasePomeResponse<Boolean>>
 }

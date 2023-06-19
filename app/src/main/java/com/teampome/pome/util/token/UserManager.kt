@@ -123,4 +123,10 @@ class UserManager(private val context: Context) {
             preferences.remove(USER_PROFILE_URL_KEY)
         }
     }
+
+    suspend fun deleteAllUserData() {
+        context.dataStore.edit { preferences ->
+            preferences.clear()
+        }
+    }
 }

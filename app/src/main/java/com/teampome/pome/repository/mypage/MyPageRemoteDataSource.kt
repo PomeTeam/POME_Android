@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 class MyPageRemoteDataSource @Inject constructor(
     private val service: MyPageService
-): MyPageDataSource{
+): MyPageDataSource {
     override fun getPastGoals(): Flow<ApiResponse<BasePomeResponse<BaseAllData<GoalData>>>> = apiRequestFlow {
         service.getUserEndGoals()
     }
@@ -22,4 +22,7 @@ class MyPageRemoteDataSource @Inject constructor(
         service.getMarshmello()
     }
 
+    override fun deleteUser(reason: String): Flow<ApiResponse<BasePomeResponse<Boolean>>> = apiRequestFlow {
+        service.deleteUser(reason)
+    }
 }

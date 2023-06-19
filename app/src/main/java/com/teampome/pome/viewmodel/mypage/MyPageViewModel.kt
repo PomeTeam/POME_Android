@@ -1,4 +1,4 @@
-package com.teampome.pome.viewmodel
+package com.teampome.pome.viewmodel.mypage
 
 import android.util.Log
 import androidx.lifecycle.LiveData

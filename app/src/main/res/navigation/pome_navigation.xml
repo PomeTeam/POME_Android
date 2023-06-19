@@ -195,10 +195,13 @@
         <action
             android:id="@+id/action_myPageSettingFragment_to_myPageWithdrawFragment"
             app:destination="@id/myPageWithdrawFragment" />
+        <action
+            android:id="@+id/action_myPageSettingFragment_to_splashFramgnet"
+            app:destination="@id/splash_fragment"/>
     </fragment>
     <fragment
         android:id="@+id/myPageFriendFragment"
-        android:name="com.teampome.pome.presentation.mypage.MyPageFriendFragment"
+        android:name="com.teampome.pome.presentation.mypage.setting.MyPageFriendFragment"
         android:label="MyPageFriendFragment"
         tools:layout="@layout/fragment_mypage_friend"/>
 
@@ -376,5 +379,12 @@
         android:id="@+id/myPageWithdrawWarningFragment"
         android:name="com.teampome.pome.presentation.mypage.setting.MyPageWithdrawWarningFragment"
         android:label="MyPageWithdrawWarningFragment"
-        tools:layout="@layout/fragment_mypage_withdraw"/>
+        tools:layout="@layout/fragment_mypage_withdraw_warning">
+        <argument
+            android:name="withdraw_reason"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_myPageWithdrawWarningFragment_to_splash_fragment"
+            app:destination="@id/splash_fragment" />
+    </fragment>
 </navigation>

@@ -11,7 +11,7 @@ import com.teampome.pome.presentation.mypage.recyclerview.main.MyPageViewAdapter
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
-import com.teampome.pome.viewmodel.MyPageViewModel
+import com.teampome.pome.viewmodel.mypage.MyPageViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 //마이페이지 탭
