@@ -13,6 +13,7 @@ import com.teampome.pome.databinding.FragmentFriendBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeFriendSettingBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
+import com.teampome.pome.model.response.FriendEmotionResponse
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
 import com.teampome.pome.util.base.CoroutineErrorHandler
@@ -211,5 +212,9 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
     override fun onFriendDetailMoreClick(recordId : Int) {
         makeFriendSettingBottomDialog(recordId)
         friendSettingBottomSheetDialog.show()
+    }
+
+    override fun onFriendDetailEmojiClick(emojiList: List<FriendEmotionResponse>) {
+
     }
 }

@@ -19,71 +19,73 @@
             android:id="@+id/friend_detail_profile_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/ic_friend_all_on"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/friend_detail_emoji_love_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/emoji_love"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_profile_iv" />
+            app:layout_constraintStart_toEndOf="@+id/friend_detail_profile_iv"
+            app:layout_constraintEnd_toStartOf="@+id/friend_detail_emoji_what_iv"/>
 
         <ImageView
             android:id="@+id/friend_detail_emoji_what_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/emoji_what"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_love_iv" />
+            app:layout_constraintStart_toEndOf="@+id/friend_detail_emoji_love_iv"
+            app:layout_constraintEnd_toStartOf="@+id/friend_detail_emoji_merong_iv"/>
 
         <ImageView
             android:id="@+id/friend_detail_emoji_merong_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/emoji_merong"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_what_iv" />
+            app:layout_constraintStart_toEndOf="@+id/friend_detail_emoji_what_iv"
+            app:layout_constraintEnd_toStartOf="@+id/friend_detail_emoji_glass_iv"/>
 
         <ImageView
             android:id="@+id/friend_detail_emoji_glass_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/emoji_glass"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_merong_iv" />
+            app:layout_constraintStart_toEndOf="@+id/friend_detail_emoji_merong_iv"
+            app:layout_constraintEnd_toStartOf="@+id/friend_detail_emoji_sad_iv"/>
 
         <ImageView
             android:id="@+id/friend_detail_emoji_sad_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
             android:src="@drawable/emoji_sad"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_glass_iv" />
+            app:layout_constraintStart_toEndOf="@+id/friend_detail_emoji_glass_iv"
+            app:layout_constraintEnd_toStartOf="@+id/friend_detail_emoji_happy_iv"
+            />
 
         <ImageView
             android:id="@+id/friend_detail_emoji_happy_iv"
             android:layout_width="34dp"
             android:layout_height="34dp"
-            android:layout_marginLeft="14dp"
             android:layout_marginBottom="20dp"
+            android:layout_marginEnd="19dp"
             android:src="@drawable/emoji_happy"
             app:layout_constraintBottom_toTopOf="@+id/friend_detail_all_emotion_tv"
-            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_sad_iv" />
+            app:layout_constraintLeft_toRightOf="@id/friend_detail_emoji_sad_iv"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:id="@+id/friend_detail_all_emotion_tv"

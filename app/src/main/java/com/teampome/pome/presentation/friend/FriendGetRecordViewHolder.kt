@@ -72,6 +72,10 @@ class FriendGetRecordViewHolder(
                     .circleCrop()
                     .into(friendDetailProfileIv)
             }
+
+            friendDetailCardLastFriendEmotionAiv.setOnClickListener {
+                friendDetailRecordClickListener.onFriendDetailEmojiClick(getFriedRecord.emotionResponse.friendEmotions)
+            }
         }
     }
 
