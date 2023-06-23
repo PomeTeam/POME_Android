@@ -11,6 +11,7 @@
         android:id="@+id/pome_friend_emotion_bottom_sheet_dialog_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:paddingTop="20dp"
         app:behavior_draggable="true"
         app:behavior_hideable="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">

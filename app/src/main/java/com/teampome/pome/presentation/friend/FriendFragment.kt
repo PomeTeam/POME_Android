@@ -6,11 +6,13 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentFriendBinding
 import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
+import com.teampome.pome.databinding.PomeFriendEmotionBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeFriendSettingBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.model.response.FriendEmotionResponse
@@ -30,6 +32,9 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
 
     private lateinit var pomeFriendSettingBottomSheetDialogBinding : PomeFriendSettingBottomSheetDialogBinding
     private lateinit var friendSettingBottomSheetDialog: BottomSheetDialog
+
+    private lateinit var pomeFriendEmojiBottomSheetDialogBinding : PomeFriendEmotionBottomSheetDialogBinding
+    private lateinit var pomeFriendEmojiBottomSheetDialog: BottomSheetDialog
 
     override fun initView() {
         setUpRecyclerView()
@@ -209,12 +214,34 @@ class FriendFragment : BaseFragment<FragmentFriendBinding>(R.layout.fragment_fri
         }
     }
 
+    private fun makeFriendEmojiBottomDialog(emojiList : List<FriendEmotionResponse>) {
+        pomeFriendEmojiBottomSheetDialog = BottomSheetDialog(requireContext())
+        pomeFriendEmojiBottomSheetDialogBinding = PomeFriendEmotionBottomSheetDialogBinding.inflate(layoutInflater, null, false)
+
+        pomeFriendEmojiBottomSheetDialog.setContentView(pomeFriendEmojiBottomSheetDialogBinding.root)
+
+        with(pomeFriendEmojiBottomSheetDialogBinding) {
+            val emojiListSize = emojiList.size
+            friendDetailAllEmotionTv.text = "전체 ${emojiListSize}개"
+
+            val gridLayoutManager = GridLayoutManager(context, 3)
+            val adapter = FriendEmotionAdapter(emojiList)
+            val decoration = BottomEmojiGridSpaceItemDecoration(3)
+            friendBottomEmojiRv.apply {
+                layoutManager = gridLayoutManager
+                this.adapter = adapter
+                addItemDecoration(decoration)
+            }
+        }
+    }
+
     override fun onFriendDetailMoreClick(recordId : Int) {
         makeFriendSettingBottomDialog(recordId)
         friendSettingBottomSheetDialog.show()
     }
 
     override fun onFriendDetailEmojiClick(emojiList: List<FriendEmotionResponse>) {
-
+        makeFriendEmojiBottomDialog(emojiList)
+        pomeFriendEmojiBottomSheetDialog.show()
     }
 }
