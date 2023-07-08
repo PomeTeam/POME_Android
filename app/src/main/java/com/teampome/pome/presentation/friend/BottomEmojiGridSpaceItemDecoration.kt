@@ -5,7 +5,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.teampome.pome.util.common.CommonUtil
 
-class BottomEmojiGridSpaceItemDecoration(private val spanCount: Int): RecyclerView.ItemDecoration() {
+class BottomEmojiGridSpaceItemDecoration(private val spanCount: Int) :
+    RecyclerView.ItemDecoration() {
     // 3, 20
     override fun getItemOffsets(
         outRect: Rect,
@@ -27,6 +28,10 @@ class BottomEmojiGridSpaceItemDecoration(private val spanCount: Int): RecyclerVi
             outRect.left = spaceInPx
         } else if (column == 2) {
             outRect.left = spaceInPx
+        }
+
+        if (position >= 3) {
+            outRect.top = CommonUtil.dpToPx(parent.context, 30)
         }
     }
 }

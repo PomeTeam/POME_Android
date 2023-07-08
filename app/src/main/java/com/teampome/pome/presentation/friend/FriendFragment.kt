@@ -5,16 +5,13 @@ import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.teampome.pome.R
 import com.teampome.pome.databinding.FragmentFriendBinding
-import com.teampome.pome.databinding.PomeCalendarBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeFriendEmotionBottomSheetDialogBinding
 import com.teampome.pome.databinding.PomeFriendSettingBottomSheetDialogBinding
-import com.teampome.pome.databinding.PomeRecordMoreGoalBottomSheetDialogBinding
 import com.teampome.pome.model.response.FriendEmotionResponse
 import com.teampome.pome.util.base.ApiResponse
 import com.teampome.pome.util.base.BaseFragment
